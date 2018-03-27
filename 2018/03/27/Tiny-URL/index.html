@@ -100,14 +100,14 @@
 
 
   <meta name="description" content="I. IntroductionA MEAN stack Single Page Application, providing:  URL shortening service Traffic statistics collecting service  Tech stacks: AngularJS, Node.js, Express, MongoDB, Redis, Nginx, Docker G">
-<meta name="keywords" content="AngularJS,Node.js,MongoDB,Express">
+<meta name="keywords" content="Node.js,MongoDB,AngularJS,Express">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Tiny URL">
 <meta property="og:url" content="http://yoursite.com/2018/03/27/Tiny-URL/index.html">
 <meta property="og:site_name" content="CMK">
 <meta property="og:description" content="I. IntroductionA MEAN stack Single Page Application, providing:  URL shortening service Traffic statistics collecting service  Tech stacks: AngularJS, Node.js, Express, MongoDB, Redis, Nginx, Docker G">
 <meta property="og:image" content="http://yoursite.com/2018/03/27/Tiny-URL/tinyURL.png">
-<meta property="og:updated_time" content="2018-03-27T22:17:40.000Z">
+<meta property="og:updated_time" content="2018-03-27T23:57:47.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Tiny URL">
 <meta name="twitter:description" content="I. IntroductionA MEAN stack Single Page Application, providing:  URL shortening service Traffic statistics collecting service  Tech stacks: AngularJS, Node.js, Express, MongoDB, Redis, Nginx, Docker G">
@@ -193,7 +193,7 @@
       </a>
     </div>
       
-        <p class="site-subtitle">Space for existence, time for significance</p>
+        <p class="site-subtitle">Space for existence; Time for significance.</p>
       
   </div>
 
@@ -333,7 +333,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-27T19:14:49-07:00">2018-03-27</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-27T10:14:49-07:00">2018-03-27</time>
             
 
             
@@ -399,7 +399,7 @@
 <h2 id="II-Work-flow"><a href="#II-Work-flow" class="headerlink" title="II. Work flow"></a>II. Work flow</h2><h4 id="1-Users-come-to-the-app-webpage"><a href="#1-Users-come-to-the-app-webpage" class="headerlink" title="1. Users come to the app webpage"></a>1. Users come to the app webpage</h4><ul>
 <li>Browser send GET request with original URL to server</li>
 <li>Server sends index.html to clients</li>
-<li>Browser get the index.html with script in the head tag.<br><code>&lt;script src=&#39;angularJS library &#39;&gt; &lt;script src=&#39;app.js&#39;&gt; &lt;script src=&#39;/public/js/controllers/homeController.js&#39;&gt;</code> </li>
+<li>Browser get the index.html with script in the head tag.<br><code>&lt;script src=&#39;angularJS library &#39;&gt; &lt;script src=&#39;app.js&#39;&gt; &lt;script src=&#39;/public/js/controllers/homeController.js&#39;&gt;</code></li>
 <li>Browser again sends request for angularJS library/ js controller files to different servers</li>
 <li>when browser encounter ‘ng-view’, it automatically turn to ‘ng-router’, ask for its view and controller; Again, sends corresponding GET request to fetch sub-view files</li>
 <li>while browser parse the controller js file, it might do AJAX request to fetch information from server.</li>
@@ -418,7 +418,7 @@
 </ul>
 <h4 id="3-Visitors-browse-the-shortURL"><a href="#3-Visitors-browse-the-shortURL" class="headerlink" title="3. Visitors browse the shortURL"></a>3. Visitors browse the shortURL</h4><ul>
 <li>the shortURL is just clicked from various browsers/ machines/ from different IP/ countries, at different time</li>
-<li>when shortURL is clicked, it sends GET request ‘localhost/:shortUrl’ to the app server. </li>
+<li>when shortURL is clicked, it sends GET request ‘localhost/:shortUrl’ to the app server.</li>
 <li>the app sever call the urlService to get the longURL from the shortURL, and redirect users to the original long URL</li>
 </ul>
 <h4 id="4-Traffic-statistics-Info"><a href="#4-Traffic-statistics-Info" class="headerlink" title="4. Traffic statistics Info"></a>4. Traffic statistics Info</h4><ul>
@@ -452,7 +452,7 @@
 <li>Least time (nginx plux)<br>“optionally weighted”</li>
 </ol>
 </li>
-<li>Cache <ul>
+<li>Cache<ul>
 <li>GET 都可以cache</li>
 <li>即便是动态列表也进行cache，因为实际生活的改变不会比nginx的处理快 “1s <---> 100000 request/s”</---></li>
 <li>POST不能cache</li>
@@ -481,11 +481,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/AngularJS/" rel="tag"># AngularJS</a>
-          
             <a href="/tags/Node-js/" rel="tag"># Node.js</a>
           
             <a href="/tags/MongoDB/" rel="tag"># MongoDB</a>
+          
+            <a href="/tags/AngularJS/" rel="tag"># AngularJS</a>
           
             <a href="/tags/Express/" rel="tag"># Express</a>
           
@@ -500,8 +500,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/27/eCommerce-Website-Design/" rel="next" title="eCommerce Website Design">
-                <i class="fa fa-chevron-left"></i> eCommerce Website Design
+              <a href="/2018/03/26/Facebook-Custom-Search/" rel="next" title="Facebook Custom Search">
+                <i class="fa fa-chevron-left"></i> Facebook Custom Search
               </a>
             
           </div>
@@ -509,6 +509,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/27/Web-Template-Engine/" rel="prev" title="Web Template Engine">
+                Web Template Engine <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -570,6 +574,10 @@
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="Mingkai Cao" />
             
               <p class="site-author-name" itemprop="name">Mingkai Cao</p>
               <p class="site-description motion-element" itemprop="description">Jack of all trades, master of one</p>

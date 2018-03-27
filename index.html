@@ -542,14 +542,13 @@
             <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>A MEAN stack Single Page Application, providing:</p>
 <ol>
 <li>URL shortening service</li>
-<li>Traffic statistics collecting service</li>
+<li>Traffic statistics collecting service<br>Tech stacks: <u>AngularJS, Node.js, Express, MongoDB, Redis, Nginx, Docker</u></li>
 </ol>
-<p>Tech stacks: <u>AngularJS, Node.js, Express, MongoDB, Redis, Nginx, Docker</u></p>
 <p><a href="https://tinyurl-199300.appspot.com/#/" target="_blank" rel="noopener"><br>    <img src="/2018/03/27/Tiny-URL/tinyURL.png" title="This is an image"><br></a></p>
 <h2 id="Work-flow"><a href="#Work-flow" class="headerlink" title="Work flow"></a>Work flow</h2><h4 id="1-Users-come-to-the-app-webpage"><a href="#1-Users-come-to-the-app-webpage" class="headerlink" title="1. Users come to the app webpage"></a>1. Users come to the app webpage</h4><ul>
 <li>Browser send GET request with original URL to server</li>
 <li>Server sends index.html to clients</li>
-<li>Browser get the index.html with script in the head tag. <code>&lt;script src=&#39;angularJS library &#39;&gt; &lt;script src=&#39;app.js&#39;&gt; &lt;script src=&#39;/public/js/controllers/homeController.js&#39;&gt;</code> </li>
+<li>Browser get the index.html with script in the head tag.<br><code>&lt;script src=&#39;angularJS library &#39;&gt; &lt;script src=&#39;app.js&#39;&gt; &lt;script src=&#39;/public/js/controllers/homeController.js&#39;&gt;</code> </li>
 <li>Browser again sends request for angularJS library/ js controller files to different servers</li>
 <li>when browser encounter ‘ng-view’, it automatically turn to ‘ng-router’, ask for its view and controller; Again, sends corresponding GET request to fetch sub-view files</li>
 <li>while browser parse the controller js file, it might do AJAX request to fetch information from server.</li>
@@ -557,11 +556,11 @@
 <h4 id="2-Users-use-the-shortening-service"><a href="#2-Users-use-the-shortening-service" class="headerlink" title="2. Users use the shortening service"></a>2. Users use the shortening service</h4><ul>
 <li>Input longURL in the input box, and click ‘submit’</li>
 <li>‘submit’ fires the onclick funcion to do 2 things:<ul>
-<li>send the longURL to specified URL, ie. POST  to localhost/api/v1/urls<code>NOTICE: This url is specifically used for rendering short/long URL</code></li>
-<li>send the longURL to specified URL, ie. POST  to localhost/api/v1/urls<code>NOTICE: this step is executed after app server responds the POST request in the first step with the calculated shortURL</code></li>
+<li>send the longURL to specified URL, ie. POST  to localhost/api/v1/urls<br><code>NOTICE: This url is specifically used for rendering short/long URL</code></li>
+<li>send the longURL to specified URL, ie. POST  to localhost/api/v1/urls<br><code>NOTICE: this step is executed after app server responds the POST request in the first step with the calculated shortURL</code></li>
 </ul>
 </li>
-<li>App server first receive the POST request with longURL, do 2 things: call the urlService to calculate the shortURL, store long/short URL pair in MongoDB;send back the shortURL to the app webpage. <code>NOTICE: the shortURL should consist different prefix compared with the current app URL. Because it is create for outside users. So the shortURL should not prefix with /api/v1/.., but with just &#39;/:shortUrl&#39;</code></li>
+<li>App server first receive the POST request with longURL, do 2 things: call the urlService to calculate the shortURL, store long/short URL pair in MongoDB;send back the shortURL to the app webpage.<br><code>NOTICE: the shortURL should consist different prefix compared with the current app URL. Because it is create for outside users. So the shortURL should not prefix with /api/v1/.., but with just &#39;/:shortUrl&#39;</code></li>
 <li>After the app webpage getting shortURL, it renders new subview using url.html; Meanwhile, it needs to know the its original longURL for display.</li>
 <li>Again, in the url.html subview, it sends GET request to the app server to get the longURL<br>Notice: This step could be simplified by just passing the longURL from the first subview to the second subview creating a service or using the $rootScop</li>
 <li>Now, in the new subview, the longURL and shortURL pair can be displayed</li>
@@ -811,7 +810,7 @@ Header 2
 #### Header 4
 ##### Header 5
 ###### Header 6
-</code></pre><h3 id="Links-and-Email"><a href="#Links-and-Email" class="headerlink" title="Links and Email"></a>Links and Email</h3><h4 id="Inline"><a href="#Inline" class="headerlink" title="Inline"></a>Inline</h4><p>Just put angle brackets around an email and it becomes clickable: <a href="mailto:&#x75;&#x72;&#x61;&#110;&#x75;&#115;&#x6a;&#114;&#x40;&#x67;&#x6d;&#97;&#105;&#x6c;&#x2e;&#x63;&#x6f;&#x6d;" target="_blank" rel="noopener">&#x75;&#x72;&#x61;&#110;&#x75;&#115;&#x6a;&#114;&#x40;&#x67;&#x6d;&#97;&#105;&#x6c;&#x2e;&#x63;&#x6f;&#x6d;</a><br><code>&lt;uranusjr@gmail.com&gt;</code>  </p>
+</code></pre><h3 id="Links-and-Email"><a href="#Links-and-Email" class="headerlink" title="Links and Email"></a>Links and Email</h3><h4 id="Inline"><a href="#Inline" class="headerlink" title="Inline"></a>Inline</h4><p>Just put angle brackets around an email and it becomes clickable: <a href="mailto:&#117;&#114;&#97;&#x6e;&#x75;&#x73;&#x6a;&#114;&#64;&#x67;&#x6d;&#x61;&#x69;&#x6c;&#x2e;&#x63;&#x6f;&#x6d;" target="_blank" rel="noopener">&#117;&#114;&#97;&#x6e;&#x75;&#x73;&#x6a;&#114;&#64;&#x67;&#x6d;&#x61;&#x69;&#x6c;&#x2e;&#x63;&#x6f;&#x6d;</a><br><code>&lt;uranusjr@gmail.com&gt;</code>  </p>
 <p>Same thing with urls: <a href="http://macdown.uranusjr.com" target="_blank" rel="noopener">http://macdown.uranusjr.com</a><br><code>&lt;http://macdown.uranusjr.com&gt;</code>  </p>
 <p>Perhaps you want to some link text like this: <a href="http://macdown.uranusjr.com" title="Title" target="_blank" rel="noopener">Macdown Website</a><br><code>[Macdown Website](http://macdown.uranusjr.com &quot;Title&quot;)</code> (The title is optional)  </p>
 <h4 id="Reference-style"><a href="#Reference-style" class="headerlink" title="Reference style"></a>Reference style</h4><p>Sometimes it looks too messy to include big long urls inline, or you want to keep all your urls together.  </p>

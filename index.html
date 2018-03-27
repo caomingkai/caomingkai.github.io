@@ -389,75 +389,52 @@
       
         
           
-            <h2 id="I-Introduction"><a href="#I-Introduction" class="headerlink" title="I. Introduction"></a>I. Introduction</h2><p>A MEAN stack Single Page Application, providing: URL shortening service, and traffic statistics collecting service.</p>
-<p><strong>#Tech stacks</strong>: React, Node.js, Python, RabbitMQ, TensorFlow</p>
-<p><strong>#Github</strong>: <a href="https://github.com/caomingkai/URL-shortening-service" target="_blank" rel="noopener">https://github.com/caomingkai/URL-shortening-service</a></p>
+            <h2 id="I-Introduction"><a href="#I-Introduction" class="headerlink" title="I. Introduction"></a>I. Introduction</h2><p>An internet-based news aggregator, providing hot news scraping on popular news sources, with recommendation feature based on users’ preference with the help of Machine Learning.</p>
+<p><strong>#Github</strong>: <a href="https://github.com/caomingkai/News_Recommendation_System" target="_blank" rel="noopener">https://github.com/caomingkai/News_Recommendation_System</a></p>
 <p><a href="https://tinyurl-199300.appspot.com/#/" target="_blank" rel="noopener"><br>    <br></a></p>
-<h2 id="II-Work-flow"><a href="#II-Work-flow" class="headerlink" title="II. Work flow"></a>II. Work flow</h2><h4 id="1-Users-come-to-the-app-webpage"><a href="#1-Users-come-to-the-app-webpage" class="headerlink" title="1. Users come to the app webpage"></a>1. Users come to the app webpage</h4><ul>
-<li>Browser send GET request with original URL to server</li>
-<li>Server sends index.html to clients</li>
-<li>Browser get the index.html with script in the head tag.<br><code>&lt;script src=&#39;angularJS library &#39;&gt; &lt;script src=&#39;app.js&#39;&gt; &lt;script src=&#39;/public/js/controllers/homeController.js&#39;&gt;</code> </li>
-<li>Browser again sends request for angularJS library/ js controller files to different servers</li>
-<li>when browser encounter ‘ng-view’, it automatically turn to ‘ng-router’, ask for its view and controller; Again, sends corresponding GET request to fetch sub-view files</li>
-<li>while browser parse the controller js file, it might do AJAX request to fetch information from server.</li>
-</ul>
-<h4 id="2-Users-use-the-shortening-service"><a href="#2-Users-use-the-shortening-service" class="headerlink" title="2. Users use the shortening service"></a>2. Users use the shortening service</h4><ul>
-<li>Input longURL in the input box, and click ‘submit’</li>
-<li>‘submit’ fires the onclick funcion to do 2 things:<ul>
-<li>send the longURL to specified URL, ie. POST  to localhost/api/v1/urls<br><code>NOTICE: This url is specifically used for rendering short/long URL</code></li>
-<li>send the longURL to specified URL, ie. POST  to localhost/api/v1/urls<br><code>NOTICE: this step is executed after app server responds the POST request in the first step with the calculated shortURL</code></li>
-</ul>
+<ol>
+<li><p>Chart with Machine Learning module for news topic classification<br><img src="https://github.com/caomingkai/News_Recommendation_System/raw/master/with%20ML%20topic%20classification1.png" alt="chart"></p>
 </li>
-<li>App server first receive the POST request with longURL, do 2 things: call the urlService to calculate the shortURL, store long/short URL pair in MongoDB;send back the shortURL to the app webpage.<br><code>NOTICE: the shortURL should consist different prefix compared with the current app URL. Because it is create for outside users. So the shortURL should not prefix with /api/v1/.., but with just &#39;/:shortUrl&#39;</code></li>
-<li>After the app webpage getting shortURL, it renders new subview using url.html; Meanwhile, it needs to know the its original longURL for display.</li>
-<li>Again, in the url.html subview, it sends GET request to the app server to get the longURL<br>Notice: This step could be simplified by just passing the longURL from the first subview to the second subview creating a service or using the $rootScop</li>
-<li>Now, in the new subview, the longURL and shortURL pair can be displayed</li>
-</ul>
-<h4 id="3-Visitors-browse-the-shortURL"><a href="#3-Visitors-browse-the-shortURL" class="headerlink" title="3. Visitors browse the shortURL"></a>3. Visitors browse the shortURL</h4><ul>
-<li>the shortURL is just clicked from various browsers/ machines/ from different IP/ countries, at different time</li>
-<li>when shortURL is clicked, it sends GET request ‘localhost/:shortUrl’ to the app server. </li>
-<li>the app sever call the urlService to get the longURL from the shortURL, and redirect users to the original long URL</li>
-</ul>
-<h4 id="4-Traffic-statistics-Info"><a href="#4-Traffic-statistics-Info" class="headerlink" title="4. Traffic statistics Info"></a>4. Traffic statistics Info</h4><ul>
-<li>We want to record the total number of clicks / their browsers/ machine brands/ their IP/ countries/ timestamp. And display them in the app webpage.</li>
-<li>So first we need add more elements in the url.html subview in the frontend; And update those information in the backend.<ul>
-<li>updating the info each time the shortURL is clicked. And then store them in the MongoDB</li>
-<li>when app webpage is clicked, make AJAX call to the app server, let it get the info from MongoDB, and then send back to frontend</li>
-</ul>
+<li><p>Chart with Recommendation module to match user preference<br><img src="https://github.com/caomingkai/News_Recommendation_System/raw/master/with%20Recommendation%20module.png" alt="chart"></p>
 </li>
-<li>Since all these clicks directly send GET request to ‘localhost/:shortURL’, which is handled by redirect.js. Thus, we here need a statistic service to update these info.</li>
-<li>Here we need the one of Express modules: Express-useragent to extract the information from the request</li>
-<li>In the statistic service, we use the express-useragent to get the info, and then store them in the MongoDB database with a new schema.</li>
-</ul>
-<h2 id="III-Nginx"><a href="#III-Nginx" class="headerlink" title="III. Nginx"></a>III. Nginx</h2><h4 id="Reverse-Proxy"><a href="#Reverse-Proxy" class="headerlink" title="Reverse Proxy"></a>Reverse Proxy</h4><ul>
-<li>(正向)代理forward proxy: 在client与internet之间，替client访问internet的计算机<ul>
-<li>路由器就是一个forward proxy，外网看不到路由器之后的计算机，但是计算机可以看到外边</li>
-<li>翻墙服务器</li>
-</ul>
-</li>
-<li>(反向)代理:在server与internet之间，替server接受internet访问的计算机</li>
-</ul>
-<h4 id="Features"><a href="#Features" class="headerlink" title="Features"></a>Features</h4><ul>
-<li>Hide Original server<br>“安全”</li>
-<li>application firewall</li>
-<li>SSL termination: “加密不需要server进行，反向代理可以代为计算以减轻server压力”</li>
-<li>Load balance<ol>
-<li>round robin<br>“optionally weighted”</li>
-<li>least connected<br>“optionally weighted”</li>
-<li>IP hash<br>“1~200: server a; 201~400: server b”</li>
-<li>Generic Hash<br>“based on devices/ client locations”</li>
-<li>Least time (nginx plux)<br>“optionally weighted”</li>
 </ol>
-</li>
-<li>Cache <ul>
-<li>GET 都可以cache</li>
-<li>即便是动态列表也进行cache，因为实际生活的改变不会比nginx的处理快 “1s <---> 100000 request/s”</---></li>
-<li>POST不能cache</li>
+<h2 id="II-System-structure"><a href="#II-System-structure" class="headerlink" title="II. System structure:"></a>II. System structure:</h2><ol>
+<li><strong>Front end tier</strong>: React &amp; Node.js</li>
+<li><strong>Back end tier</strong>: providing RPC API for communication among different tiers</li>
+<li><strong>News recommendation system</strong>: time decay algorithm</li>
+<li><strong>News topic classifying system</strong>: Tensorflow with 2-layer CNN model for classification</li>
+<li><strong>data pipeline</strong>: get news sources<ul>
+<li>new monitor </li>
+<li>news scraper </li>
+<li>news deduper</li>
 </ul>
 </li>
-<li>Compression(gzip)<br>“减小网络传输量: 用reverse proxy/ browser 的CPU为代价”</li>
-<li>不宕机进行配置改变／升级</li>
+</ol>
+<h2 id="III-Tech-stack"><a href="#III-Tech-stack" class="headerlink" title="III. Tech stack:"></a>III. Tech stack:</h2><ul>
+<li><p><strong>Front end:  React, Express, Node.js, OAuth</strong></p>
+<ul>
+<li>Built a responsive single-page web application for users to browse news (React, Node.js, RPC, SOA, JWT)</li>
 </ul>
+</li>
+<li><p><strong>Back end: Python RPC, MongoDB, Redis, RabbitMQ</strong></p>
+<ul>
+<li>Service Oriented, multiple backends serving via JSON RPC</li>
+<li>Implemented a data pipeline which monitors, scrapes and deduplicates news</li>
+</ul>
+</li>
+<li><p><strong>News recommendation system: Tensorflow, DNN, NLP</strong></p>
+<ul>
+<li>Designed and built an offline training pipeline for news topic modeling</li>
+<li>Deployed an online classifying service for news topic modeling using trained model</li>
+</ul>
+</li>
+<li><p><strong>News topic classifying system: TF-IDF, NLP, RabbitMQ</strong></p>
+<ul>
+<li>Implemented a click event log processor which collects users’ click logs, updated a news model for each user</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://github.com/caomingkai/News_Recommendation_System/raw/master/chart.jpg" alt="chart"></p>
 
           
         
@@ -996,7 +973,7 @@ Header 2
 #### Header 4
 ##### Header 5
 ###### Header 6
-</code></pre><h3 id="Links-and-Email"><a href="#Links-and-Email" class="headerlink" title="Links and Email"></a>Links and Email</h3><h4 id="Inline"><a href="#Inline" class="headerlink" title="Inline"></a>Inline</h4><p>Just put angle brackets around an email and it becomes clickable: <a href="mailto:&#x75;&#114;&#x61;&#x6e;&#x75;&#x73;&#106;&#114;&#x40;&#x67;&#x6d;&#97;&#x69;&#108;&#x2e;&#x63;&#x6f;&#x6d;" target="_blank" rel="noopener">&#x75;&#114;&#x61;&#x6e;&#x75;&#x73;&#106;&#114;&#x40;&#x67;&#x6d;&#97;&#x69;&#108;&#x2e;&#x63;&#x6f;&#x6d;</a><br><code>&lt;uranusjr@gmail.com&gt;</code>  </p>
+</code></pre><h3 id="Links-and-Email"><a href="#Links-and-Email" class="headerlink" title="Links and Email"></a>Links and Email</h3><h4 id="Inline"><a href="#Inline" class="headerlink" title="Inline"></a>Inline</h4><p>Just put angle brackets around an email and it becomes clickable: <a href="mailto:&#x75;&#114;&#x61;&#x6e;&#117;&#115;&#x6a;&#114;&#64;&#103;&#109;&#97;&#x69;&#108;&#46;&#99;&#x6f;&#109;" target="_blank" rel="noopener">&#x75;&#114;&#x61;&#x6e;&#117;&#115;&#x6a;&#114;&#64;&#103;&#109;&#97;&#x69;&#108;&#46;&#99;&#x6f;&#109;</a><br><code>&lt;uranusjr@gmail.com&gt;</code>  </p>
 <p>Same thing with urls: <a href="http://macdown.uranusjr.com" target="_blank" rel="noopener">http://macdown.uranusjr.com</a><br><code>&lt;http://macdown.uranusjr.com&gt;</code>  </p>
 <p>Perhaps you want to some link text like this: <a href="http://macdown.uranusjr.com" title="Title" target="_blank" rel="noopener">Macdown Website</a><br><code>[Macdown Website](http://macdown.uranusjr.com &quot;Title&quot;)</code> (The title is optional)  </p>
 <h4 id="Reference-style"><a href="#Reference-style" class="headerlink" title="Reference style"></a>Reference style</h4><p>Sometimes it looks too messy to include big long urls inline, or you want to keep all your urls together.  </p>

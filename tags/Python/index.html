@@ -873,7 +873,7 @@
   <script>
       // 新增以下代码即可，可以移除.vempty下所有子节点
       var vemptyEle = document.querySelector('#comments .vempty');
-      console.log("vempty");
+      console.log(vemptyEle);
       if (vemptyEle && vemptyEle.childNodes && vemptyEle.childNodes.length > 0){
         vemptyEle.childNodes.forEach(function(item) {
           item.parentNode.removeChild(item);

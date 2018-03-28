@@ -704,7 +704,7 @@
   
   
   <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-  
+
   <script type="text/javascript">
     var GUEST = ['nick','mail','link'];
     var guest = 'nick';
@@ -713,7 +713,7 @@
     });
     new Valine({
         el: '#comments' ,
-        verify: true,
+        verify: false,
         notify: false,
         appId: 'hG8fgggWL7hK1jsXsRoVCNWv-MdYXbMMI',
         appKey: 'VRAYsgwdkRyyb8bAFQ5uii6o',
@@ -722,6 +722,23 @@
         guest_info:guest,
         pageSize:'10' || 10,
     });
+    // 新增以下代码即可，可以移除.info下所有子节点
+    var infoEle = document.querySelector('#comments.info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0){
+      infoEle.childNodes.forEach(function(item) {
+        item.parentNode.removeChild(item);
+      });
+    }
+
+    // 新增以下代码即可，可以移除.info下所有子节点
+    var vemptyEle = document.querySelector('#comments.vempty');
+    if (vemptyEle && vemptyEle.childNodes && vemptyEle.childNodes.length > 0){
+      vemptyEle.childNodes.forEach(function(item) {
+        item.parentNode.removeChild(item);
+      });
+    }
+
+
   </script>
 
 

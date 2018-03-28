@@ -368,8 +368,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/2018/03/27/Binary-Search-variations/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/03/27/Binary-Search-variations/" itemprop="commentCount"></span>
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count gitment-comments-count" data-xid="/2018/03/27/Binary-Search-variations/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -546,12 +545,10 @@ mid = (left + right + 1) &gt;&gt;1
 
   
     <div class="comments" id="comments">
-      <div id="disqus_thread">
-        <noscript>
-          Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
-        </noscript>
-      </div>
+      
+        <div onclick="showGitment()" id="gitment-display-button">Show comments from Gitment</div>
+        <div id="gitment-container" style="display:none"></div>
+      
     </div>
 
   
@@ -882,31 +879,6 @@ mid = (left + right + 1) &gt;&gt;1
 
   
 
-  
-    <script id="dsq-count-scr" src="https://mingkaicao.disqus.com/count.js" async></script>
-  
-
-  
-    <script type="text/javascript">
-      var disqus_config = function () {
-        this.page.url = 'http://yoursite.com/2018/03/27/Binary-Search-variations/';
-        this.page.identifier = '2018/03/27/Binary-Search-variations/';
-        this.page.title = 'Binary Search variations';
-      };
-      function loadComments () {
-        var d = document, s = d.createElement('script');
-        s.src = 'https://mingkaicao.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', '' + +new Date());
-        (d.head || d.body).appendChild(s);
-      }
-      
-        loadComments();
-      
-    </script>
-  
-
-
-
 
 
 	
@@ -918,6 +890,10 @@ mid = (left + right + 1) &gt;&gt;1
   
 
 
+
+
+
+  
 
 
 

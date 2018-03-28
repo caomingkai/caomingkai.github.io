@@ -731,34 +731,6 @@
     }
 
 
-    var vemptyEle = document.querySelector('#comments .vempty');
-    console.log(vemptyEle);
-
-    console.log("display111111");
-    vemptyEle.style.display = "none";
-    console.log(vemptyEle);
-
-    console.log("visibility111111");
-    vemptyEle.style.visibility = "hidden";
-    console.log(vemptyEle);
-
-    if (vemptyEle && vemptyEle.childNodes && vemptyEle.childNodes.length > 0){
-        console.log("removeChild");
-      vemptyEle.childNodes.forEach(function(item) {
-        item.parentNode.removeChild(item);
-      });
-      console.log("display222222");
-      vemptyEle.style.display = "none";
-      console.log(vemptyEle);
-
-      console.log("visibility22222");
-      vemptyEle.style.visibility = "hidden";
-      console.log(vemptyEle);
-    }
-
-    console.log("lastttttt");
-    console.log(vemptyEle);
-
   </script>
 
 
@@ -885,37 +857,11 @@
   
 
 
-  <script>
-      // 新增以下代码即可，可以移除.vempty下所有子节点
-      var vemptyEle = document.querySelector('#comments .vempty');
-      console.log(vemptyEle);
-
-      console.log("display1");
-      vemptyEle.style.display = "none";
-      console.log(vemptyEle);
-
-      console.log("visibility1");
-      vemptyEle.style.visibility = "hidden";
-      console.log(vemptyEle);
-
-      if (vemptyEle && vemptyEle.childNodes && vemptyEle.childNodes.length > 0){
-          console.log("removeChild");
-        vemptyEle.childNodes.forEach(function(item) {
-          item.parentNode.removeChild(item);
-        });
-        console.log("display2");
-        vemptyEle.style.display = "none";
-        console.log(vemptyEle);
-
-        console.log("visibility2");
-        vemptyEle.style.visibility = "hidden";
-        console.log(vemptyEle);
-      }
-
-      console.log("last");
-      console.log(vemptyEle);
-  </script>
-
+<style>
+    #comments .vempty{
+        display: none;
+    }
+</style>
 
 </body>
 </html>

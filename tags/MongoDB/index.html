@@ -744,17 +744,6 @@
       });
     }
 
-    // 新增以下代码即可，可以移除.vempty下所有子节点
-    var vemptyEle = document.querySelector('#comments .vempty');
-    console.log("exist");
-    if( vemptyEle ) vemptyEle.style.display = "none";
-    // if (vemptyEle && vemptyEle.childNodes && vemptyEle.childNodes.length > 0){
-    //  vemptyEle.childNodes.forEach(function(item2) {
-    //    item2.parentNode.removeChild(item2);
-    //  });
-    //}
-
-
   </script>
 
 
@@ -879,6 +868,15 @@
   
 
   
+
+  
+  <script>
+      // 新增以下代码即可，可以移除.vempty下所有子节点
+      var vemptyEle = document.querySelector('#comments .vempty');
+      console.log("exist");
+      if( vemptyEle ) vemptyEle.style.display = "none";
+  </script>
+
 
 </body>
 </html>

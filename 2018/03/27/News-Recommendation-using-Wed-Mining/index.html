@@ -109,7 +109,7 @@
 <meta property="og:image" content="https://github.com/caomingkai/News_Recommendation_System/raw/master/with%20ML%20topic%20classification1.png">
 <meta property="og:image" content="https://github.com/caomingkai/News_Recommendation_System/raw/master/with%20Recommendation%20module.png">
 <meta property="og:image" content="https://github.com/caomingkai/News_Recommendation_System/raw/master/chart.jpg">
-<meta property="og:updated_time" content="2018-03-28T00:05:28.000Z">
+<meta property="og:updated_time" content="2018-03-28T00:19:24.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="News Recommendation using Wed Mining">
 <meta name="twitter:description" content="I. IntroductionAn internet-based news aggregator, providing hot news scraping on popular news sources, with recommendation feature based on users’ preference with the help of Machine Learning. #Github">
@@ -311,7 +311,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Mingkai Cao">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -393,44 +393,42 @@
         <h2 id="I-Introduction"><a href="#I-Introduction" class="headerlink" title="I. Introduction"></a>I. Introduction</h2><p>An internet-based news aggregator, providing hot news scraping on popular news sources, with recommendation feature based on users’ preference with the help of Machine Learning.</p>
 <p><strong>#Github</strong>: <a href="https://github.com/caomingkai/News_Recommendation_System" target="_blank" rel="noopener">https://github.com/caomingkai/News_Recommendation_System</a></p>
 <p><a href="https://tinyurl-199300.appspot.com/#/" target="_blank" rel="noopener"><br>    <br></a></p>
-<ol>
-<li><p>Chart with Machine Learning module for news topic classification<br><img src="https://github.com/caomingkai/News_Recommendation_System/raw/master/with%20ML%20topic%20classification1.png" alt="chart"></p>
-</li>
-<li><p>Chart with Recommendation module to match user preference<br><img src="https://github.com/caomingkai/News_Recommendation_System/raw/master/with%20Recommendation%20module.png" alt="chart"></p>
-</li>
-</ol>
+<p><strong>Chart: System with Machine Learning module</strong><br><img src="https://github.com/caomingkai/News_Recommendation_System/raw/master/with%20ML%20topic%20classification1.png" alt="chart"></p>
+<p><strong>Chart: System with Recommendation module</strong><br><img src="https://github.com/caomingkai/News_Recommendation_System/raw/master/with%20Recommendation%20module.png" alt="chart"></p>
 <h2 id="II-System-structure"><a href="#II-System-structure" class="headerlink" title="II. System structure:"></a>II. System structure:</h2><ol>
 <li><strong>Front end tier</strong>: React &amp; Node.js</li>
 <li><strong>Back end tier</strong>: providing RPC API for communication among different tiers</li>
 <li><strong>News recommendation system</strong>: time decay algorithm</li>
 <li><strong>News topic classifying system</strong>: Tensorflow with 2-layer CNN model for classification</li>
 <li><strong>data pipeline</strong>: get news sources<ul>
-<li>new monitor</li>
-<li>news scraper</li>
-<li>news deduper</li>
+<li>News monitor: gets news from News.API</li>
+<li>News scraper: web scraper</li>
+<li>News deduper: news TF-IDF deduplication</li>
 </ul>
 </li>
 </ol>
 <h2 id="III-Tech-stack"><a href="#III-Tech-stack" class="headerlink" title="III. Tech stack:"></a>III. Tech stack:</h2><ul>
-<li><p><strong>Front end:  React, Express, Node.js, OAuth</strong></p>
-<ul>
+<li><strong>Front end:  React, Express, Node.js, OAuth</strong><ul>
 <li>Built a responsive single-page web application for users to browse news (React, Node.js, RPC, SOA, JWT)</li>
 </ul>
 </li>
-<li><p><strong>Back end: Python RPC, MongoDB, Redis, RabbitMQ</strong></p>
+</ul>
 <ul>
+<li><strong>Back end: Python RPC, MongoDB, Redis, RabbitMQ</strong><ul>
 <li>Service Oriented, multiple backends serving via JSON RPC</li>
 <li>Implemented a data pipeline which monitors, scrapes and deduplicates news</li>
 </ul>
 </li>
-<li><p><strong>News recommendation system: Tensorflow, DNN, NLP</strong></p>
+</ul>
 <ul>
+<li><strong>News recommendation system: Tensorflow, DNN, NLP</strong><ul>
 <li>Designed and built an offline training pipeline for news topic modeling</li>
 <li>Deployed an online classifying service for news topic modeling using trained model</li>
 </ul>
 </li>
-<li><p><strong>News topic classifying system: TF-IDF, NLP, RabbitMQ</strong></p>
+</ul>
 <ul>
+<li><strong>News topic classifying system: TF-IDF, NLP, RabbitMQ</strong><ul>
 <li>Implemented a click event log processor which collects users’ click logs, updated a news model for each user</li>
 </ul>
 </li>
@@ -553,7 +551,7 @@
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="/images/avatar.gif"
+                src="/images/avatar.jpg"
                 alt="Mingkai Cao" />
             
               <p class="site-author-name" itemprop="name">Mingkai Cao</p>

@@ -732,7 +732,7 @@
         appId: 'hG8fgggWL7hK1jsXsRoVCNWv-MdYXbMMI',
         appKey: 'VRAYsgwdkRyyb8bAFQ5uii6o',
         placeholder: 'Any comment?',
-        avatar:'mm',
+        avatar:'',
         guest_info:guest,
         pageSize:'10' || 10,
     });
@@ -873,8 +873,12 @@
   <script>
       // 新增以下代码即可，可以移除.vempty下所有子节点
       var vemptyEle = document.querySelector('#comments .vempty');
-      console.log("vempty node exist");
-      if( vemptyEle ) vemptyEle.style.display = "none";
+      console.log("vempty");
+      if (vemptyEle && vemptyEle.childNodes && vemptyEle.childNodes.length > 0){
+        vemptyEle.childNodes.forEach(function(item) {
+          item.parentNode.removeChild(item);
+        });
+      }
   </script>
 
 

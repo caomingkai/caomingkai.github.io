@@ -99,17 +99,17 @@
 
 
 
-  <meta name="description" content="VFS system call Interfaces for specific File Systems, like ramfs, s5fs.  在Linux中，文件名字没有缀；“file”与“directory”无区别 所有涉及“绝对路径”最后一级拆分的，会先将trailing “/” 去掉 lookup()这个函数作用巨大: VFS-AFS-VFS: “虚实连接的小能手” 递归进行name r">
+  <meta name="description" content="VFS system call Interfaces for specific File Systems, like ramfs, s5fs.  在Linux中，文件名字没有缀；“file”与“directory”无区别 所有涉及“绝对路径”最后一级拆分的，会先将trailing “/” 去掉 lookup()这个函数作用巨大: 在dir_inode中，找名字是“name”的entry，并把该en">
 <meta name="keywords" content="OS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="VFS system call">
 <meta property="og:url" content="http://yoursite.com/2018/04/01/VFS-system-call/index.html">
 <meta property="og:site_name" content="CMK">
-<meta property="og:description" content="VFS system call Interfaces for specific File Systems, like ramfs, s5fs.  在Linux中，文件名字没有缀；“file”与“directory”无区别 所有涉及“绝对路径”最后一级拆分的，会先将trailing “/” 去掉 lookup()这个函数作用巨大: VFS-AFS-VFS: “虚实连接的小能手” 递归进行name r">
-<meta property="og:updated_time" content="2018-04-01T08:06:19.000Z">
+<meta property="og:description" content="VFS system call Interfaces for specific File Systems, like ramfs, s5fs.  在Linux中，文件名字没有缀；“file”与“directory”无区别 所有涉及“绝对路径”最后一级拆分的，会先将trailing “/” 去掉 lookup()这个函数作用巨大: 在dir_inode中，找名字是“name”的entry，并把该en">
+<meta property="og:updated_time" content="2018-04-01T17:05:32.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="VFS system call">
-<meta name="twitter:description" content="VFS system call Interfaces for specific File Systems, like ramfs, s5fs.  在Linux中，文件名字没有缀；“file”与“directory”无区别 所有涉及“绝对路径”最后一级拆分的，会先将trailing “/” 去掉 lookup()这个函数作用巨大: VFS-AFS-VFS: “虚实连接的小能手” 递归进行name r">
+<meta name="twitter:description" content="VFS system call Interfaces for specific File Systems, like ramfs, s5fs.  在Linux中，文件名字没有缀；“file”与“directory”无区别 所有涉及“绝对路径”最后一级拆分的，会先将trailing “/” 去掉 lookup()这个函数作用巨大: 在dir_inode中，找名字是“name”的entry，并把该en">
 
 
 
@@ -418,7 +418,9 @@
 <li>在Linux中，文件名字没有缀；“file”与“directory”无区别</li>
 <li>所有涉及“绝对路径”最后一级拆分的，会先将trailing “/” 去掉</li>
 <li>lookup()这个函数作用巨大:<ul>
-<li><strong>VFS-AFS-VFS: “虚实连接的小能手”</strong></li>
+<li><strong>在dir_inode中，找名字是“name”的entry，并把该entry变为vnode放到result中</strong></li>
+<li><strong>ramfs_lookup =&gt; entry =&gt; vget(entry) =&gt; ramfs_read_vnode(vnode) =&gt; 完整vnode</strong></li>
+<li><strong>VFS-AFS-VFS: “虚、实连接的小能手”</strong></li>
 <li><strong>递归进行name resolution</strong><ul>
 <li>问 parent inode：你是否包含名字为“name”的entry？</li>
 <li>if Yes，把该entry以 child inode的形式返回</li>
@@ -491,6 +493,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/01/File-System-Name-Resolution/" rel="prev" title="File System: Name Resolution">
+                File System: Name Resolution <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -571,7 +577,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-count">11</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

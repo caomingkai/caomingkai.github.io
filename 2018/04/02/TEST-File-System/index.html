@@ -99,17 +99,17 @@
 
 
 
-  <meta name="description" content="preface dir_namev() 没有处理如下情况： extra slashes： paths_equal(“1/2/3”, “1///2///3///“);    vfstest_main int makedirs(const char *dir) -  int getdent(const char *dir, dirent_t *dirent)  what： 读取 dir 下的第一个非">
+  <meta name="description" content="Preface dir_namev() 没有处理如下情况： extra slashes： paths_equal(“1/2/3”, “1///2///3///“);    vfstest_main int makedirs(const char *dir)  对传入的 绝对路径：dir，逐级建立相应的directory   int getdent(const char *dir, dirent_t">
 <meta name="keywords" content="OK">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TEST: File System">
 <meta property="og:url" content="http://yoursite.com/2018/04/02/TEST-File-System/index.html">
 <meta property="og:site_name" content="CMK">
-<meta property="og:description" content="preface dir_namev() 没有处理如下情况： extra slashes： paths_equal(“1/2/3”, “1///2///3///“);    vfstest_main int makedirs(const char *dir) -  int getdent(const char *dir, dirent_t *dirent)  what： 读取 dir 下的第一个非">
-<meta property="og:updated_time" content="2018-04-04T02:25:24.000Z">
+<meta property="og:description" content="Preface dir_namev() 没有处理如下情况： extra slashes： paths_equal(“1/2/3”, “1///2///3///“);    vfstest_main int makedirs(const char *dir)  对传入的 绝对路径：dir，逐级建立相应的directory   int getdent(const char *dir, dirent_t">
+<meta property="og:updated_time" content="2018-04-04T07:34:05.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TEST: File System">
-<meta name="twitter:description" content="preface dir_namev() 没有处理如下情况： extra slashes： paths_equal(“1/2/3”, “1///2///3///“);    vfstest_main int makedirs(const char *dir) -  int getdent(const char *dir, dirent_t *dirent)  what： 读取 dir 下的第一个非">
+<meta name="twitter:description" content="Preface dir_namev() 没有处理如下情况： extra slashes： paths_equal(“1/2/3”, “1///2///3///“);    vfstest_main int makedirs(const char *dir)  对传入的 绝对路径：dir，逐级建立相应的directory   int getdent(const char *dir, dirent_t">
 
 
 
@@ -340,7 +340,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-02T16:10:48-07:00">2018-04-02</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-02T22:10:48-07:00">2018-04-02</time>
             
 
             
@@ -413,14 +413,18 @@
       
 
       
-        <h2 id="preface"><a href="#preface" class="headerlink" title="preface"></a>preface</h2><ol>
+        <h2 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h2><ol>
 <li>dir_namev() 没有处理如下情况：<ul>
 <li>extra slashes： paths_equal(“1/2/3”, “1///2///3///“);</li>
 </ul>
 </li>
 </ol>
 <h2 id="vfstest-main"><a href="#vfstest-main" class="headerlink" title="vfstest_main"></a>vfstest_main</h2><ol>
-<li>int makedirs(const char *dir)<br> - </li>
+<li><p>int makedirs(const char *dir)</p>
+<ul>
+<li>对传入的 绝对路径：dir，逐级建立相应的directory</li>
+</ul>
+</li>
 <li><p>int getdent(const char *dir, dirent_t *dirent)</p>
 <ul>
 <li>what： 读取 dir 下的第一个非 ./.. 的entry<ul>
@@ -758,7 +762,150 @@
 </ul>
 </li>
 </ol>
-<h2 id="faber-fs-thread-test"><a href="#faber-fs-thread-test" class="headerlink" title="faber_fs_thread_test"></a>faber_fs_thread_test</h2><h2 id="faber-directory-test"><a href="#faber-directory-test" class="headerlink" title="faber_directory_test"></a>faber_directory_test</h2>
+<h2 id="faber-fs-thread-test"><a href="#faber-fs-thread-test" class="headerlink" title="faber_fs_thread_test"></a>faber_fs_thread_test</h2><ol>
+<li><p>检查 argc， 要求在执行faber_fs_thread_test()的时候，必须带参数</p>
+<ul>
+<li>if ( argc == 1 ) { //  打印错误 }</li>
+</ul>
+</li>
+<li><p>如果满足，即 argc&gt;1；再检查输入的参数:n</p>
+<ul>
+<li>if sscanf() != 1, 表明argv中的参数没有输入正确，<ul>
+<li>lim = 1</li>
+</ul>
+</li>
+<li>if sscanf() == 1，表明argv中的参数正确输入了<ul>
+<li>即告知该程序：我想要开辟几个进程／线程</li>
+<li>然后只需要检测一下，lim不超过上下限即可</li>
+</ul>
+</li>
+<li>sscanf()<ul>
+<li>dtm =”Saturday March 25 1989” );</li>
+<li>int n = sscanf( dtm, “%s %s %d  %d”, weekday, month, &amp;day, &amp;year )</li>
+<li>将dtm的data，按照format的形式，赋值给后边的变量</li>
+<li>返回值：一共赋值了几个变量。此处 n = 4<ul>
+<li>snprintf()</li>
+</ul>
+</li>
+<li>BUFLEN = 256</li>
+<li>char tname[BUFLEN]; 定义了一个字符数组，最大程度256</li>
+<li>snprintf(tname, BUFLEN, “thread%03d”, i);</li>
+<li>会将”thread%03d”与i 构成的字符串写道 tname 中</li>
+<li>snprintf 中 BUFLEN 指定了tname接受的最大字符数</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>开辟 lim 个进程／线程 make_dir</p>
+<ul>
+<li>name：” thread k “ </li>
+<li>每个进程／线程 执行：make_dir_thread()</li>
+</ul>
+</li>
+<li>do_waitpid()等待所有的线程结束<ul>
+<li>if rv&lt;0 : 打印 pid + rv + err_info</li>
+<li>else    : 打印 pid + rv</li>
+<li>至此所有的 make_dir_thread 进程／线程 终结了</li>
+</ul>
+</li>
+<li>再开辟 lim 个进程／线程 clean_dir<ul>
+<li>name: “ clean_dir_thread k “</li>
+<li>每个进程／线程 执行 clean_dir_thread()<ul>
+<li>如果上次 all passed，kthread_create最后参数为：NULL</li>
+<li>如果上次有未  passed，kthread_create最后参数为：1</li>
+</ul>
+</li>
+<li>do_waitpid()等待当前线程结束，打印信息</li>
+</ul>
+</li>
+<li>最后删除所有的 lim 个dir<ul>
+<li>根据前几次的 pass 值</li>
+<li>如果全部删除成功， 打印成功</li>
+<li>如果有未删除的，打印失败</li>
+</ul>
+</li>
+</ol>
+<h4 id="make-dir-thread"><a href="#make-dir-thread" class="headerlink" title="make_dir_thread"></a>make_dir_thread</h4><ol>
+<li>该线程创建一个目录： /dir00k</li>
+<li>然后在每个目录中创建 20 个file： <ul>
+<li>/dir00n/test000 ～ /dir00n/test019</li>
+<li>调用 do_open(O_CREAT)的方式创建新文件<ul>
+<li>如果有错误，直接返回 err_val</li>
+</ul>
+</li>
+<li>调用 do_write()向每个文件中写 “look！”</li>
+<li>调用 do_close()关闭该文件</li>
+</ul>
+</li>
+</ol>
+<h4 id="clean-dir-thread"><a href="#clean-dir-thread" class="headerlink" title="clean_dir_thread"></a>clean_dir_thread</h4><ol>
+<li>该线程会删除 arg1 指定的目录(/dir00k)下的所有files</li>
+<li>arg2的值由 make_dir_thread的执行结果确定<ul>
+<li>Arg2 == 0 means directory should exist.</li>
+<li>Arg2 == 1 means if directory does not exist,<br>don’t treat it as error. <ul>
+<li>尝试性的删除 make_dir_thread 创建的 file</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>调用 f=do_open()打开 该 dir<ul>
+<li>如果该dir未打开，并且 Arg2 == 1，该线程退出 with rv=0</li>
+<li>如果 Arg2 == 0，该线程退出 with rv=f</li>
+</ul>
+</li>
+<li>调用 do_getdent() 挨个handle 每个 entry<ul>
+<li>跳过 “.” , “..” entry</li>
+<li>拼接其要删除的file 的绝对路径</li>
+<li>调用 do_unlink(file_path) 删除该file 的连接<ul>
+<li>如果删除成功， 置got_one = 1; 跳出</li>
+<li>关闭该 fd 的open_conn</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="faber-directory-test"><a href="#faber-directory-test" class="headerlink" title="faber_directory_test"></a>faber_directory_test</h2><ol start="0">
+<li>与faber_fs_thread_test区别在于：<ul>
+<li>第一个<br>所有mk_dir_threads成功之后，回收threads；<br>再创建rm_dir_threads，成功后，回收threads</li>
+<li>第二个<br>mk_dir_thread 与 rm_dir_thread 混合执行<br>然后同时等待这两类thread的终结</li>
+</ul>
+</li>
+<li>该函数创造“成对的进程／线程”<ul>
+<li>proc_1 name: “ thread k “</li>
+<li>proc_2 name: “ rmthread k “</li>
+</ul>
+</li>
+<li>每次 iteration<ul>
+<li>创建一个 thread， 并运行之</li>
+<li>创建一个 rmthread，并运行之</li>
+</ul>
+</li>
+<li><p>调用 do_waitpid() 等待所有子进程结束</p>
+<ul>
+<li>如果某个进程返回rv &lt; 0 , 打印：pid  + rv + err_info</li>
+<li>如果某个进程返回rv ==0 , 打印：pid  + rv </li>
+</ul>
+</li>
+<li><p>循环删除所有 directory </p>
+<ul>
+<li>do_rmdir(tname)</li>
+</ul>
+</li>
+</ol>
+<h4 id="rm-dir-thread"><a href="#rm-dir-thread" class="headerlink" title="rm_dir_thread"></a>rm_dir_thread</h4><ol>
+<li>该线程创建一个目录： /dir00k</li>
+<li>然后删除目录中名字为：“/dir00n/test000” 的file<ul>
+<li>/dir00n/test000 ～ /dir00n/test019</li>
+<li>调用 do_open(O_CREAT)的方式创建新文件<ul>
+<li>如果有错误，直接返回 err_val</li>
+</ul>
+</li>
+<li>调用 do_write()向每个文件中写 “look！”</li>
+<li>调用 do_close()关闭该文件</li>
+</ul>
+</li>
+</ol>
+
       
     </div>
 
@@ -990,7 +1137,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#preface"><span class="nav-number">1.</span> <span class="nav-text">preface</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vfstest-main"><span class="nav-number">2.</span> <span class="nav-text">vfstest_main</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#faber-fs-thread-test"><span class="nav-number">3.</span> <span class="nav-text">faber_fs_thread_test</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#faber-directory-test"><span class="nav-number">4.</span> <span class="nav-text">faber_directory_test</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vfstest-main"><span class="nav-number">2.</span> <span class="nav-text">vfstest_main</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#faber-fs-thread-test"><span class="nav-number">3.</span> <span class="nav-text">faber_fs_thread_test</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#make-dir-thread"><span class="nav-number">3.0.1.</span> <span class="nav-text">make_dir_thread</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#clean-dir-thread"><span class="nav-number">3.0.2.</span> <span class="nav-text">clean_dir_thread</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#faber-directory-test"><span class="nav-number">4.</span> <span class="nav-text">faber_directory_test</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#rm-dir-thread"><span class="nav-number">4.0.1.</span> <span class="nav-text">rm_dir_thread</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

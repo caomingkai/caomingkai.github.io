@@ -99,17 +99,17 @@
 
 
 
-  <meta name="description" content="Jack of all trades, master of one">
+  <meta name="description" content="BIOS(code stored on ROM)At BIOS session, several tasks are executed:   Power-on self test (POST), making suring: memory, disk,screen,ect. are in good condition so it knows where to load the boot progr">
 <meta name="keywords" content="OS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="How does OS load File System">
 <meta property="og:url" content="http://yoursite.com/2018/04/01/How-does-OS-load-File-System/index.html">
 <meta property="og:site_name" content="CMK">
-<meta property="og:description" content="Jack of all trades, master of one">
-<meta property="og:updated_time" content="2018-04-02T01:15:44.000Z">
+<meta property="og:description" content="BIOS(code stored on ROM)At BIOS session, several tasks are executed:   Power-on self test (POST), making suring: memory, disk,screen,ect. are in good condition so it knows where to load the boot progr">
+<meta property="og:updated_time" content="2018-04-02T23:29:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="How does OS load File System">
-<meta name="twitter:description" content="Jack of all trades, master of one">
+<meta name="twitter:description" content="BIOS(code stored on ROM)At BIOS session, several tasks are executed:   Power-on self test (POST), making suring: memory, disk,screen,ect. are in good condition so it knows where to load the boot progr">
 
 
 
@@ -413,7 +413,41 @@
       
 
       
-        
+        <h2 id="BIOS-code-stored-on-ROM"><a href="#BIOS-code-stored-on-ROM" class="headerlink" title="BIOS(code stored on ROM)"></a>BIOS(code stored on ROM)</h2><p>At BIOS session, several tasks are executed: </p>
+<ol>
+<li>Power-on self test (POST), making suring: <strong>memory, disk,screen,ect.</strong> are in good condition<ul>
+<li>so it knows where to load the boot program( on <strong>DISK</strong>)</li>
+<li>also prepare <strong>memory(run process)</strong> and  <strong>disk(boot program)</strong></li>
+</ul>
+</li>
+<li>Load and transfer control to boot program</li>
+<li>Provide drivers for all devices,</li>
+</ol>
+<h2 id="Boot-code-stored-on-DISK"><a href="#Boot-code-stored-on-DISK" class="headerlink" title="Boot(code stored on DISK)"></a>Boot(code stored on DISK)</h2><ol>
+<li><p>Set up stack, clear BSS, uncompress kernel, then transfer control to Kernel</p>
+</li>
+<li><p><strong>Idle process(pid=0)</strong> is created; set up initial page tables, turn on address translation</p>
+</li>
+<li><p>Initialize rest of kernel</p>
+<ul>
+<li>create vfs_root_vnode</li>
+<li>set the “cwd” of idle/init process</li>
+<li>make the null, zero, and tty devices using “mknod”<ul>
+<li>“/dev” </li>
+<li>“/dev/null”   “/dev/zero”, </li>
+<li>“/dev/tty0”   “/dev/tty1”</li>
+</ul>
+</li>
+<li>create the <strong>“init” process(pid=1)</strong>,<br>which is the ancestor of all other user processes </li>
+<li>invoke the scheduler</li>
+</ul>
+</li>
+</ol>
+<h2 id="Kernel-code-stored-on-disk"><a href="#Kernel-code-stored-on-disk" class="headerlink" title="Kernel(code stored on disk)"></a>Kernel(code stored on disk)</h2><ol>
+<li>Now the File System is ready to use</li>
+<li>Also need to execute other configuration</li>
+</ol>
+
       
     </div>
 
@@ -455,6 +489,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/02/TEST-File-System/" rel="prev" title="TEST: File System">
+                TEST: File System <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -506,8 +544,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -526,7 +573,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -584,7 +631,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">13</span>
+                      
+                    
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -624,6 +673,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#BIOS-code-stored-on-ROM"><span class="nav-number">1.</span> <span class="nav-text">BIOS(code stored on ROM)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Boot-code-stored-on-DISK"><span class="nav-number">2.</span> <span class="nav-text">Boot(code stored on DISK)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kernel-code-stored-on-disk"><span class="nav-number">3.</span> <span class="nav-text">Kernel(code stored on disk)</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

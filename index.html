@@ -310,6 +310,184 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/07/239-Sliding-Window-Maximum/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/07/239-Sliding-Window-Maximum/" itemprop="url">239.Sliding Window Maximum</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-07T16:30:20-07:00">2018-04-07</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Leetcode/" itemprop="url" rel="index"><span itemprop="name">Leetcode</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/07/239-Sliding-Window-Maximum/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/07/239-Sliding-Window-Maximum/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="方法一：Priority-Queue"><a href="#方法一：Priority-Queue" class="headerlink" title="方法一：Priority Queue"></a>方法一：Priority Queue</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">   </span><br><span class="line">    <span class="number">1</span>. 前后两个窗口差别只有两个数，尽量用到上一个窗口的信息</span><br><span class="line">    <span class="number">2</span>. 上一个窗口的头部元素从窗口元素集剔出，加入下一个窗口的尾部元素；形成新的窗口元素集</span><br><span class="line">    <span class="number">3</span>. 想办法从“窗口元素集”中找最大值==&gt; priority queue 最合适</span><br><span class="line">    <span class="number">4</span>. O(nlogn)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] maxSlidingWindow(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> k) &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>( nums == <span class="keyword">null</span> || nums.length == <span class="number">0</span> )</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">0</span>];</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> len = nums.length;</span><br><span class="line">        <span class="keyword">int</span>[] ret = <span class="keyword">new</span> <span class="keyword">int</span>[len-k+<span class="number">1</span>];</span><br><span class="line">        PriorityQueue&lt;Integer&gt; pq = <span class="keyword">new</span> PriorityQueue&lt;&gt;(k, Collections.reverseOrder());</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++ )&#123;</span><br><span class="line">            <span class="keyword">if</span>( i &gt;= k )&#123;</span><br><span class="line">                ret[i-k] = pq.peek();</span><br><span class="line">                pq.remove(nums[i-k]);</span><br><span class="line">            &#125;</span><br><span class="line">            pq.add(nums[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        ret[len-k] = pq.peek();</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="方法二：单调队列-Monotonic-Queue-Deque"><a href="#方法二：单调队列-Monotonic-Queue-Deque" class="headerlink" title="方法二：单调队列 / Monotonic Queue / Deque"></a>方法二：单调队列 / Monotonic Queue / Deque</h2><ol>
+<li>上一个方法在从窗口元素集找最大 O(logn),继续优化只能为 O(1)</li>
+<li>想办法维护一个与窗口区对应的“有序数据结构”</li>
+<li>进入下一个窗口前，上一个窗口对应的 potential_max queue 是有序的</li>
+<li>进入下一个窗口后，<ul>
+<li>如果第一个 potential_max 仍然在新窗口范围内；<br>该peotential_max不需要从 queue中删除，仍然有可能是后边窗口的max</li>
+<li>如果第一个 potential_max 不在新窗口范围内；<br>该value就不是potential max了，而是 definitely_not_possible_max for later windows</li>
+</ul>
+</li>
+<li><p>窗口末尾新加入的元素：</p>
+<ul>
+<li>如果值比 potential_max_queue 中的最后一个 potential_max_value 小，<br>那么该值与之前的值都有可能是后边窗口的max</li>
+<li>如果值比后边的“某一段”potential_max values 都大，<br>表明“那一段”potential values 因为更大新元素的加入，由 potential 变为 never_possible_max</li>
+<li>直接删除“那一段” potential values，并将该值插入到 queue之后</li>
+</ul>
+</li>
+<li><p>【小结】：potential_max_queue 的维护有4点：</p>
+<ul>
+<li>维护这么一个“单调队列”目的：某个window的max，就是其对应 petential_max_queue 中的第一个元素</li>
+<li>头部 potential_max_value 在当前window下是否valid，是否需要删除；</li>
+<li>头部 potential_max_value 是否valid，实际是根据其 index来判断的，因此在queue中维护的实际是 index</li>
+<li>新加入的元素是否应该加入potential max queue，加入到哪里</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] maxSlidingWindow(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> k) &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>( nums == <span class="keyword">null</span> || nums.length == <span class="number">0</span> )</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">0</span>];</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> len = nums.length;</span><br><span class="line">        <span class="keyword">int</span>[] ret = <span class="keyword">new</span> <span class="keyword">int</span>[len-k+<span class="number">1</span>];</span><br><span class="line">        Deque&lt;Integer&gt; dq = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++ )&#123;</span><br><span class="line">            <span class="comment">// check head items of the potential_max_queue</span></span><br><span class="line">            <span class="keyword">if</span>( !dq.isEmpty() &amp;&amp; dq.peekFirst() &lt; i-k+<span class="number">1</span> )</span><br><span class="line">                dq.removeFirst();</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// handle new item</span></span><br><span class="line">            <span class="keyword">while</span>( !dq.isEmpty() &amp;&amp; nums[dq.peekLast()] &lt; nums[i] )&#123;</span><br><span class="line">                dq.removeLast();</span><br><span class="line">            &#125;</span><br><span class="line">            dq.addLast(i);</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// update ret values</span></span><br><span class="line">            <span class="keyword">if</span>(i-k+<span class="number">1</span> &gt;= <span class="number">0</span>)</span><br><span class="line">                ret[i-k+<span class="number">1</span>] = nums[dq.peekFirst()];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/02/TEST-File-System/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2491,230 +2669,6 @@ D: do_stat()
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/27/Tiny-URL/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/27/Tiny-URL/" itemprop="url">Tiny URL</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-27T11:14:49-07:00">2018-03-27</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/portfolios/" itemprop="url" rel="index"><span itemprop="name">portfolios</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/03/27/Tiny-URL/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/03/27/Tiny-URL/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="I-Introduction"><a href="#I-Introduction" class="headerlink" title="I. Introduction"></a>I. Introduction</h2><p>A MEAN stack Single Page Application, providing:</p>
-<ol>
-<li>URL shortening service</li>
-<li>Traffic statistics collecting service</li>
-</ol>
-<p>Tech stacks: <strong>AngularJS, Node.js, Express, MongoDB, Redis, Nginx, Docker</strong></p>
-<p>Github: <a href="https://github.com/caomingkai/URL-shortening-service" target="_blank" rel="noopener">https://github.com/caomingkai/URL-shortening-service</a></p>
-<p><a href="https://tinyurl-199300.appspot.com/#/" target="_blank" rel="noopener"><br>    <img src="/2018/03/27/Tiny-URL/tinyURL.png" title="This is an image"><br></a></p>
-<h2 id="II-Work-flow"><a href="#II-Work-flow" class="headerlink" title="II. Work flow"></a>II. Work flow</h2><h4 id="1-Users-come-to-the-app-webpage"><a href="#1-Users-come-to-the-app-webpage" class="headerlink" title="1. Users come to the app webpage"></a>1. Users come to the app webpage</h4><ul>
-<li>Browser send GET request with original URL to server</li>
-<li>Server sends index.html to clients</li>
-<li>Browser get the index.html with script in the head tag.<br><code>&lt;script src=&#39;angularJS library &#39;&gt; &lt;script src=&#39;app.js&#39;&gt; &lt;script src=&#39;/public/js/controllers/homeController.js&#39;&gt;</code></li>
-<li>Browser again sends request for angularJS library/ js controller files to different servers</li>
-<li>when browser encounter ‘ng-view’, it automatically turn to ‘ng-router’, ask for its view and controller; Again, sends corresponding GET request to fetch sub-view files</li>
-<li>while browser parse the controller js file, it might do AJAX request to fetch information from server.</li>
-</ul>
-<h4 id="2-Users-use-the-shortening-service"><a href="#2-Users-use-the-shortening-service" class="headerlink" title="2. Users use the shortening service"></a>2. Users use the shortening service</h4><ul>
-<li>Input longURL in the input box, and click ‘submit’</li>
-<li>‘submit’ fires the onclick funcion to do 2 things:<ul>
-<li>send the longURL to specified URL, ie. POST  to localhost/api/v1/urls<br><code>NOTICE: This url is specifically used for rendering short/long URL</code></li>
-<li>send the longURL to specified URL, ie. POST  to localhost/api/v1/urls<br><code>NOTICE: this step is executed after app server responds the POST request in the first step with the calculated shortURL</code></li>
-</ul>
-</li>
-<li>App server first receive the POST request with longURL, do 2 things: call the urlService to calculate the shortURL, store long/short URL pair in MongoDB;send back the shortURL to the app webpage.<br><code>NOTICE: the shortURL should consist different prefix compared with the current app URL. Because it is create for outside users. So the shortURL should not prefix with /api/v1/.., but with just &#39;/:shortUrl&#39;</code></li>
-<li>After the app webpage getting shortURL, it renders new subview using url.html; Meanwhile, it needs to know the its original longURL for display.</li>
-<li>Again, in the url.html subview, it sends GET request to the app server to get the longURL<br>Notice: This step could be simplified by just passing the longURL from the first subview to the second subview creating a service or using the $rootScop</li>
-<li>Now, in the new subview, the longURL and shortURL pair can be displayed</li>
-</ul>
-<h4 id="3-Visitors-browse-the-shortURL"><a href="#3-Visitors-browse-the-shortURL" class="headerlink" title="3. Visitors browse the shortURL"></a>3. Visitors browse the shortURL</h4><ul>
-<li>the shortURL is just clicked from various browsers/ machines/ from different IP/ countries, at different time</li>
-<li>when shortURL is clicked, it sends GET request ‘localhost/:shortUrl’ to the app server.</li>
-<li>the app sever call the urlService to get the longURL from the shortURL, and redirect users to the original long URL</li>
-</ul>
-<h4 id="4-Traffic-statistics-Info"><a href="#4-Traffic-statistics-Info" class="headerlink" title="4. Traffic statistics Info"></a>4. Traffic statistics Info</h4><ul>
-<li>We want to record the total number of clicks / their browsers/ machine brands/ their IP/ countries/ timestamp. And display them in the app webpage.</li>
-<li>So first we need add more elements in the url.html subview in the frontend; And update those information in the backend.<ul>
-<li>updating the info each time the shortURL is clicked. And then store them in the MongoDB</li>
-<li>when app webpage is clicked, make AJAX call to the app server, let it get the info from MongoDB, and then send back to frontend</li>
-</ul>
-</li>
-<li>Since all these clicks directly send GET request to ‘localhost/:shortURL’, which is handled by redirect.js. Thus, we here need a statistic service to update these info.</li>
-<li>Here we need the one of Express modules: Express-useragent to extract the information from the request</li>
-<li>In the statistic service, we use the express-useragent to get the info, and then store them in the MongoDB database with a new schema.</li>
-</ul>
-<h2 id="III-Nginx"><a href="#III-Nginx" class="headerlink" title="III. Nginx"></a>III. Nginx</h2><h4 id="Reverse-Proxy"><a href="#Reverse-Proxy" class="headerlink" title="Reverse Proxy"></a>Reverse Proxy</h4><ul>
-<li>(正向)代理forward proxy: 在client与internet之间，替client访问internet的计算机<ul>
-<li>路由器就是一个forward proxy，外网看不到路由器之后的计算机，但是计算机可以看到外边</li>
-<li>翻墙服务器</li>
-</ul>
-</li>
-<li>(反向)代理:在server与internet之间，替server接受internet访问的计算机</li>
-</ul>
-<h4 id="Features"><a href="#Features" class="headerlink" title="Features"></a>Features</h4><ul>
-<li>Hide Original server<br>“安全”</li>
-<li>application firewall</li>
-<li>SSL termination: “加密不需要server进行，反向代理可以代为计算以减轻server压力”</li>
-<li>Load balance<ol>
-<li>round robin<br>“optionally weighted”</li>
-<li>least connected<br>“optionally weighted”</li>
-<li>IP hash<br>“1~200: server a; 201~400: server b”</li>
-<li>Generic Hash<br>“based on devices/ client locations”</li>
-<li>Least time (nginx plux)<br>“optionally weighted”</li>
-</ol>
-</li>
-<li>Cache<ul>
-<li>GET 都可以cache</li>
-<li>即便是动态列表也进行cache，因为实际生活的改变不会比nginx的处理快 “1s <---> 100000 request/s”</---></li>
-<li>POST不能cache</li>
-</ul>
-</li>
-<li>Compression(gzip)<br>“减小网络传输量: 用reverse proxy/ browser 的CPU为代价”</li>
-<li>不宕机进行配置改变／升级</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2766,7 +2720,7 @@ D: do_stat()
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-count">15</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2785,7 +2739,9 @@ D: do_stat()
                     
                       
                     
-                    <span class="site-state-item-count">3</span>
+                      
+                    
+                    <span class="site-state-item-count">4</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -2826,7 +2782,9 @@ D: do_stat()
                     
                       
                     
-                    <span class="site-state-item-count">14</span>
+                      
+                    
+                    <span class="site-state-item-count">15</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

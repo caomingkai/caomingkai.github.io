@@ -99,24 +99,24 @@
 
 
 
-  <meta name="description" content="I. Main idea:similar to Python string’s format method like “ A is {title} of B”.format(title=”father”); Whereas, template engine is also a formatter, but much more powerful.  An important phase in any">
-<meta name="keywords" content="Python">
+  <meta name="description" content="1. 题意： 给n个任务 1～k； 以及 task dependency array A、B；其中 [Ai,Bi] - bi先完成，才能做ai； 同时规定：每个task顶多只能依赖一个task 问：最多可以完成的任务数  2. 分析虽然任务的dependency可能成环(1-2-3-4-1),但有第三条可知：每个任务最多出现在1个“环”里，表明该“环”上的任务有一个不可能完成，但可以完成(环任务数">
+<meta name="keywords" content="Union Find">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Web Template Engine">
-<meta property="og:url" content="http://yoursite.com/2018/03/27/Web-Template-Engine/index.html">
+<meta property="og:title" content="Union Find to achieve max tasks">
+<meta property="og:url" content="http://yoursite.com/2018/04/08/Union-Find-to-achieve-max-tasks/index.html">
 <meta property="og:site_name" content="CMK">
-<meta property="og:description" content="I. Main idea:similar to Python string’s format method like “ A is {title} of B”.format(title=”father”); Whereas, template engine is also a formatter, but much more powerful.  An important phase in any">
-<meta property="og:updated_time" content="2018-03-28T00:06:06.000Z">
+<meta property="og:description" content="1. 题意： 给n个任务 1～k； 以及 task dependency array A、B；其中 [Ai,Bi] - bi先完成，才能做ai； 同时规定：每个task顶多只能依赖一个task 问：最多可以完成的任务数  2. 分析虽然任务的dependency可能成环(1-2-3-4-1),但有第三条可知：每个任务最多出现在1个“环”里，表明该“环”上的任务有一个不可能完成，但可以完成(环任务数">
+<meta property="og:updated_time" content="2018-04-08T19:53:48.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Web Template Engine">
-<meta name="twitter:description" content="I. Main idea:similar to Python string’s format method like “ A is {title} of B”.format(title=”father”); Whereas, template engine is also a formatter, but much more powerful.  An important phase in any">
+<meta name="twitter:title" content="Union Find to achieve max tasks">
+<meta name="twitter:description" content="1. 题意： 给n个任务 1～k； 以及 task dependency array A、B；其中 [Ai,Bi] - bi先完成，才能做ai； 同时规定：每个task顶多只能依赖一个task 问：最多可以完成的任务数  2. 分析虽然任务的dependency可能成环(1-2-3-4-1),但有第三条可知：每个任务最多出现在1个“环”里，表明该“环”上的任务有一个不可能完成，但可以完成(环任务数">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/03/27/Web-Template-Engine/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/08/Union-Find-to-achieve-max-tasks/"/>
 
 
 
@@ -126,7 +126,7 @@
   };
 </script>
 
-  <title>Web Template Engine | CMK</title>
+  <title>Union Find to achieve max tasks | CMK</title>
   
 
 
@@ -311,7 +311,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/27/Web-Template-Engine/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/Union-Find-to-achieve-max-tasks/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Mingkai Cao">
@@ -328,7 +328,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Web Template Engine</h1>
+          <h1 class="post-title" itemprop="name headline">Union Find to achieve max tasks</h1>
         
 
         <div class="post-meta">
@@ -340,7 +340,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-27T10:02:04-07:00">2018-03-27</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-08T12:47:03-07:00">2018-04-08</time>
             
 
             
@@ -361,7 +361,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/portfolios/" itemprop="url" rel="index"><span itemprop="name">portfolios</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a></span>
 
                 
                 
@@ -376,8 +376,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/03/27/Web-Template-Engine/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/03/27/Web-Template-Engine/" itemprop="commentCount"></span>
+                <a href="/2018/04/08/Union-Find-to-achieve-max-tasks/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/08/Union-Find-to-achieve-max-tasks/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -413,72 +413,24 @@
       
 
       
-        <h3 id="I-Main-idea"><a href="#I-Main-idea" class="headerlink" title="I. Main idea:"></a>I. Main idea:</h3><p>similar to Python string’s <strong>format method</strong> like “ A is {title} of B”.format(title=”father”); Whereas, <strong>template engine</strong> is also a formatter, but much more powerful.</p>
-<blockquote>
-<p>An important phase in any web application is generating HTML to be served to the browser.</p>
-</blockquote>
-<blockquote>
-<p>Very few HTML pages are completely static: they involve at least a small amount of <strong>dynamic data</strong>, such as the user’s name. Usually, they contain a great deal of dynamic data: product listings, friends’ news updates, and so on.</p>
-</blockquote>
-<blockquote>
-<p>The mostly-static style used in templates is the opposite of how most programming languages work.</p>
-</blockquote>
-<blockquote>
-<p>A template language flips this around: <strong>the template file is mostly static literal text, with special notation to indicate the executable dynamic parts.</strong></p>
-</blockquote>
-<h3 id="II-tech-stacks"><a href="#II-tech-stacks" class="headerlink" title="II. tech stacks"></a>II. tech stacks</h3><p> <strong>Python – Template language Django</strong></p>
-<p><strong>Github</strong>: <a href="https://github.com/caomingkai/500-Lines-Or-Less" target="_blank" rel="noopener">https://github.com/caomingkai/500-Lines-Or-Less</a></p>
-<h3 id="III-template-syntax"><a href="#III-template-syntax" class="headerlink" title="III. template syntax"></a>III. template syntax</h3><ol>
-<li><p>dot : </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;The price is: &#123;&#123;product.price&#125;&#125;, with a &#123;&#123;product.discount&#125;&#125;% discount.&lt;/p&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>filters with pipe character: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;Short name: &#123;&#123;story.subject|slugify|lower&#125;&#125;&lt;/p&gt;</span><br></pre></td></tr></table></figure></p>
-</li>
-<li><p>logic control: </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;Products:&lt;/p&gt;</span><br><span class="line">&lt;ul&gt;</span><br><span class="line">&#123;% for product in product_list %&#125;</span><br><span class="line">    &lt;li&gt;&#123;&#123; product.name &#125;&#125;: &#123;&#123; product.price|format_price &#125;&#125;&lt;/li&gt;</span><br><span class="line">&#123;% endfor %&#125;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>comment:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;# This is the best template ever! #&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="III-Two-approach-to-implement-the-Template-Engine"><a href="#III-Two-approach-to-implement-the-Template-Engine" class="headerlink" title="III. Two approach to implement the Template Engine"></a>III. Two approach to implement the Template Engine</h3><ol>
-<li><p>Two main phases: <strong>parsing the template</strong>, and then <strong>rendering the template</strong></p>
-</li>
-<li><p>For ‘parsing phase’:</p>
-</li>
-</ol>
+        <h3 id="1-题意："><a href="#1-题意：" class="headerlink" title="1. 题意："></a>1. 题意：</h3><ul>
+<li>给n个任务 1～k；</li>
+<li>以及 task dependency array A、B；其中 [Ai,Bi] - bi先完成，才能做ai；</li>
+<li>同时规定：每个task顶多只能依赖一个task</li>
+<li>问：最多可以完成的任务数</li>
+</ul>
+<h3 id="2-分析"><a href="#2-分析" class="headerlink" title="2. 分析"></a>2. 分析</h3><p>虽然任务的dependency可能成环(1-2-3-4-1),但有第三条可知：<br>每个任务最多出现在1个“环”里，表明该“环”上的任务有一个不可能完成，但可以完成(环任务数-1)的任务<br>对于没有出现在环中的任务，这些任务都能够执行完</p>
+<p>因此，相当于根据 A、B，找 number of dependency cycle，<br>那么最多可以完成的任务数就是：<code>总任务数 - 环数</code></p>
+<h3 id="3-Union-Find-Class"><a href="#3-Union-Find-Class" class="headerlink" title="3. Union Find Class"></a>3. Union Find Class</h3><p><strong>Union Find Summary</strong>: <a href="https://workflowy.com/s/HdnT.nwWuWS1F7W" target="_blank" rel="noopener">https://workflowy.com/s/HdnT.nwWuWS1F7W</a></p>
+<p><strong>如何找有多少环？:<code>Union-Find.isConnected()</code></strong></p>
 <ul>
-<li>interpretation (Django )</li>
-<li>compilation (Jinja2 and Mako | also, we will use)</li>
+<li>对每个 task dependency 进行 union</li>
+<li>union 之前调用 isConnected() 检查是否已连通(表明该[ai,bi]会导致“环”)</li>
+<li>累加 每次isConnected() 结果为 True 的情况</li>
+<li>isConnected() 有几次为 True，就存在几个“环”</li>
 </ul>
-<h3 id="IV-Compiling-to-Python"><a href="#IV-Compiling-to-Python" class="headerlink" title="IV. Compiling to Python"></a>IV. Compiling to Python</h3><ol>
-<li>The template engine will compile templates to Python method called <strong>“render_function(context, do_dots)”</strong></li>
-<li>context dictionary : carry kinds of dynamic variables to be embedded in template</li>
-<li>do_dots method: passed-in method name, handling dot access</li>
-</ol>
-<h3 id="V-Code-bulider"><a href="#V-Code-bulider" class="headerlink" title="V. Code_bulider"></a>V. Code_bulider</h3><ol>
-<li>Being called by template object, to help to read passed-in lines, using <strong>‘add-line()’</strong></li>
-<li>Integrate lines into a well-formed python script</li>
-<li>return to templage object the final executable script by calling “ exec(python_source, global_namespace)”</li>
-</ol>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Code-builder</span><br><span class="line">    |__   add_line()    : read in ready-to-run python lines</span><br><span class="line">    |__   add_section() : set aside space for later variable assignment</span><br><span class="line">    |__   indent()      : indent to form well-formed python</span><br><span class="line">    |__   dedent()      : dedent to form well-formed python</span><br><span class="line">    |__   get_globles() : 1- call "exec(python_source, global_namespace)"</span><br><span class="line">                          2- return executable script by calling get_globles()['render_function']</span><br></pre></td></tr></table></figure>
-<h3 id="VI-Template"><a href="#VI-Template" class="headerlink" title="VI. Template"></a>VI. Template</h3><ol>
-<li>used to handle template, and parse it into executable lines</li>
-<li>call functions of Code-builder object, to produce an executable script to output ‘HTML string’</li>
-<li>with helper function: do_dots()</li>
-</ol>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Template</span><br><span class="line">    |__   __init__(context):   1- read context( ie, values for var in template )</span><br><span class="line">    |                          2- break down template text by Regex into 4 cases</span><br><span class="line">    |                          3- call functions of Code_bulider to produce HTML</span><br><span class="line">    |</span><br><span class="line">    |__   4 cases:             1- Literal content(pure string)</span><br><span class="line">    |                          2- &#123;&#123; ..... &#125;&#125; variables, converted to string</span><br><span class="line">    |                             For case 1 and 2, just concatenate them;</span><br><span class="line">    |                          3- &#123;# ..... #&#125;</span><br><span class="line">    |                             Just ignore</span><br><span class="line">    |                          4- &#123;% ..... %&#125; control statements</span><br><span class="line">    |                             4.1- ops_stack() for nested control statements</span><br><span class="line">    |                             4.2- filter_handler() for 'var|upper'</span><br><span class="line">    |                             4.3- indent()/ dedent()</span><br><span class="line">    |</span><br><span class="line">    |__   self._render_function() = code.get_globles['render_function'];</span><br><span class="line">    |</span><br><span class="line">    |__   render():             calls self._render_function() with context param</span><br></pre></td></tr></table></figure>
-<h3 id="VII-Template-Test"><a href="#VII-Template-Test" class="headerlink" title="VII. Template Test"></a>VII. Template Test</h3><ul>
-<li>great introduction of unittest: <a href="https://www.jianshu.com/p/38948d0d73f5" target="_blank" rel="noopener">https://www.jianshu.com/p/38948d0d73f5</a></li>
-<li>unittest是Python自带的单元测试框架，我们可以用其来作为我们自动化测试框架的用例组织执行框架</li>
-</ul>
-<ol>
-<li>unittest的流程：写好TestCase，然后由TestLoader加载TestCase到TestSuite，然后由TextTestRunner来运行TestSuite，运行的结果保存在TextTestResult中，我们通过命令行或者unittest.main()执行时，main会调用TextTestRunner中的run来执行，或者我们可以直接通过TextTestRunner来执行用例。</li>
-<li>一个class继承unittest.TestCase即是一个TestCase，其中以 test 开头的方法在load时被加载为一个真正的TestCase。</li>
-<li>verbosity参数可以控制执行结果的输出，0 是简单报告、1 是一般报告、2 是详细报告。<br>可以通过addTest和addTests向suite中添加case或suite，可以用TestLoader的loadTestsFrom__()方法</li>
-<li>用 setUp()、tearDown()、setUpClass()以及 tearDownClass()可以在用例执行前布置环境，以及在用例执行后清理环境</li>
-<li>我们可以通过skip，skipIf，skipUnless装饰器跳过某个case，或者用TestCase.skipTest方法。<br>参数中加stream，可以将报告输出到文件：可以用TextTestRunner输出txt报告，以及可以用HTMLTestRunner输出html报告。</li>
-</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// weighted quick UF</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UnionFind</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> [] p;</span><br><span class="line">	<span class="keyword">int</span> [] w;</span><br><span class="line">	<span class="keyword">int</span> numOfCycles ;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">UnionFind</span><span class="params">(<span class="keyword">int</span> N)</span></span>&#123;</span><br><span class="line">		p = <span class="keyword">new</span> <span class="keyword">int</span>[N];</span><br><span class="line">		w = <span class="keyword">new</span> <span class="keyword">int</span>[N];</span><br><span class="line">		numOfCycles = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++ )</span><br><span class="line">			p[i] = i;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">union</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b )</span></span>&#123;</span><br><span class="line">		<span class="keyword">int</span> pa = find(a);</span><br><span class="line">		<span class="keyword">int</span> pb = find(b);</span><br><span class="line">		<span class="keyword">if</span>( pa == pb )&#123;</span><br><span class="line">			numOfCycles++;</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			<span class="keyword">if</span>( w[pa] &lt; w[pb] )&#123;</span><br><span class="line">				p[pb] = pa;</span><br><span class="line">				w[pa] += w[pb];</span><br><span class="line">			&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">				p[pa] = pb;</span><br><span class="line">				w[pb] += w[pa];</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span> a)</span></span>&#123;</span><br><span class="line">		<span class="keyword">while</span>( p[a] != a )&#123;</span><br><span class="line">			p[a] = p[p[a]];</span><br><span class="line">			a = p[a];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> a;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="4-Solution"><a href="#4-Solution" class="headerlink" title="4. Solution"></a>4. Solution</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TaskMaster</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">maxTasks</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span>[] a, <span class="keyword">int</span>[] b )</span></span>&#123;</span><br><span class="line">		<span class="keyword">int</span> ret = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">int</span> size = a.length;</span><br><span class="line">		UnionFind UF = <span class="keyword">new</span> UnionFind(n);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++ )&#123;</span><br><span class="line">			UF.union(a[i]-<span class="number">1</span>,b[i]-<span class="number">1</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">int</span> numOfCycles = UF.numOfCycles;</span><br><span class="line">		ret = n - numOfCycles;</span><br><span class="line">		<span class="keyword">return</span> ret;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">( String[] args )</span></span>&#123;</span><br><span class="line">		<span class="comment">// int n = 8;</span></span><br><span class="line">		<span class="comment">// int[] a = &#123;2,3,4,1,5,8,7&#125;;</span></span><br><span class="line">		<span class="comment">// int[] b = &#123;1,2,3,4,6,7,8&#125;;</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">// int n = 4;</span></span><br><span class="line">		<span class="comment">// int[] a = &#123;2,3,4,1&#125;;</span></span><br><span class="line">		<span class="comment">// int[] b = &#123;1,2,3,4&#125;;</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">// int n = 2;</span></span><br><span class="line">		<span class="comment">// int[] a = &#123;&#125;;</span></span><br><span class="line">		<span class="comment">// int[] b = &#123;&#125;;</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">int</span> n = <span class="number">2</span>;</span><br><span class="line">		<span class="keyword">int</span>[] a = &#123;<span class="number">2</span>&#125;;</span><br><span class="line">		<span class="keyword">int</span>[] b = &#123;<span class="number">1</span>&#125;;</span><br><span class="line"></span><br><span class="line">		System.out.println(maxTasks(n, a, b ));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -499,7 +451,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Python/" rel="tag"># Python</a>
+            <a href="/tags/Union-Find/" rel="tag"># Union Find</a>
           
         </div>
       
@@ -512,8 +464,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/27/Weather-Chat/" rel="next" title="Weather Chat">
-                <i class="fa fa-chevron-left"></i> Weather Chat
+              <a href="/2018/04/07/239-Sliding-Window-Maximum/" rel="next" title="239.Sliding Window Maximum">
+                <i class="fa fa-chevron-left"></i> 239.Sliding Window Maximum
               </a>
             
           </div>
@@ -521,10 +473,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/03/27/eCommerce-Website-Design/" rel="prev" title="eCommerce Website Design">
-                eCommerce Website Design <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -723,7 +671,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#I-Main-idea"><span class="nav-number">1.</span> <span class="nav-text">I. Main idea:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#II-tech-stacks"><span class="nav-number">2.</span> <span class="nav-text">II. tech stacks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#III-template-syntax"><span class="nav-number">3.</span> <span class="nav-text">III. template syntax</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#III-Two-approach-to-implement-the-Template-Engine"><span class="nav-number">4.</span> <span class="nav-text">III. Two approach to implement the Template Engine</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IV-Compiling-to-Python"><span class="nav-number">5.</span> <span class="nav-text">IV. Compiling to Python</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#V-Code-bulider"><span class="nav-number">6.</span> <span class="nav-text">V. Code_bulider</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VI-Template"><span class="nav-number">7.</span> <span class="nav-text">VI. Template</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VII-Template-Test"><span class="nav-number">8.</span> <span class="nav-text">VII. Template Test</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-题意："><span class="nav-number">1.</span> <span class="nav-text">1. 题意：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-分析"><span class="nav-number">2.</span> <span class="nav-text">2. 分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Union-Find-Class"><span class="nav-number">3.</span> <span class="nav-text">3. Union Find Class</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Solution"><span class="nav-number">4.</span> <span class="nav-text">4. Solution</span></a></li></ol></div>
             
 
           </div>

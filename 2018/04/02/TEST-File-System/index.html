@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.6" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.6">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.6" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.0.6',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Preface dir_namev() 没有处理如下情况： extra slashes： paths_equal(“1/2/3”, “1///2///3///“);    vfstest_main int makedirs(const char *dir)  对传入的 绝对路径：dir，逐级建立相应的directory   int getdent(const char *dir, dirent_t">
+<meta name="keywords" content="OK">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TEST: File System">
+<meta property="og:url" content="http://yoursite.com/2018/04/02/TEST-File-System/index.html">
+<meta property="og:site_name" content="CMK">
+<meta property="og:description" content="Preface dir_namev() 没有处理如下情况： extra slashes： paths_equal(“1/2/3”, “1///2///3///“);    vfstest_main int makedirs(const char *dir)  对传入的 绝对路径：dir，逐级建立相应的directory   int getdent(const char *dir, dirent_t">
+<meta property="og:updated_time" content="2018-04-09T19:05:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TEST: File System">
+<meta name="twitter:description" content="Preface dir_namev() 没有处理如下情况： extra slashes： paths_equal(“1/2/3”, “1///2///3///“);    vfstest_main int makedirs(const char *dir)  对传入的 绝对路径：dir，逐级建立相应的directory   int getdent(const char *dir, dirent_t">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/02/TEST-File-System/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>TEST: File System | CMK</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-116541729-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-116541729-1');
+</script>
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> 
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">CMK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Let's create something!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+          
+  <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+</li>
+
+      
+
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/02/TEST-File-System/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">TEST: File System</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-02T22:10:48-07:00">2018-04-02</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Courses/" itemprop="url" rel="index"><span itemprop="name">Courses</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/02/TEST-File-System/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/02/TEST-File-System/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views: 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h2><ol>
+<li>dir_namev() 没有处理如下情况：<ul>
+<li>extra slashes： paths_equal(“1/2/3”, “1///2///3///“);</li>
+</ul>
+</li>
+</ol>
+<h2 id="vfstest-main"><a href="#vfstest-main" class="headerlink" title="vfstest_main"></a>vfstest_main</h2><ol>
+<li><p>int makedirs(const char *dir)</p>
+<ul>
+<li>对传入的 绝对路径：dir，逐级建立相应的directory</li>
+</ul>
+</li>
+<li><p>int getdent(const char *dir, dirent_t *dirent)</p>
+<ul>
+<li>what： 读取 dir 下的第一个非 ./.. 的entry<ul>
+<li>有的话，存到 dirent，返回 1</li>
+<li>没有的话， 返回 0</li>
+</ul>
+</li>
+<li>先调用open(dir) 得到 fd</li>
+<li>然后调用getdents(fd, dirent)依次读取该dir 下的 entries</li>
+<li>将该dir下：除了”.”以及”..”的第一个entry读出来，读到dirent<ul>
+<li>如果有其它 entry，那么关闭fd，返回 1</li>
+<li>如果只有 “.” “..”， 那么关闭fd，返回 0</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>int removeall(const char *dir)</p>
+<ul>
+<li>what: <ul>
+<li>将 dir 下的所有 files 以及 sub-files 全部unlink</li>
+<li>删除 本 dir</li>
+<li>将cur_proc 置为 “..”</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>void vfstest_start(void)</p>
+<ul>
+<li>what<ul>
+<li>随机生成 root_dir 的名字，并mkdir 该dir</li>
+<li>注意这只是 vfs_test 的root dir</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>void vfstest_term(void)</p>
+<ul>
+<li>what：Terminates the testing environment</li>
+<li>调用 removeall (root_dir) 将vfstest 过程中所有文件／目录（包括 root_dir 自己)删除</li>
+</ul>
+</li>
+<li><p>宏函数：test_assert(expr, fmt, args…)</p>
+<ul>
+<li>what: <ul>
+<li>expr应该是 true；</li>
+<li>otherwise，打印format信息，以及后续的参数</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>宏函数：syscall_success(expr)</p>
+<ul>
+<li>what：<ul>
+<li>expr所对应的测试的代码 should fail；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>宏函数：syscall_fail(expr, err)</p>
+<ul>
+<li>what：<ul>
+<li>expr所对应的测试的代码 should fail；即 -1 == (expr)</li>
+<li>并且，返回的错误代码应该跟此处传入的err一致</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>宏函数：create_file(file)</p>
+<ul>
+<li>what:<ul>
+<li>用于测试“成功打开open”、“成功关闭close” file;</li>
+<li>【注意】创建 file，不是 dir</li>
+<li>调用 open(file, O_RDONLY|O_CREAT)</li>
+<li>生成相应 fd</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>宏函数：read_fd(fd, size, goal)  </p>
+<ul>
+<li>what： <ul>
+<li>用于测试 read() 是否能够从文件fd：</li>
+<li>1-读取指定 size 的内容到buf</li>
+<li>2-读取的内容无误： buf与goal 一致</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>宏函数：test_fpos(fd, exp)    </p>
+<ul>
+<li>what：<ul>
+<li>用于测试 fd 对应 f_pos 目前应该出在 exp 指示的位置</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>vfstest_stat()</p>
+<ul>
+<li>what : 测试 do_stat()</li>
+<li>涉及函数：<ul>
+<li>mkdir</li>
+<li>chdir</li>
+<li>open</li>
+<li>write</li>
+<li>close</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>vfstest_mkdir()</p>
+<ul>
+<li>what : 测试 mkdir()</li>
+<li>涉及函数：<ul>
+<li>mkdir</li>
+<li>chdir</li>
+<li>rmdir</li>
+<li>unlink</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>vfstest_chdir()</p>
+<ul>
+<li>what : 测试 mkdir()</li>
+<li>涉及函数：<ul>
+<li>mkdir</li>
+<li>chdir</li>
+<li>stat</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>vfstest_paths()</p>
+<ul>
+<li><p>what : </p>
+<ul>
+<li>测试 directory path 的各种 “edge cases”</li>
+<li>主要函数paths_equal(p1,p2) </li>
+</ul>
+</li>
+<li><p>paths_equal(p1,p2) </p>
+<ul>
+<li>传入的 char* str，满足 p1 == p2</li>
+<li>首先调用 makedirs(p1)，逐级创建 二者对应的 dir</li>
+<li>调用 stat(p1) 、stat(p2) 比对二者的信息</li>
+</ul>
+</li>
+<li>涉及函数：<ul>
+<li>mkdir</li>
+<li>chdir</li>
+<li>stat</li>
+<li>open</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<ol start="16">
+<li>vfstest_fd()<ul>
+<li>what : 测试 fd：file descriptor</li>
+<li>how:<ul>
+<li>read/write/close/getdents/dup nonexistent file descriptors</li>
+<li>dup2 has some extra cases since it takes a second fd</li>
+<li>if the fds are equal, but the first is invalid or out of the  allowed range</li>
+<li>dup works properly in normal usage</li>
+<li>dup2 works properly in normal usage</li>
+<li>dup2-ing a file to itself works</li>
+<li>dup2 closes previous file</li>
+<li>如果dup2传入的fd是已在使用中的,<br>会首先关闭该fd对应的open_conn，<br>然后将该fd赋给新的 open_conn</li>
+</ul>
+</li>
+<li>涉及函数：<ul>
+<li>mkdir</li>
+<li>open</li>
+<li>read</li>
+<li>write</li>
+<li>lseek</li>
+<li>getdents</li>
+<li>dup</li>
+<li>dup2</li>
+<li>close</li>
+<li>chdir</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<ol start="17">
+<li>vfstest_memdev()<ul>
+<li>what : <ul>
+<li>测试 /dev/null 以及 /dev/zero 的读写</li>
+</ul>
+</li>
+<li>/dev/null，或称空设备，被称为比特桶或者黑洞。<br>是一个特殊的设备文件，它丢弃一切写入其中的数据<br>但报告写入操作成功；读取它则会立即得到一个EOF</li>
+<li>/dev/zero，当你读它的时候，它会提供无限的空字符(NULL)<br>可以将数据写入 /dev/zero 文件，但实际上不会有任何影响；<br>不过一般我们还是使用 /dev/null 来做这件事</li>
+<li>涉及函数：<ul>
+<li>mkdir</li>
+<li>chdir</li>
+<li>rmdir</li>
+<li>unlink</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<ol start="18">
+<li>vfstest_write()<ul>
+<li>what : <ul>
+<li>测试 在不同位置 f_pos 的 write() 操作</li>
+<li>测试 lseek()</li>
+</ul>
+</li>
+<li>test_assert(lseek(fd, 0, SEEK_END) == (NUM_CHUNKS-1) * CHUNK_SIZE + (int)strlen(str)<ul>
+<li>返回的 f_pos在文件尾，但并不是 (NUM_CHUNKS) * CHUNK_SIZE</li>
+<li>因为每个chunk中，内容只占strlen(str)部分，应该为：</li>
+<li>(NUM_CHUNKS-1) * CHUNK_SIZE + (int)strlen(str)</li>
+</ul>
+</li>
+<li>涉及函数：<ul>
+<li>mkdir</li>
+<li>chdir</li>
+<li>lseek</li>
+<li>write</li>
+<li>close</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<ol start="19">
+<li>vfstest_infinite()<ul>
+<li>what : <ul>
+<li>申请一个 很大的 buf空间</li>
+<li>持续向 dev/null 中写，一直写到爆；<br>即写入字节数的返回值&lt;= 0 </li>
+<li>持续从 dev/zeor 中读NULL，一直读到爆；<br>即读入字节数的返回值&lt;= 0 </li>
+</ul>
+</li>
+<li>涉及函数：<ul>
+<li>mkdir</li>
+<li>open</li>
+<li>read</li>
+<li>write</li>
+<li>close</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<ol start="20">
+<li>vfstest_open()<ul>
+<li>what : <ul>
+<li>测试 open()</li>
+<li>测试 close()</li>
+<li>测试 unlink()</li>
+</ul>
+</li>
+<li>how:<ul>
+<li>Accepts only valid combinations of flags</li>
+<li>Cannot open nonexistent file without O_CREAT</li>
+<li>Cannot write to readonly file</li>
+<li>Cannot read from writeonly file</li>
+<li>Cannot close non-existent file descriptor</li>
+<li>Lowest file descriptor is always selected</li>
+<li>Cannot unlink a directory</li>
+<li>Cannot unlink a non-existent file</li>
+<li>Cannot open a directory for writing</li>
+<li>File descriptors are correctly released when a proc exits</li>
+</ul>
+</li>
+<li>涉及函数：<ul>
+<li>mkdir</li>
+<li>chdir</li>
+<li>open</li>
+<li>write</li>
+<li>unlink</li>
+<li>stat</li>
+<li>close</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<ol start="21">
+<li>vfstest_read()<ul>
+<li>what : 测试 do_read()</li>
+<li>how:<ul>
+<li>Can read and write to a file</li>
+<li>cannot read from a directory</li>
+<li>Can seek to beginning, middle, and end of file</li>
+<li>O_APPEND works properly</li>
+</ul>
+</li>
+<li>涉及函数：<ul>
+<li>mkdir</li>
+<li>chdir</li>
+<li>open</li>
+<li>read</li>
+<li>write</li>
+<li>lseek</li>
+<li>close</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<ol start="22">
+<li><p>vfstest_getdents()</p>
+<ul>
+<li>what : <ul>
+<li>测试 do_getdent() 读取dir目录的entries的情况</li>
+</ul>
+</li>
+<li><p>涉及函数：</p>
+<ul>
+<li>mkdir</li>
+<li>chdir</li>
+<li>open</li>
+<li>close</li>
+<li>do_getdent</li>
+</ul>
+</li>
+<li><p>问题：vfstest_getdents()这个函数：<br>在dir01中建立了一个目录、一个文件，<br>为啥getdents(fd, dirents, 4 <em> sizeof(dirent_t))<br>返回值是4 </em> sizeof(dirent_t)呀？</p>
+</li>
+<li>答案：<ul>
+<li>每个目录下还有 ‘.’ 以及 ‘..’ ，所以是4个！</li>
+</ul>
+</li>
+<li>会调用 user process 的 getdents()</li>
+<li>继而调用 ksys_getdents(fd, *dirp, count)：  <ul>
+<li>将fd代表的directory目录下所有的entries读取出来，  </li>
+<li>结果按顺序放到dir中，直到读入的信息达到指定的count</li>
+<li>返回实际读到的字节数(就是所有entries构成的dir)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="faber-fs-thread-test"><a href="#faber-fs-thread-test" class="headerlink" title="faber_fs_thread_test"></a>faber_fs_thread_test</h2><ol>
+<li><p>检查 argc， 要求在执行faber_fs_thread_test()的时候，必须带参数</p>
+<ul>
+<li>if ( argc == 1 ) { //  打印错误 }</li>
+</ul>
+</li>
+<li><p>如果满足，即 argc&gt;1；再检查输入的参数:n</p>
+<ul>
+<li>if sscanf() != 1, 表明argv中的参数没有输入正确，<ul>
+<li>lim = 1</li>
+</ul>
+</li>
+<li>if sscanf() == 1，表明argv中的参数正确输入了<ul>
+<li>即告知该程序：我想要开辟几个进程／线程</li>
+<li>然后只需要检测一下，lim不超过上下限即可</li>
+</ul>
+</li>
+<li>sscanf()<ul>
+<li>dtm =”Saturday March 25 1989” );</li>
+<li>int n = sscanf( dtm, “%s %s %d  %d”, weekday, month, &amp;day, &amp;year )</li>
+<li>将dtm的data，按照format的形式，赋值给后边的变量</li>
+<li>返回值：一共赋值了几个变量。此处 n = 4<ul>
+<li>snprintf()</li>
+</ul>
+</li>
+<li>BUFLEN = 256</li>
+<li>char tname[BUFLEN]; 定义了一个字符数组，最大程度256</li>
+<li>snprintf(tname, BUFLEN, “thread%03d”, i);</li>
+<li>会将”thread%03d”与i 构成的字符串写道 tname 中</li>
+<li>snprintf 中 BUFLEN 指定了tname接受的最大字符数</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>开辟 lim 个进程／线程 make_dir</p>
+<ul>
+<li>name：” thread k “ </li>
+<li>每个进程／线程 执行：make_dir_thread()</li>
+</ul>
+</li>
+<li>do_waitpid()等待所有的线程结束<ul>
+<li>if rv&lt;0 : 打印 pid + rv + err_info</li>
+<li>else    : 打印 pid + rv</li>
+<li>至此所有的 make_dir_thread 进程／线程 终结了</li>
+</ul>
+</li>
+<li>再开辟 lim 个进程／线程 clean_dir<ul>
+<li>name: “ clean_dir_thread k “</li>
+<li>每个进程／线程 执行 clean_dir_thread()<ul>
+<li>如果上次 all passed，kthread_create最后参数为：NULL</li>
+<li>如果上次有未  passed，kthread_create最后参数为：1</li>
+</ul>
+</li>
+<li>do_waitpid()等待当前线程结束，打印信息</li>
+</ul>
+</li>
+<li>最后删除所有的 lim 个dir<ul>
+<li>根据前几次的 pass 值</li>
+<li>如果全部删除成功， 打印成功</li>
+<li>如果有未删除的，打印失败</li>
+</ul>
+</li>
+</ol>
+<h4 id="make-dir-thread"><a href="#make-dir-thread" class="headerlink" title="make_dir_thread"></a>make_dir_thread</h4><ol>
+<li>该线程创建一个目录： /dir00k</li>
+<li>然后在每个目录中创建 20 个file： <ul>
+<li>/dir00n/test000 ～ /dir00n/test019</li>
+<li>调用 do_open(O_CREAT)的方式创建新文件<ul>
+<li>如果有错误，直接返回 err_val</li>
+</ul>
+</li>
+<li>调用 do_write()向每个文件中写 “look！”</li>
+<li>调用 do_close()关闭该文件</li>
+</ul>
+</li>
+</ol>
+<h4 id="clean-dir-thread"><a href="#clean-dir-thread" class="headerlink" title="clean_dir_thread"></a>clean_dir_thread</h4><ol>
+<li>该线程会删除 arg1 指定的目录(/dir00k)下的所有files</li>
+<li>arg2的值由 make_dir_thread的执行结果确定<ul>
+<li>Arg2 == 0 means directory should exist.</li>
+<li>Arg2 == 1 means if directory does not exist,<br>don’t treat it as error. <ul>
+<li>尝试性的删除 make_dir_thread 创建的 file</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>调用 f=do_open()打开 该 dir<ul>
+<li>如果该dir未打开，并且 Arg2 == 1，该线程退出 with rv=0</li>
+<li>如果 Arg2 == 0，该线程退出 with rv=f</li>
+</ul>
+</li>
+<li>调用 do_getdent() 挨个handle 每个 entry<ul>
+<li>跳过 “.” , “..” entry</li>
+<li>拼接其要删除的file 的绝对路径</li>
+<li>调用 do_unlink(file_path) 删除该file 的连接<ul>
+<li>如果删除成功， 置got_one = 1; 跳出</li>
+<li>关闭该 fd 的open_conn</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="faber-directory-test"><a href="#faber-directory-test" class="headerlink" title="faber_directory_test"></a>faber_directory_test</h2><ol start="0">
+<li>与faber_fs_thread_test区别在于：<ul>
+<li>第一个<br>所有mk_dir_threads成功之后，回收threads；<br>再创建rm_dir_threads，成功后，回收threads</li>
+<li>第二个<br>mk_dir_thread 与 rm_dir_thread 混合执行<br>然后同时等待这两类thread的终结</li>
+</ul>
+</li>
+<li>该函数创造“成对的进程／线程”<ul>
+<li>proc_1 name: “ thread k “</li>
+<li>proc_2 name: “ rmthread k “</li>
+</ul>
+</li>
+<li>每次 iteration<ul>
+<li>创建一个 thread， 并运行之</li>
+<li>创建一个 rmthread，并运行之</li>
+</ul>
+</li>
+<li><p>调用 do_waitpid() 等待所有子进程结束</p>
+<ul>
+<li>如果某个进程返回rv &lt; 0 , 打印：pid  + rv + err_info</li>
+<li>如果某个进程返回rv ==0 , 打印：pid  + rv </li>
+</ul>
+</li>
+<li><p>循环删除所有 directory </p>
+<ul>
+<li>do_rmdir(tname)</li>
+</ul>
+</li>
+</ol>
+<h4 id="rm-dir-thread"><a href="#rm-dir-thread" class="headerlink" title="rm_dir_thread"></a>rm_dir_thread</h4><ol>
+<li>该线程创建一个目录： /dir00k</li>
+<li>然后删除目录中名字为：“/dir00n/test000” 的file<ul>
+<li>/dir00n/test000 ～ /dir00n/test019</li>
+<li>调用 do_open(O_CREAT)的方式创建新文件<ul>
+<li>如果有错误，直接返回 err_val</li>
+</ul>
+</li>
+<li>调用 do_write()向每个文件中写 “look！”</li>
+<li>调用 do_close()关闭该文件</li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/OK/" rel="tag"># OK</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/01/How-does-OS-load-File-System/" rel="next" title="How does OS load File System">
+                <i class="fa fa-chevron-left"></i> How does OS load File System
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/07/239-Sliding-Window-Maximum/" rel="prev" title="239.Sliding Window Maximum">
+                239.Sliding Window Maximum <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/sea.jpg"
+                alt="Mingkai Cao" />
+            
+              <p class="site-author-name" itemprop="name">Mingkai Cao</p>
+              <p class="site-description motion-element" itemprop="description">Jack of all trades, master of one</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">16</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">16</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/caomingkai" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:mingkaic@usc.edu" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vfstest-main"><span class="nav-number">2.</span> <span class="nav-text">vfstest_main</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#faber-fs-thread-test"><span class="nav-number">3.</span> <span class="nav-text">faber_fs_thread_test</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#make-dir-thread"><span class="nav-number">3.0.1.</span> <span class="nav-text">make_dir_thread</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#clean-dir-thread"><span class="nav-number">3.0.2.</span> <span class="nav-text">clean_dir_thread</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#faber-directory-test"><span class="nav-number">4.</span> <span class="nav-text">faber_directory_test</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#rm-dir-thread"><span class="nav-number">4.0.1.</span> <span class="nav-text">rm_dir_thread</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate"> 
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mingkai Cao</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Gemini</a> v6.0.6</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.6"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.6"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.6"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.6"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.6"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.6"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.6"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'hG8fgggWL7hK1jsXsRoVCNWv-MdYXbMMI',
+        appKey: 'VRAYsgwdkRyyb8bAFQ5uii6o',
+        placeholder: 'Any comment?',
+        avatar:'',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+    // 新增以下代码即可，可以移除.info下所有子节点
+    var infoEle = document.querySelector('#comments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0){
+      infoEle.childNodes.forEach(function(item) {
+        item.parentNode.removeChild(item);
+      });
+    }
+
+
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+<style>
+    #comments .vempty{
+        display: none;
+    }
+</style>
+
+</body>
+</html>

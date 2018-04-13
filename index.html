@@ -310,6 +310,259 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/12/page-frame/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/12/page-frame/" itemprop="url">page frame</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-12T17:04:02-07:00">2018-04-12</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Courses/" itemprop="url" rel="index"><span itemprop="name">Courses</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/12/page-frame/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/12/page-frame/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Why-do-we-need-page-frame"><a href="#Why-do-we-need-page-frame" class="headerlink" title="Why do we need page frame?"></a>Why do we need page frame?</h2><p>实际 page frame 只是 kernel 的一个 struct，用于：</p>
+<ol>
+<li>记录：由其包含的 physical page 地址（其实还是virtual addr）</li>
+<li>记录：该page 所属的 memeory object(即 vm_area_struct/bss… 所指向的)；以及该page 的 page_num</li>
+<li>第一条“由其包含”表明了，OS需要一个结构体来管理所“征用”的physical page，这个结构体就是 page frame</li>
+<li>注意：page frame 中的page 不一定都在 physical memory 中，也有可能被 page out 到了 disk。前者称为 resident page。</li>
+</ol>
+<h4 id="1-pframe-init"><a href="#1-pframe-init" class="headerlink" title="1. pframe_init()"></a>1. pframe_init()</h4><blockquote>
+<p>使用物理内存之前的准备工作，开机时？</p>
+</blockquote>
+<p>初始化与 pframe 有关的量：  </p>
+<ul>
+<li>alloc_list  </li>
+<li>pinned_list  </li>
+<li>pframe_allocator  </li>
+<li>pageout deamon</li>
+</ul>
+<h4 id="2-pframe-shutdown（）"><a href="#2-pframe-shutdown（）" class="headerlink" title="2. pframe_shutdown（）"></a>2. pframe_shutdown（）</h4><blockquote>
+<p>停止使用物理内存之后的清理工作，关机时？</p>
+</blockquote>
+<ul>
+<li>停止 pageout deamon</li>
+<li>清理及 free 所有 page</li>
+</ul>
+<h4 id="3-pframe-get-resident（）"><a href="#3-pframe-get-resident（）" class="headerlink" title="3. pframe_get_resident（）"></a>3. pframe_get_resident（）</h4><blockquote>
+<p>获得“驻足内存的pframe”，based on mmobj &amp; pagenum; 如果pframe 不再内存中，返回NULL</p>
+</blockquote>
+<h4 id="4-pframe-alloc（）"><a href="#4-pframe-alloc（）" class="headerlink" title="4. pframe_alloc（）"></a>4. pframe_alloc（）</h4><blockquote>
+<p>为 mmobj、pagenum 指定的 page 分配<strong>物理内存</strong></p>
+</blockquote>
+<h4 id="5-pframe-lookup（）"><a href="#5-pframe-lookup（）" class="headerlink" title="5. pframe_lookup（）"></a>5. pframe_lookup（）</h4><blockquote>
+<p>实际上就是执行 pframe_get()，</p>
+</blockquote>
+<h4 id="6-pframe-get（）"><a href="#6-pframe-get（）" class="headerlink" title="6. pframe_get（）"></a>6. pframe_get（）</h4><blockquote>
+<p>根据 ‘mmobj &amp; pagenum’ 得到 pframe  </p>
+<ul>
+<li>如果物理内存中已有该page，直接返回  </li>
+<li>如果物理内存中没有该page，allocate 新的，并（有可能从disk）fill 进内容</li>
+</ul>
+</blockquote>
+<ol>
+<li>先判断由 ‘mmobj &amp; pagenum’ 指明的pframe 是否存在于内存中，by calling pframe_get_resident() <ul>
+<li>如果存在，继续判断 pframe 是否 busy（因为有可能被 pageout deamon 操作）<ul>
+<li>if busy 则 sleep；醒来时再回到第1步，判断pframe是否存在于物理内存中</li>
+<li>if not busy，直接返回 pframe</li>
+</ul>
+</li>
+<li>如果不存在，则创建新的pframe<ul>
+<li>先判断是否需要启动 pageout deamon 释放部分物理内存，需要的话就唤醒 deamon</li>
+<li>然后分配pframe空间， pframe_alloc(o,pagenum)；注意返回值ERROR</li>
+<li>再向刚获得的pframe中添加内容， pframe_fill()；注意返回值ERROR</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="7-pframe-migrate（）"><a href="#7-pframe-migrate（）" class="headerlink" title="7. pframe_migrate（）"></a>7. pframe_migrate（）</h4><blockquote>
+<p>将pframe 移到父节点；缩短 shadow object tree 的高度（在某个mmobj被清除的时候）</p>
+</blockquote>
+<h4 id="8-pframe-fill（）"><a href="#8-pframe-fill（）" class="headerlink" title="8. pframe_fill（）"></a>8. pframe_fill（）</h4><blockquote>
+<p>调用 specific mmobj 的 fillpage() 真正实现<strong>将外部数据读入物理内存</strong></p>
+</blockquote>
+<h4 id="9-pframe-pin（）"><a href="#9-pframe-pin（）" class="headerlink" title="9. pframe_pin（）"></a>9. pframe_pin（）</h4><blockquote>
+<p>对该 pframe 锁定 pin down，防止被 pageout</p>
+</blockquote>
+<ol>
+<li>判断该 pframe 的 pf_pincount 是否为“0”<ul>
+<li>如果==0，表明该 pframe page 在 allo_chain上<ul>
+<li>从原来 chain 卸下来</li>
+<li>nallocated–</li>
+<li>加入 pinned_chain 中</li>
+<li>npinned++</li>
+<li>pf-&gt;pf_pincount++</li>
+</ul>
+</li>
+<li>如果 != 0，表明该 pframe page 已经在 pinned_chain上了<ul>
+<li>只需要 pf-&gt;pf_pincount++ 即可</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="10-pframe-unpin（）"><a href="#10-pframe-unpin（）" class="headerlink" title="10. pframe_unpin（）"></a>10. pframe_unpin（）</h4><blockquote>
+<p>将该 pframe 解锁，向 pageout deamon 开放</p>
+</blockquote>
+<ol>
+<li>首先更新 pf_pincount： pf_pincount–;</li>
+<li>判断该 pframe 的 pf_pincount 目前是否为“0”<ul>
+<li>如果==0，那么<ul>
+<li>从 pinned_chain 中卸下来</li>
+<li>npinned–</li>
+<li>加入 alloc_chain 中</li>
+<li>nallocated++</li>
+</ul>
+</li>
+<li>如果 !=0, 那么啥也不做</li>
+</ul>
+</li>
+</ol>
+<h4 id="11-pframe-dirty（）"><a href="#11-pframe-dirty（）" class="headerlink" title="11. pframe_dirty（）"></a>11. pframe_dirty（）</h4><blockquote>
+<p>对 pframe（仅指file_obj，shadow、anony 无法pageout）进行更改之前，将该page设置为 DIRTY，待 pageout deamon 回收的时候检查到DIRTY时，会将page的内容更新到 disk 上</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/Union-Find-to-achieve-max-tasks/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2494,162 +2747,6 @@ D: do_stat()
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/27/Facebook-Custom-Search/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/27/Facebook-Custom-Search/" itemprop="url">Facebook Custom Search</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-27T15:32:37-07:00">2018-03-27</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Portfolios/" itemprop="url" rel="index"><span itemprop="name">Portfolios</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/03/27/Facebook-Custom-Search/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/03/27/Facebook-Custom-Search/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="I-Introduction"><a href="#I-Introduction" class="headerlink" title="I. Introduction"></a>I. Introduction</h2><p>An application for both web-version and IOS-version, supported by PHP-based server on AWS EC2, allows searching, displaying and posting information on Facebook.</p>
-<p>Tech stacks: <strong>AngularJS, Bootstrp, PHP, AWS EC2, Swift, Cocoa</strong></p>
-<p><strong>Github web</strong>: <a href="https://github.com/caomingkai/FaceBook-custom-Search-Web-App" target="_blank" rel="noopener">https://github.com/caomingkai/FaceBook-custom-Search-Web-App</a></p>
-<p><strong>Github IOS</strong>: <a href="https://github.com/caomingkai/FaceBook-custom-Search-Web-App" target="_blank" rel="noopener">https://github.com/caomingkai/FaceBook-custom-Search-Web-App</a></p>
-<p><a href="http://default-environment.twp33krzmp.us-west-1.elasticbeanstalk.com/index.html" target="_blank" rel="noopener"><br>    <img src="/2018/03/27/Facebook-Custom-Search/FB.png" title="This is an image"><br></a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2701,7 +2798,7 @@ D: do_stat()
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">16</span>
+                    <span class="site-state-item-count">17</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

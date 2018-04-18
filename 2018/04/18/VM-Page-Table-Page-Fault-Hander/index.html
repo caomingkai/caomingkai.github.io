@@ -106,7 +106,7 @@
 <meta property="og:url" content="http://yoursite.com/2018/04/18/VM-Page-Table-Page-Fault-Hander/index.html">
 <meta property="og:site_name" content="CMK">
 <meta property="og:description" content="I. Page Table1. Page table的作用【简洁版】  隔离user process，给每个process分配4GB内存【假象，至于到底怎么分配，交给kernel】 提供 CPU 可识别的 physical address  【详细版】  在没有 page table 之前，processes 如果想在memory中执行，必须做好process isolation。一个方案是为每个">
-<meta property="og:updated_time" content="2018-04-18T22:22:34.000Z">
+<meta property="og:updated_time" content="2018-04-18T22:28:55.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="VM: Page Table &amp; Page Fault Hander">
 <meta name="twitter:description" content="I. Page Table1. Page table的作用【简洁版】  隔离user process，给每个process分配4GB内存【假象，至于到底怎么分配，交给kernel】 提供 CPU 可识别的 physical address  【详细版】  在没有 page table 之前，processes 如果想在memory中执行，必须做好process isolation。一个方案是为每个">
@@ -416,7 +416,7 @@
         <h2 id="I-Page-Table"><a href="#I-Page-Table" class="headerlink" title="I. Page Table"></a>I. Page Table</h2><h4 id="1-Page-table的作用"><a href="#1-Page-table的作用" class="headerlink" title="1. Page table的作用"></a>1. Page table的作用</h4><p><strong>【简洁版】</strong></p>
 <ul>
 <li>隔离user process，给每个process分配4GB内存【假象，至于到底怎么分配，交给kernel】</li>
-<li>提供 CPU 可识别的 physical address<br><br><br><br></li>
+<li>提供 CPU 可识别的 physical address</li>
 </ul>
 <p><strong>【详细版】</strong></p>
 <ul>
@@ -460,9 +460,7 @@
 </ul>
 </li>
 </ol>
-<hr>
-
-<p><br><br><br></p>
+<p><br></p>
 <h2 id="II-Page-fault"><a href="#II-Page-fault" class="headerlink" title="II. Page fault"></a>II. Page fault</h2><h4 id="1-page-fault-handler-具体步骤"><a href="#1-page-fault-handler-具体步骤" class="headerlink" title="1. page fault handler 具体步骤"></a>1. page fault handler 具体步骤</h4><p>page fault 是由MMU检测到的硬件中断，由kernel处理；当一个进程发生缺页中断的时候，进程会<strong>陷入(trap)内核态</strong>，执行以下操作： </p>
 <ol>
 <li>检查要访问的虚拟地址是否合法 </li>
@@ -492,17 +490,15 @@
 <li>mmobj 调用<code>pframe_get()</code>寻找是否有相应的 pframe 对应于 mmonj&amp;pageNum</li>
 <li>如果有：直接返回；</li>
 <li>如果没有：进入<em>“无中生有”</em>这一步：<ul>
-<li>创建 pframe 结构体，获得physical address。 通过：<code>pframe_alloc(mmobj,pagenum)</code><br><strong>&gt;&gt; 这一步会调用 <code>page_alloc()</code> 申请到物理内存physical address</strong>  <blockquote>
-<blockquote>
-<p>至此vaddr有了与之对应的物理内存，但还未载入vaddr对应的内容</p>
-</blockquote>
-</blockquote>
+<li>创建 pframe 结构体，获得physical address。 通过：<code>pframe_alloc(mmobj,pagenum)</code>  <ol>
+<li><strong>这一步会调用 <code>page_alloc()</code> 申请到物理内存physical address</strong>  </li>
+<li>至此vaddr有了与之对应的物理内存，但还未载入vaddr对应的内容</li>
+</ol>
 </li>
-<li>调用 <code>pframe_fill()</code>往刚申请到的physical addr中载入vaddr对应的内容<br><strong>&gt;&gt; 这一步调用 <code>mmobj-&gt;ops-&gt;fillpage(obj,pf)</code>由vaddr对应的mmobj向物理内存载入内容</strong>  <blockquote>
-<blockquote>
-<p>实际上如果是disk，会调用<code>read_block()</code>进入硬件过程；后续还会通过DMA(direct memory access)直接将disk中的内容读入到内存</p>
-</blockquote>
-</blockquote>
+<li>调用 <code>pframe_fill()</code>往刚申请到的physical addr中载入vaddr对应的内容  <ol>
+<li><strong>这一步调用 <code>mmobj-&gt;ops-&gt;fillpage(obj,pf)</code>由vaddr对应的mmobj向物理内存载入内容</strong>  </li>
+<li>实际上如果是disk，会调用<code>read_block()</code>进入硬件过程；后续还会通过DMA(direct memory access)直接将disk中的内容读入到内存</li>
+</ol>
 </li>
 <li>至此，mmobj的<strong>幕后人物：vnode / file</strong> 的内容成功读入到 page frame 中</li>
 </ul>

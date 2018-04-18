@@ -310,6 +310,647 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/18/VM-How-does-fork-work/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/18/VM-How-does-fork-work/" itemprop="url">VM: How does fork() work?</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-18T15:12:11-07:00">2018-04-18</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Courses/" itemprop="url" rel="index"><span itemprop="name">Courses</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/18/VM-How-does-fork-work/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/18/VM-How-does-fork-work/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="fork-in-Kernel"><a href="#fork-in-Kernel" class="headerlink" title="fork( ) in Kernel"></a><em>fork</em>( ) in Kernel</h2><p>跟<code>read()</code>一样: 都是user process调用kernel syscall，trap into kernel，在interrupt handler中指明interrupt routine，最终由kernel代为执行任务；</p>
+<p>具体在kernle中要做的工作有以下几步：</p>
+<ol>
+<li>创建新的 PCB,<code>newProc = proc_create()</code></li>
+<li>拷贝address space,<code>vmmap_copy(newProc)</code><ul>
+<li>拷贝 vmmap(address space)的vmarea(只初步copy memory area):<br><code>newProc-&gt;p_vmmap = vmmap_clone(curproc-&gt;p_vmmap);</code></li>
+<li>拷贝每个vmarea对应的mmobj, from curproc<ul>
+<li>两个process的vmarea是一一对应的，遍历copy</li>
+<li>首先获得即将要拷贝的curproc的第一个vmarea</li>
+<li>从newProc的第一个vmarea开始，执行copy：<br> <code>curproc-&gt;vmarea-&gt;vma_obj</code></li>
+<li>更新vma_obj的refcount</li>
+<li>判断要该vmarea是否为Private,执行<strong>shadow copy</strong><ol>
+<li>if private，执行shadow copy</li>
+<li>并且要新vmarea插入到bottom_mmobj-&gt;mmo_vmas之后</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>清除 curproc 的pageTable 以及TLB缓存(必须在thread copy之前)<ul>
+<li>因为curproc的pageTable也会被copy(在thread copy的时候)<br>若不重新映射pageTable的话，两个process的vaddr会映射同一paddr</li>
+<li>既然pageTable需要重新映射，那么TLB也需要重新缓存新映射</li>
+</ul>
+</li>
+<li>创建新thread，拷贝cur thread内容，包括 register、stack、pageTable<ul>
+<li>拷贝parent的TCB到新的TCB：kth_new,<code>kth_new = kthread_clone(curthr)</code></li>
+<li>设置所属process，<code>kth_new-&gt;kt_proc = newProc</code></li>
+<li>将新thread插入到process的“线程链”之后</li>
+<li>更新register信息（包括page table信息）<ul>
+<li><strong>其实pageTable是给CPU使用的(以下可看出)</strong></li>
+<li><code>kt_ctx.c_pdptr = newProc-&gt;p_pagedir</code></li>
+<li><code>kt_ctx.c_eip = (uint32_t)userland_entry</code></li>
+<li><code>kt_ctx.c_esp = fork_setup_stack(regs,kth_new-&gt;kt_kstack)</code></li>
+<li><code>kt_ctx.c_kstack = (uintptr_t) kth_new-&gt;kt_kstack</code></li>
+<li><code>kt_ctx.c_kstacksz = DEFAULT_STACK_SIZE</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>拷贝file system的内容<ul>
+<li>拷贝curProc的file-descriptor-table</li>
+<li>注意这里是拷贝的 fd table的内容，并非 open-connection-table</li>
+<li>因为fd-table很大：NFILES，遍历拷贝<ul>
+<li>如果 p-&gt;p_files[i] != NULL，表明对应实际open-file</li>
+<li>还需要更新该open-file的refcount</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>拷贝p_cwd，并更新p_cwd的refcount:<code>p-&gt;p_cwd = curproc-&gt;p_cwd;</code><ul>
+<li>注意：这里的<code>p_cwd</code>在<code>proc_creat()</code>的时候复制了一遍了</li>
+<li>同时也要考虑<code>p_cwd=NULL</code>的情况如何处理</li>
+</ul>
+</li>
+<li>设置 heap segment 的break，与 curproc 的一致</li>
+<li>将新thread加入到 run queue 中</li>
+<li>设置 parent proc的fork()返回值：newProc-&gt;p_pid</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/18/VM-Virtual-memory-File-system-Memory-object-in-VM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/18/VM-Virtual-memory-File-system-Memory-object-in-VM/" itemprop="url">VM: Virtual memory + File system = Memory object(in VM)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-18T15:07:05-07:00">2018-04-18</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Courses/" itemprop="url" rel="index"><span itemprop="name">Courses</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/18/VM-Virtual-memory-File-system-Memory-object-in-VM/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/18/VM-Virtual-memory-File-system-Memory-object-in-VM/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="I-Virtual-memory-amp-File-system"><a href="#I-Virtual-memory-amp-File-system" class="headerlink" title="I. Virtual memory &amp; File system"></a>I. Virtual memory &amp; File system</h2><h4 id="1-file可以直接映射进memory，更快，但无cache。"><a href="#1-file可以直接映射进memory，更快，但无cache。" class="headerlink" title="1. file可以直接映射进memory，更快，但无cache。"></a>1. file可以直接映射进memory，更快，但无cache。</h4><h4 id="2-从disk读取文件有两种方法：read-and-mmap"><a href="#2-从disk读取文件有两种方法：read-and-mmap" class="headerlink" title="2. 从disk读取文件有两种方法：read() and mmap()"></a>2. 从disk读取文件有两种方法：<code>read()</code> and <code>mmap()</code></h4><ul>
+<li>read(): <ul>
+<li>user process： 系统调用<code>read()</code>，trap into kernel</li>
+<li>kernel： 执行interrupt handler，调用do_read()；继而调用 file system的 read() 指令</li>
+<li>kernel space：读入的内容放到 kernel address space</li>
+<li>user space： kernel 将内容copy到 user address space</li>
+</ul>
+</li>
+<li>mmap(): <ul>
+<li>user process：系统调用<code>mmap()</code>，trap into kernel</li>
+<li>kernel ：执行interrupt handler，调用 do_mmap()；继而调用 file system 的 mmap() 指令</li>
+<li>user space： kernel 直接将 file 映射到 user address space中</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-file-system-中的-vnode-结构体："><a href="#3-file-system-中的-vnode-结构体：" class="headerlink" title="3. file system 中的 vnode 结构体："></a>3. file system 中的 vnode 结构体：</h4><pre><code>- 对应一个电脑文件系统中的一个 file
+- 其中还有一个 mmobj vn_mmobj 结构体： 是该file到address space 中的映射。 mmobj 包含：
+    + mmo_operations
+        - lookuppage：根据[mmobj:page#], 找对应的 pframe
+        - fillpage：将 disk file 内容加载到 pframe
+        - dirtypage：将该 mmobj 指定的 pframe 设置为 dirty
+        - cleanpage：将该 mmobj指定的 pframe 清楚
+        - ref
+        - put
+    + mmo_refcount
+    + mmo_resident_pages
+- vnode 为抽象的 inode，来实现 polymophism。也有与file 相关的 operations：
+    + read
+    + write
+    + mmap(): 注意这个mmap 是vnode层面的function；**实际上返回的是 vnode-&gt;vn\_mmobj; 而这个vn\_mmobj则是通过上述的fillpage()实际将 disk 中的数据加载进 pframe**
+</code></pre><h2 id="II-vmmap-c"><a href="#II-vmmap-c" class="headerlink" title="II. vmmap.c"></a>II. vmmap.c</h2><h4 id="1-vmmap-lookup"><a href="#1-vmmap-lookup" class="headerlink" title="1. vmmap_lookup"></a>1. vmmap_lookup</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">vmarea_t</span> * vmmap_lookup(<span class="keyword">vmmap_t</span> *<span class="built_in">map</span>, <span class="keyword">uint32_t</span> vfn)</span><br><span class="line"></span><br><span class="line"><span class="function">Find the vm_area that <span class="title">vfn</span><span class="params">(<span class="keyword">virtual</span> frame number)</span> lies in</span></span><br></pre></td></tr></table></figure>
+<h4 id="2-vmmap-map"><a href="#2-vmmap-map" class="headerlink" title="2. vmmap_map"></a>2. vmmap_map</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">vmmap_map(<span class="keyword">vmmap_t</span> *<span class="built_in">map</span>, <span class="keyword">vnode_t</span> *file, </span><br><span class="line">          <span class="keyword">uint32_t</span> lopage, <span class="keyword">uint32_t</span> npages, </span><br><span class="line">          <span class="keyword">int</span> prot, <span class="keyword">int</span> flags, <span class="keyword">off_t</span> off, </span><br><span class="line">          <span class="keyword">int</span> dir, <span class="keyword">vmarea_t</span> **<span class="keyword">new</span>)</span><br><span class="line">- <span class="built_in">map</span> 为cur process 的地址空间</span><br><span class="line">- file 为被映射到虚拟内存的 vnode/shadow/anonymous obj</span><br><span class="line">- lopage、npages 指明从地址空间的什么具体位置开始映射、映射长度</span><br><span class="line">- prot、flag、off 指明 vmarea 的 read/write、<span class="keyword">public</span>/<span class="keyword">private</span>、 vmarea的起始地址</span><br><span class="line">- <span class="keyword">new</span> 为接收 映射file到虚拟内存的 mapped\_file\_obj 的指针</span><br><span class="line"></span><br><span class="line">【注意】该函数被 system API:do_mmap()调用；完成</span><br></pre></td></tr></table></figure>
+<p>将指定的 file(anonymous／shadow) 映射map到该进程的“地址空间”address space中；经历一下步骤：</p>
+<ol>
+<li><p>现在cur_proc的地址空间中开辟一块 vmarea </p>
+<ul>
+<li>if lopage=0: 开辟一个新的 vmarea</li>
+<li>if lopage!=0: 如果该位置已经被别的vmarea占用，那么删除就的vmarea</li>
+</ul>
+</li>
+<li><p>对刚获得的 vmarea 赋值：</p>
+<ul>
+<li>newvma-&gt;vma_start = lopage;</li>
+<li>newvma-&gt;vma_end = lopage + npages;</li>
+<li>newvma-&gt;vma_off = ADDR_TO_PN(off);</li>
+<li>newvma-&gt;vma_prot = prot;</li>
+<li>newvma-&gt;vma_flags = flags;</li>
+<li>list_link_init(&amp;newvma-&gt;vma_plink);</li>
+<li>list_link_init(&amp;newvma-&gt;vma_olink);</li>
+</ul>
+</li>
+<li><p>创建 mmobj（<strong>这是 vmarea 存在的意义</strong>）</p>
+<ul>
+<li>if file==NULL: mmobj为新创建的 anonymous obj;<br><code>mmobj = anon_create();</code></li>
+<li>if file!=NULL: mmobj为从vnode读入的 mmobj;<br><code>file-&gt;vn_ops-&gt;mmap(file, newvma, &amp;mmobj);</code></li>
+<li>判断是否需要创建 shadow obj<br><code>if MAP_PRIVATE &amp; flags != 0</code> 需要在 mmobj内部创建 shadow obj</li>
+</ul>
+</li>
+<li><p>将mmobj 链接到 vmarea上；<code>newvma-&gt;vma_obj = mmobj;</code></p>
+</li>
+<li><p>将vmarea 插入到 cur_proc 的 地址空间 map 中</p>
+</li>
+</ol>
+<h4 id="3-vmmap-remove"><a href="#3-vmmap-remove" class="headerlink" title="3. vmmap_remove()"></a>3. vmmap_remove()</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">vmmap_remove</span><span class="params">(<span class="keyword">vmmap_t</span> *<span class="built_in">map</span>, <span class="keyword">uint32_t</span> lopage, <span class="keyword">uint32_t</span> npages)</span></span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>删除虚拟内存/virtual address 中的对应的 mmobj</li>
+<li>并删除相应 page table entry，相当于释放物理内存</li>
+</ol>
+<h4 id="4-vmmap-is-range-empty"><a href="#4-vmmap-is-range-empty" class="headerlink" title="4. vmmap_is_range_empty"></a>4. vmmap_is_range_empty</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">vmmap_is_range_empty</span><span class="params">(<span class="keyword">vmmap_t</span> *<span class="built_in">map</span>, <span class="keyword">uint32_t</span> startvfn, <span class="keyword">uint32_t</span> npages)</span></span></span><br></pre></td></tr></table></figure>
+<p>判断指定的一段pages 在否在虚拟内存中未被占用</p>
+<h4 id="5-vmmap-read"><a href="#5-vmmap-read" class="headerlink" title="5. vmmap_read"></a>5. vmmap_read</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">vmmap_read</span><span class="params">(<span class="keyword">vmmap_t</span> *<span class="built_in">map</span>, <span class="keyword">const</span> <span class="keyword">void</span> *vaddr, <span class="keyword">void</span> *buf, <span class="keyword">size_t</span> count)</span></span></span><br></pre></td></tr></table></figure>
+<p>从 cur_proc 当前地址空间map中指定的vaddr开始，读取“内存”中大小为count的内容到指定的 “内存”buf 中（<strong>因为这里的“内存”是虚拟内存，必须要借助pframe_lookup()读取physical memory的值</strong>）</p>
+<ol>
+<li>循环执行以下步骤，直到读取字节数 达到count 数量；<ul>
+<li>注意：因为count 是字节数，而 address space 中以 page 为单位；并且page之间并非一直连续，是由 vmarea 链接而成；因此需要遍历 地址空间逐个vmarea、逐个page 读取</li>
+</ul>
+</li>
+<li>在 address space 中查找 start vaddr所属的 vmarea</li>
+<li>获得该 vmarea 中所包含的 pages</li>
+<li>循环读取所有 pages，memcpy到指定buf<ul>
+<li>调用<code>pframe_lookup()</code> 找到 virtual page 的 physical page </li>
+<li>注意1：如果之前并没有 mapped physical address；那么会调用<code>pframe_get()</code> 即刻map一个physical address</li>
+<li>注意2: 这里的 physical address 并非真正的，而依然是存在kernel address space 的 virtual address</li>
+<li>调用 <code>memcpy()</code>将对应的pframe中的内容copy到指定的buf中去</li>
+<li>注意3:因为<code>memcpy()</code>是C语言库函数，这里实际上还是“virtual address”之间的内容拷贝。很有可能在<code>memcpy()</code>实现了“virtual address to physical address”的转换</li>
+</ul>
+</li>
+<li>直到该vmarea所有pages都copy完<ul>
+<li>if count 未满足，则跳到下一个vmarea继续拷贝</li>
+<li>if count 满足，则退出</li>
+</ul>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/14/Virtual-Memory-Allocation-brk-and-mmap/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/14/Virtual-Memory-Allocation-brk-and-mmap/" itemprop="url">VM - Virtual Memory Allocation: brk() and mmap() </a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-14T11:33:45-07:00">2018-04-14</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Courses/" itemprop="url" rel="index"><span itemprop="name">Courses</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/14/Virtual-Memory-Allocation-brk-and-mmap/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/14/Virtual-Memory-Allocation-brk-and-mmap/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Useful-Link"><a href="#Useful-Link" class="headerlink" title="Useful Link"></a>Useful Link</h2><p>Credit goes to:<br><a href="https://blog.csdn.net/gfgdsg/article/details/42709943" target="_blank" rel="noopener">https://blog.csdn.net/gfgdsg/article/details/42709943</a></p>
+<h2 id="Notice-page-granularity"><a href="#Notice-page-granularity" class="headerlink" title="Notice: page-granularity"></a>Notice: page-granularity</h2><p>All memory in virtual memory address space are <strong>page-based</strong>. It is the smallest unit of granularity, including the Heap segment in the following.</p>
+<h2 id="Virtual-Memory-Allocation-2-ways"><a href="#Virtual-Memory-Allocation-2-ways" class="headerlink" title="Virtual Memory Allocation (2 ways):"></a>Virtual Memory Allocation (2 ways):</h2><ol>
+<li><code>brk()</code> on Heap segment</li>
+<li><code>mmap()</code> mapped_file segment, between Heap and Stack</li>
+</ol>
+<p>Usually user process calls <code>malloc()</code> to invoke kernel<br>system calls <code>brk()</code> or <code>mmap()</code> to get a virtual memory. Which one will be executed depends on <strong>requesting memory size(128KB is the line)</strong></p>
+<ul>
+<li><em>size&lt;128KB</em>, kernel calls <code>brk()</code> to assign virtual memory on Heap to user process<ul>
+<li><strong>BAD:</strong> only be sequentially assign and free, like Stack</li>
+<li><strong>GOOD:</strong> can be used as cache ()</li>
+</ul>
+</li>
+<li><em>size&gt;128KB</em>, kerel calls <code>mmap()</code> to get a piece of memory between Heap and Stack to user process<ul>
+<li><strong>GOOD:</strong> can independently assign and free (flexible)</li>
+<li><strong>BAD:</strong> repeately causing page_fault to involve physical memory (CPU costly)</li>
+</ul>
+</li>
+</ul>
+<h2 id="System-API：do-brk"><a href="#System-API：do-brk" class="headerlink" title="System API：do_brk( )"></a>System API：do_brk( )</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">do_brk</span><span class="params">(<span class="keyword">void</span> *addr, <span class="keyword">void</span> **ret)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line">设置 process 地址空间中Heap Segment的break，即Heap的“堆顶”。  </span><br><span class="line">- <span class="built_in">malloc</span>()、<span class="built_in">free</span>()均会调用该API，增加、减小heap <span class="keyword">break</span></span><br><span class="line">- <span class="built_in">malloc</span>()时向高地址增加; <span class="built_in">free</span>()时向低地址减小</span><br><span class="line"></span><br><span class="line">输入： addr 要更新的<span class="keyword">break</span>地址； ret 更新后的<span class="keyword">break</span>地址</span><br><span class="line">输出：<span class="number">0</span>-成功</span><br></pre></td></tr></table></figure>
+<ol>
+<li>如果 addr == NULL，返回当前 brk</li>
+<li>判断 addr 的合法性：与 proc_start_brk比较，不能比他还小</li>
+<li>处理 addr 与 proc_brk 在 page_not_aligned 的情况；并获得old proc_brk所在 virtual area 的最后一页 end_page<ul>
+<li>addr : newvfn (new virtual frame number)</li>
+<li>curproc-&gt;p_brk: oldvma-&gt;vma_end</li>
+<li>if(newvfn &gt; oldvma-&gt;vma_end): 对应于<code>malloc()</code></li>
+<li>if(newvfn &lt; oldvma-&gt;vma_end): 对应于<code>free()</code></li>
+</ul>
+</li>
+<li>最后更新两个量：<ul>
+<li>oldvma-&gt;vma_end = newvfn;</li>
+<li>curproc-&gt;p_brk = addr;</li>
+</ul>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/13/How-Does-Kernel-Handle-System-Calls/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -408,7 +1049,7 @@
       
         
           
-            <h2 id="1-An-Example-read"><a href="#1-An-Example-read" class="headerlink" title="1. An Example: read( )"></a>1. An Example: read( )</h2><ol>
+            <h2 id="I-An-Example-read"><a href="#I-An-Example-read" class="headerlink" title="I. An Example: read( )"></a>I. An Example: read( )</h2><ol>
 <li><strong>User space:</strong> User process makes <code>read()</code> system call</li>
 <li><strong>Interrupt:</strong> This will <strong>trap</strong> into kernel by <strong>software interrupt</strong></li>
 <li><strong>System API:</strong> Kernel executes its <code>interrupt handler</code>, in which <code>sys_read() API</code> will be called<ul>
@@ -424,7 +1065,7 @@
 </ul>
 </li>
 </ol>
-<h2 id="2-System-API-for-file-operation"><a href="#2-System-API-for-file-operation" class="headerlink" title="2. System API for file operation"></a>2. System API for file operation</h2><h4 id="1-System-Read-API"><a href="#1-System-Read-API" class="headerlink" title="1. System Read API"></a>1. System Read API</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_read</span><span class="params">(<span class="keyword">read_args_t</span> *arg)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line">kernel “读”操作的API，自此由kernel执行一系列“读”相关的操作</span><br><span class="line"></span><br><span class="line">输入：arg，包含了user process read()的所有参数</span><br><span class="line">输出：实际读出的字节数</span><br></pre></td></tr></table></figure>
+<h2 id="II-System-API-for-file-operation"><a href="#II-System-API-for-file-operation" class="headerlink" title="II. System API for file operation"></a>II. System API for file operation</h2><h4 id="1-System-Read-API"><a href="#1-System-Read-API" class="headerlink" title="1. System Read API"></a>1. System Read API</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_read</span><span class="params">(<span class="keyword">read_args_t</span> *arg)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line">kernel “读”操作的API，自此由kernel执行一系列“读”相关的操作</span><br><span class="line"></span><br><span class="line">输入：arg，包含了user process read()的所有参数</span><br><span class="line">输出：实际读出的字节数</span><br></pre></td></tr></table></figure>
 <ol>
 <li>作为 interrupt routine 被调用；发生于 user process <code>read()</code> leading to <em>trap as software interrupt</em> into kernel 的时候</li>
 <li><code>copy_from_user()</code> 读取 user process <code>read()</code>的传入参数</li>
@@ -463,7 +1104,7 @@
 <li>Ask File System to complete relavent operation: <code>do_read()</code></li>
 <li>Copy to user address space with the result at kernel address space</li>
 </ol>
-<h2 id="3-Other-System-API-related-to-Virtual-Memory-System"><a href="#3-Other-System-API-related-to-Virtual-Memory-System" class="headerlink" title="3. Other System API related to Virtual Memory System"></a>3. Other System API related to Virtual Memory System</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_munmap</span><span class="params">(<span class="keyword">munmap_args_t</span> *args)</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">sys_mmap</span><span class="params">(<span class="keyword">mmap_args_t</span> *arg)</span></span></span><br><span class="line"><span class="function">pid_t <span class="title">sys_waitpid</span><span class="params">(<span class="keyword">waitpid_args_t</span> *args)</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">sys_brk</span><span class="params">(<span class="keyword">void</span> *addr)</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sys_sync</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_stat</span><span class="params">(<span class="keyword">stat_args_t</span> *arg)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_fork</span><span class="params">(<span class="keyword">regs_t</span> *regs)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_execve</span><span class="params">(<span class="keyword">execve_args_t</span> *args, <span class="keyword">regs_t</span> *regs)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_kshell</span><span class="params">(<span class="keyword">int</span> ttyid)</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="III-Other-System-API-related-to-Virtual-Memory-System"><a href="#III-Other-System-API-related-to-Virtual-Memory-System" class="headerlink" title="III. Other System API related to Virtual Memory System"></a>III. Other System API related to Virtual Memory System</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_munmap</span><span class="params">(<span class="keyword">munmap_args_t</span> *args)</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">sys_mmap</span><span class="params">(<span class="keyword">mmap_args_t</span> *arg)</span></span></span><br><span class="line"><span class="function">pid_t <span class="title">sys_waitpid</span><span class="params">(<span class="keyword">waitpid_args_t</span> *args)</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">sys_brk</span><span class="params">(<span class="keyword">void</span> *addr)</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sys_sync</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_stat</span><span class="params">(<span class="keyword">stat_args_t</span> *arg)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_fork</span><span class="params">(<span class="keyword">regs_t</span> *regs)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_execve</span><span class="params">(<span class="keyword">execve_args_t</span> *args, <span class="keyword">regs_t</span> *regs)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_kshell</span><span class="params">(<span class="keyword">int</span> ttyid)</span></span></span><br></pre></td></tr></table></figure>
 <p>这些函数与“用户态” Process/ Thread/ Virtual Memory 的操作有关：</p>
 <ol>
 <li>由 user process 发起的 system call： <code>wait()</code></li>
@@ -471,7 +1112,7 @@
 <li>kernel 在调用相应的 system API，代替 user process 执行任务: <code>sys_waitpid()</code></li>
 <li>交给“进程系统” Process&amp; Memory System，来具体处理任务：<code>do_waitpid()</code></li>
 </ol>
-<h2 id="4-Interrupt-handler-for-syscalls"><a href="#4-Interrupt-handler-for-syscalls" class="headerlink" title="4. Interrupt handler for syscalls"></a>4. Interrupt handler for syscalls</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">syscall_handler</span><span class="params">(<span class="keyword">regs_t</span> *regs)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line">很重要的一个函数：</span><br><span class="line"><span class="number">1.</span> 使“用户态”程序在 make syscall 的时候，进入“内核态”</span><br><span class="line"><span class="number">2.</span> 根据 syscall_number，调用相应的 system API</span><br></pre></td></tr></table></figure>
+<h2 id="VI-Interrupt-handler-for-syscalls"><a href="#VI-Interrupt-handler-for-syscalls" class="headerlink" title="VI. Interrupt handler for syscalls"></a>VI. Interrupt handler for syscalls</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">syscall_handler</span><span class="params">(<span class="keyword">regs_t</span> *regs)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line">很重要的一个函数：</span><br><span class="line"><span class="number">1.</span> 使“用户态”程序在 make syscall 的时候，进入“内核态”</span><br><span class="line"><span class="number">2.</span> 根据 syscall_number，调用相应的 system API</span><br></pre></td></tr></table></figure>
 
           
         
@@ -544,7 +1185,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/04/12/page-frame/" itemprop="url">page frame</a></h1>
+                <a class="post-title-link" href="/2018/04/12/page-frame/" itemprop="url">VM - Page Frame</a></h1>
         
 
         <div class="post-meta">
@@ -1151,7 +1792,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/04/02/TEST-File-System/" itemprop="url">TEST: File System</a></h1>
+                <a class="post-title-link" href="/2018/04/02/TEST-File-System/" itemprop="url">FS - TEST: File System</a></h1>
         
 
         <div class="post-meta">
@@ -1794,7 +2435,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/04/01/How-does-OS-load-File-System/" itemprop="url">How does OS load File System</a></h1>
+                <a class="post-title-link" href="/2018/04/01/How-does-OS-load-File-System/" itemprop="url">FS - How does OS load File System</a></h1>
         
 
         <div class="post-meta">
@@ -1979,7 +2620,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/04/01/Vnode-Special-Read-Write-for-byte-device/" itemprop="url">Vnode: Special_Read_Write for byte device</a></h1>
+                <a class="post-title-link" href="/2018/04/01/Vnode-Special-Read-Write-for-byte-device/" itemprop="url">FS - Vnode: Special_Read_Write for byte device</a></h1>
         
 
         <div class="post-meta">
@@ -2140,651 +2781,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/01/RAM-File-System/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/01/RAM-File-System/" itemprop="url">RAM File System</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-01T12:23:19-07:00">2018-04-01</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Courses/" itemprop="url" rel="index"><span itemprop="name">Courses</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/01/RAM-File-System/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/01/RAM-File-System/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="0-What"><a href="#0-What" class="headerlink" title="0. What?"></a>0. What?</h2><p>A specific file system, using RAM<br>提供 file system “统一接口”的”具体实现”，即：Vnode ops函数指针的具体实现</p>
-<h2 id="1-filesystem-structure"><a href="#1-filesystem-structure" class="headerlink" title="1. filesystem structure"></a>1. filesystem structure</h2><ul>
-<li><p>成员变量：相当于 superblock</p>
-  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ramfs</span> &#123;</span></span><br><span class="line">    <span class="keyword">ramfs_inode_t</span> *rfs_inodes[RAMFS_MAX_FILES];  <span class="comment">/*        </span></span><br><span class="line"><span class="comment">    Array of all files */</span></span><br><span class="line">&#125; <span class="keyword">ramfs_t</span>;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>成员函数</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">static fs_ops_t ramfs_ops = &#123;</span><br><span class="line">    .read_vnode   = ramfs_read_vnode,</span><br><span class="line">    .delete_vnode = ramfs_delete_vnode,</span><br><span class="line">    .query_vnode  = ramfs_query_vnode,</span><br><span class="line">    .umount       = ramfs_umount</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<hr>
-<h2 id="2-‘inode’-structure"><a href="#2-‘inode’-structure" class="headerlink" title="2. ‘inode’ structure"></a>2. ‘inode’ structure</h2><h4 id="成员变量：相当于-inode"><a href="#成员变量：相当于-inode" class="headerlink" title="成员变量：相当于 inode"></a>成员变量：相当于 inode</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">typedef struct ramfs_inode &#123;</span><br><span class="line">    off_t     rf_size;       /* Total file size */</span><br><span class="line">    ino_t     rf_ino;        /* Inode number */</span><br><span class="line">    char     *rf_mem;        /* Memory for this file (1 page) */</span><br><span class="line">    int       rf_mode;       /* Type of file */</span><br><span class="line">    int       rf_linkcount;  /* Number of links to this file */</span><br><span class="line">&#125; ramfs_inode_t;</span><br></pre></td></tr></table></figure>
-<h4 id="成员函数"><a href="#成员函数" class="headerlink" title="成员函数:"></a>成员函数:</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">static vnode_ops_t ramfs_dir_vops = &#123;</span><br><span class="line">        .read = NULL,</span><br><span class="line">        .write = NULL,</span><br><span class="line">        .mmap = NULL,</span><br><span class="line">        .create = ramfs_create,</span><br><span class="line">        .mknod = ramfs_mknod,</span><br><span class="line">        .lookup = ramfs_lookup,</span><br><span class="line">        .link = ramfs_link,</span><br><span class="line">        .unlink = ramfs_unlink,</span><br><span class="line">        .mkdir = ramfs_mkdir,</span><br><span class="line">        .rmdir = ramfs_rmdir,</span><br><span class="line">        .readdir = ramfs_readdir,</span><br><span class="line">        .stat = ramfs_stat,</span><br><span class="line">        .fillpage = NULL,</span><br><span class="line">        .dirtypage = NULL,</span><br><span class="line">        .cleanpage = NULL</span><br><span class="line">&#125;;</span><br><span class="line">    </span><br><span class="line">static vnode_ops_t ramfs_file_vops = &#123;</span><br><span class="line">        .read = ramfs_read,</span><br><span class="line">        .write = ramfs_write,</span><br><span class="line">        .mmap = NULL,</span><br><span class="line">        .create = NULL,</span><br><span class="line">        .mknod = NULL,</span><br><span class="line">        .lookup = NULL,</span><br><span class="line">        .link = NULL,</span><br><span class="line">        .unlink = NULL,</span><br><span class="line">        .mkdir = NULL,</span><br><span class="line">        .rmdir = NULL,</span><br><span class="line">        .stat = ramfs_stat,</span><br><span class="line">        .fillpage = NULL,</span><br><span class="line">        .dirtypage = NULL,</span><br><span class="line">        .cleanpage = NULL</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<hr>
-<h2 id="3-Specific-Filesystem-operation"><a href="#3-Specific-Filesystem-operation" class="headerlink" title="3. Specific Filesystem operation"></a>3. Specific Filesystem operation</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">1. void ramfs_read_vnode(vnode_t *vn)</span><br><span class="line"></span><br><span class="line">    - 这一步让 generic vnode 有了生命，具备file system specific operations</span><br><span class="line">    - 根据传入的vnode中的vnum、fs参数;</span><br><span class="line">    - 由该specific file system 对该vnode加载上其自身的 inode信息、vnode_operations等等；</span><br><span class="line">    - 使该 vnode 成为完整的对象</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">2. void ramfs_delete_vnode(vnode_t *vn);</span><br><span class="line">    - 从硬盘删除该inode</span><br><span class="line"></span><br><span class="line">3. int ramfs_query_vnode(vnode_t *vn);</span><br><span class="line">    - 查看该vnode是否在硬盘中有相应的inode</span><br></pre></td></tr></table></figure>
-<hr>
-<h2 id="4-vnode-operation"><a href="#4-vnode-operation" class="headerlink" title="4. vnode operation"></a>4. vnode operation</h2><ol start="0">
-<li><p>entry = VNODE_TO_DIRENT(vndoe dir);<br>拿到该 vnode dir 所属的entry，即 [name:inode_num] pairs<br>需要使用循环，来遍历所有的entry；无法random access</p>
-</li>
-<li><p>ramfs_create(vnode_t *dir, const char *name, size_t name_len, vnode_t **result)</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- 调用ramfs_lookup(),确定该dir中没有‘name’名字的 subdir；  </span><br><span class="line">- 在当前vnode dir中找第一个可用的subdir entry; 一个dir含有的entry不能超过 RAMFS_MAX_DIRENT</span><br><span class="line">- 调用 inode_num=ramfs_alloc_inode() 创建新的inode</span><br><span class="line">- 调用 vget(inode_num)</span><br><span class="line">    - vget中会调用ramfs_read_vnode(vnode_t *vn)该vnode的加载完成</span><br><span class="line">- 设置subdir的名字，完成dir creation</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<ol start="2">
-<li><p>ramfs_mknod(struct vnode *dir, const char *name, size_t name_len, int mode, devid_t devid)</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- 调用ramfs_lookup(),确定该dir中没有‘name’名字的 subdir；  </span><br><span class="line">- 在当前vnode dir中找可用的subdir entry; 一个dir含有的entry不能超过 RAMFS_MAX_DIRENT</span><br><span class="line">- 调用 inode_num=ramfs_alloc_inode() 创建新的inode</span><br><span class="line">- 不需要调用 vget(inode_num)，不需要加载vnode，因为其为特殊的special file【character、bulk】</span><br><span class="line">- 设置subdir的名字，完成dir mknod</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<ol start="3">
-<li><p>ramfs_lookup(vnode_t *dir, const char *name, size_t namelen, vnode_t **result)</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">- 注意：这个函数很重要：是 name resolution 的重要一步；负责从 “name ==&gt; vnode_num ==&gt; vnode” 的解析。</span><br><span class="line">- 也是在这一步，这也是vget()的主要应用场景</span><br><span class="line">- vget()，又会调用 AFS的ramfs_read_vnode(),从而使返回vnode“活起来”，是vnode完整。</span><br><span class="line">- 至此，ramfs_lookup() 完成了 VFS-AFS-VFS 的旅程</span><br><span class="line">- 查看该‘dir&apos;vnode下是否有名字为’name‘的vnode，结果放到result  </span><br><span class="line">- 调用VNODE_TO_RAMFSINODE，根据dir vnode或得 inode</span><br><span class="line">- 遍历该 inode 下属的entries，看是否有该“name”的 entry</span><br><span class="line">- if YES，调用vget(entry.ino_num)返回该vnode到result</span><br><span class="line">- vget中会调用ramfs_read_vnode(vnode_t *vn)该vnode的加载完成</span><br><span class="line">- vget( ) 内部创建一个“半成品”vnode，传入 ramfs_read_vnode( )</span><br><span class="line">- ramfs_read_vnode( ) 根据具体的file system将该vnode中的所有成员函数、成员变量补充完成</span><br><span class="line">- 至此，vget() 返回的vnode是“活的”、完整的</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<ol start="4">
-<li><p>ramfs_link(vnode_t *oldvnode, vnode_t *dir, const char *name, size_t name_len)</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- sets up a hard link. it links oldvnode into dir with the specified name.  </span><br><span class="line">- 调用ramfs_lookup()保证“name”不在“dir”中</span><br><span class="line">- 遍历当前vnode dir，找第一个可用的subdir entry; 一个dir含有的entry不能超过 RAMFS_MAX_DIRENT</span><br><span class="line">- 将新拿到的entry的inode_num，设置为oldvnode的vnode_num</span><br><span class="line">    entry-&gt;rd_ino = oldvnode-&gt;vn_vno;</span><br><span class="line">- 设置名字</span><br><span class="line">    strncpy(entry-&gt;rd_name, name, MIN(name_len, NAME_LEN - 1));</span><br><span class="line">    entry-&gt;rd_name[MIN(name_len, NAME_LEN - 1)] = &apos;\0&apos;;</span><br><span class="line">- 增加 linkcount</span><br><span class="line">    VNODE_TO_RAMFSINODE(oldvnode)-&gt;rf_linkcount++;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>ramfs_unlink(vnode_t *dir, const char *name, size_t namelen)</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- removes the link to the vnode in dir specified by name  </span><br><span class="line">- 调用ramfs_lookup()保证“name”在“dir”中</span><br><span class="line">- 遍历当前vnode dir，找到该entry，并将其名字设置为空</span><br><span class="line">    entry-&gt;rd_name[0] = &apos;\0&apos;;</span><br><span class="line">- 减少 linkcount</span><br><span class="line">    VNODE_TO_RAMFSINODE(oldvnode)-&gt;rf_linkcount++;</span><br><span class="line"></span><br><span class="line">- 调用vput(vn);处理相应的vnode</span><br><span class="line">    - 减少 vn_refcount</span><br><span class="line">    - 当 vn_refcount==0 时候，调用 ramfs_delete_vnode()</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<ol start="6">
-<li><p>ramfs_mkdir(vnode_t *dir, const char *name, size_t name_len)</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- mkdir creates a directory called name in dir</span><br><span class="line">- 调用ramfs_lookup(),确定该dir中没有‘name’名字的 subdir；  </span><br><span class="line">- 在当前vnode dir中找第一个可用的subdir entry; 一个dir含有的entry不能超过 RAMFS_MAX_DIRENT</span><br><span class="line">- 调用 inode_num=ramfs_alloc_inode() 创建新的inode</span><br><span class="line">- Set entry in its parent: dir</span><br><span class="line">    - 关联inode，entry-&gt;rd_ino = inode_num;</span><br><span class="line">    - 设置名字，strncpy(entry-&gt;rd_name, name, MIN(name_len, NAME_LEN - 1));</span><br><span class="line">        entry-&gt;rd_name[MIN(name_len, NAME_LEN - 1)] = &apos;\0&apos;;</span><br><span class="line">- Set up &apos;.&apos; and &apos;..&apos; in the directory</span><br><span class="line">- 设置subdir的名字，完成dir mknod</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>ramfs_rmdir(vnode_t *dir, const char *name, size_t name_len)</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- removes the directory called name from dir. the directory to be removed must be empty (except for . and .. of course).</span><br><span class="line">- 调用ramfs_lookup(),确定该dir中没有‘name’名字的 entry，并获得 inode；</span><br><span class="line">- 调用S_ISDIR(),确保该name是一个directory </span><br><span class="line">- 遍历该inode下的entry，make sure that this directory is empty</span><br><span class="line">- 便利parent dir，找到对应的name，将其删除</span><br><span class="line">    - 删除名字</span><br><span class="line">    - vput(vn)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>ramfs_read(vnode_t *file, off_t offset, void *buf, size_t count)</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- read transfers at most count bytes from file into buf. It begins reading from the file at offset bytes into the file.</span><br><span class="line">- 调用VNODE_TO_RAMFSINODE(),获得vnode对应的inode</span><br><span class="line">- 确保inode不是directory</span><br><span class="line">- 将inode中的内容inode-&gt;rf_mem复制到buf中</span><br><span class="line">     memcpy(buf, inode-&gt;rf_mem + offset, ret);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>ramfs_write(vnode_t *file, off_t offset, const void *buf, size_t count)</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- transfers count bytes from buf into file.</span><br><span class="line">- 调用VNODE_TO_RAMFSINODE(),获得vnode对应的inode</span><br><span class="line">- 确保inode不是directory</span><br><span class="line">- 将buf中的内容复制到inode中的inode-&gt;rf_mem</span><br><span class="line">     memcpy(inode-&gt;rf_mem + offset, buf, ret);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>ramfs_readdir(vnode_t *dir, off_t offset, struct dirent *d)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- 在当前dir中，从offset处，“挨个”读取dir中的entry到数据结构d中；成功读取某个entry后，返回值是下一次调用该函数时应该起始的offset（相当于加了刚刚读取entry/inode的file_size）</span><br><span class="line">- reads one directory entry from the dir into the struct dirent. On success, it returns the amount that offset should be increased by to obtain the next directory entry with a subsequent call to readdir. </span><br><span class="line">- 确保inode是directory</span><br><span class="line">- 将buf中的内容复制到inode中的inode-&gt;rf_mem</span><br><span class="line">     memcpy(inode-&gt;rf_mem + offset, buf, ret);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>ramfs_stat(vnode_t *file, struct stat *buf)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- sets the fields in the given buf, filling it with information about file</span><br><span class="line">- 在 stat 中填入各种统计信息</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/01/File-System-Name-Resolution/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/01/File-System-Name-Resolution/" itemprop="url">File System: Name Resolution</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-01T12:21:30-07:00">2018-04-01</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Courses/" itemprop="url" rel="index"><span itemprop="name">Courses</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/01/File-System-Name-Resolution/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/01/File-System-Name-Resolution/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="lookup"><a href="#lookup" class="headerlink" title="lookup()"></a>lookup()</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int lookup(vnode_t *dir,  char *name, </span><br><span class="line">           size_t   len,  vnode_t **result)</span><br></pre></td></tr></table></figure>
-<h4 id="1-使-vnode-“活”起来"><a href="#1-使-vnode-“活”起来" class="headerlink" title="1. 使 vnode “活”起来"></a>1. 使 vnode “活”起来</h4><p>lookup()、vget()、ramfs_read_vnode() 一起使 vnode “活起来，成为完整 vnode”</p>
-<h4 id="2-lookup-流程："><a href="#2-lookup-流程：" class="headerlink" title="2. lookup 流程："></a>2. lookup 流程：</h4><p>在给定的 dir_vnode 下，查找是否存在名字是”name”的 vnode</p>
-<ul>
-<li>先调用 <strong><em>ramfs_lookup( )</em></strong> 查找 dir_vnode 下是否有相应 entry</li>
-<li>后根据 entry.ino，调用<strong><em>vget(fs,ino)</em></strong> 查找该 inode_num对应的 inode<ol>
-<li>if exist, 更新 refcount， 直接返回 vnode</li>
-<li>if none, 创建 new vnode，填充部分信息；传给ramfs_read_vnode()</li>
-</ol>
-</li>
-<li>调用 <strong><em>ramfs_read_vnode( )</em></strong> 获得完整vnode</li>
-</ul>
-<h4 id="3-name-resolution-虚实连接、递归查找"><a href="#3-name-resolution-虚实连接、递归查找" class="headerlink" title="3. name resolution: 虚实连接、递归查找"></a>3. name resolution: 虚实连接、递归查找</h4><ul>
-<li>lookup() 会调用 ramfs_lookup (a specific FS)，由AFS代为查找</li>
-<li>递归进行name resolution：查找到相应的inode之后，继续以得到的inode查找下一个那么，</li>
-</ul>
-<h2 id="dir-namev"><a href="#dir-namev" class="headerlink" title="dir_namev()"></a>dir_namev()</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int dir_namev(const char *pathname, size_t *namelen, </span><br><span class="line">              const char **name, vnode_t *base, </span><br><span class="line">              vnode_t **res_vnode)</span><br></pre></td></tr></table></figure>
-<h4 id="1-man-dirname"><a href="#1-man-dirname" class="headerlink" title="1. man dirname"></a>1. man dirname</h4><blockquote>
-<p>it deletes the filename portion, beginning with the last slash ‘/‘ character to the end of string (after first stripping trailing slashes), and writes the result to the standard output.</p>
-</blockquote>
-<ul>
-<li>提取 pathname 的 <strong>parent directory inode</strong>；  </li>
-<li>同时保存最后一级 <strong>directory/file 的 name</strong>  </li>
-</ul>
-<h4 id="2-三个例子："><a href="#2-三个例子：" class="headerlink" title="2. 三个例子："></a>2. 三个例子：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1. 正常情况</span><br><span class="line">$ dirname /Users/kevin/Desktop/html-DOM.jpg </span><br><span class="line">/Users/kevin/Desktop</span><br><span class="line"></span><br><span class="line">2. 即便文件名字后边有 “／”，会先将“／”去掉</span><br><span class="line">$ dirname /Users/kevin/Desktop/html-DOM.jpg/</span><br><span class="line">/Users/kevin/Desktop</span><br><span class="line"></span><br><span class="line">3. 不但对文件(file)适用，对目录(directory)也适用</span><br><span class="line">$ dirname /Users/kevin/Desktop/</span><br><span class="line">/Users/kevin</span><br></pre></td></tr></table></figure>
-<h4 id="3-refcount"><a href="#3-refcount" class="headerlink" title="3. refcount"></a>3. refcount</h4><ul>
-<li><p>该函数如果成功返回的话，会使 res_vnode，也就是parent directory inode的 refcount++</p>
-</li>
-<li><p>因为函数内部会逐级调用 lookup() 进行 AFS call 以及  vput(base) 来抵消lookup(base)，给每级base带来的refcount++</p>
-</li>
-<li>但是lookup()找到了parent directory inode 的时候，刻意不调用vput(base)，是最后一级(即res_vnode)的refcount加“1”</li>
-<li>这是有原因的：用户调用dir_namev()，就是要对这个dir就行操作的，需要停留在这里，因此需要对硬盘中相应的对象做相应的refcount更新</li>
-</ul>
-<h4 id="4-dir-name-流程"><a href="#4-dir-name-流程" class="headerlink" title="4. dir_name() 流程"></a>4. dir_name() 流程</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int dir_namev(const char *pathname, size_t *namelen, </span><br><span class="line">              const char **name, vnode_t *base, </span><br><span class="line">              vnode_t **res_vnode)</span><br></pre></td></tr></table></figure>
-<ol>
-<li>根据 <strong><em>base</em></strong> 的值确定查找的起始节点<ul>
-<li>base == NULL, base = curproc -&gt; p_cwd;</li>
-<li>如果 pathname 以 “/“ 开始，忽略 base 的值；base = vfs_root_vn;</li>
-</ul>
-</li>
-<li>更新 base 的refcount =&gt; vref(base);</li>
-<li>依次提取 pathname 中 name 部分，在当前 base inode 下查找是否存在对应 entry<ul>
-<li>维护一个 start_ptr：指向”/“之后第一个位置</li>
-<li>维护一个 end_ptr： 指向下个”/“之前第一个位置</li>
-<li>[start, end] 之间就是 name 部分</li>
-</ul>
-</li>
-<li>调用 lookup 查找该 base vnode之下，是否有 name 的 vnode<ul>
-<li>返回值 != 0, 失败，提前return</li>
-<li>返回值 == 0, 成功，递归查询下一级 name</li>
-<li>更新本次查询使用的 base 的refcount</li>
-</ul>
-</li>
-<li>递归查询：将此次得到的 vnode 设置为下一次查询的 base</li>
-<li>直到start_ptr &gt;= len，表明路径解析完成，跳出<ul>
-<li>注意：在循环中的 lookup() 之前跳出</li>
-<li>因为这是查找上级 dir inode，并非查找最后一级inode</li>
-</ul>
-</li>
-<li>检查最后得到的 inode 是否为 directory</li>
-<li>填充相应的返回值；返回 0(成功)</li>
-</ol>
-<h2 id="open-namev"><a href="#open-namev" class="headerlink" title="open_namev()"></a>open_namev()</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">int open_namev(const char *pathname, int flag, </span><br><span class="line">               vnode_t **res_vnode, vnode_t *base)</span><br><span class="line"></span><br><span class="line">- 输入：</span><br><span class="line">    + pathname：指定要打开的绝对路径</span><br><span class="line">    + flag=O_CREAT &amp;&amp; name 不存在，那么创建新的</span><br><span class="line">    + base：指定从那个vnode 目录下开始解析路径</span><br><span class="line">    </span><br><span class="line">- 输出：将打开的 vnode 存在 res_vnode 中</span><br></pre></td></tr></table></figure>
-<h4 id="1-man-open"><a href="#1-man-open" class="headerlink" title="1. man open"></a>1. man open</h4><blockquote>
-<p>opens a file, a directory or even an URL, just as if you had double-clicked the file’s icon</p>
-</blockquote>
-<ul>
-<li>打开一个文件/目录/URL，相当于 Linux 的 open 指令</li>
-<li>open_namev = dir_namev + lookup + (create)</li>
-</ul>
-<h4 id="2-open-namev-流程"><a href="#2-open-namev-流程" class="headerlink" title="2. open_namev 流程"></a>2. open_namev 流程</h4><ol>
-<li>调用 dir_namev() 解析 pathname<ul>
-<li>retcode = dir_namev(pathname, &amp;namelen, &amp;name, base, &amp;dir);</li>
-<li>输入参数的错误处理由 dir_namev() 解决了</li>
-<li>检查返回值，如果没错误，更新 refcount</li>
-<li>继续下一步</li>
-</ul>
-</li>
-<li>根据刚得到的dir，调用 lookup() 打开dir下的该vnode<ul>
-<li>retVal = lookup(*dir,name,len,res_vnode);</li>
-<li>如果存在的话：将 vnode 返回到 res_vnode 中</li>
-<li>如果不存在的话，同时又满足(flag &amp; O_CREAT) == O_CREAT，那就创建新的vnode<ul>
-<li>调用(*dir)-&gt;vn_ops-&gt;create(*dir,name,len,res_vnode);</li>
-</ul>
-</li>
-<li>return retval</li>
-</ul>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/01/VFS-system-call/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/01/VFS-system-call/" itemprop="url">VFS system call</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-01T00:38:52-07:00">2018-04-01</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Courses/" itemprop="url" rel="index"><span itemprop="name">Courses</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/01/VFS-system-call/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/01/VFS-system-call/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="VFS-system-call"><a href="#VFS-system-call" class="headerlink" title="VFS system call"></a>VFS system call</h3><ol>
-<li>Interfaces for specific File Systems, like ramfs, s5fs. </li>
-<li>在Linux中，文件名字没有缀；“file”与“directory”无区别</li>
-<li>所有涉及“绝对路径”最后一级拆分的，会先将trailing “/” 去掉</li>
-<li>lookup()这个函数作用巨大:<ul>
-<li><strong>在dir_inode中，找名字是“name”的entry，并把该entry变为vnode放到result中</strong></li>
-<li><strong>ramfs_lookup =&gt; entry =&gt; vget(entry) =&gt; ramfs_read_vnode(vnode) =&gt; 完整vnode</strong></li>
-<li><strong>VFS-AFS-VFS: “虚、实连接的小能手”</strong></li>
-<li><strong>递归进行name resolution</strong><ul>
-<li>问 parent inode：你是否包含名字为“name”的entry？</li>
-<li>if Yes，把该entry以 child inode的形式返回</li>
-<li>递归进行lookup，直至找到目标name的inode</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>以vn_mode来区别inode的类型** </p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">S_IFDIR  directory   </span><br><span class="line">S_IFREG  regular   </span><br><span class="line">S_IFLNK  symlink  </span><br><span class="line">S_IFCHR  character special  </span><br><span class="line">S_IFBLK  block special</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>为什么 dir_namev() 与 lookup() 一起使用？直接使用open_namev()可以么？？</p>
-</li>
-</ol>
-<h3 id="1-open"><a href="#1-open" class="headerlink" title="1. open"></a>1. open</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">int do_open(const char *filename, int oflags)</span><br><span class="line"></span><br><span class="line">输入：</span><br><span class="line">    user process 传入的 filename</span><br><span class="line">    user process 传入的 oflags: READ | WRITE | APPEND</span><br><span class="line">输出： fd（ 可以是 file／directory ）</span><br><span class="line"></span><br><span class="line">0. 设置 f_mode 有点麻烦：</span><br><span class="line">    - f_mode 由传入的 oflags 的位信息组合而成三种结果：</span><br><span class="line">        + FMODE_READ    1</span><br><span class="line">        + FMODE_WRITE   2</span><br><span class="line">        + FMODE_APPEND  4</span><br><span class="line">    - oflags 有以下必须有以下前三者中一个；</span><br><span class="line">       额外有creat bit、以及status bit</span><br><span class="line">      (只需考虑O_CREAT，O_TRUNC跟随O_CREAT)：</span><br><span class="line">        + O_RDONLY   0</span><br><span class="line">        + O_WRONLY   1</span><br><span class="line">        + O_RDWR     2</span><br><span class="line">        + O_CREAT    0x100 /* Create if non-exist */</span><br><span class="line">        + O_TRUNC    0x200 /* Truncate to 0-length */</span><br><span class="line">        + O_APPEND   0x400   /* Append to file. *／</span><br><span class="line">    - 注意：O_CREAT 不必写到 f_mode 中去；这里的O_CREAT是</span><br><span class="line">           告知 kernel：如没有此文件，帮我创建一个；而新建</span><br><span class="line">           是由 open_namev() 根据 oflags=O_CREAT 执行的</span><br><span class="line">    - 设置 f_mode 流程：</span><br><span class="line">        + 首先，通过“与运算&amp;”，取得oflags 低位的位信息；</span><br><span class="line">        + 若不是 RD/WR/RDWR中的任一个，返回-EINVAL</span><br><span class="line">        + 若合法，则使用 if-else 将后三位确定；</span><br><span class="line">        + 然后，获得高位的位信息，取得creat/status bit</span><br><span class="line">        + 若是 O_APPEND,当前f_mode“或运算|”上O_APPEND位</span><br><span class="line">        + 不必考虑是否为 O_CREAT，open_namev()会检查</span><br><span class="line">        + 如果不是其中任何一个，高位置 “0”</span><br><span class="line">        + 使用 if-else 设置高位信息</span><br><span class="line">1. 获得可用的 fd</span><br><span class="line">2. 获得新的 open_file_conn(kernel全局唯一的open file table)</span><br><span class="line">3. 更新 curproc-&gt;p_file[fd] = open_file_conn</span><br><span class="line">4. 检查 file mode， based on oflags</span><br><span class="line">5. 调用 open_namev(filename, oflags, &amp;vno, NULL)</span><br><span class="line">    - open_namev()调用 path_namev()</span><br><span class="line">    - open_namev()调用 lookup() 通用接口</span><br><span class="line">    - lookup() 通用接口调用 specific FS ramfs_lookup()</span><br><span class="line">    - specific FS ramfs_lookup() 在当前 vnode 下，查找名字是“name”的 vnode，将结果存到result中</span><br><span class="line">    - specific FS ramfs_lookup()找到了该“name”的entry，根据&quot;name:vnode_num&quot; pair，再次调用 vget(vnode_num)</span><br><span class="line">    - vget中会调用ramfs_read_vnode(vnode_t *vn)该vnode的加载完成</span><br><span class="line">    - vget( ) 内部创建一个“半成品”vnode，传入 ramfs_read_vnode( )</span><br><span class="line">    - ramfs_read_vnode( ) 根据具体的file system将该vnode中的所有成员函数、成员变量补充完成</span><br><span class="line">6. 至此，open_namev() 得到的vnode是“活的”、完整的</span><br><span class="line">7. 最后，do_open中将open_conn的vnode指针指向刚刚创建的vnode</span><br><span class="line">     f-&gt;f_vnode = vnode;</span><br></pre></td></tr></table></figure>
-<h3 id="2-read"><a href="#2-read" class="headerlink" title="2. read"></a>2. read</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">int do_read(int fd, void *buf, size_t nbytes)</span><br><span class="line"></span><br><span class="line">输入：</span><br><span class="line">    user process 传入的 fd</span><br><span class="line">    user process 传入的 buf，用以接受从 file 读取的内容</span><br><span class="line">    user process 传入的 nbytes，指明需要读的字节数</span><br><span class="line">输出： 实际读入字节数、or 错误信息</span><br><span class="line"></span><br><span class="line">0. 检查传入参数是否正确</span><br><span class="line">1. 调用 fget(fd) 获得由OS维护的全局唯一的open_conn_table中对应的 file_conn</span><br><span class="line">    - fget()会自动对该file_conn执行refcount++</span><br><span class="line">2. 检查获得的file_conn，是否valid</span><br><span class="line">    - 检查该file是否“可读”：return -EBADF;</span><br><span class="line">    - 检查该file是否是“dir”，而非“data”：return -EISDIR;</span><br><span class="line">3. 通过 file_conn-&gt;f_vnode，获得 vnode_table中的 vnode entry,</span><br><span class="line">4. 调用获得的vnode的 vn_ops(函数指针) 中的对应的 read()</span><br><span class="line">    - 虽然这里的 read() 为抽象的接口，</span><br><span class="line">    - 但是在do_open()的时候specific FS 的read()已实现了该接口</span><br><span class="line">5. 读操作完成后，需要移动 open_conn中的f_pos指针</span><br><span class="line">6. 最后，调用fput()，更新 f_refcount；返回读操作的字节数</span><br></pre></td></tr></table></figure>
-<h3 id="3-write"><a href="#3-write" class="headerlink" title="3. write"></a>3. write</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">int do_write(int fd, const void *buf, size_t nbytes)</span><br><span class="line"></span><br><span class="line">输入： </span><br><span class="line">    user process 传入的 fd</span><br><span class="line">    user process 传入的 buf，用从buf向 file 写数据</span><br><span class="line">    user process 传入的 nbytes，指明需要写的字节数</span><br><span class="line">输出： 实际写字节数、or 错误信息</span><br><span class="line"></span><br><span class="line">0. 检查传入参数是否正确</span><br><span class="line">1. 调用 fget(fd) 获得由OS维护的全局唯一的open_conn_table中对应的 file_conn</span><br><span class="line">    - fget()会自动对该file_conn执行refcount++</span><br><span class="line">2. 检查获得的file_conn，是否valid</span><br><span class="line">    - 检查该file是否“可写”：return -EBADF;</span><br><span class="line">    - 检查该file是否是“dir”，而非“data”：return -EISDIR;</span><br><span class="line">    - 同时应该检查是否为APPEND模式，需要调用do_lseek()重置cursor</span><br><span class="line">3. 通过 file_conn-&gt;f_vnode，获得 vnode_table中的 vnode entry</span><br><span class="line">4. 调用获得的vnode的 vn_ops(函数指针) 中的对应的 write()</span><br><span class="line">    - 虽然这里的 read() 为抽象的接口，</span><br><span class="line">    - 但是在do_open()的时候specific FS 的read()已实现了该接口</span><br><span class="line">5. 写操作完成后，需要移动 open_conn中的f_pos指针</span><br><span class="line">6. 最后，调用fput()，更新 f_refcount； 返回写操作的字节数</span><br></pre></td></tr></table></figure>
-<h3 id="4-close"><a href="#4-close" class="headerlink" title="4. close"></a>4. close</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">输入：user process 传入的 fd</span><br><span class="line">输出： 0-成功；(-EBADF)-失败</span><br><span class="line"></span><br><span class="line">1. 检查传入参数正确性</span><br><span class="line">2. 更新 fd 对应的 open_conn 的信息</span><br><span class="line">    - fput( curproc-&gt;p_files[fd] )</span><br><span class="line">        + f-&gt;f_refcount--;</span><br><span class="line">        + if(f-&gt;f_refcount==0) vput(curproc-&gt;p_files[fd]-&gt;f_vnode)</span><br><span class="line">3. 将该process的fd table中该fd 置为 NULL</span><br><span class="line">4. 返回 0 ：成功</span><br></pre></td></tr></table></figure>
-<h3 id="5-duplicate-a-file-descriptor"><a href="#5-duplicate-a-file-descriptor" class="headerlink" title="5. duplicate a file_descriptor"></a>5. duplicate a file_descriptor</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">int do_dup(int fd)</span><br><span class="line"></span><br><span class="line">输入：user process 传入的 fd</span><br><span class="line">输出： fd   OR  (-EBADF)-失败 </span><br><span class="line"></span><br><span class="line">1. 检查传入参数正确性</span><br><span class="line">2. 获得该 fd 对应的 open_conn</span><br><span class="line">    - file_t *file = fget(fd);</span><br><span class="line">3. 获得下一个可用的 fd</span><br><span class="line">    - availFd = get_empty_fd(curproc);</span><br><span class="line">4. 更新该 process 的 fd table 中 fd 对应的 open_conn</span><br><span class="line">    - curproc-&gt;p_files[availFd] = file;</span><br><span class="line">5. 返回 availFd</span><br></pre></td></tr></table></figure>
-<h3 id="6-duplicate-with-a-designated-file-descriptor"><a href="#6-duplicate-with-a-designated-file-descriptor" class="headerlink" title="6. duplicate with a designated file_descriptor"></a>6. duplicate with a designated file_descriptor</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">int do_dup2(int ofd, int nfd)</span><br><span class="line"></span><br><span class="line">输入：user process 传入的 fd</span><br><span class="line">输出： nfd   OR  (-EBADF)-失败 </span><br><span class="line"></span><br><span class="line">1. 检查传入参数正确性</span><br><span class="line">2. 获得该 fd 对应的 open_conn</span><br><span class="line">    - file_t *file = fget(fd);</span><br><span class="line">3. 检查 nfd</span><br><span class="line">    - 如果 ofd==nfd， 需要fput(file)，因为之前fget()了，  </span><br><span class="line">      导致open_conn的refcount增加了；这里是同一个fd，要再变回去</span><br><span class="line">    - 如果 nfd 在使用中：curproc-&gt;p_files[nfd] != NULL</span><br><span class="line">      那么需要先将nfd原来对应的 open_conn 关了</span><br><span class="line">        + do_close(nfd);</span><br><span class="line">4. curproc-&gt;p_files[nfd] = file;</span><br><span class="line">5. 返回 nfd</span><br></pre></td></tr></table></figure>
-<h3 id="7-mknode"><a href="#7-mknode" class="headerlink" title="7. mknode"></a>7. mknode</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">int do_mknod(const char *path, int mode, unsigned devid)</span><br><span class="line"></span><br><span class="line">输入：path(node的绝对路径) | mode(S_IFCHR／S_IFBLK) |  devid(device identifier 对应该 node)</span><br><span class="line">输出： 0:成功  负数：失败</span><br><span class="line"></span><br><span class="line">1. 检查输入参数的正确性</span><br><span class="line">    - 检查mode，必须只能在 S_IFCHR／S_IFBLK 两者之中取值</span><br><span class="line">    - 检查path，不能超过 path_name 的最大长度</span><br><span class="line">2. 获得该path对应的vnode，通过调用 dir_namev()</span><br><span class="line">    - retval = dir_namev(path,&amp;nameLen,&amp;name,NULL,&amp;dir);</span><br><span class="line">    - 该dir路径不是我们想要驻足操作的地方，只是“瞟一眼”</span><br><span class="line">        + vput(dir)：因为dir_namev()会将dir的refcount++</span><br><span class="line">    - 检查该 path 是否合法；不合法的话提前return</span><br><span class="line">3. 检查最后一级目录(dir)下是否已经有名字为name的目录</span><br><span class="line">    - value_lookup = lookup(dir,name,nameLen,&amp;result);</span><br><span class="line">4. 如果有的话，value_lookup==0，表明最后一级路径不合法</span><br><span class="line">    - vput(result)：因为lookup()会讲result的refcount++</span><br><span class="line">5. 如果没有的话：value_lookup==-ENOENT，这是我们期望的情况：</span><br><span class="line">    - 在当前result directory下调用 specific FS 的 mknod()创建相应node；</span><br><span class="line">    - 返回</span><br><span class="line">6. 【注意】熊的版本</span><br><span class="line">    - vput() 不必写那么麻烦，写在最外层即可</span><br></pre></td></tr></table></figure>
-<h3 id="8-make-directory"><a href="#8-make-directory" class="headerlink" title="8. make directory"></a>8. make directory</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">int do_mkdir(const char *path)</span><br><span class="line"></span><br><span class="line">输入：user process 传入的path(创建的node放在哪)</span><br><span class="line">输出： specific FS的返回值</span><br><span class="line"></span><br><span class="line">1. Use dir_namev() to find the vnode of the dir we want to make the new directory in.  </span><br><span class="line"></span><br><span class="line">2. Then use lookup() to make sure it doesn&apos;t already exist.</span><br><span class="line"></span><br><span class="line">3. Finally call the dir&apos;s mkdir vn_ops. Return what it returns.</span><br></pre></td></tr></table></figure>
-<h3 id="9-remove-directory"><a href="#9-remove-directory" class="headerlink" title="9. remove directory"></a>9. remove directory</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">int do_rmdir(const char *path)</span><br><span class="line"></span><br><span class="line">输入：user process 传入的path(最后一级是要将被删除的)</span><br><span class="line">输出：specific FS的返回值</span><br><span class="line"></span><br><span class="line">0. 删除 directory ( 下一条就是 删除 file )</span><br><span class="line">    - 删除dir的操作是： target dir 的 parent dir 根据 target dir&apos;s name 执行删除操作</span><br><span class="line">    - 不需考虑 target dir是否存在，parent dir的rmdir会handle（如下边的do_unlink()不一样）</span><br><span class="line">1. 调用 dir_namev() 获得path最后一级vnode的parent directory</span><br><span class="line">    - Use dir_namev() to find the vnode of the directory containing the dir to be removed.</span><br><span class="line">2. 检查 dir_namev()的返回值，根据情况处理Error</span><br><span class="line">3. 根据返回的vnode，调用specific FS 的rmdir()</span><br><span class="line">    - call the containing dir&apos;s rmdir() v_op</span><br><span class="line">    - 注意 name 不能是 &quot;.&quot; or &quot;..&quot;</span><br><span class="line">    - 调用 value_remove = dir-&gt;vn_ops-&gt;rmdir(dir, name, namelen);</span><br><span class="line">4. 最后 处理 dir的 refcount</span><br><span class="line">    - vput(dir);</span><br></pre></td></tr></table></figure>
-<h3 id="10-unlink"><a href="#10-unlink" class="headerlink" title="10. unlink"></a>10. unlink</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">int do_unlink(const char *path)</span><br><span class="line"></span><br><span class="line">输入：user process 传入的path(最后的file是要将被删除的)</span><br><span class="line">输出：specific FS的返回值</span><br><span class="line"></span><br><span class="line">0. 删除 file ( 上一条就是 删除 directory )</span><br><span class="line">    - 删除file的操作是： target dir 的 parent dir 根据 target file&apos;s name 执行删除操作</span><br><span class="line">    - 需要考虑 target file是否存在，在调用parent dir的unlink()（如下边的do_rmdir()不一样）</span><br><span class="line">1. 调用 dir = dir_namev() 获得目标 file 的dir；</span><br><span class="line">    - 如果有错误，提前返回</span><br><span class="line">    - 没有错误，vput(dir);</span><br><span class="line">2. 调用 lookup(dir,name,&amp;result)检查 目标file是否存在于该dir下</span><br><span class="line">    - 不存在的话，提前返回</span><br><span class="line">    - 如果该file是一个directory的话，vput(file)，提前返回</span><br><span class="line">3. 根据返回的dir vnode，调用specific FS 的unlink()</span><br><span class="line">    - call the containing dir&apos;s unlink() v_op</span><br><span class="line">4. 最后 处理 dir的 refcount</span><br><span class="line">    - vput(result);</span><br></pre></td></tr></table></figure>
-<h3 id="11-link"><a href="#11-link" class="headerlink" title="11. link"></a>11. link</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">int do_link(const char *from, const char *to)</span><br><span class="line"></span><br><span class="line">【注意1】这里的link是hard link，就是源文件如果删除了，  </span><br><span class="line">那么被hard link的file不会一同消失，复制的文件靠hard link</span><br><span class="line">(即vnode中也存了一个指向硬盘中对应data block的inode的指针)</span><br><span class="line">与硬盘中的inode建立了联系</span><br><span class="line">【注意2】hard link的源文件只能是 file，不能是dir</span><br><span class="line">输入：源文件绝对路径from、目标路径to</span><br><span class="line">输出：0:成功； 负数：失败</span><br><span class="line"></span><br><span class="line">1. 调用open_namev(from)，获得源文件file的 vnode</span><br><span class="line">    - 检查源文件的 vnode，确保是file，不是dir</span><br><span class="line">2. 调用dir_namev(to)，获得目标路径dir，以及银的文件名name</span><br><span class="line">    - value_tolink = dir_namev(to, &amp;namelen, &amp;name, NULL, &amp;to_dir)</span><br><span class="line"></span><br><span class="line">3. 调用 lookup()，检查目标dir下，是否已经存在 名字是name的inode</span><br><span class="line">    - 如果已经存在，提前返回</span><br><span class="line">    - 如果不存在，执行下一步</span><br><span class="line">4. 调用 specific FS 的 link() 操作</span><br><span class="line">    - to_dir -&gt; vn_ops -&gt; link(from_vnode, to_dir, name, namelen)</span><br><span class="line">5. 注意 from_vnode、to_dir 的refcount值</span><br></pre></td></tr></table></figure>
-<h3 id="12-rename"><a href="#12-rename" class="headerlink" title="12. rename"></a>12. rename</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">int do_rename(const char *oldname, const char *newname)</span><br><span class="line"></span><br><span class="line">【注意】这里不是改名字！！而是修改“硬盘文件”在file system中的绝对路径</span><br><span class="line"></span><br><span class="line">输入：旧文件绝对路径oldname、旧文件绝对路径newname</span><br><span class="line">输出：unlink()的返回值</span><br><span class="line"></span><br><span class="line">1. 调用 do_link()，对旧文件建立一个hardlink到新文件</span><br><span class="line">    - 检查hardlink是否创建成功</span><br><span class="line">2. 调用 do_unlink()，将旧文件删除</span><br><span class="line">3. 返回 do_unlink() 的返回值</span><br></pre></td></tr></table></figure>
-<h3 id="13-change-dir"><a href="#13-change-dir" class="headerlink" title="13. change dir"></a>13. change dir</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">int do_chdir(const char *path)</span><br><span class="line"></span><br><span class="line">输入：当前process的新cwd的绝对路径</span><br><span class="line">输出： 0:成功  负值：失败</span><br><span class="line"></span><br><span class="line">【注意】改变current working directory，</span><br><span class="line">       实际上是改变 process中vnode的指针</span><br><span class="line"></span><br><span class="line">1. 调用open_namev()获得新cwd的vnode</span><br><span class="line">    - 检查返回值是否valid</span><br><span class="line">    - 检查该vnode，确保其实dir，非file</span><br><span class="line">2. 更新之前的cwd的refcount</span><br><span class="line">    - vput(curproc-&gt;p_cwd);</span><br><span class="line">3. 更新process 的cwd</span><br><span class="line">    - curproc-&gt;p_cwd = vno;</span><br></pre></td></tr></table></figure>
-<h3 id="14-get-dir-entry"><a href="#14-get-dir-entry" class="headerlink" title="14. get dir entry"></a>14. get dir entry</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">int do_getdent(int fd, struct dirent *dirp)</span><br><span class="line"></span><br><span class="line">- 操作目录：给定文件，依次读取目录到 dirp 中</span><br><span class="line">- 与之前的 read、write直接对文件操作不同，这是对“directory entry”的操作</span><br><span class="line">- 使用场景：搜索第8个目标子目录，对该目录依次调用8次该函数</span><br><span class="line"></span><br><span class="line">输入：fd、dirp（下面的三个信息作为成员变量存在dirp中）</span><br><span class="line">输出：returns the amount that offset should be increased by to obtain the next directory entry with a subsequent call to readdir</span><br><span class="line">【注意0】每个FS的 dir_inode 实际上维护着一个entry array，</span><br><span class="line">        但是总数有上限：RAMFS_MAX_DIRENT；</span><br><span class="line">        因此只要一直调用do_getdent()，有可能读到 NULL值</span><br><span class="line">        即：“没有entry了怎么办？管他呢！一直读。。。”</span><br><span class="line">        [====Oh my god！不是很确定。。。]</span><br><span class="line">        </span><br><span class="line">【注意1】从fd所代表的directory依次读取它里边的entry；</span><br><span class="line">        开始时从头读取entry，信息放到dirp结构体中；</span><br><span class="line">        之后entry的读取起始位置offset，</span><br><span class="line">        会由上一次该函数的调用自动更新f_pos += ent_size;，</span><br><span class="line">        从而实现顺序读取entry的目的</span><br><span class="line">【注意2】这个函数比较叼～</span><br><span class="line">       - 读取到fd对应的inode下的entry的 name（ 不论 file／dir ）</span><br><span class="line">       - 读取到了这个file在硬盘中对应的 entry inode number</span><br><span class="line">       - 读取到该目录下一个 entry的起始offset</span><br><span class="line"></span><br><span class="line">1. 调用fget()获得 open_conn</span><br><span class="line">2. 由open_conn进而获得 vnode</span><br><span class="line">3. 由vnode进而调用 specific FB的 readdir()，获得第一个 entry，存到dirp</span><br></pre></td></tr></table></figure>
-<h3 id="15-lseek"><a href="#15-lseek" class="headerlink" title="15. lseek"></a>15. lseek</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">int do_lseek(int fd, int offset, int whence)</span><br><span class="line"></span><br><span class="line">输入：fd、偏移量offset、从哪里计算偏移whence</span><br><span class="line">输出： 0:成功</span><br><span class="line"></span><br><span class="line">1. 调用 fget() 获得 open_conn</span><br><span class="line">2. 直接对相应的 open_conn进行操作，不需要往下深入到vnode</span><br><span class="line">3. 根据 whence 情况，设定 new_cursor</span><br><span class="line">    - whence==SEEK_SET， new_pos = offset;</span><br><span class="line">    - whence==SEEK_CUR，new_pos = file-&gt;f_pos + offset; </span><br><span class="line">    - whence==SEEK_END，new_pos = file-&gt;f_vnode-&gt;vn_len + offset;</span><br><span class="line">    - else，出错了。fput()</span><br><span class="line">4. 更新open_conn的f_pos、以及refcount</span><br><span class="line">    - file-&gt;f_pos = new_pos;</span><br><span class="line">    - fput(file);</span><br></pre></td></tr></table></figure>
-<h3 id="16-statistic"><a href="#16-statistic" class="headerlink" title="16. statistic"></a>16. statistic</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">int do_stat(const char *path, struct stat *buf)</span><br><span class="line"></span><br><span class="line">输入：需要统计的绝对路径path、用于存储统计信息的stat</span><br><span class="line">输出：specific FS 的stat()返回值</span><br><span class="line"></span><br><span class="line">1. 调用open_namev()，获得该path的vnode</span><br><span class="line">    - open_namev(path, 0,&amp;res_vnode,NULL);</span><br><span class="line">    - 检查返回值</span><br><span class="line">2. 由拿到的 vnode，调用specific FS的stat()</span><br><span class="line">    -  res_vnode-&gt;vn_ops-&gt;stat(res_vnode, buf);</span><br><span class="line">3. 更新res_vnode的refcount</span><br><span class="line">    -  vput(res_vnode);</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -2831,7 +2832,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-count">21</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

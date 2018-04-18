@@ -99,17 +99,17 @@
 
 
 
-  <meta name="description" content="1. An Example: read( ) User space: User process makes read() system call Interrupt: This will trap into kernel by software interrupt System API: Kernel executes its interrupt handler, in which sys_rea">
+  <meta name="description" content="I. An Example: read( ) User space: User process makes read() system call Interrupt: This will trap into kernel by software interrupt System API: Kernel executes its interrupt handler, in which sys_rea">
 <meta name="keywords" content="OS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="How Does Kernel Handle System Calls">
 <meta property="og:url" content="http://yoursite.com/2018/04/13/How-Does-Kernel-Handle-System-Calls/index.html">
 <meta property="og:site_name" content="CMK">
-<meta property="og:description" content="1. An Example: read( ) User space: User process makes read() system call Interrupt: This will trap into kernel by software interrupt System API: Kernel executes its interrupt handler, in which sys_rea">
-<meta property="og:updated_time" content="2018-04-13T23:13:47.000Z">
+<meta property="og:description" content="I. An Example: read( ) User space: User process makes read() system call Interrupt: This will trap into kernel by software interrupt System API: Kernel executes its interrupt handler, in which sys_rea">
+<meta property="og:updated_time" content="2018-04-14T17:34:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="How Does Kernel Handle System Calls">
-<meta name="twitter:description" content="1. An Example: read( ) User space: User process makes read() system call Interrupt: This will trap into kernel by software interrupt System API: Kernel executes its interrupt handler, in which sys_rea">
+<meta name="twitter:description" content="I. An Example: read( ) User space: User process makes read() system call Interrupt: This will trap into kernel by software interrupt System API: Kernel executes its interrupt handler, in which sys_rea">
 
 
 
@@ -413,7 +413,7 @@
       
 
       
-        <h2 id="1-An-Example-read"><a href="#1-An-Example-read" class="headerlink" title="1. An Example: read( )"></a>1. An Example: read( )</h2><ol>
+        <h2 id="I-An-Example-read"><a href="#I-An-Example-read" class="headerlink" title="I. An Example: read( )"></a>I. An Example: read( )</h2><ol>
 <li><strong>User space:</strong> User process makes <code>read()</code> system call</li>
 <li><strong>Interrupt:</strong> This will <strong>trap</strong> into kernel by <strong>software interrupt</strong></li>
 <li><strong>System API:</strong> Kernel executes its <code>interrupt handler</code>, in which <code>sys_read() API</code> will be called<ul>
@@ -429,7 +429,7 @@
 </ul>
 </li>
 </ol>
-<h2 id="2-System-API-for-file-operation"><a href="#2-System-API-for-file-operation" class="headerlink" title="2. System API for file operation"></a>2. System API for file operation</h2><h4 id="1-System-Read-API"><a href="#1-System-Read-API" class="headerlink" title="1. System Read API"></a>1. System Read API</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_read</span><span class="params">(<span class="keyword">read_args_t</span> *arg)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line">kernel “读”操作的API，自此由kernel执行一系列“读”相关的操作</span><br><span class="line"></span><br><span class="line">输入：arg，包含了user process read()的所有参数</span><br><span class="line">输出：实际读出的字节数</span><br></pre></td></tr></table></figure>
+<h2 id="II-System-API-for-file-operation"><a href="#II-System-API-for-file-operation" class="headerlink" title="II. System API for file operation"></a>II. System API for file operation</h2><h4 id="1-System-Read-API"><a href="#1-System-Read-API" class="headerlink" title="1. System Read API"></a>1. System Read API</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_read</span><span class="params">(<span class="keyword">read_args_t</span> *arg)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line">kernel “读”操作的API，自此由kernel执行一系列“读”相关的操作</span><br><span class="line"></span><br><span class="line">输入：arg，包含了user process read()的所有参数</span><br><span class="line">输出：实际读出的字节数</span><br></pre></td></tr></table></figure>
 <ol>
 <li>作为 interrupt routine 被调用；发生于 user process <code>read()</code> leading to <em>trap as software interrupt</em> into kernel 的时候</li>
 <li><code>copy_from_user()</code> 读取 user process <code>read()</code>的传入参数</li>
@@ -468,7 +468,7 @@
 <li>Ask File System to complete relavent operation: <code>do_read()</code></li>
 <li>Copy to user address space with the result at kernel address space</li>
 </ol>
-<h2 id="3-Other-System-API-related-to-Virtual-Memory-System"><a href="#3-Other-System-API-related-to-Virtual-Memory-System" class="headerlink" title="3. Other System API related to Virtual Memory System"></a>3. Other System API related to Virtual Memory System</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_munmap</span><span class="params">(<span class="keyword">munmap_args_t</span> *args)</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">sys_mmap</span><span class="params">(<span class="keyword">mmap_args_t</span> *arg)</span></span></span><br><span class="line"><span class="function">pid_t <span class="title">sys_waitpid</span><span class="params">(<span class="keyword">waitpid_args_t</span> *args)</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">sys_brk</span><span class="params">(<span class="keyword">void</span> *addr)</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sys_sync</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_stat</span><span class="params">(<span class="keyword">stat_args_t</span> *arg)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_fork</span><span class="params">(<span class="keyword">regs_t</span> *regs)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_execve</span><span class="params">(<span class="keyword">execve_args_t</span> *args, <span class="keyword">regs_t</span> *regs)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_kshell</span><span class="params">(<span class="keyword">int</span> ttyid)</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="III-Other-System-API-related-to-Virtual-Memory-System"><a href="#III-Other-System-API-related-to-Virtual-Memory-System" class="headerlink" title="III. Other System API related to Virtual Memory System"></a>III. Other System API related to Virtual Memory System</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_munmap</span><span class="params">(<span class="keyword">munmap_args_t</span> *args)</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">sys_mmap</span><span class="params">(<span class="keyword">mmap_args_t</span> *arg)</span></span></span><br><span class="line"><span class="function">pid_t <span class="title">sys_waitpid</span><span class="params">(<span class="keyword">waitpid_args_t</span> *args)</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">sys_brk</span><span class="params">(<span class="keyword">void</span> *addr)</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sys_sync</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_stat</span><span class="params">(<span class="keyword">stat_args_t</span> *arg)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_fork</span><span class="params">(<span class="keyword">regs_t</span> *regs)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_execve</span><span class="params">(<span class="keyword">execve_args_t</span> *args, <span class="keyword">regs_t</span> *regs)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_kshell</span><span class="params">(<span class="keyword">int</span> ttyid)</span></span></span><br></pre></td></tr></table></figure>
 <p>这些函数与“用户态” Process/ Thread/ Virtual Memory 的操作有关：</p>
 <ol>
 <li>由 user process 发起的 system call： <code>wait()</code></li>
@@ -476,7 +476,7 @@
 <li>kernel 在调用相应的 system API，代替 user process 执行任务: <code>sys_waitpid()</code></li>
 <li>交给“进程系统” Process&amp; Memory System，来具体处理任务：<code>do_waitpid()</code></li>
 </ol>
-<h2 id="4-Interrupt-handler-for-syscalls"><a href="#4-Interrupt-handler-for-syscalls" class="headerlink" title="4. Interrupt handler for syscalls"></a>4. Interrupt handler for syscalls</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">syscall_handler</span><span class="params">(<span class="keyword">regs_t</span> *regs)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line">很重要的一个函数：</span><br><span class="line"><span class="number">1.</span> 使“用户态”程序在 make syscall 的时候，进入“内核态”</span><br><span class="line"><span class="number">2.</span> 根据 syscall_number，调用相应的 system API</span><br></pre></td></tr></table></figure>
+<h2 id="VI-Interrupt-handler-for-syscalls"><a href="#VI-Interrupt-handler-for-syscalls" class="headerlink" title="VI. Interrupt handler for syscalls"></a>VI. Interrupt handler for syscalls</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">syscall_handler</span><span class="params">(<span class="keyword">regs_t</span> *regs)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line">很重要的一个函数：</span><br><span class="line"><span class="number">1.</span> 使“用户态”程序在 make syscall 的时候，进入“内核态”</span><br><span class="line"><span class="number">2.</span> 根据 syscall_number，调用相应的 system API</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -510,8 +510,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/12/page-frame/" rel="next" title="page frame">
-                <i class="fa fa-chevron-left"></i> page frame
+              <a href="/2018/04/12/page-frame/" rel="next" title="VM - Page Frame">
+                <i class="fa fa-chevron-left"></i> VM - Page Frame
               </a>
             
           </div>
@@ -519,6 +519,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/14/Virtual-Memory-Allocation-brk-and-mmap/" rel="prev" title="VM - Virtual Memory Allocation: brk() and mmap() ">
+                VM - Virtual Memory Allocation: brk() and mmap()  <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -599,7 +603,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-count">21</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -715,7 +719,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-An-Example-read"><span class="nav-number">1.</span> <span class="nav-text">1. An Example: read( )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-System-API-for-file-operation"><span class="nav-number">2.</span> <span class="nav-text">2. System API for file operation</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-System-Read-API"><span class="nav-number">2.0.1.</span> <span class="nav-text">1. System Read API</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-System-Write-API"><span class="nav-number">2.0.2.</span> <span class="nav-text">2. System Write API</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-System-Get-Directory-Entry"><span class="nav-number">2.0.3.</span> <span class="nav-text">3. System Get Directory Entry</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-Other-System-APIs-related-to-File-System"><span class="nav-number">2.0.4.</span> <span class="nav-text">4. Other System APIs related to File System</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Other-System-API-related-to-Virtual-Memory-System"><span class="nav-number">3.</span> <span class="nav-text">3. Other System API related to Virtual Memory System</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Interrupt-handler-for-syscalls"><span class="nav-number">4.</span> <span class="nav-text">4. Interrupt handler for syscalls</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#I-An-Example-read"><span class="nav-number">1.</span> <span class="nav-text">I. An Example: read( )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#II-System-API-for-file-operation"><span class="nav-number">2.</span> <span class="nav-text">II. System API for file operation</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-System-Read-API"><span class="nav-number">2.0.1.</span> <span class="nav-text">1. System Read API</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-System-Write-API"><span class="nav-number">2.0.2.</span> <span class="nav-text">2. System Write API</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-System-Get-Directory-Entry"><span class="nav-number">2.0.3.</span> <span class="nav-text">3. System Get Directory Entry</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-Other-System-APIs-related-to-File-System"><span class="nav-number">2.0.4.</span> <span class="nav-text">4. Other System APIs related to File System</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#III-Other-System-API-related-to-Virtual-Memory-System"><span class="nav-number">3.</span> <span class="nav-text">III. Other System API related to Virtual Memory System</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VI-Interrupt-handler-for-syscalls"><span class="nav-number">4.</span> <span class="nav-text">VI. Interrupt handler for syscalls</span></a></li></ol></div>
             
 
           </div>

@@ -106,7 +106,7 @@
 <meta property="og:url" content="http://yoursite.com/2018/04/12/page-frame/index.html">
 <meta property="og:site_name" content="CMK">
 <meta property="og:description" content="Why do we need page frame?实际 page frame 只是 kernel 的一个 struct，用于：  记录：由其包含的 physical page 地址（其实还是virtual addr） 记录：该page 所属的 memeory object(即 vm_area_struct/bss… 所指向的)；以及该page 的 page_num 第一条“由其包含”表明了，OS">
-<meta property="og:updated_time" content="2018-04-16T07:08:26.000Z">
+<meta property="og:updated_time" content="2018-04-19T06:14:32.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="VM - Page Frame">
 <meta name="twitter:description" content="Why do we need page frame?实际 page frame 只是 kernel 的一个 struct，用于：  记录：由其包含的 physical page 地址（其实还是virtual addr） 记录：该page 所属的 memeory object(即 vm_area_struct/bss… 所指向的)；以及该page 的 page_num 第一条“由其包含”表明了，OS">
@@ -446,7 +446,8 @@
 <h4 id="5-pframe-lookup（）"><a href="#5-pframe-lookup（）" class="headerlink" title="5. pframe_lookup（）"></a>5. pframe_lookup（）</h4><blockquote>
 <p>实际上就是执行 pframe_get()，</p>
 </blockquote>
-<h4 id="6-pframe-get（）"><a href="#6-pframe-get（）" class="headerlink" title="6. pframe_get（）"></a>6. pframe_get（）</h4><blockquote>
+<h4 id="6-pframe-get（）"><a href="#6-pframe-get（）" class="headerlink" title="6. pframe_get（）"></a>6. pframe_get（）</h4><p><strong>#参见<code>page\_fault()</code>:</strong><br><a href="https://caomingkai.github.io/2018/04/18/VM-Page-Table-Page-Fault-Hander/" target="_blank" rel="noopener">https://caomingkai.github.io/2018/04/18/VM-Page-Table-Page-Fault-Hander/</a></p>
+<blockquote>
 <p>根据 ‘mmobj &amp; pagenum’ 得到 pframe  </p>
 <ul>
 <li>如果物理内存中已有该page，直接返回  </li>
@@ -641,7 +642,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-count">23</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -662,7 +663,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">4</span>
+                      
+                    
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -707,7 +710,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">16</span>
+                      
+                    
+                    <span class="site-state-item-count">17</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

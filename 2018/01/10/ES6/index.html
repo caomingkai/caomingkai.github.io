@@ -103,10 +103,10 @@
 <meta name="keywords" content="ES6">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ES6">
-<meta property="og:url" content="http://yoursite.com/2018/04/20/ES6/index.html">
+<meta property="og:url" content="http://yoursite.com/2018/01/10/ES6/index.html">
 <meta property="og:site_name" content="CMK">
 <meta property="og:description" content="I. JavaScript is OOP JS的始末、与Java的区别：https://juejin.im/entry/5975e76af265da6c2a74bc45  JavaScript 是一种基于原型实现的面向对象的语言， 根本没有类的概念，全是 object ！  通过 “prototype” 以及 “proto“ 来实现：类的继承 “prototype” 以及 “proto“ 重要性：">
-<meta property="og:updated_time" content="2018-04-21T04:24:03.000Z">
+<meta property="og:updated_time" content="2018-04-21T06:22:19.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ES6">
 <meta name="twitter:description" content="I. JavaScript is OOP JS的始末、与Java的区别：https://juejin.im/entry/5975e76af265da6c2a74bc45  JavaScript 是一种基于原型实现的面向对象的语言， 根本没有类的概念，全是 object ！  通过 “prototype” 以及 “proto“ 来实现：类的继承 “prototype” 以及 “proto“ 重要性：">
@@ -116,7 +116,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/04/20/ES6/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/01/10/ES6/"/>
 
 
 
@@ -311,7 +311,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/20/ES6/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/10/ES6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Mingkai Cao">
@@ -340,7 +340,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-20T20:21:44-07:00">2018-04-20</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-10T20:21:44-08:00">2018-01-10</time>
             
 
             
@@ -376,8 +376,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/04/20/ES6/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/20/ES6/" itemprop="commentCount"></span>
+                <a href="/2018/01/10/ES6/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/01/10/ES6/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -604,15 +604,22 @@
   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 第一组</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">crc32</span>(<span class="params"></span>) </span>&#123; <span class="comment">// 输出</span></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> crc32 <span class="keyword">from</span> <span class="string">'crc32'</span>; <span class="comment">// 输入</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 第二组</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">crc32</span>(<span class="params"></span>) </span>&#123; <span class="comment">// 输出</span></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123;crc32&#125; <span class="keyword">from</span> <span class="string">'crc32'</span>; <span class="comment">// 输入"</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h2 id="XVI-Spread-Operator-用法"><a href="#XVI-Spread-Operator-用法" class="headerlink" title="XVI. ...:Spread Operator 用法"></a>XVI. <code>...</code>:Spread Operator 用法</h2><ul>
-<li><p>Template literals:   <code>....   ${...}</code>  </p>
+<h2 id="XVI-Spread-Operator展开运算符"><a href="#XVI-Spread-Operator展开运算符" class="headerlink" title="XVI. ...:Spread Operator展开运算符"></a>XVI. <code>...</code>:Spread Operator展开运算符</h2><p><a href="https://blog.fundebug.com/2017/07/19/master_object_spread_operator/" target="_blank" rel="noopener">https://blog.fundebug.com/2017/07/19/master_object_spread_operator/</a></p>
 <ul>
-<li>处理字符串中变量</li>
-<li>use the ` around a series of characters, which are interpreted as a string literal; </li>
-<li>而且 <code>...</code>  之间 允许断行</li>
-<li>But any expressions of the form ${..} are parsed and evaluated inline immediately.</li>
-<li>${..} 之间的expression甚至可以方 function，如  <code>{ func( &quot;params&quot;) }</code></li>
+<li><p>展开运算符将所有可枚举的属性从一个对象展开到另一个对象去。一个例子：</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj1 = &#123; <span class="attr">c</span>: <span class="number">3</span>, <span class="attr">d</span>: <span class="number">4</span> &#125;;</span><br><span class="line"><span class="keyword">const</span> obj2 = &#123; <span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span>, ...obj1 &#125;;</span><br><span class="line"><span class="built_in">console</span>.log(obj2); <span class="comment">//&#123; a: 1, b: 2, c: 3, d: 4 &#125;</span></span><br><span class="line">                   <span class="comment">//obj1的所有属性被展开到obj2中去。</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>应用场景1：deep copy</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123; <span class="attr">a</span>: <span class="number">123</span>, <span class="attr">b</span>: <span class="number">456</span> &#125;;</span><br><span class="line"><span class="keyword">const</span> objCopy = &#123; ...obj &#125;;</span><br><span class="line"><span class="built_in">console</span>.log(objCopy); </span><br><span class="line"></span><br><span class="line"><span class="comment">// &#123; a: 123, b: 456 &#125;</span></span><br><span class="line"><span class="comment">// 注意： 不会递归地深度拷贝所有属性</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>应用场景2：合并多个对象</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj1 = &#123; <span class="attr">a</span>: <span class="number">111</span>, <span class="attr">b</span>: <span class="number">222</span> &#125;;</span><br><span class="line"><span class="keyword">const</span> obj2 = &#123; <span class="attr">c</span>: <span class="number">333</span>, <span class="attr">d</span>: <span class="number">444</span> &#125;;</span><br><span class="line"><span class="keyword">const</span> merged = &#123; ...obj1, ...obj2 &#125;;</span><br><span class="line"><span class="built_in">console</span>.log(merged);</span><br><span class="line"></span><br><span class="line"><span class="comment">// &#123; a: 111, b: 222, c: 333, d: 444 &#125;</span></span><br></pre></td></tr></table></figure>
+</li>
 </ul>
+<h2 id="Template-literals"><a href="#Template-literals" class="headerlink" title="Template literals: `     `"></a>Template literals: `     `</h2><ul>
+<li>处理字符串中变量:使用 <code>{ }</code>包含起来</li>
+<li>use the ` around a series of characters, which are interpreted as a string literal; </li>
+<li><p>But any expressions of the form ${..} are parsed and evaluated inline immediately.</p>
 </li>
 <li><p>为什么用它？—简洁</p>
   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">var</span> b = <span class="number">10</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'Fifteen is '</span> + (a + b) + <span class="string">' and \n not '</span> + (<span class="number">2</span> * a + b) + <span class="string">'.'</span>);</span><br><span class="line"><span class="comment">// "Fifteen is 15 and</span></span><br><span class="line"><span class="comment">// not 20."</span></span><br><span class="line"></span><br><span class="line">----------------------------------</span><br><span class="line">控制打印更简单，不用\n，直接断行。如下： </span><br><span class="line">----------------------------------</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">var</span> b = <span class="number">10</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">`Fifteen is <span class="subst">$&#123;a + b&#125;</span> and</span></span><br><span class="line"><span class="string">not <span class="subst">$&#123;<span class="number">2</span> * a + b&#125;</span>.`</span>);</span><br><span class="line"><span class="comment">// "Fifteen is 15 and</span></span><br><span class="line"><span class="comment">// not 20.""</span></span><br></pre></td></tr></table></figure>
@@ -678,15 +685,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/18/VM-Page-Table-Page-Fault-Hander/" rel="next" title="VM: Page Table & Page Fault Hander">
-                <i class="fa fa-chevron-left"></i> VM: Page Table & Page Fault Hander
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/20/React-Router/" rel="prev" title="React Router">
+                React Router <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -767,7 +774,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">23</span>
+                    <span class="site-state-item-count">24</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -837,7 +844,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">17</span>
+                      
+                    
+                    <span class="site-state-item-count">18</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -887,7 +896,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#I-JavaScript-is-OOP"><span class="nav-number">1.</span> <span class="nav-text">I. JavaScript is OOP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#II-OOP的4个特性："><span class="nav-number">2.</span> <span class="nav-text">II. OOP的4个特性：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#III-var-vs-let-vs-const"><span class="nav-number">3.</span> <span class="nav-text">III. var vs let vs const</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IV-闭包：closure"><span class="nav-number">4.</span> <span class="nav-text">IV 闭包：closure</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#V-Event"><span class="nav-number">5.</span> <span class="nav-text">V. Event</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VI-JS创建Object的7种方式"><span class="nav-number">6.</span> <span class="nav-text">VI. JS创建Object的7种方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VII-with-关键字"><span class="nav-number">7.</span> <span class="nav-text">VII. with 关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IX-JavaScript-Native-对象（6个）"><span class="nav-number">8.</span> <span class="nav-text">IX. JavaScript Native 对象（6个）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#X-func-…"><span class="nav-number">9.</span> <span class="nav-text">X. ( func(){…} )( )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XI-Array-map"><span class="nav-number">10.</span> <span class="nav-text">XI. Array.map( )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XII-this-and-bind"><span class="nav-number">11.</span> <span class="nav-text">XII. this and bind()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XIII-call-amp-apply"><span class="nav-number">12.</span> <span class="nav-text">XIII. call() &amp; apply()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XIV-CommonJS：是一个规范"><span class="nav-number">13.</span> <span class="nav-text">XIV. CommonJS：是一个规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XV-CommonJS-import-vs-export"><span class="nav-number">14.</span> <span class="nav-text">XV. CommonJS: import vs export</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XVI-Spread-Operator-用法"><span class="nav-number">15.</span> <span class="nav-text">XVI. ...:Spread Operator 用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XVII-Special-Variables"><span class="nav-number">16.</span> <span class="nav-text">XVII. Special Variables $, $$, _</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#I-JavaScript-is-OOP"><span class="nav-number">1.</span> <span class="nav-text">I. JavaScript is OOP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#II-OOP的4个特性："><span class="nav-number">2.</span> <span class="nav-text">II. OOP的4个特性：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#III-var-vs-let-vs-const"><span class="nav-number">3.</span> <span class="nav-text">III. var vs let vs const</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IV-闭包：closure"><span class="nav-number">4.</span> <span class="nav-text">IV 闭包：closure</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#V-Event"><span class="nav-number">5.</span> <span class="nav-text">V. Event</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VI-JS创建Object的7种方式"><span class="nav-number">6.</span> <span class="nav-text">VI. JS创建Object的7种方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VII-with-关键字"><span class="nav-number">7.</span> <span class="nav-text">VII. with 关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IX-JavaScript-Native-对象（6个）"><span class="nav-number">8.</span> <span class="nav-text">IX. JavaScript Native 对象（6个）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#X-func-…"><span class="nav-number">9.</span> <span class="nav-text">X. ( func(){…} )( )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XI-Array-map"><span class="nav-number">10.</span> <span class="nav-text">XI. Array.map( )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XII-this-and-bind"><span class="nav-number">11.</span> <span class="nav-text">XII. this and bind()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XIII-call-amp-apply"><span class="nav-number">12.</span> <span class="nav-text">XIII. call() &amp; apply()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XIV-CommonJS：是一个规范"><span class="nav-number">13.</span> <span class="nav-text">XIV. CommonJS：是一个规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XV-CommonJS-import-vs-export"><span class="nav-number">14.</span> <span class="nav-text">XV. CommonJS: import vs export</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XVI-Spread-Operator展开运算符"><span class="nav-number">15.</span> <span class="nav-text">XVI. ...:Spread Operator展开运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Template-literals"><span class="nav-number">16.</span> <span class="nav-text">Template literals: `     `</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XVII-Special-Variables"><span class="nav-number">17.</span> <span class="nav-text">XVII. Special Variables $, $$, _</span></a></li></ol></div>
             
 
           </div>

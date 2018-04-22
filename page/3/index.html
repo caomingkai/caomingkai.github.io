@@ -310,6 +310,160 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/27/Weather-Chat/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/27/Weather-Chat/" itemprop="url">Weather Chat</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-27T09:22:46-07:00">2018-03-27</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Portfolios/" itemprop="url" rel="index"><span itemprop="name">Portfolios</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/27/Weather-Chat/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/03/27/Weather-Chat/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>A weather query web application, enabling real-time group chat and scrolling message display</p>
+<p>Tech stacks: <strong>HTML, Bootstrap, AngularJS, Wilddog NoSQL Database</strong></p>
+<p><a href="http://www-scf.usc.edu/~mingkaic/Interactive%20Weather%20Forcast%20Panel/#/" target="_blank" rel="noopener"><br>    <img src="/2018/03/27/Weather-Chat/weather_chat.jpg" title="This is an image"><br></a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/27/Binary-Search-variations/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1262,6 +1416,30 @@ mid = (left + right + 1) &gt;&gt;1
 </ul>
 </li>
 </ul>
+<h2 id="XVIII-Array-map-filter-reduce"><a href="#XVIII-Array-map-filter-reduce" class="headerlink" title="XVIII.Array: map(), filter(), reduce()"></a>XVIII.Array: <code>map(), filter(), reduce()</code></h2><p>Array的几个常用方法: 包含<strong>filter()，map()，sort()，reduce()</strong>，可在 Console 面板中查看结果。</p>
+<blockquote>
+<p>map(), filter(), reduce() 不会修改原来Array；而是生成新的Array或者Object</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">第一组：inventors数组，包含名、姓、出生日期以及死亡日期</span><br><span class="line">    <span class="keyword">const</span> inventors = [</span><br><span class="line">          &#123; <span class="attr">first</span>: <span class="string">'Albert'</span>, <span class="attr">last</span>: <span class="string">'Einstein'</span>, <span class="attr">year</span>: <span class="number">1879</span>, <span class="attr">passed</span>: <span class="number">1955</span> &#125;,</span><br><span class="line">           ......</span><br><span class="line">          &#123; <span class="attr">first</span>: <span class="string">'Hanna'</span>, <span class="attr">last</span>: <span class="string">'Hammarström'</span>, <span class="attr">year</span>: <span class="number">1829</span>, <span class="attr">passed</span>: <span class="number">1909</span> &#125;</span><br><span class="line">        ];</span><br><span class="line"></span><br><span class="line">第二组：people数组，包含一组人名，名姓之间用逗号分隔。</span><br><span class="line">    <span class="keyword">const</span> people = [<span class="string">'Beck, Glenn'</span>, ...... , <span class="string">'Blake, William'</span>];</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p><code>filter()</code>过滤操作，筛选符合条件的所有元素，若为true则返回组成新数组：</p>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">eg: 筛选出生于<span class="number">16</span>世纪的发明家</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bornyear</span>(<span class="params">inventor</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> inventor.year &gt;= <span class="number">1500</span> &amp;&amp; inventor.year &lt; <span class="number">1600</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> fifteen = inventors.filter(bornyear);</span><br><span class="line"><span class="built_in">console</span>.table(fifteen);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 可简化为</span></span><br><span class="line"><span class="keyword">const</span> fifteen = inventors.filter(<span class="function"><span class="params">inventor</span> =&gt;</span> (inventor.year &gt;= <span class="number">1500</span> &amp;&amp; inventor.year &lt; <span class="number">1600</span>));</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>map()</code>映射操作，对原数组每个元素进行处理，并回传新的数组;</p>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">eg: 以数组形式，列出其名与姓: </span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> fullnames = inventors.map(<span class="function"><span class="params">inventor</span> =&gt;</span> <span class="string">`<span class="subst">$&#123;inventor.first&#125;</span> <span class="subst">$&#123;inventor.last&#125;</span>`</span>);</span><br><span class="line"><span class="built_in">console</span>.table(fullnames);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>sort()</code>排序操作，默认排序顺序是根据字符串Unicode码点，如10在2之前,而数字又在大写字母之前, 大写字母在小写字母之前。也可使用比较函数，数组会按照调用该函数的返回值排序</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">eg: 根据其出生日期，并从大到小排序；</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> birthdate = inventors.sort(<span class="function">(<span class="params">inventora, inventorb</span>) =&gt;</span> (inventorb.year - inventora.year));</span><br><span class="line">    <span class="built_in">console</span>.table(birthdate)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>reduce()</code>归并操作，总共两个参数，</p>
+<ul>
+<li>第一个是函数，可以理解为累加器，遍历数组累加回传的返回值  </li>
+<li><p>第二个是初始数值。如果没有提供初始值，则将使用数组中的第一个元素。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">eg: 计算所有的发明家加起来一共活了几岁；</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> totalyears = inventors.reduce(</span><br><span class="line">(total, inventor) =&gt; &#123; <span class="keyword">return</span> total + (inventor.passed -inventor.year); &#125; </span><br><span class="line">, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(totalyears);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
 
           
         
@@ -1351,7 +1529,7 @@ mid = (left + right + 1) &gt;&gt;1
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">24</span>
+                    <span class="site-state-item-count">25</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

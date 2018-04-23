@@ -310,6 +310,191 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/01/How-does-OS-load-File-System/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/01/How-does-OS-load-File-System/" itemprop="url">FS - How does OS load File System</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-01T16:04:24-07:00">2018-04-01</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Courses/" itemprop="url" rel="index"><span itemprop="name">Courses</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/01/How-does-OS-load-File-System/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/01/How-does-OS-load-File-System/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="BIOS-code-stored-on-ROM"><a href="#BIOS-code-stored-on-ROM" class="headerlink" title="BIOS(code stored on ROM)"></a>BIOS(code stored on ROM)</h2><p>At BIOS session, several tasks are executed: </p>
+<ol>
+<li>Power-on self test (POST), making suring: <strong>memory, disk,screen,ect.</strong> are in good condition<ul>
+<li>so it knows where to load the boot program( on <strong>DISK</strong>)</li>
+<li>also prepare <strong>memory(run process)</strong> and  <strong>disk(boot program)</strong></li>
+</ul>
+</li>
+<li>Load and transfer control to boot program</li>
+<li>Provide drivers for all devices,</li>
+</ol>
+<h2 id="Boot-code-stored-on-DISK"><a href="#Boot-code-stored-on-DISK" class="headerlink" title="Boot(code stored on DISK)"></a>Boot(code stored on DISK)</h2><ol>
+<li><p>Set up stack, clear BSS, uncompress kernel, then transfer control to Kernel</p>
+</li>
+<li><p><strong>Idle process(pid=0)</strong> is created; set up initial page tables, turn on address translation</p>
+</li>
+<li><p>Initialize rest of kernel</p>
+<ul>
+<li>create vfs_root_vnode</li>
+<li>set the “cwd” of idle/init process</li>
+<li>make the null, zero, and tty devices using “mknod”<ul>
+<li>“/dev” </li>
+<li>“/dev/null”   “/dev/zero”, </li>
+<li>“/dev/tty0”   “/dev/tty1”</li>
+</ul>
+</li>
+<li>create the <strong>“init” process(pid=1)</strong>,<br>which is the ancestor of all other user processes </li>
+<li>invoke the scheduler</li>
+</ul>
+</li>
+</ol>
+<h2 id="Kernel-code-stored-on-disk"><a href="#Kernel-code-stored-on-disk" class="headerlink" title="Kernel(code stored on disk)"></a>Kernel(code stored on disk)</h2><ol>
+<li>Now the File System is ready to use</li>
+<li>Also need to execute other configuration</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/01/Vnode-Special-Read-Write-for-byte-device/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2055,160 +2240,6 @@ D: do_stat()
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/27/Weather-Chat/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/27/Weather-Chat/" itemprop="url">Weather Chat</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-27T09:22:46-07:00">2018-03-27</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Portfolios/" itemprop="url" rel="index"><span itemprop="name">Portfolios</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/03/27/Weather-Chat/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/03/27/Weather-Chat/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>A weather query web application, enabling real-time group chat and scrolling message display</p>
-<p>Tech stacks: <strong>HTML, Bootstrap, AngularJS, Wilddog NoSQL Database</strong></p>
-<p><a href="http://www-scf.usc.edu/~mingkaic/Interactive%20Weather%20Forcast%20Panel/#/" target="_blank" rel="noopener"><br>    <img src="/2018/03/27/Weather-Chat/weather_chat.jpg" title="This is an image"><br></a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2260,7 +2291,7 @@ D: do_stat()
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">24</span>
+                    <span class="site-state-item-count">25</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2332,7 +2363,9 @@ D: do_stat()
                     
                       
                     
-                    <span class="site-state-item-count">18</span>
+                      
+                    
+                    <span class="site-state-item-count">19</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

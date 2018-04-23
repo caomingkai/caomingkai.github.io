@@ -99,17 +99,17 @@
 
 
 
-  <meta name="description" content="1. 组件数据流: Model -&amp;gt; View 父组件M -&amp;gt; 子组件V  父组件prop 之间传给 子组件 prop   子组件M -&amp;gt; 父组件V  回调函数 父组件向子组件传递回调函数 JS中，function是一等公民，因此传入的值会作为自身field保存起来；与C／Java不同。     sibling 组件间传值 M-&amp;gt;V 必须依靠二者共同父组件来传递 但等组件之">
+  <meta name="description" content="0. 组件数据流: Model -&amp;gt; View 父组件M -&amp;gt; 子组件V  父组件prop 之间传给 子组件 prop   子组件M -&amp;gt; 父组件V  回调函数 父组件向子组件传递回调函数 JS中，function是一等公民，因此传入的值会作为自身field保存起来；与C／Java不同。     sibling 组件间传值 M-&amp;gt;V 必须依靠二者共同父组件来传递 但等组件之">
 <meta name="keywords" content="React">
 <meta property="og:type" content="article">
 <meta property="og:title" content="React Learning">
 <meta property="og:url" content="http://yoursite.com/2017/12/23/React-Learning/index.html">
 <meta property="og:site_name" content="CMK">
-<meta property="og:description" content="1. 组件数据流: Model -&amp;gt; View 父组件M -&amp;gt; 子组件V  父组件prop 之间传给 子组件 prop   子组件M -&amp;gt; 父组件V  回调函数 父组件向子组件传递回调函数 JS中，function是一等公民，因此传入的值会作为自身field保存起来；与C／Java不同。     sibling 组件间传值 M-&amp;gt;V 必须依靠二者共同父组件来传递 但等组件之">
-<meta property="og:updated_time" content="2018-04-23T22:40:57.000Z">
+<meta property="og:description" content="0. 组件数据流: Model -&amp;gt; View 父组件M -&amp;gt; 子组件V  父组件prop 之间传给 子组件 prop   子组件M -&amp;gt; 父组件V  回调函数 父组件向子组件传递回调函数 JS中，function是一等公民，因此传入的值会作为自身field保存起来；与C／Java不同。     sibling 组件间传值 M-&amp;gt;V 必须依靠二者共同父组件来传递 但等组件之">
+<meta property="og:updated_time" content="2018-04-23T23:33:54.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="React Learning">
-<meta name="twitter:description" content="1. 组件数据流: Model -&amp;gt; View 父组件M -&amp;gt; 子组件V  父组件prop 之间传给 子组件 prop   子组件M -&amp;gt; 父组件V  回调函数 父组件向子组件传递回调函数 JS中，function是一等公民，因此传入的值会作为自身field保存起来；与C／Java不同。     sibling 组件间传值 M-&amp;gt;V 必须依靠二者共同父组件来传递 但等组件之">
+<meta name="twitter:description" content="0. 组件数据流: Model -&amp;gt; View 父组件M -&amp;gt; 子组件V  父组件prop 之间传给 子组件 prop   子组件M -&amp;gt; 父组件V  回调函数 父组件向子组件传递回调函数 JS中，function是一等公民，因此传入的值会作为自身field保存起来；与C／Java不同。     sibling 组件间传值 M-&amp;gt;V 必须依靠二者共同父组件来传递 但等组件之">
 
 
 
@@ -413,7 +413,7 @@
       
 
       
-        <h2 id="1-组件数据流-Model-gt-View"><a href="#1-组件数据流-Model-gt-View" class="headerlink" title="1. 组件数据流: Model -&gt; View"></a>1. 组件数据流: Model -&gt; View</h2><ul>
+        <h2 id="0-组件数据流-Model-gt-View"><a href="#0-组件数据流-Model-gt-View" class="headerlink" title="0. 组件数据流: Model -&gt; View"></a>0. 组件数据流: Model -&gt; View</h2><ul>
 <li><p>父组件M -&gt; 子组件V</p>
 <ul>
 <li>父组件prop 之间传给 子组件 prop</li>
@@ -437,9 +437,11 @@
 </ul>
 </li>
 </ul>
-<h2 id="2-双向绑定-Model-View"><a href="#2-双向绑定-Model-View" class="headerlink" title="2. 双向绑定: Model  View"></a>2. 双向绑定: Model <-> View</-></h2><ul>
+<h2 id="1-双向绑定-Model-View"><a href="#1-双向绑定-Model-View" class="headerlink" title="1. 双向绑定: Model  View"></a>1. 双向绑定: Model <-> View</-></h2><ul>
 <li>通过绑定<code>&lt;input&gt;</code>的 <code>onChange()</code> 监视 View的变换</li>
-<li>在 onChange Handler中更新组件的值，完成 View =&gt; Model 的数据流。<h2 id="0-3-React-生命周期"><a href="#0-3-React-生命周期" class="headerlink" title="0.3 React 生命周期"></a>0.3 React 生命周期</h2></li>
+<li>在 onChange Handler中更新组件的值，完成 View =&gt; Model 的数据流。</li>
+</ul>
+<h2 id="2-React-生命周期"><a href="#2-React-生命周期" class="headerlink" title="2. React 生命周期"></a>2. React 生命周期</h2><ul>
 <li>Mount<ul>
 <li>constructor()</li>
 <li>componentWillMount()</li>
@@ -467,8 +469,8 @@
 <li><p>In order to make faster rendering at client-side, use “ $ babel src –out-dir build “, parsing all JSX file at directory ‘src’ into javascript files at directory ‘build’, where browser could recognize.</p>
 </li>
 </ul>
-<h2 id="4-ReactDOM-render"><a href="#4-ReactDOM-render" class="headerlink" title="4. ReactDOM.render();"></a>4. ReactDOM.render();</h2><h4 id="what"><a href="#what" class="headerlink" title="what?"></a>what?</h4><p>It is a basic method used everywhere</p>
-<ul>
+<h2 id="4-ReactDOM-render"><a href="#4-ReactDOM-render" class="headerlink" title="4. ReactDOM.render();"></a>4. ReactDOM.render();</h2><ul>
+<li>what? :It is a basic method used everywhere</li>
 <li>converting JSX into HTML;</li>
 <li>inserting HTML at specified DOM point</li>
 </ul>
@@ -490,12 +492,13 @@
 </li>
 </ul>
 <h2 id="6-JSX-can-contain-tag-array"><a href="#6-JSX-can-contain-tag-array" class="headerlink" title="6. JSX can contain tag array"></a>6. JSX can contain tag array</h2><p>JSX can unfold all tag in a array</p>
-<h2 id="7-Component"><a href="#7-Component" class="headerlink" title="7. Component"></a>7. Component</h2><h4 id="what-1"><a href="#what-1" class="headerlink" title="what?"></a>what?</h4><p>A component is function,</p>
-<ul>
+<h2 id="7-Component"><a href="#7-Component" class="headerlink" title="7. Component"></a>7. Component</h2><ul>
+<li>what? A component is function,</li>
 <li>accepting “input”(props), </li>
-<li>returnnig “view”(HTML tag)</li>
-</ul>
-<h4 id="How-to-create-a-component"><a href="#How-to-create-a-component" class="headerlink" title="How to create a component?"></a>How to create a component?</h4><ol>
+<li><p>returnnig “view”(HTML tag)</p>
+</li>
+<li><p>How to create a component?</p>
+<ol>
 <li><p>functional component</p>
  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Welcome</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line"><span class="keyword">return</span> &lt;h1&gt;Hello, &#123;props.name&#125;&lt;/h1&gt;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> element = &lt;Welcome name="Sara" /&gt;;</span><br><span class="line">ReactDOM.render(</span><br><span class="line">element,</span><br><span class="line">document.getElementById('root')</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 </li>
@@ -503,33 +506,76 @@
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class Welcome extends React.Component &#123;</span><br><span class="line">render() &#123;</span><br><span class="line">return &lt;h1&gt;Hello, &#123;this.props.name&#125;&lt;/h1&gt;;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">const element = &lt;Welcome name=&quot;Sara&quot; /&gt;;</span><br><span class="line">ReactDOM.render(</span><br><span class="line">element,</span><br><span class="line">document.getElementById(&apos;root&apos;)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<h4 id="Notice"><a href="#Notice" class="headerlink" title="Notice"></a>Notice</h4><ul>
+</li>
+</ul>
+<ul>
+<li><p>Notice</p>
+<ul>
 <li>If a group of tags don’t need its own props or states, just declare it as <em>const</em>, rather than component. [ see demo14 &amp; demo14-2]</li>
 <li>Component should have no more than one top tag</li>
 </ul>
-<h2 id="5-this-props-children"><a href="#5-this-props-children" class="headerlink" title="5. this.props.children"></a>5. this.props.children</h2><h4 id="what-2"><a href="#what-2" class="headerlink" title="what?"></a>what?</h4><p>All the properties of a Component belongs to its correspoinding HTML element, except “props.children”, which represent components’ children</p>
-<h4 id="possible-types-for-children"><a href="#possible-types-for-children" class="headerlink" title="possible types for children"></a>possible types for children</h4><ul>
+</li>
+</ul>
+<h2 id="5-this-props-children"><a href="#5-this-props-children" class="headerlink" title="5. this.props.children"></a>5. this.props.children</h2><ul>
+<li><p>what?</p>
+<p> All the properties of a Component belongs to its correspoinding HTML element, except “props.children”, which represent components’ children</p>
+</li>
+<li><p>possible types for children</p>
+<ul>
 <li>undefined, if no child at all;</li>
 <li>object, if only have one child;</li>
 <li>array, if have multiple children;</li>
 </ul>
-<h4 id="How-to-traverse-properly-without-error"><a href="#How-to-traverse-properly-without-error" class="headerlink" title="How to traverse properly without error?"></a>How to traverse properly without error?</h4><p> use React.Children to ensure validity</p>
-<h2 id="6-Composing-Components"><a href="#6-Composing-Components" class="headerlink" title="6. Composing Components"></a>6. Composing Components</h2><h4 id="What"><a href="#What" class="headerlink" title="What?"></a>What?</h4><ul>
+</li>
+<li><p>How to traverse properly without error?</p>
+<p>  use React.Children to ensure validity</p>
+</li>
+</ul>
+<h2 id="6-Composing-Components"><a href="#6-Composing-Components" class="headerlink" title="6. Composing Components"></a>6. Composing Components</h2><ul>
+<li><p>What?</p>
+<ul>
 <li>A button, a form, a dialog, a screen: in React apps, all those are commonly expressed as components.</li>
 <li>On the other hand, we typically have an ‘App’ component at the top level</li>
 <li><em>Best Practice:</em> start from bottom-up, work along to the top level</li>
 </ul>
-<h4 id="How"><a href="#How" class="headerlink" title="How?"></a>How?</h4><p>Reuse components just like “li” in “ul”</p>
-<h2 id="7-Extracting-Components"><a href="#7-Extracting-Components" class="headerlink" title="7. Extracting Components"></a>7. Extracting Components</h2><h4 id="What-1"><a href="#What-1" class="headerlink" title="What?"></a>What?</h4><p>Split components into smaller components, to achieve more flexibility and reusability.</p>
-<h4 id="How-1"><a href="#How-1" class="headerlink" title="How?"></a>How?</h4><p>Split by functionality<br>One component can contain multiple sub-components</p>
-<h2 id="8-State-like-‘props’"><a href="#8-State-like-‘props’" class="headerlink" title="8. State (like ‘props’)"></a>8. State (like ‘props’)</h2><h4 id="Purpose"><a href="#Purpose" class="headerlink" title="Purpose?"></a>Purpose?</h4><p>A non-static component, has its own “state”</p>
-<h4 id="What-2"><a href="#What-2" class="headerlink" title="What?"></a>What?</h4><p>Actually it’s like pros, but “state” is private to component class, compared to “props”</p>
-<h4 id="How-2"><a href="#How-2" class="headerlink" title="How?"></a>How?</h4><ul>
+</li>
+<li><p>How?</p>
+<p>  Reuse components just like “li” in “ul”</p>
+</li>
+</ul>
+<h2 id="7-Extracting-Components"><a href="#7-Extracting-Components" class="headerlink" title="7. Extracting Components"></a>7. Extracting Components</h2><ul>
+<li>What?<br>  Split components into smaller components, to achieve more flexibility and reusability.</li>
+<li>How?<ul>
+<li>Split by functionality</li>
+<li>One component can contain multiple sub-components</li>
+</ul>
+</li>
+</ul>
+<h2 id="8-State-like-‘props’"><a href="#8-State-like-‘props’" class="headerlink" title="8. State (like ‘props’)"></a>8. State (like ‘props’)</h2><ul>
+<li>Purpose? <ul>
+<li>A non-static component, has its own “state”</li>
+</ul>
+</li>
+<li>What?<ul>
+<li>Actually it’s like pros, but “state” is private to component class, compared to “props”</li>
+</ul>
+</li>
+<li>How?<ul>
 <li>Use “state” in render(), when state changed, React will can render again.</li>
-<li>Must use a <strong>Class Component</strong>, rather than <strong>function component</strong>.<h4 id="Diff"><a href="#Diff" class="headerlink" title="Diff"></a>Diff</h4></li>
+<li>Must use a <strong>Class Component</strong>, rather than <strong>function component</strong>.</li>
+</ul>
+</li>
+<li>Diff<ul>
 <li>this.props(<em>public:passed-in</em>) 表示那些一旦定义，就不再改变的特性</li>
 <li>this.state(<em>private:built-in</em>)是会随着用户互动而产生变化的特性。</li>
-<li>both are belongs to <strong>this</strong>.<h4 id="Constructor-of-component-class"><a href="#Constructor-of-component-class" class="headerlink" title="Constructor of component class"></a>Constructor of component class</h4>First, always call <strong>super(props):</strong><br>Second, set *this.state=…;**</li>
+<li>both are belongs to <strong>this</strong>.</li>
+</ul>
+</li>
+<li>Constructor of component class<ul>
+<li>First, always call <strong>super(props):</strong></li>
+<li>Second, set <strong>this.state=…;</strong></li>
+</ul>
+</li>
 </ul>
 <h2 id="9-Adding-Lifecycle-Methods-to-a-Class"><a href="#9-Adding-Lifecycle-Methods-to-a-Class" class="headerlink" title="9. Adding Lifecycle Methods to a Class"></a>9. Adding Lifecycle Methods to a Class</h2><ul>
 <li>purpose: In order to save CPU and memory</li>
@@ -928,7 +974,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-组件数据流-Model-gt-View"><span class="nav-number">1.</span> <span class="nav-text">1. 组件数据流: Model -&gt; View</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-双向绑定-Model-View"><span class="nav-number">2.</span> <span class="nav-text">2. 双向绑定: Model  View</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0-3-React-生命周期"><span class="nav-number">3.</span> <span class="nav-text">0.3 React 生命周期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Depedency"><span class="nav-number">4.</span> <span class="nav-text">3. Depedency</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-ReactDOM-render"><span class="nav-number">5.</span> <span class="nav-text">4. ReactDOM.render();</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#what"><span class="nav-number">5.0.1.</span> <span class="nav-text">what?</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-JSX"><span class="nav-number">6.</span> <span class="nav-text">5. JSX</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-JSX-can-contain-tag-array"><span class="nav-number">7.</span> <span class="nav-text">6. JSX can contain tag array</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-Component"><span class="nav-number">8.</span> <span class="nav-text">7. Component</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#what-1"><span class="nav-number">8.0.1.</span> <span class="nav-text">what?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#How-to-create-a-component"><span class="nav-number">8.0.2.</span> <span class="nav-text">How to create a component?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Notice"><span class="nav-number">8.0.3.</span> <span class="nav-text">Notice</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-this-props-children"><span class="nav-number">9.</span> <span class="nav-text">5. this.props.children</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#what-2"><span class="nav-number">9.0.1.</span> <span class="nav-text">what?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#possible-types-for-children"><span class="nav-number">9.0.2.</span> <span class="nav-text">possible types for children</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#How-to-traverse-properly-without-error"><span class="nav-number">9.0.3.</span> <span class="nav-text">How to traverse properly without error?</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-Composing-Components"><span class="nav-number">10.</span> <span class="nav-text">6. Composing Components</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#What"><span class="nav-number">10.0.1.</span> <span class="nav-text">What?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#How"><span class="nav-number">10.0.2.</span> <span class="nav-text">How?</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-Extracting-Components"><span class="nav-number">11.</span> <span class="nav-text">7. Extracting Components</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#What-1"><span class="nav-number">11.0.1.</span> <span class="nav-text">What?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#How-1"><span class="nav-number">11.0.2.</span> <span class="nav-text">How?</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-State-like-‘props’"><span class="nav-number">12.</span> <span class="nav-text">8. State (like ‘props’)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Purpose"><span class="nav-number">12.0.1.</span> <span class="nav-text">Purpose?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#What-2"><span class="nav-number">12.0.2.</span> <span class="nav-text">What?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#How-2"><span class="nav-number">12.0.3.</span> <span class="nav-text">How?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Diff"><span class="nav-number">12.0.4.</span> <span class="nav-text">Diff</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Constructor-of-component-class"><span class="nav-number">12.0.5.</span> <span class="nav-text">Constructor of component class</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-Adding-Lifecycle-Methods-to-a-Class"><span class="nav-number">13.</span> <span class="nav-text">9. Adding Lifecycle Methods to a Class</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-Events"><span class="nav-number">14.</span> <span class="nav-text">10. Events</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-Lifting-State-Up-share-state-among-components-in-their-parent-component"><span class="nav-number">15.</span> <span class="nav-text">14. Lifting State Up ( share state among components in their parent component )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-Composition-vs-Inheritance"><span class="nav-number">16.</span> <span class="nav-text">15. Composition vs Inheritance</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-Summary"><span class="nav-number">17.</span> <span class="nav-text">16. Summary</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Steps-to-build-a-React-App"><span class="nav-number">17.0.1.</span> <span class="nav-text">Steps to build a React App</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-组件数据流-Model-gt-View"><span class="nav-number">1.</span> <span class="nav-text">0. 组件数据流: Model -&gt; View</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-双向绑定-Model-View"><span class="nav-number">2.</span> <span class="nav-text">1. 双向绑定: Model  View</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-React-生命周期"><span class="nav-number">3.</span> <span class="nav-text">2. React 生命周期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Depedency"><span class="nav-number">4.</span> <span class="nav-text">3. Depedency</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-ReactDOM-render"><span class="nav-number">5.</span> <span class="nav-text">4. ReactDOM.render();</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-JSX"><span class="nav-number">6.</span> <span class="nav-text">5. JSX</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-JSX-can-contain-tag-array"><span class="nav-number">7.</span> <span class="nav-text">6. JSX can contain tag array</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-Component"><span class="nav-number">8.</span> <span class="nav-text">7. Component</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-this-props-children"><span class="nav-number">9.</span> <span class="nav-text">5. this.props.children</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-Composing-Components"><span class="nav-number">10.</span> <span class="nav-text">6. Composing Components</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-Extracting-Components"><span class="nav-number">11.</span> <span class="nav-text">7. Extracting Components</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-State-like-‘props’"><span class="nav-number">12.</span> <span class="nav-text">8. State (like ‘props’)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-Adding-Lifecycle-Methods-to-a-Class"><span class="nav-number">13.</span> <span class="nav-text">9. Adding Lifecycle Methods to a Class</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-Events"><span class="nav-number">14.</span> <span class="nav-text">10. Events</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-Lifting-State-Up-share-state-among-components-in-their-parent-component"><span class="nav-number">15.</span> <span class="nav-text">14. Lifting State Up ( share state among components in their parent component )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-Composition-vs-Inheritance"><span class="nav-number">16.</span> <span class="nav-text">15. Composition vs Inheritance</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-Summary"><span class="nav-number">17.</span> <span class="nav-text">16. Summary</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Steps-to-build-a-React-App"><span class="nav-number">17.0.1.</span> <span class="nav-text">Steps to build a React App</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

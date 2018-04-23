@@ -408,10 +408,22 @@
       
         
           
-            <h2 id="I-About"><a href="#I-About" class="headerlink" title="I. About"></a>I. About</h2><p>An expense tracking application proving CRUD using React.</p>
-<p><strong>Chart1: Create</strong><br><img src="/2018/04/23/React-Expense-Tracking-app/create.gif"></p>
-<p><strong>Chart2: Update</strong><br><img src="/2018/04/23/React-Expense-Tracking-app/update.gif"></p>
-<p><strong>Chart3: Delete</strong><br><img src="/2018/04/23/React-Expense-Tracking-app/delete.gif"></p>
+            <h2 id="I-About"><a href="#I-About" class="headerlink" title="I. About"></a>I. About</h2><ul>
+<li>An expense tracking application proving CRUD using React.</li>
+<li>Github: <ul>
+<li><a href="https://github.com/caomingkai/Expense-Tracking.git" target="_blank" rel="noopener">https://github.com/caomingkai/Expense-Tracking.git</a></li>
+</ul>
+</li>
+<li><p><strong>Chart1: Create</strong></p>
+  <img src="/2018/04/23/React-Expense-Tracking-app/create.gif">
+</li>
+<li><p>**Chart2: Update</p>
+  <img src="/2018/04/23/React-Expense-Tracking-app/update.gif">
+</li>
+<li><p><strong>Chart3: Delete</strong></p>
+  <img src="/2018/04/23/React-Expense-Tracking-app/delete.gif">
+</li>
+</ul>
 <h2 id="II-Structure"><a href="#II-Structure" class="headerlink" title="II. Structure"></a>II. Structure</h2><h4 id="1-Components-Structure"><a href="#1-Components-Structure" class="headerlink" title="1. Components Structure"></a>1. Components Structure</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">App</span><br><span class="line"> |___ Summary</span><br><span class="line"> |___ Form _ _ _ _ RecordsAPI</span><br><span class="line"> |                    |</span><br><span class="line"> |___ Table           |</span><br><span class="line">         |_______ TableRow</span><br><span class="line">                      |____ TableDisplay</span><br><span class="line">                      |____ TableEdit</span><br></pre></td></tr></table></figure>
 <ul>
 <li><strong>App Component:</strong> is the data hub<ul>
@@ -500,7 +512,7 @@
 </ul>
 </li>
 <li><strong>Unmount</strong><ul>
-<li>componentWillUnmount(): 组件被卸载前做一些数据清楚哦给你做</li>
+<li>componentWillUnmount(): 组件被卸载前做一些数据清除</li>
 </ul>
 </li>
 </ul>

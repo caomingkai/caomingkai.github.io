@@ -1512,7 +1512,7 @@ D: do_stat()
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/27/Facebook-Custom-Search/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/28/Tiny-URL/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Mingkai Cao">
@@ -1531,7 +1531,7 @@ D: do_stat()
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/27/Facebook-Custom-Search/" itemprop="url">Facebook Custom Search</a></h1>
+                <a class="post-title-link" href="/2018/03/28/Tiny-URL/" itemprop="url">Tiny URL</a></h1>
         
 
         <div class="post-meta">
@@ -1543,7 +1543,7 @@ D: do_stat()
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-27T15:32:37-07:00">2018-03-27</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-28T11:14:49-07:00">2018-03-28</time>
             
 
             
@@ -1579,8 +1579,8 @@ D: do_stat()
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/03/27/Facebook-Custom-Search/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/03/27/Facebook-Custom-Search/" itemprop="commentCount"></span>
+                <a href="/2018/03/28/Tiny-URL/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/03/28/Tiny-URL/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1610,11 +1610,79 @@ D: do_stat()
       
         
           
-            <h2 id="I-Introduction"><a href="#I-Introduction" class="headerlink" title="I. Introduction"></a>I. Introduction</h2><p>An application for both web-version and IOS-version, supported by PHP-based server on AWS EC2, allows searching, displaying and posting information on Facebook.</p>
-<p>Tech stacks: <strong>AngularJS, Bootstrp, PHP, AWS EC2, Swift, Cocoa</strong></p>
-<p><strong>Github web</strong>: <a href="https://github.com/caomingkai/FaceBook-custom-Search-Web-App" target="_blank" rel="noopener">https://github.com/caomingkai/FaceBook-custom-Search-Web-App</a></p>
-<p><strong>Github IOS</strong>: <a href="https://github.com/caomingkai/FaceBook-custom-Search-Web-App" target="_blank" rel="noopener">https://github.com/caomingkai/FaceBook-custom-Search-Web-App</a></p>
-<p><a href="http://default-environment.twp33krzmp.us-west-1.elasticbeanstalk.com/index.html" target="_blank" rel="noopener"><br>    <img src="/2018/03/27/Facebook-Custom-Search/FB.png" title="This is an image"><br></a></p>
+            <h2 id="I-Introduction"><a href="#I-Introduction" class="headerlink" title="I. Introduction"></a>I. Introduction</h2><p>A MEAN stack Single Page Application, providing:</p>
+<ol>
+<li>URL shortening service</li>
+<li>Traffic statistics collecting service</li>
+</ol>
+<p>Tech stacks: <strong>AngularJS, Node.js, Express, MongoDB, Redis, Nginx, Docker</strong></p>
+<p>Github: <a href="https://github.com/caomingkai/URL-shortening-service" target="_blank" rel="noopener">https://github.com/caomingkai/URL-shortening-service</a></p>
+<p><a href="https://tinyurl-199300.appspot.com/#/" target="_blank" rel="noopener"><br>    <img src="/2018/03/28/Tiny-URL/tinyURL.png" title="This is an image"><br></a></p>
+<h2 id="II-Work-flow"><a href="#II-Work-flow" class="headerlink" title="II. Work flow"></a>II. Work flow</h2><h4 id="1-Users-come-to-the-app-webpage"><a href="#1-Users-come-to-the-app-webpage" class="headerlink" title="1. Users come to the app webpage"></a>1. Users come to the app webpage</h4><ul>
+<li>Browser send GET request with original URL to server</li>
+<li>Server sends index.html to clients</li>
+<li>Browser get the index.html with script in the head tag.<br><code>&lt;script src=&#39;angularJS library &#39;&gt; &lt;script src=&#39;app.js&#39;&gt; &lt;script src=&#39;/public/js/controllers/homeController.js&#39;&gt;</code></li>
+<li>Browser again sends request for angularJS library/ js controller files to different servers</li>
+<li>when browser encounter ‘ng-view’, it automatically turn to ‘ng-router’, ask for its view and controller; Again, sends corresponding GET request to fetch sub-view files</li>
+<li>while browser parse the controller js file, it might do AJAX request to fetch information from server.</li>
+</ul>
+<h4 id="2-Users-use-the-shortening-service"><a href="#2-Users-use-the-shortening-service" class="headerlink" title="2. Users use the shortening service"></a>2. Users use the shortening service</h4><ul>
+<li>Input longURL in the input box, and click ‘submit’</li>
+<li>‘submit’ fires the onclick funcion to do 2 things:<ul>
+<li>send the longURL to specified URL, ie. POST  to localhost/api/v1/urls<br><code>NOTICE: This url is specifically used for rendering short/long URL</code></li>
+<li>send the longURL to specified URL, ie. POST  to localhost/api/v1/urls<br><code>NOTICE: this step is executed after app server responds the POST request in the first step with the calculated shortURL</code></li>
+</ul>
+</li>
+<li>App server first receive the POST request with longURL, do 2 things: call the urlService to calculate the shortURL, store long/short URL pair in MongoDB;send back the shortURL to the app webpage.<br><code>NOTICE: the shortURL should consist different prefix compared with the current app URL. Because it is create for outside users. So the shortURL should not prefix with /api/v1/.., but with just &#39;/:shortUrl&#39;</code></li>
+<li>After the app webpage getting shortURL, it renders new subview using url.html; Meanwhile, it needs to know the its original longURL for display.</li>
+<li>Again, in the url.html subview, it sends GET request to the app server to get the longURL<br>Notice: This step could be simplified by just passing the longURL from the first subview to the second subview creating a service or using the $rootScop</li>
+<li>Now, in the new subview, the longURL and shortURL pair can be displayed</li>
+</ul>
+<h4 id="3-Visitors-browse-the-shortURL"><a href="#3-Visitors-browse-the-shortURL" class="headerlink" title="3. Visitors browse the shortURL"></a>3. Visitors browse the shortURL</h4><ul>
+<li>the shortURL is just clicked from various browsers/ machines/ from different IP/ countries, at different time</li>
+<li>when shortURL is clicked, it sends GET request ‘localhost/:shortUrl’ to the app server.</li>
+<li>the app sever call the urlService to get the longURL from the shortURL, and redirect users to the original long URL</li>
+</ul>
+<h4 id="4-Traffic-statistics-Info"><a href="#4-Traffic-statistics-Info" class="headerlink" title="4. Traffic statistics Info"></a>4. Traffic statistics Info</h4><ul>
+<li>We want to record the total number of clicks / their browsers/ machine brands/ their IP/ countries/ timestamp. And display them in the app webpage.</li>
+<li>So first we need add more elements in the url.html subview in the frontend; And update those information in the backend.<ul>
+<li>updating the info each time the shortURL is clicked. And then store them in the MongoDB</li>
+<li>when app webpage is clicked, make AJAX call to the app server, let it get the info from MongoDB, and then send back to frontend</li>
+</ul>
+</li>
+<li>Since all these clicks directly send GET request to ‘localhost/:shortURL’, which is handled by redirect.js. Thus, we here need a statistic service to update these info.</li>
+<li>Here we need the one of Express modules: Express-useragent to extract the information from the request</li>
+<li>In the statistic service, we use the express-useragent to get the info, and then store them in the MongoDB database with a new schema.</li>
+</ul>
+<h2 id="III-Nginx"><a href="#III-Nginx" class="headerlink" title="III. Nginx"></a>III. Nginx</h2><h4 id="Reverse-Proxy"><a href="#Reverse-Proxy" class="headerlink" title="Reverse Proxy"></a>Reverse Proxy</h4><ul>
+<li>(正向)代理forward proxy: 在client与internet之间，替client访问internet的计算机<ul>
+<li>路由器就是一个forward proxy，外网看不到路由器之后的计算机，但是计算机可以看到外边</li>
+<li>翻墙服务器</li>
+</ul>
+</li>
+<li>(反向)代理:在server与internet之间，替server接受internet访问的计算机</li>
+</ul>
+<h4 id="Features"><a href="#Features" class="headerlink" title="Features"></a>Features</h4><ul>
+<li>Hide Original server<br>“安全”</li>
+<li>application firewall</li>
+<li>SSL termination: “加密不需要server进行，反向代理可以代为计算以减轻server压力”</li>
+<li>Load balance<ol>
+<li>round robin<br>“optionally weighted”</li>
+<li>least connected<br>“optionally weighted”</li>
+<li>IP hash<br>“1~200: server a; 201~400: server b”</li>
+<li>Generic Hash<br>“based on devices/ client locations”</li>
+<li>Least time (nginx plux)<br>“optionally weighted”</li>
+</ol>
+</li>
+<li>Cache<ul>
+<li>GET 都可以cache</li>
+<li>即便是动态列表也进行cache，因为实际生活的改变不会比nginx的处理快 “1s <---> 100000 request/s”</---></li>
+<li>POST不能cache</li>
+</ul>
+</li>
+<li>Compression(gzip)<br>“减小网络传输量: 用reverse proxy/ browser 的CPU为代价”</li>
+<li>不宕机进行配置改变／升级</li>
+</ul>
 
           
         
@@ -1699,7 +1767,7 @@ D: do_stat()
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-27T12:02:08-07:00">2018-03-27</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-27T15:02:08-07:00">2018-03-27</time>
             
 
             
@@ -1883,6 +1951,162 @@ D: do_stat()
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/27/Facebook-Custom-Search/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/27/Facebook-Custom-Search/" itemprop="url">Facebook Custom Search</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-27T12:32:37-07:00">2018-03-27</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Portfolios/" itemprop="url" rel="index"><span itemprop="name">Portfolios</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/27/Facebook-Custom-Search/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/03/27/Facebook-Custom-Search/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="I-Introduction"><a href="#I-Introduction" class="headerlink" title="I. Introduction"></a>I. Introduction</h2><p>An application for both web-version and IOS-version, supported by PHP-based server on AWS EC2, allows searching, displaying and posting information on Facebook.</p>
+<p>Tech stacks: <strong>AngularJS, Bootstrp, PHP, AWS EC2, Swift, Cocoa</strong></p>
+<p><strong>Github web</strong>: <a href="https://github.com/caomingkai/FaceBook-custom-Search-Web-App" target="_blank" rel="noopener">https://github.com/caomingkai/FaceBook-custom-Search-Web-App</a></p>
+<p><strong>Github IOS</strong>: <a href="https://github.com/caomingkai/FaceBook-custom-Search-Web-App" target="_blank" rel="noopener">https://github.com/caomingkai/FaceBook-custom-Search-Web-App</a></p>
+<p><a href="http://default-environment.twp33krzmp.us-west-1.elasticbeanstalk.com/index.html" target="_blank" rel="noopener"><br>    <img src="/2018/03/27/Facebook-Custom-Search/FB.png" title="This is an image"><br></a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/27/eCommerce-Website-Design/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1985,223 +2209,6 @@ D: do_stat()
 <p>Tech stacks: <strong>Shopify Liquid, HTML, Bootstrap, JavaScript</strong></p>
 <p><strong><em>password:</em></strong>  ttotea</p>
 <p><a href="https://www.ttotea.com/" target="_blank" rel="noopener"><br>    <img src="/2018/03/27/eCommerce-Website-Design/ttotea.png" title="This is an image"><br></a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/27/Web-Template-Engine/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/27/Web-Template-Engine/" itemprop="url">Web Template Engine</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-27T10:02:04-07:00">2018-03-27</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Portfolios/" itemprop="url" rel="index"><span itemprop="name">Portfolios</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/03/27/Web-Template-Engine/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/03/27/Web-Template-Engine/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="I-Main-idea"><a href="#I-Main-idea" class="headerlink" title="I. Main idea:"></a>I. Main idea:</h3><p>similar to Python string’s <strong>format method</strong> like “ A is {title} of B”.format(title=”father”); Whereas, <strong>template engine</strong> is also a formatter, but much more powerful.</p>
-<blockquote>
-<p>An important phase in any web application is generating HTML to be served to the browser.</p>
-</blockquote>
-<blockquote>
-<p>Very few HTML pages are completely static: they involve at least a small amount of <strong>dynamic data</strong>, such as the user’s name. Usually, they contain a great deal of dynamic data: product listings, friends’ news updates, and so on.</p>
-</blockquote>
-<blockquote>
-<p>The mostly-static style used in templates is the opposite of how most programming languages work.</p>
-</blockquote>
-<blockquote>
-<p>A template language flips this around: <strong>the template file is mostly static literal text, with special notation to indicate the executable dynamic parts.</strong></p>
-</blockquote>
-<h3 id="II-tech-stacks"><a href="#II-tech-stacks" class="headerlink" title="II. tech stacks"></a>II. tech stacks</h3><p> <strong>Python – Template language Django</strong></p>
-<p><strong>Github</strong>: <a href="https://github.com/caomingkai/500-Lines-Or-Less" target="_blank" rel="noopener">https://github.com/caomingkai/500-Lines-Or-Less</a></p>
-<h3 id="III-template-syntax"><a href="#III-template-syntax" class="headerlink" title="III. template syntax"></a>III. template syntax</h3><ol>
-<li><p>dot : </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;The price is: &#123;&#123;product.price&#125;&#125;, with a &#123;&#123;product.discount&#125;&#125;% discount.&lt;/p&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>filters with pipe character: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;Short name: &#123;&#123;story.subject|slugify|lower&#125;&#125;&lt;/p&gt;</span><br></pre></td></tr></table></figure></p>
-</li>
-<li><p>logic control: </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;Products:&lt;/p&gt;</span><br><span class="line">&lt;ul&gt;</span><br><span class="line">&#123;% for product in product_list %&#125;</span><br><span class="line">    &lt;li&gt;&#123;&#123; product.name &#125;&#125;: &#123;&#123; product.price|format_price &#125;&#125;&lt;/li&gt;</span><br><span class="line">&#123;% endfor %&#125;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>comment:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;# This is the best template ever! #&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="III-Two-approach-to-implement-the-Template-Engine"><a href="#III-Two-approach-to-implement-the-Template-Engine" class="headerlink" title="III. Two approach to implement the Template Engine"></a>III. Two approach to implement the Template Engine</h3><ol>
-<li><p>Two main phases: <strong>parsing the template</strong>, and then <strong>rendering the template</strong></p>
-</li>
-<li><p>For ‘parsing phase’:</p>
-</li>
-</ol>
-<ul>
-<li>interpretation (Django )</li>
-<li>compilation (Jinja2 and Mako | also, we will use)</li>
-</ul>
-<h3 id="IV-Compiling-to-Python"><a href="#IV-Compiling-to-Python" class="headerlink" title="IV. Compiling to Python"></a>IV. Compiling to Python</h3><ol>
-<li>The template engine will compile templates to Python method called <strong>“render_function(context, do_dots)”</strong></li>
-<li>context dictionary : carry kinds of dynamic variables to be embedded in template</li>
-<li>do_dots method: passed-in method name, handling dot access</li>
-</ol>
-<h3 id="V-Code-bulider"><a href="#V-Code-bulider" class="headerlink" title="V. Code_bulider"></a>V. Code_bulider</h3><ol>
-<li>Being called by template object, to help to read passed-in lines, using <strong>‘add-line()’</strong></li>
-<li>Integrate lines into a well-formed python script</li>
-<li>return to templage object the final executable script by calling “ exec(python_source, global_namespace)”</li>
-</ol>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Code-builder</span><br><span class="line">    |__   add_line()    : read in ready-to-run python lines</span><br><span class="line">    |__   add_section() : set aside space for later variable assignment</span><br><span class="line">    |__   indent()      : indent to form well-formed python</span><br><span class="line">    |__   dedent()      : dedent to form well-formed python</span><br><span class="line">    |__   get_globles() : 1- call "exec(python_source, global_namespace)"</span><br><span class="line">                          2- return executable script by calling get_globles()['render_function']</span><br></pre></td></tr></table></figure>
-<h3 id="VI-Template"><a href="#VI-Template" class="headerlink" title="VI. Template"></a>VI. Template</h3><ol>
-<li>used to handle template, and parse it into executable lines</li>
-<li>call functions of Code-builder object, to produce an executable script to output ‘HTML string’</li>
-<li>with helper function: do_dots()</li>
-</ol>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Template</span><br><span class="line">    |__   __init__(context):   1- read context( ie, values for var in template )</span><br><span class="line">    |                          2- break down template text by Regex into 4 cases</span><br><span class="line">    |                          3- call functions of Code_bulider to produce HTML</span><br><span class="line">    |</span><br><span class="line">    |__   4 cases:             1- Literal content(pure string)</span><br><span class="line">    |                          2- &#123;&#123; ..... &#125;&#125; variables, converted to string</span><br><span class="line">    |                             For case 1 and 2, just concatenate them;</span><br><span class="line">    |                          3- &#123;# ..... #&#125;</span><br><span class="line">    |                             Just ignore</span><br><span class="line">    |                          4- &#123;% ..... %&#125; control statements</span><br><span class="line">    |                             4.1- ops_stack() for nested control statements</span><br><span class="line">    |                             4.2- filter_handler() for 'var|upper'</span><br><span class="line">    |                             4.3- indent()/ dedent()</span><br><span class="line">    |</span><br><span class="line">    |__   self._render_function() = code.get_globles['render_function'];</span><br><span class="line">    |</span><br><span class="line">    |__   render():             calls self._render_function() with context param</span><br></pre></td></tr></table></figure>
-<h3 id="VII-Template-Test"><a href="#VII-Template-Test" class="headerlink" title="VII. Template Test"></a>VII. Template Test</h3><ul>
-<li>great introduction of unittest: <a href="https://www.jianshu.com/p/38948d0d73f5" target="_blank" rel="noopener">https://www.jianshu.com/p/38948d0d73f5</a></li>
-<li>unittest是Python自带的单元测试框架，我们可以用其来作为我们自动化测试框架的用例组织执行框架</li>
-</ul>
-<ol>
-<li>unittest的流程：写好TestCase，然后由TestLoader加载TestCase到TestSuite，然后由TextTestRunner来运行TestSuite，运行的结果保存在TextTestResult中，我们通过命令行或者unittest.main()执行时，main会调用TextTestRunner中的run来执行，或者我们可以直接通过TextTestRunner来执行用例。</li>
-<li>一个class继承unittest.TestCase即是一个TestCase，其中以 test 开头的方法在load时被加载为一个真正的TestCase。</li>
-<li>verbosity参数可以控制执行结果的输出，0 是简单报告、1 是一般报告、2 是详细报告。<br>可以通过addTest和addTests向suite中添加case或suite，可以用TestLoader的loadTestsFrom__()方法</li>
-<li>用 setUp()、tearDown()、setUpClass()以及 tearDownClass()可以在用例执行前布置环境，以及在用例执行后清理环境</li>
-<li>我们可以通过skip，skipIf，skipUnless装饰器跳过某个case，或者用TestCase.skipTest方法。<br>参数中加stream，可以将报告输出到文件：可以用TextTestRunner输出txt报告，以及可以用HTMLTestRunner输出html报告。</li>
-</ol>
 
           
         

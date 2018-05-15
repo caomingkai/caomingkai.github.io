@@ -310,6 +310,208 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/14/Node-MySQL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/14/Node-MySQL/" itemprop="url">Node+MySQL</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-14T21:30:13-07:00">2018-05-14</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/14/Node-MySQL/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/05/14/Node-MySQL/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h3><p>This is a Node.js module, install:<br><code>npm install mysql --save</code></p>
+<h3 id="Connect"><a href="#Connect" class="headerlink" title="Connect"></a>Connect</h3><p>Before connecting to databases, make sure MySQL database is turned on.</p>
+<p>【注意】：</p>
+<ul>
+<li>先执行 <code>connect()</code>,让connection object与数据库建立连接。</li>
+<li>然后，在对该connection执行<code>.query(MySQL_Command, callback_func)</code></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> mysql      = <span class="built_in">require</span>(<span class="string">'mysql'</span>);</span><br><span class="line"><span class="keyword">var</span> connection = mysql.createConnection(&#123;</span><br><span class="line">  host     : <span class="string">'example.org'</span>,</span><br><span class="line">  user     : <span class="string">'bob'</span>,</span><br><span class="line">  password : <span class="string">'secret'</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">connection.query(<span class="string">'SELECT 1'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">error, results, fields</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (error) <span class="keyword">throw</span> error;</span><br><span class="line">  <span class="comment">// connected!</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="Disconnect"><a href="#Disconnect" class="headerlink" title="Disconnect"></a>Disconnect</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">connection.end(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// Callback function</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="Escaping-query-values"><a href="#Escaping-query-values" class="headerlink" title="Escaping query values"></a>Escaping query values</h3><p>Three ways to avoid <strong>SQL injection</strong></p>
+<ul>
+<li>mysql.escape()</li>
+<li>connection.escape() </li>
+<li>pool.escape()</li>
+<li><code>?</code>placeholder</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1 -connection.escape()</span></span><br><span class="line"><span class="keyword">var</span> userId = <span class="string">'some user provided value'</span>;</span><br><span class="line"><span class="keyword">var</span> sql    = <span class="string">'SELECT * FROM users WHERE id = '</span> + connection.escape(userId);</span><br><span class="line">connection.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">error, results, fields</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (error) <span class="keyword">throw</span> error;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2 - ? placeholder</span></span><br><span class="line"><span class="keyword">var</span> adr = <span class="string">'Mountain 21'</span>;</span><br><span class="line"><span class="keyword">var</span> sql = <span class="string">'SELECT * FROM customers WHERE address = ?'</span>;</span><br><span class="line">con.query(sql, [adr], <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">  <span class="built_in">console</span>.log(result);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="Creating-a-Database"><a href="#Creating-a-Database" class="headerlink" title="Creating a Database"></a>Creating a Database</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">connection.query(<span class="string">"CREATE DATABASE mydb"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Database created"</span>);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="Creating-a-Table"><a href="#Creating-a-Table" class="headerlink" title="Creating a Table"></a>Creating a Table</h3><p>Two ways:</p>
+<ul>
+<li>create database and table simultenously</li>
+<li>first create database, and connect it; then create table with the connection</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// approach 1</span></span><br><span class="line"></span><br><span class="line">connection.query(<span class="string">"CREATE DATABASE db"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">error, rows, fields</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (error) <span class="keyword">throw</span> error;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">connection.query(<span class="string">"USE db"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">error, rows, fields</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (error) <span class="keyword">throw</span> error;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">connection.query(<span class="string">"CREATE TABLE tb(id INT, name VARCHAR(50))"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">error, rows, fields</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (error) <span class="keyword">throw</span> error;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//-----------------------</span></span><br><span class="line"><span class="comment">// approach 2</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> con = mysql.createConnection(&#123;</span><br><span class="line">  host: <span class="string">"localhost"</span>,</span><br><span class="line">  user: <span class="string">"yourusername"</span>,</span><br><span class="line">  password: <span class="string">"yourpassword"</span>,</span><br><span class="line">  database: <span class="string">"mydb"</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">con.connect(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> sql = <span class="string">"CREATE TABLE customers (name VARCHAR(255), address VARCHAR(255))"</span>;</span><br><span class="line"></span><br><span class="line">con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line"><span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Table created"</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="Selecting-From-a-Table"><a href="#Selecting-From-a-Table" class="headerlink" title="Selecting From a Table"></a>Selecting From a Table</h3><p>To select data from a table in MySQL, use the <code>SELECT</code> statement.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"SELECT * FROM customers WHERE address = 'Park Lane 38'"</span>;</span><br><span class="line"></span><br><span class="line">con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="built_in">console</span>.log(result);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><strong>Wildcard Characters</strong><code>%</code>: represent zero, one or multiple characters:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"SELECT * FROM customers WHERE address LIKE 'S%'"</span></span><br></pre></td></tr></table></figure>
+<h3 id="Insert-Into-Table"><a href="#Insert-Into-Table" class="headerlink" title="Insert Into Table"></a>Insert Into Table</h3><p>To fill a table in MySQL, use the <code>INSERT INTO</code> statement.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"INSERT INTO customers (name, address) VALUES ('Company Inc', 'Highway 37')"</span>;</span><br><span class="line"></span><br><span class="line">con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line"><span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"1 record inserted"</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="Update-Table"><a href="#Update-Table" class="headerlink" title="Update Table"></a>Update Table</h3><p>You can update existing records in a table by using the <code>UPDATE</code> statement:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"UPDATE customers SET address = 'Canyon 123' WHERE address = 'Valley 345'"</span>;</span><br><span class="line"></span><br><span class="line">  con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="built_in">console</span>.log(result.affectedRows + <span class="string">" record(s) updated"</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="Sort-the-Result"><a href="#Sort-the-Result" class="headerlink" title="Sort the Result"></a>Sort the Result</h3><p>Use the <code>ORDER BY</code> statement to sort the result in ascending or descending order.</p>
+<p>The <code>ORDER BY</code> keyword sorts the result ascending by default. To sort the result in descending order, use the <code>DESC</code> keyword.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"SELECT * FROM customers ORDER BY name DESC"</span>;</span><br><span class="line"></span><br><span class="line">con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="built_in">console</span>.log(result);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="Delete-Record"><a href="#Delete-Record" class="headerlink" title="Delete Record"></a>Delete Record</h3><p>You can delete records from an existing table by using the <code>DELETE FROM</code> statement:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"DELETE FROM customers WHERE address = 'Mountain 21'"</span>;</span><br><span class="line"></span><br><span class="line">con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Number of records deleted: "</span> + result.affectedRows);</span><br></pre></td></tr></table></figure>
+<h3 id="Limit-the-Result"><a href="#Limit-the-Result" class="headerlink" title="Limit the Result"></a>Limit the Result</h3><p>You can limit the number of records returned from the query, by using the <code>LIMIT</code> statement:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"SELECT * FROM customers LIMIT 5"</span>;</span><br><span class="line"></span><br><span class="line">con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line"><span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line"><span class="built_in">console</span>.log(result);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="Join-Two-or-More-Tables"><a href="#Join-Two-or-More-Tables" class="headerlink" title="Join Two or More Tables"></a>Join Two or More Tables</h3><p>Combine rows from two or more tables, based on a related column between them, by using a <code>JOIN</code> statement.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//users</span><br><span class="line"></span><br><span class="line">[</span><br><span class="line">  &#123; id: 1, name: &apos;John&apos;, favorite_product: 154&#125;,</span><br><span class="line">  &#123; id: 2, name: &apos;Peter&apos;, favorite_product: 154&#125;,</span><br><span class="line">  &#123; id: 3, name: &apos;Amy&apos;, favorite_product: 155&#125;,</span><br><span class="line">  &#123; id: 4, name: &apos;Hannah&apos;, favorite_product:&#125;,</span><br><span class="line">  &#123; id: 5, name: &apos;Michael&apos;, favorite_product:&#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// products</span><br><span class="line">[</span><br><span class="line">  &#123; id: 154, name: &apos;Chocolate Heaven&apos; &#125;,</span><br><span class="line">  &#123; id: 155, name: &apos;Tasty Lemons&apos; &#125;,</span><br><span class="line">  &#123; id: 156, name: &apos;Vanilla Dreams&apos; &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p><strong>1. Inner join</strong></p>
+<p>These two tables can be combined by using users’ favorite_product field and products’ id field.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"SELECT users.name AS user, products.name AS favorite FROM users JOIN products ON users.favorite_product = products.id"</span>;</span><br><span class="line">    </span><br><span class="line">con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line"><span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line"><span class="built_in">console</span>.log(result);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><strong>2. Left Join</strong><br>If you want to return all users, no matter if they have a favorite product or not, use the LEFT JOIN statement:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT users.name AS user,</span><br><span class="line">products.name AS favorite</span><br><span class="line">FROM users</span><br><span class="line">LEFT JOIN products ON users.favorite_product = products.id</span><br></pre></td></tr></table></figure>
+<p><strong>2. Right Join</strong><br>If you want to return <strong>all products</strong>, and the users who have them as their favorite, even if no user have them as their favorite, use the RIGHT JOIN statement:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT users.name AS user,</span><br><span class="line">products.name AS favorite</span><br><span class="line">FROM users</span><br><span class="line">RIGHT JOIN products ON users.favorite_product = products.id</span><br></pre></td></tr></table></figure></p>
+<p>### </p>
+<p>### </p>
+<p>### </p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/23/React-Expense-Tracking-app/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -762,216 +964,6 @@
 <li>最后调用 <code>pt_map(curproc-&gt;pdir, vaddr, pt_virt_to_phys(pf_addr),...)</code>将 (vadd:paddr)写到 page table 中</li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">【实质】</span><br><span class="line"></span><br><span class="line"> virtualAddr &lt;=&gt; pframe &lt;=&gt; physicalAddr</span><br><span class="line">      |            |             |</span><br><span class="line">     user        kernel     physical mem</span><br><span class="line">      |            |             |</span><br><span class="line">      3G    1G=2^20*2^12=4K &lt;==&gt; 4G</span><br><span class="line">       \_ _ _ _ _ _ _ _ _ _ _ _ _／</span><br><span class="line">       </span><br><span class="line">+ 任何一块物理内存都由一个对应的pframe指向,并管理；</span><br><span class="line">+ pframe本身为virtual address；甚至其内部与phsical page</span><br><span class="line">  直接关联的 pf_addr也是 virtual address。But why?**  </span><br><span class="line">+ 实际上:</span><br><span class="line">    - 1page = 4KB = 2^12 Byte</span><br><span class="line">    - physical mem(32bit): 4GB=2^32 Byte</span><br><span class="line">    - pframe #: 2^32 / 2^12 = 2^20 </span><br><span class="line">    - kernel address space: 1GB = 2^20</span><br><span class="line">    - 也就是说：使用pframe分配物理内存的话，</span><br><span class="line">              kernel pframes正好与physical pages形成对应</span><br><span class="line">    - 因此：在pframe创建之时(即对应物理内存征用之时)，</span><br><span class="line">      只需要做一个简单的加减法就可以！</span><br><span class="line">      因为 kernel 1G [c0000000~ffffffff],对应4GB；</span><br><span class="line">      那么减去的 delta=c0000000（该值需要再调整）</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/18/VM-How-does-fork-work/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/18/VM-How-does-fork-work/" itemprop="url">VM: How does fork() work?</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-18T15:12:11-07:00">2018-04-18</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Courses/" itemprop="url" rel="index"><span itemprop="name">Courses</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/18/VM-How-does-fork-work/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/18/VM-How-does-fork-work/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="fork-in-Kernel"><a href="#fork-in-Kernel" class="headerlink" title="fork( ) in Kernel"></a><em>fork</em>( ) in Kernel</h2><p>跟<code>read()</code>一样: 都是user process调用kernel syscall，trap into kernel，在interrupt handler中指明interrupt routine，最终由kernel代为执行任务；</p>
-<p>具体在kernle中要做的工作有以下几步：</p>
-<ol>
-<li>创建新的 PCB,<code>newProc = proc_create()</code></li>
-<li>拷贝address space,<code>vmmap_copy(newProc)</code><ul>
-<li>拷贝 vmmap(address space)的vmarea(只初步copy memory area):<br><code>newProc-&gt;p_vmmap = vmmap_clone(curproc-&gt;p_vmmap);</code></li>
-<li>拷贝每个vmarea对应的mmobj, from curproc<ul>
-<li>两个process的vmarea是一一对应的，遍历copy</li>
-<li>首先获得即将要拷贝的curproc的第一个vmarea</li>
-<li>从newProc的第一个vmarea开始，执行copy：<br> <code>curproc-&gt;vmarea-&gt;vma_obj</code></li>
-<li>更新vma_obj的refcount</li>
-<li>判断要该vmarea是否为Private,执行<strong>shadow copy</strong><ol>
-<li>if private，执行shadow copy</li>
-<li>并且要新vmarea插入到bottom_mmobj-&gt;mmo_vmas之后</li>
-</ol>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>清除 curproc 的pageTable 以及TLB缓存(必须在thread copy之前)<ul>
-<li>因为curproc的pageTable也会被copy(在thread copy的时候)<br>若不重新映射pageTable的话，两个process的vaddr会映射同一paddr</li>
-<li>既然pageTable需要重新映射，那么TLB也需要重新缓存新映射</li>
-</ul>
-</li>
-<li>创建新thread，拷贝cur thread内容，包括 register、stack、pageTable<ul>
-<li>拷贝parent的TCB到新的TCB：kth_new,<code>kth_new = kthread_clone(curthr)</code></li>
-<li>设置所属process，<code>kth_new-&gt;kt_proc = newProc</code></li>
-<li>将新thread插入到process的“线程链”之后</li>
-<li>更新register信息（包括page table信息）<ul>
-<li><strong>其实pageTable是给CPU使用的(以下可看出)</strong></li>
-<li><code>kt_ctx.c_pdptr = newProc-&gt;p_pagedir</code></li>
-<li><code>kt_ctx.c_eip = (uint32_t)userland_entry</code></li>
-<li><code>kt_ctx.c_esp = fork_setup_stack(regs,kth_new-&gt;kt_kstack)</code></li>
-<li><code>kt_ctx.c_kstack = (uintptr_t) kth_new-&gt;kt_kstack</code></li>
-<li><code>kt_ctx.c_kstacksz = DEFAULT_STACK_SIZE</code></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>拷贝file system的内容<ul>
-<li>拷贝curProc的file-descriptor-table</li>
-<li>注意这里是拷贝的 fd table的内容，并非 open-connection-table</li>
-<li>因为fd-table很大：NFILES，遍历拷贝<ul>
-<li>如果 p-&gt;p_files[i] != NULL，表明对应实际open-file</li>
-<li>还需要更新该open-file的refcount</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>拷贝p_cwd，并更新p_cwd的refcount:<code>p-&gt;p_cwd = curproc-&gt;p_cwd;</code><ul>
-<li>注意：这里的<code>p_cwd</code>在<code>proc_creat()</code>的时候复制了一遍了</li>
-<li>同时也要考虑<code>p_cwd=NULL</code>的情况如何处理</li>
-</ul>
-</li>
-<li>设置 heap segment 的break，与 curproc 的一致</li>
-<li>将新thread加入到 run queue 中</li>
-<li>设置 parent proc的fork()返回值：newProc-&gt;p_pid</li>
-</ol>
 
           
         
@@ -1618,429 +1610,6 @@
 <li>交给“进程系统” Process&amp; Memory System，来具体处理任务：<code>do_waitpid()</code></li>
 </ol>
 <h2 id="VI-Interrupt-handler-for-syscalls"><a href="#VI-Interrupt-handler-for-syscalls" class="headerlink" title="VI. Interrupt handler for syscalls"></a>VI. Interrupt handler for syscalls</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">syscall_handler</span><span class="params">(<span class="keyword">regs_t</span> *regs)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line">很重要的一个函数：</span><br><span class="line"><span class="number">1.</span> 使“用户态”程序在 make syscall 的时候，进入“内核态”</span><br><span class="line"><span class="number">2.</span> 根据 syscall_number，调用相应的 system API</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/12/page-frame/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/12/page-frame/" itemprop="url">VM - Page Frame</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-12T17:04:02-07:00">2018-04-12</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Courses/" itemprop="url" rel="index"><span itemprop="name">Courses</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/12/page-frame/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/12/page-frame/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Why-do-we-need-page-frame"><a href="#Why-do-we-need-page-frame" class="headerlink" title="Why do we need page frame?"></a>Why do we need page frame?</h2><p>实际 page frame 只是 kernel 的一个 struct，用于：</p>
-<ol>
-<li>记录：由其包含的 physical page 地址（其实还是virtual addr）</li>
-<li>记录：该page 所属的 memeory object(即 vm_area_struct/bss… 所指向的)；以及该page 的 page_num</li>
-<li>第一条“由其包含”表明了，OS需要一个结构体来管理所“征用”的physical page，这个结构体就是 page frame</li>
-<li>注意：page frame 中的page 不一定都在 physical memory 中，也有可能被 page out 到了 disk。前者称为 resident page。</li>
-</ol>
-<h4 id="1-pframe-init"><a href="#1-pframe-init" class="headerlink" title="1. pframe_init()"></a>1. pframe_init()</h4><blockquote>
-<p>使用物理内存之前的准备工作，开机时？</p>
-</blockquote>
-<p>初始化与 pframe 有关的量：  </p>
-<ul>
-<li>alloc_list  </li>
-<li>pinned_list  </li>
-<li>pframe_allocator  </li>
-<li>pageout deamon</li>
-</ul>
-<h4 id="2-pframe-shutdown（）"><a href="#2-pframe-shutdown（）" class="headerlink" title="2. pframe_shutdown（）"></a>2. pframe_shutdown（）</h4><blockquote>
-<p>停止使用物理内存之后的清理工作，关机时？</p>
-</blockquote>
-<ul>
-<li>停止 pageout deamon</li>
-<li>清理及 free 所有 page</li>
-</ul>
-<h4 id="3-pframe-get-resident（）"><a href="#3-pframe-get-resident（）" class="headerlink" title="3. pframe_get_resident（）"></a>3. pframe_get_resident（）</h4><blockquote>
-<p>获得“驻足内存的pframe”，based on mmobj &amp; pagenum; 如果pframe 不再内存中，返回NULL</p>
-</blockquote>
-<h4 id="4-pframe-alloc（）"><a href="#4-pframe-alloc（）" class="headerlink" title="4. pframe_alloc（）"></a>4. pframe_alloc（）</h4><blockquote>
-<p>为 mmobj、pagenum 指定的 page 分配<strong>物理内存</strong></p>
-</blockquote>
-<h4 id="5-pframe-lookup（）"><a href="#5-pframe-lookup（）" class="headerlink" title="5. pframe_lookup（）"></a>5. pframe_lookup（）</h4><blockquote>
-<p>实际上就是执行 pframe_get()，</p>
-</blockquote>
-<h4 id="6-pframe-get（）"><a href="#6-pframe-get（）" class="headerlink" title="6. pframe_get（）"></a>6. pframe_get（）</h4><p><strong>#参见<code>page\_fault()</code>:</strong><br><a href="https://caomingkai.github.io/2018/04/18/VM-Page-Table-Page-Fault-Hander/" target="_blank" rel="noopener">https://caomingkai.github.io/2018/04/18/VM-Page-Table-Page-Fault-Hander/</a></p>
-<blockquote>
-<p>根据 ‘mmobj &amp; pagenum’ 得到 pframe  </p>
-<ul>
-<li>如果物理内存中已有该page，直接返回  </li>
-<li>如果物理内存中没有该page，allocate 新的，并（有可能从disk）fill 进内容</li>
-</ul>
-</blockquote>
-<ol>
-<li>先判断由 ‘mmobj &amp; pagenum’ 指明的pframe 是否存在于内存中，by calling pframe_get_resident() <ul>
-<li>如果存在，继续判断 pframe 是否 busy（因为有可能被 pageout deamon 操作）<ul>
-<li>if busy 则 sleep；醒来时再回到第1步，判断pframe是否存在于物理内存中</li>
-<li>if not busy，直接返回 pframe</li>
-</ul>
-</li>
-<li>如果不存在，则创建新的pframe<ul>
-<li>先判断是否需要启动 pageout deamon 释放部分物理内存，需要的话就唤醒 deamon</li>
-<li>然后分配pframe空间， pframe_alloc(o,pagenum)；注意返回值ERROR</li>
-<li>再向刚获得的pframe中添加内容， pframe_fill()；注意返回值ERROR</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<h4 id="7-pframe-migrate（）"><a href="#7-pframe-migrate（）" class="headerlink" title="7. pframe_migrate（）"></a>7. pframe_migrate（）</h4><blockquote>
-<p>将pframe 移到父节点；缩短 shadow object tree 的高度（在某个mmobj被清除的时候）</p>
-</blockquote>
-<h4 id="8-pframe-fill（）"><a href="#8-pframe-fill（）" class="headerlink" title="8. pframe_fill（）"></a>8. pframe_fill（）</h4><blockquote>
-<p>调用 specific mmobj 的 fillpage() 真正实现<strong>将外部数据读入物理内存</strong></p>
-</blockquote>
-<h4 id="9-pframe-pin（）"><a href="#9-pframe-pin（）" class="headerlink" title="9. pframe_pin（）"></a>9. pframe_pin（）</h4><blockquote>
-<p>对该 pframe 锁定 pin down，防止被 pageout</p>
-</blockquote>
-<ol>
-<li>判断该 pframe 的 pf_pincount 是否为“0”<ul>
-<li>如果==0，表明该 pframe page 在 allo_chain上<ul>
-<li>从原来 chain 卸下来</li>
-<li>nallocated–</li>
-<li>加入 pinned_chain 中</li>
-<li>npinned++</li>
-<li>pf-&gt;pf_pincount++</li>
-</ul>
-</li>
-<li>如果 != 0，表明该 pframe page 已经在 pinned_chain上了<ul>
-<li>只需要 pf-&gt;pf_pincount++ 即可</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<h4 id="10-pframe-unpin（）"><a href="#10-pframe-unpin（）" class="headerlink" title="10. pframe_unpin（）"></a>10. pframe_unpin（）</h4><blockquote>
-<p>将该 pframe 解锁，向 pageout deamon 开放</p>
-</blockquote>
-<ol>
-<li>首先更新 pf_pincount： pf_pincount–;</li>
-<li>判断该 pframe 的 pf_pincount 目前是否为“0”<ul>
-<li>如果==0，那么<ul>
-<li>从 pinned_chain 中卸下来</li>
-<li>npinned–</li>
-<li>加入 alloc_chain 中</li>
-<li>nallocated++</li>
-</ul>
-</li>
-<li>如果 !=0, 那么啥也不做</li>
-</ul>
-</li>
-</ol>
-<h4 id="11-pframe-dirty（）"><a href="#11-pframe-dirty（）" class="headerlink" title="11. pframe_dirty（）"></a>11. pframe_dirty（）</h4><blockquote>
-<p>对 pframe（仅指file_obj，shadow、anony 无法pageout）进行更改之前，将该page设置为 DIRTY，待 pageout deamon 回收的时候检查到DIRTY时，会将page的内容更新到 disk 上</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/Union-Find-to-achieve-max-tasks/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/08/Union-Find-to-achieve-max-tasks/" itemprop="url">Union Find to achieve max tasks</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-08T12:47:03-07:00">2018-04-08</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/08/Union-Find-to-achieve-max-tasks/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/08/Union-Find-to-achieve-max-tasks/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="1-题意："><a href="#1-题意：" class="headerlink" title="1. 题意："></a>1. 题意：</h3><ul>
-<li>给n个任务 1～k；</li>
-<li>以及 task dependency array A、B；其中 [Ai,Bi] - bi先完成，才能做ai；</li>
-<li>同时规定：每个task顶多只能依赖一个task</li>
-<li>问：最多可以完成的任务数</li>
-</ul>
-<h3 id="2-分析"><a href="#2-分析" class="headerlink" title="2. 分析"></a>2. 分析</h3><p>虽然任务的dependency可能成环(1-2-3-4-1),但有第三条可知：<br>每个任务最多出现在1个“环”里，表明该“环”上的任务有一个不可能完成，但可以完成(环任务数-1)的任务<br>对于没有出现在环中的任务，这些任务都能够执行完</p>
-<p>因此，相当于根据 A、B，找 number of dependency cycle，<br>那么最多可以完成的任务数就是：<code>总任务数 - 环数</code></p>
-<h3 id="3-Union-Find-Class"><a href="#3-Union-Find-Class" class="headerlink" title="3. Union Find Class"></a>3. Union Find Class</h3><p><strong>Union Find Summary</strong>: <a href="https://workflowy.com/s/HdnT.nwWuWS1F7W" target="_blank" rel="noopener">https://workflowy.com/s/HdnT.nwWuWS1F7W</a></p>
-<p><strong>如何找有多少环？:<code>Union-Find.isConnected()</code></strong></p>
-<ul>
-<li>对每个 task dependency 进行 union</li>
-<li>union 之前调用 isConnected() 检查是否已连通(表明该[ai,bi]会导致“环”)</li>
-<li>累加 每次isConnected() 结果为 True 的情况</li>
-<li>isConnected() 有几次为 True，就存在几个“环”</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// weighted quick UF</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UnionFind</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> [] p;</span><br><span class="line">	<span class="keyword">int</span> [] w;</span><br><span class="line">	<span class="keyword">int</span> numOfCycles ;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">UnionFind</span><span class="params">(<span class="keyword">int</span> N)</span></span>&#123;</span><br><span class="line">		p = <span class="keyword">new</span> <span class="keyword">int</span>[N];</span><br><span class="line">		w = <span class="keyword">new</span> <span class="keyword">int</span>[N];</span><br><span class="line">		numOfCycles = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++ )</span><br><span class="line">			p[i] = i;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">union</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b )</span></span>&#123;</span><br><span class="line">		<span class="keyword">int</span> pa = find(a);</span><br><span class="line">		<span class="keyword">int</span> pb = find(b);</span><br><span class="line">		<span class="keyword">if</span>( pa == pb )&#123;</span><br><span class="line">			numOfCycles++;</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			<span class="keyword">if</span>( w[pa] &lt; w[pb] )&#123;</span><br><span class="line">				p[pb] = pa;</span><br><span class="line">				w[pa] += w[pb];</span><br><span class="line">			&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">				p[pa] = pb;</span><br><span class="line">				w[pb] += w[pa];</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span> a)</span></span>&#123;</span><br><span class="line">		<span class="keyword">while</span>( p[a] != a )&#123;</span><br><span class="line">			p[a] = p[p[a]];</span><br><span class="line">			a = p[a];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> a;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="4-Solution"><a href="#4-Solution" class="headerlink" title="4. Solution"></a>4. Solution</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TaskMaster</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">maxTasks</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span>[] a, <span class="keyword">int</span>[] b )</span></span>&#123;</span><br><span class="line">		<span class="keyword">int</span> ret = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">int</span> size = a.length;</span><br><span class="line">		UnionFind UF = <span class="keyword">new</span> UnionFind(n);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++ )&#123;</span><br><span class="line">			UF.union(a[i]-<span class="number">1</span>,b[i]-<span class="number">1</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">int</span> numOfCycles = UF.numOfCycles;</span><br><span class="line">		ret = n - numOfCycles;</span><br><span class="line">		<span class="keyword">return</span> ret;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">( String[] args )</span></span>&#123;</span><br><span class="line">		<span class="comment">// int n = 8;</span></span><br><span class="line">		<span class="comment">// int[] a = &#123;2,3,4,1,5,8,7&#125;;</span></span><br><span class="line">		<span class="comment">// int[] b = &#123;1,2,3,4,6,7,8&#125;;</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">// int n = 4;</span></span><br><span class="line">		<span class="comment">// int[] a = &#123;2,3,4,1&#125;;</span></span><br><span class="line">		<span class="comment">// int[] b = &#123;1,2,3,4&#125;;</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">// int n = 2;</span></span><br><span class="line">		<span class="comment">// int[] a = &#123;&#125;;</span></span><br><span class="line">		<span class="comment">// int[] b = &#123;&#125;;</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">int</span> n = <span class="number">2</span>;</span><br><span class="line">		<span class="keyword">int</span>[] a = &#123;<span class="number">2</span>&#125;;</span><br><span class="line">		<span class="keyword">int</span>[] b = &#123;<span class="number">1</span>&#125;;</span><br><span class="line"></span><br><span class="line">		System.out.println(maxTasks(n, a, b ));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
           
         
@@ -2907,11 +2476,436 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/01/How-does-OS-load-File-System/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/01/How-does-OS-load-File-System/" itemprop="url">FS - How does OS load File System</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-01T16:04:24-07:00">2018-04-01</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Courses/" itemprop="url" rel="index"><span itemprop="name">Courses</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/01/How-does-OS-load-File-System/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/01/How-does-OS-load-File-System/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="BIOS-code-stored-on-ROM"><a href="#BIOS-code-stored-on-ROM" class="headerlink" title="BIOS(code stored on ROM)"></a>BIOS(code stored on ROM)</h2><p>At BIOS session, several tasks are executed: </p>
+<ol>
+<li>Power-on self test (POST), making suring: <strong>memory, disk,screen,ect.</strong> are in good condition<ul>
+<li>so it knows where to load the boot program( on <strong>DISK</strong>)</li>
+<li>also prepare <strong>memory(run process)</strong> and  <strong>disk(boot program)</strong></li>
+</ul>
+</li>
+<li>Load and transfer control to boot program</li>
+<li>Provide drivers for all devices,</li>
+</ol>
+<h2 id="Boot-code-stored-on-DISK"><a href="#Boot-code-stored-on-DISK" class="headerlink" title="Boot(code stored on DISK)"></a>Boot(code stored on DISK)</h2><ol>
+<li><p>Set up stack, clear BSS, uncompress kernel, then transfer control to Kernel</p>
+</li>
+<li><p><strong>Idle process(pid=0)</strong> is created; set up initial page tables, turn on address translation</p>
+</li>
+<li><p>Initialize rest of kernel</p>
+<ul>
+<li>create vfs_root_vnode</li>
+<li>set the “cwd” of idle/init process</li>
+<li>make the null, zero, and tty devices using “mknod”<ul>
+<li>“/dev” </li>
+<li>“/dev/null”   “/dev/zero”, </li>
+<li>“/dev/tty0”   “/dev/tty1”</li>
+</ul>
+</li>
+<li>create the <strong>“init” process(pid=1)</strong>,<br>which is the ancestor of all other user processes </li>
+<li>invoke the scheduler</li>
+</ul>
+</li>
+</ol>
+<h2 id="Kernel-code-stored-on-disk"><a href="#Kernel-code-stored-on-disk" class="headerlink" title="Kernel(code stored on disk)"></a>Kernel(code stored on disk)</h2><ol>
+<li>Now the File System is ready to use</li>
+<li>Also need to execute other configuration</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/01/File-System-Name-Resolution/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/01/File-System-Name-Resolution/" itemprop="url">FS - File System: Name Resolution</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-01T12:21:30-07:00">2018-04-01</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Courses/" itemprop="url" rel="index"><span itemprop="name">Courses</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/01/File-System-Name-Resolution/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/01/File-System-Name-Resolution/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="lookup"><a href="#lookup" class="headerlink" title="lookup()"></a>lookup()</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int lookup(vnode_t *dir,  char *name, </span><br><span class="line">           size_t   len,  vnode_t **result)</span><br></pre></td></tr></table></figure>
+<h4 id="1-使-vnode-“活”起来"><a href="#1-使-vnode-“活”起来" class="headerlink" title="1. 使 vnode “活”起来"></a>1. 使 vnode “活”起来</h4><p>lookup()、vget()、ramfs_read_vnode() 一起使 vnode “活起来，成为完整 vnode”</p>
+<h4 id="2-lookup-流程："><a href="#2-lookup-流程：" class="headerlink" title="2. lookup 流程："></a>2. lookup 流程：</h4><p>在给定的 dir_vnode 下，查找是否存在名字是”name”的 vnode</p>
+<ul>
+<li>先调用 <strong><em>ramfs_lookup( )</em></strong> 查找 dir_vnode 下是否有相应 entry</li>
+<li>后根据 entry.ino，调用<strong><em>vget(fs,ino)</em></strong> 查找该 inode_num对应的 inode<ol>
+<li>if exist, 更新 refcount， 直接返回 vnode</li>
+<li>if none, 创建 new vnode，填充部分信息；传给ramfs_read_vnode()</li>
+</ol>
+</li>
+<li>调用 <strong><em>ramfs_read_vnode( )</em></strong> 获得完整vnode</li>
+</ul>
+<h4 id="3-name-resolution-虚实连接、递归查找"><a href="#3-name-resolution-虚实连接、递归查找" class="headerlink" title="3. name resolution: 虚实连接、递归查找"></a>3. name resolution: 虚实连接、递归查找</h4><ul>
+<li>lookup() 会调用 ramfs_lookup (a specific FS)，由AFS代为查找</li>
+<li>递归进行name resolution：查找到相应的inode之后，继续以得到的inode查找下一个那么，</li>
+</ul>
+<h2 id="dir-namev"><a href="#dir-namev" class="headerlink" title="dir_namev()"></a>dir_namev()</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int dir_namev(const char *pathname, size_t *namelen, </span><br><span class="line">              const char **name, vnode_t *base, </span><br><span class="line">              vnode_t **res_vnode)</span><br></pre></td></tr></table></figure>
+<h4 id="1-man-dirname"><a href="#1-man-dirname" class="headerlink" title="1. man dirname"></a>1. man dirname</h4><blockquote>
+<p>it deletes the filename portion, beginning with the last slash ‘/‘ character to the end of string (after first stripping trailing slashes), and writes the result to the standard output.</p>
+</blockquote>
+<ul>
+<li>提取 pathname 的 <strong>parent directory inode</strong>；  </li>
+<li>同时保存最后一级 <strong>directory/file 的 name</strong>  </li>
+</ul>
+<h4 id="2-三个例子："><a href="#2-三个例子：" class="headerlink" title="2. 三个例子："></a>2. 三个例子：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1. 正常情况</span><br><span class="line">$ dirname /Users/kevin/Desktop/html-DOM.jpg </span><br><span class="line">/Users/kevin/Desktop</span><br><span class="line"></span><br><span class="line">2. 即便文件名字后边有 “／”，会先将“／”去掉</span><br><span class="line">$ dirname /Users/kevin/Desktop/html-DOM.jpg/</span><br><span class="line">/Users/kevin/Desktop</span><br><span class="line"></span><br><span class="line">3. 不但对文件(file)适用，对目录(directory)也适用</span><br><span class="line">$ dirname /Users/kevin/Desktop/</span><br><span class="line">/Users/kevin</span><br></pre></td></tr></table></figure>
+<h4 id="3-refcount"><a href="#3-refcount" class="headerlink" title="3. refcount"></a>3. refcount</h4><ul>
+<li><p>该函数如果成功返回的话，会使 res_vnode，也就是parent directory inode的 refcount++</p>
+</li>
+<li><p>因为函数内部会逐级调用 lookup() 进行 AFS call 以及  vput(base) 来抵消lookup(base)，给每级base带来的refcount++</p>
+</li>
+<li>但是lookup()找到了parent directory inode 的时候，刻意不调用vput(base)，是最后一级(即res_vnode)的refcount加“1”</li>
+<li>这是有原因的：用户调用dir_namev()，就是要对这个dir就行操作的，需要停留在这里，因此需要对硬盘中相应的对象做相应的refcount更新</li>
+</ul>
+<h4 id="4-dir-name-流程"><a href="#4-dir-name-流程" class="headerlink" title="4. dir_name() 流程"></a>4. dir_name() 流程</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int dir_namev(const char *pathname, size_t *namelen, </span><br><span class="line">              const char **name, vnode_t *base, </span><br><span class="line">              vnode_t **res_vnode)</span><br></pre></td></tr></table></figure>
+<ol>
+<li>根据 <strong><em>base</em></strong> 的值确定查找的起始节点<ul>
+<li>base == NULL, base = curproc -&gt; p_cwd;</li>
+<li>如果 pathname 以 “/“ 开始，忽略 base 的值；base = vfs_root_vn;</li>
+</ul>
+</li>
+<li>更新 base 的refcount =&gt; vref(base);</li>
+<li>依次提取 pathname 中 name 部分，在当前 base inode 下查找是否存在对应 entry<ul>
+<li>维护一个 start_ptr：指向”/“之后第一个位置</li>
+<li>维护一个 end_ptr： 指向下个”/“之前第一个位置</li>
+<li>[start, end] 之间就是 name 部分</li>
+</ul>
+</li>
+<li>调用 lookup 查找该 base vnode之下，是否有 name 的 vnode<ul>
+<li>返回值 != 0, 失败，提前return</li>
+<li>返回值 == 0, 成功，递归查询下一级 name</li>
+<li>更新本次查询使用的 base 的refcount</li>
+</ul>
+</li>
+<li>递归查询：将此次得到的 vnode 设置为下一次查询的 base</li>
+<li>直到start_ptr &gt;= len，表明路径解析完成，跳出<ul>
+<li>注意：在循环中的 lookup() 之前跳出</li>
+<li>因为这是查找上级 dir inode，并非查找最后一级inode</li>
+</ul>
+</li>
+<li>检查最后得到的 inode 是否为 directory</li>
+<li>填充相应的返回值；返回 0(成功)</li>
+</ol>
+<h2 id="open-namev"><a href="#open-namev" class="headerlink" title="open_namev()"></a>open_namev()</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">int open_namev(const char *pathname, int flag, </span><br><span class="line">               vnode_t **res_vnode, vnode_t *base)</span><br><span class="line"></span><br><span class="line">- 输入：</span><br><span class="line">    + pathname：指定要打开的绝对路径</span><br><span class="line">    + flag=O_CREAT &amp;&amp; name 不存在，那么创建新的</span><br><span class="line">    + base：指定从那个vnode 目录下开始解析路径</span><br><span class="line">    </span><br><span class="line">- 输出：将打开的 vnode 存在 res_vnode 中</span><br></pre></td></tr></table></figure>
+<h4 id="1-man-open"><a href="#1-man-open" class="headerlink" title="1. man open"></a>1. man open</h4><blockquote>
+<p>opens a file, a directory or even an URL, just as if you had double-clicked the file’s icon</p>
+</blockquote>
+<ul>
+<li>打开一个文件/目录/URL，相当于 Linux 的 open 指令</li>
+<li>open_namev = dir_namev + lookup + (create)</li>
+</ul>
+<h4 id="2-open-namev-流程"><a href="#2-open-namev-流程" class="headerlink" title="2. open_namev 流程"></a>2. open_namev 流程</h4><ol>
+<li>调用 dir_namev() 解析 pathname<ul>
+<li>retcode = dir_namev(pathname, &amp;namelen, &amp;name, base, &amp;dir);</li>
+<li>输入参数的错误处理由 dir_namev() 解决了</li>
+<li>检查返回值，如果没错误，更新 refcount</li>
+<li>继续下一步</li>
+</ul>
+</li>
+<li>根据刚得到的dir，调用 lookup() 打开dir下的该vnode<ul>
+<li>retVal = lookup(*dir,name,len,res_vnode);</li>
+<li>如果存在的话：将 vnode 返回到 res_vnode 中</li>
+<li>如果不存在的话，同时又满足(flag &amp; O_CREAT) == O_CREAT，那就创建新的vnode<ul>
+<li>调用(*dir)-&gt;vn_ops-&gt;create(*dir,name,len,res_vnode);</li>
+</ul>
+</li>
+<li>return retval</li>
+</ul>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -2958,7 +2952,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-count">17</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

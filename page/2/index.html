@@ -310,6 +310,246 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/01/File-System-Name-Resolution/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/01/File-System-Name-Resolution/" itemprop="url">FS - File System: Name Resolution</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-01T12:21:30-07:00">2018-04-01</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Courses/" itemprop="url" rel="index"><span itemprop="name">Courses</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/01/File-System-Name-Resolution/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/01/File-System-Name-Resolution/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="lookup"><a href="#lookup" class="headerlink" title="lookup()"></a>lookup()</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int lookup(vnode_t *dir,  char *name, </span><br><span class="line">           size_t   len,  vnode_t **result)</span><br></pre></td></tr></table></figure>
+<h4 id="1-使-vnode-“活”起来"><a href="#1-使-vnode-“活”起来" class="headerlink" title="1. 使 vnode “活”起来"></a>1. 使 vnode “活”起来</h4><p>lookup()、vget()、ramfs_read_vnode() 一起使 vnode “活起来，成为完整 vnode”</p>
+<h4 id="2-lookup-流程："><a href="#2-lookup-流程：" class="headerlink" title="2. lookup 流程："></a>2. lookup 流程：</h4><p>在给定的 dir_vnode 下，查找是否存在名字是”name”的 vnode</p>
+<ul>
+<li>先调用 <strong><em>ramfs_lookup( )</em></strong> 查找 dir_vnode 下是否有相应 entry</li>
+<li>后根据 entry.ino，调用<strong><em>vget(fs,ino)</em></strong> 查找该 inode_num对应的 inode<ol>
+<li>if exist, 更新 refcount， 直接返回 vnode</li>
+<li>if none, 创建 new vnode，填充部分信息；传给ramfs_read_vnode()</li>
+</ol>
+</li>
+<li>调用 <strong><em>ramfs_read_vnode( )</em></strong> 获得完整vnode</li>
+</ul>
+<h4 id="3-name-resolution-虚实连接、递归查找"><a href="#3-name-resolution-虚实连接、递归查找" class="headerlink" title="3. name resolution: 虚实连接、递归查找"></a>3. name resolution: 虚实连接、递归查找</h4><ul>
+<li>lookup() 会调用 ramfs_lookup (a specific FS)，由AFS代为查找</li>
+<li>递归进行name resolution：查找到相应的inode之后，继续以得到的inode查找下一个那么，</li>
+</ul>
+<h2 id="dir-namev"><a href="#dir-namev" class="headerlink" title="dir_namev()"></a>dir_namev()</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int dir_namev(const char *pathname, size_t *namelen, </span><br><span class="line">              const char **name, vnode_t *base, </span><br><span class="line">              vnode_t **res_vnode)</span><br></pre></td></tr></table></figure>
+<h4 id="1-man-dirname"><a href="#1-man-dirname" class="headerlink" title="1. man dirname"></a>1. man dirname</h4><blockquote>
+<p>it deletes the filename portion, beginning with the last slash ‘/‘ character to the end of string (after first stripping trailing slashes), and writes the result to the standard output.</p>
+</blockquote>
+<ul>
+<li>提取 pathname 的 <strong>parent directory inode</strong>；  </li>
+<li>同时保存最后一级 <strong>directory/file 的 name</strong>  </li>
+</ul>
+<h4 id="2-三个例子："><a href="#2-三个例子：" class="headerlink" title="2. 三个例子："></a>2. 三个例子：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1. 正常情况</span><br><span class="line">$ dirname /Users/kevin/Desktop/html-DOM.jpg </span><br><span class="line">/Users/kevin/Desktop</span><br><span class="line"></span><br><span class="line">2. 即便文件名字后边有 “／”，会先将“／”去掉</span><br><span class="line">$ dirname /Users/kevin/Desktop/html-DOM.jpg/</span><br><span class="line">/Users/kevin/Desktop</span><br><span class="line"></span><br><span class="line">3. 不但对文件(file)适用，对目录(directory)也适用</span><br><span class="line">$ dirname /Users/kevin/Desktop/</span><br><span class="line">/Users/kevin</span><br></pre></td></tr></table></figure>
+<h4 id="3-refcount"><a href="#3-refcount" class="headerlink" title="3. refcount"></a>3. refcount</h4><ul>
+<li><p>该函数如果成功返回的话，会使 res_vnode，也就是parent directory inode的 refcount++</p>
+</li>
+<li><p>因为函数内部会逐级调用 lookup() 进行 AFS call 以及  vput(base) 来抵消lookup(base)，给每级base带来的refcount++</p>
+</li>
+<li>但是lookup()找到了parent directory inode 的时候，刻意不调用vput(base)，是最后一级(即res_vnode)的refcount加“1”</li>
+<li>这是有原因的：用户调用dir_namev()，就是要对这个dir就行操作的，需要停留在这里，因此需要对硬盘中相应的对象做相应的refcount更新</li>
+</ul>
+<h4 id="4-dir-name-流程"><a href="#4-dir-name-流程" class="headerlink" title="4. dir_name() 流程"></a>4. dir_name() 流程</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int dir_namev(const char *pathname, size_t *namelen, </span><br><span class="line">              const char **name, vnode_t *base, </span><br><span class="line">              vnode_t **res_vnode)</span><br></pre></td></tr></table></figure>
+<ol>
+<li>根据 <strong><em>base</em></strong> 的值确定查找的起始节点<ul>
+<li>base == NULL, base = curproc -&gt; p_cwd;</li>
+<li>如果 pathname 以 “/“ 开始，忽略 base 的值；base = vfs_root_vn;</li>
+</ul>
+</li>
+<li>更新 base 的refcount =&gt; vref(base);</li>
+<li>依次提取 pathname 中 name 部分，在当前 base inode 下查找是否存在对应 entry<ul>
+<li>维护一个 start_ptr：指向”/“之后第一个位置</li>
+<li>维护一个 end_ptr： 指向下个”/“之前第一个位置</li>
+<li>[start, end] 之间就是 name 部分</li>
+</ul>
+</li>
+<li>调用 lookup 查找该 base vnode之下，是否有 name 的 vnode<ul>
+<li>返回值 != 0, 失败，提前return</li>
+<li>返回值 == 0, 成功，递归查询下一级 name</li>
+<li>更新本次查询使用的 base 的refcount</li>
+</ul>
+</li>
+<li>递归查询：将此次得到的 vnode 设置为下一次查询的 base</li>
+<li>直到start_ptr &gt;= len，表明路径解析完成，跳出<ul>
+<li>注意：在循环中的 lookup() 之前跳出</li>
+<li>因为这是查找上级 dir inode，并非查找最后一级inode</li>
+</ul>
+</li>
+<li>检查最后得到的 inode 是否为 directory</li>
+<li>填充相应的返回值；返回 0(成功)</li>
+</ol>
+<h2 id="open-namev"><a href="#open-namev" class="headerlink" title="open_namev()"></a>open_namev()</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">int open_namev(const char *pathname, int flag, </span><br><span class="line">               vnode_t **res_vnode, vnode_t *base)</span><br><span class="line"></span><br><span class="line">- 输入：</span><br><span class="line">    + pathname：指定要打开的绝对路径</span><br><span class="line">    + flag=O_CREAT &amp;&amp; name 不存在，那么创建新的</span><br><span class="line">    + base：指定从那个vnode 目录下开始解析路径</span><br><span class="line">    </span><br><span class="line">- 输出：将打开的 vnode 存在 res_vnode 中</span><br></pre></td></tr></table></figure>
+<h4 id="1-man-open"><a href="#1-man-open" class="headerlink" title="1. man open"></a>1. man open</h4><blockquote>
+<p>opens a file, a directory or even an URL, just as if you had double-clicked the file’s icon</p>
+</blockquote>
+<ul>
+<li>打开一个文件/目录/URL，相当于 Linux 的 open 指令</li>
+<li>open_namev = dir_namev + lookup + (create)</li>
+</ul>
+<h4 id="2-open-namev-流程"><a href="#2-open-namev-流程" class="headerlink" title="2. open_namev 流程"></a>2. open_namev 流程</h4><ol>
+<li>调用 dir_namev() 解析 pathname<ul>
+<li>retcode = dir_namev(pathname, &amp;namelen, &amp;name, base, &amp;dir);</li>
+<li>输入参数的错误处理由 dir_namev() 解决了</li>
+<li>检查返回值，如果没错误，更新 refcount</li>
+<li>继续下一步</li>
+</ul>
+</li>
+<li>根据刚得到的dir，调用 lookup() 打开dir下的该vnode<ul>
+<li>retVal = lookup(*dir,name,len,res_vnode);</li>
+<li>如果存在的话：将 vnode 返回到 res_vnode 中</li>
+<li>如果不存在的话，同时又满足(flag &amp; O_CREAT) == O_CREAT，那就创建新的vnode<ul>
+<li>调用(*dir)-&gt;vn_ops-&gt;create(*dir,name,len,res_vnode);</li>
+</ul>
+</li>
+<li>return retval</li>
+</ul>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/28/Tiny-URL/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1882,10 +2122,10 @@ mid = (left + right + 1) &gt;&gt;1
 <li><p>How to create a component?</p>
 <ol>
 <li><p>functional component</p>
- <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Welcome</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line"><span class="keyword">return</span> &lt;h1&gt;Hello, &#123;props.name&#125;&lt;/h1&gt;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> element = &lt;Welcome name="Sara" /&gt;;</span><br><span class="line">ReactDOM.render(</span><br><span class="line">element,</span><br><span class="line">document.getElementById('root')</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 因为不是class概念，只是方程式，因此直接使用props，不使用this前缀</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Welcome</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &lt;h1&gt;Hello, &#123;props.name&#125;&lt;/h1&gt;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> element = &lt;Welcome name="Sara" /&gt;;</span><br><span class="line">ReactDOM.render(</span><br><span class="line">    element,</span><br><span class="line">    document.getElementById('root')</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>class component</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class Welcome extends React.Component &#123;</span><br><span class="line">render() &#123;</span><br><span class="line">return &lt;h1&gt;Hello, &#123;this.props.name&#125;&lt;/h1&gt;;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">const element = &lt;Welcome name=&quot;Sara&quot; /&gt;;</span><br><span class="line">ReactDOM.render(</span><br><span class="line">element,</span><br><span class="line">document.getElementById(&apos;root&apos;)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 注意：必须加前缀：this；这样才能取到绑定在Welcome上的props</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Welcome</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">        <span class="keyword">return</span> &lt;h1&gt;Hello, &#123;this.props.name&#125;&lt;/h1&gt;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> element = &lt;Welcome name="Sara" /&gt;;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 </li>
@@ -2225,7 +2465,7 @@ mid = (left + right + 1) &gt;&gt;1
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-count">18</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2297,7 +2537,9 @@ mid = (left + right + 1) &gt;&gt;1
                     
                       
                     
-                    <span class="site-state-item-count">18</span>
+                      
+                    
+                    <span class="site-state-item-count">19</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

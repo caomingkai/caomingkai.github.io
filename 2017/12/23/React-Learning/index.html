@@ -106,7 +106,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/12/23/React-Learning/index.html">
 <meta property="og:site_name" content="CMK">
 <meta property="og:description" content="0. 组件数据流: Model -&amp;gt; View 父组件M -&amp;gt; 子组件V  父组件prop 之间传给 子组件 prop   子组件M -&amp;gt; 父组件V  回调函数 父组件向子组件传递回调函数 JS中，function是一等公民，因此传入的值会作为自身field保存起来；与C／Java不同。     sibling 组件间传值 M-&amp;gt;V 必须依靠二者共同父组件来传递 但等组件之">
-<meta property="og:updated_time" content="2018-05-15T04:33:43.000Z">
+<meta property="og:updated_time" content="2018-05-16T00:15:30.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="React Learning">
 <meta name="twitter:description" content="0. 组件数据流: Model -&amp;gt; View 父组件M -&amp;gt; 子组件V  父组件prop 之间传给 子组件 prop   子组件M -&amp;gt; 父组件V  回调函数 父组件向子组件传递回调函数 JS中，function是一等公民，因此传入的值会作为自身field保存起来；与C／Java不同。     sibling 组件间传值 M-&amp;gt;V 必须依靠二者共同父组件来传递 但等组件之">
@@ -500,10 +500,10 @@
 <li><p>How to create a component?</p>
 <ol>
 <li><p>functional component</p>
- <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Welcome</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line"><span class="keyword">return</span> &lt;h1&gt;Hello, &#123;props.name&#125;&lt;/h1&gt;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> element = &lt;Welcome name="Sara" /&gt;;</span><br><span class="line">ReactDOM.render(</span><br><span class="line">element,</span><br><span class="line">document.getElementById('root')</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 因为不是class概念，只是方程式，因此直接使用props，不使用this前缀</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Welcome</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &lt;h1&gt;Hello, &#123;props.name&#125;&lt;/h1&gt;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> element = &lt;Welcome name="Sara" /&gt;;</span><br><span class="line">ReactDOM.render(</span><br><span class="line">    element,</span><br><span class="line">    document.getElementById('root')</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>class component</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class Welcome extends React.Component &#123;</span><br><span class="line">render() &#123;</span><br><span class="line">return &lt;h1&gt;Hello, &#123;this.props.name&#125;&lt;/h1&gt;;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">const element = &lt;Welcome name=&quot;Sara&quot; /&gt;;</span><br><span class="line">ReactDOM.render(</span><br><span class="line">element,</span><br><span class="line">document.getElementById(&apos;root&apos;)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 注意：必须加前缀：this；这样才能取到绑定在Welcome上的props</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Welcome</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">        <span class="keyword">return</span> &lt;h1&gt;Hello, &#123;this.props.name&#125;&lt;/h1&gt;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> element = &lt;Welcome name="Sara" /&gt;;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 </li>
@@ -876,7 +876,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-count">18</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -948,7 +948,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">18</span>
+                      
+                    
+                    <span class="site-state-item-count">19</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

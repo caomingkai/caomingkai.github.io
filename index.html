@@ -515,7 +515,17 @@
 <li>brower自己<code>每次</code>都携带<code>authentication token</code>进行request</li>
 </ol>
 </blockquote>
-<p><strong>本质：</strong><br><strong>1. 相当于每次browser request，都要求用户输入<code>account &amp; password</code></strong><br><strong>2. 因此要对<code>token</code>加强保密措施：password编码传输，等等</strong></p>
+<p><strong>0.【JWT本质：】</strong> </p>
+<ul>
+<li><strong>相当于每次browser request，都要求用户输入<code>account &amp; password</code></strong>   </li>
+<li><strong>即：第一次用户登陆成功后，server根据其“用户名密码”生成唯一“令牌token”，往后该用户只要带上该token进行访问就可以</strong>   </li>
+<li><strong>相同点：<code>session</code>方法类似，<code>cookie</code>中的<code>sessionID</code>也相当于“令牌token”，每次请求都携带上</strong></li>
+<li><strong>不同点：</strong><ul>
+<li><strong><code>JWT</code>方法的token生成依赖于<code>用户名密码</code>与<code>SHA256</code>，不受server环境影响</strong></li>
+<li><strong><code>session</code>方法的<code>sessionID</code>生成依赖于<code>server session context</code>，每个server生成的<code>sessionID</code>不一致，无法适用于distributed system</strong></li>
+</ul>
+</li>
+</ul>
 <p><strong>1. Problems with <code>session</code> approach</strong> </p>
 <ul>
 <li>memcache或者redis的<strong>稳定性</strong>会影响业务系统的可用性</li>

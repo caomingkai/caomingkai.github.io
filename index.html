@@ -1797,182 +1797,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/21/React-Music-Player/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/21/React-Music-Player/" itemprop="url">React Music Player</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-21T19:46:18-07:00">2018-04-21</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Front-end/" itemprop="url" rel="index"><span itemprop="name">Front end</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/21/React-Music-Player/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/21/React-Music-Player/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="About"><a href="#About" class="headerlink" title="About"></a>About</h2><h2 id="webpack"><a href="#webpack" class="headerlink" title="webpack"></a>webpack</h2><ol>
-<li>根据<strong>topologic sort</strong>，进行依赖分析</li>
-<li><p><code>entry</code>:指明从哪里开始解析（是与output对应的）</p>
- <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">entry: <span class="string">'./app.js'</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>output</code>:指明所有的离散文件被打包后的“目录”与“文件名”</p>
- <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">output:&#123;</span><br><span class="line">    path    : <span class="string">'.dist'</span>,</span><br><span class="line">    filename: <span class="string">'bundle.js'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>module</code>:提供给webpack打包过程中要使用的工具</p>
-<ul>
-<li>JS文件中可以使用img、css</li>
-<li>这时候就需要提供给webpack相应的工具：’style-loader’, ‘css-loader’, ‘url-loader’</li>
-<li>其中<code>test</code>指明regex<ul>
-<li><code>／ ／</code>是regex表达式，中间写regex</li>
-<li><code>\.</code> escaped character<code>.</code></li>
-<li><code>?</code> match as few as possible</li>
-<li><code>$</code> matches the end of the string,</li>
-</ul>
-</li>
-<li>所以test指的是：match 严格以<code>.css</code>结尾的文件<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>: &#123;</span><br><span class="line">    rules:[</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.css$/</span>,</span><br><span class="line">        use: [ <span class="string">'style-loader'</span>, <span class="string">'css-loader'</span> ]</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.jsx?$/</span>,</span><br><span class="line">        exclude: <span class="regexp">/node_modules/</span>,</span><br><span class="line">        use: &#123;</span><br><span class="line">          loader: <span class="string">'babel-loader'</span>,</span><br><span class="line">          options: &#123;</span><br><span class="line">            presets: [<span class="string">'es2015'</span>, <span class="string">'react'</span>]</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ol>
-<p>## </p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/18/VM-Page-Table-Page-Fault-Hander/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2658,11 +2482,198 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/14/Virtual-Memory-Allocation-brk-and-mmap/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/14/Virtual-Memory-Allocation-brk-and-mmap/" itemprop="url">VM - Virtual Memory Allocation: brk() and mmap() </a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-14T11:33:45-07:00">2018-04-14</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Courses/" itemprop="url" rel="index"><span itemprop="name">Courses</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/14/Virtual-Memory-Allocation-brk-and-mmap/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/14/Virtual-Memory-Allocation-brk-and-mmap/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Useful-Link"><a href="#Useful-Link" class="headerlink" title="Useful Link"></a>Useful Link</h2><p>Credit goes to:<br><a href="https://blog.csdn.net/gfgdsg/article/details/42709943" target="_blank" rel="noopener">https://blog.csdn.net/gfgdsg/article/details/42709943</a></p>
+<h2 id="Notice-page-granularity"><a href="#Notice-page-granularity" class="headerlink" title="Notice: page-granularity"></a>Notice: page-granularity</h2><p>All memory in virtual memory address space are <strong>page-based</strong>. It is the smallest unit of granularity, including the Heap segment in the following.</p>
+<h2 id="Virtual-Memory-Allocation-2-ways"><a href="#Virtual-Memory-Allocation-2-ways" class="headerlink" title="Virtual Memory Allocation (2 ways):"></a>Virtual Memory Allocation (2 ways):</h2><ol>
+<li><code>brk()</code> on Heap segment</li>
+<li><code>mmap()</code> mapped_file segment, between Heap and Stack</li>
+</ol>
+<p>Usually user process calls <code>malloc()</code> to invoke kernel<br>system calls <code>brk()</code> or <code>mmap()</code> to get a virtual memory. Which one will be executed depends on <strong>requesting memory size(128KB is the line)</strong></p>
+<ul>
+<li><em>size&lt;128KB</em>, kernel calls <code>brk()</code> to assign virtual memory on Heap to user process<ul>
+<li><strong>BAD:</strong> only be sequentially assign and free, like Stack</li>
+<li><strong>GOOD:</strong> can be used as cache ()</li>
+</ul>
+</li>
+<li><em>size&gt;128KB</em>, kerel calls <code>mmap()</code> to get a piece of memory between Heap and Stack to user process<ul>
+<li><strong>GOOD:</strong> can independently assign and free (flexible)</li>
+<li><strong>BAD:</strong> repeately causing page_fault to involve physical memory (CPU costly)</li>
+</ul>
+</li>
+</ul>
+<h2 id="System-API：do-brk"><a href="#System-API：do-brk" class="headerlink" title="System API：do_brk( )"></a>System API：do_brk( )</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">do_brk</span><span class="params">(<span class="keyword">void</span> *addr, <span class="keyword">void</span> **ret)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line">设置 process 地址空间中Heap Segment的break，即Heap的“堆顶”。  </span><br><span class="line">- <span class="built_in">malloc</span>()、<span class="built_in">free</span>()均会调用该API，增加、减小heap <span class="keyword">break</span></span><br><span class="line">- <span class="built_in">malloc</span>()时向高地址增加; <span class="built_in">free</span>()时向低地址减小</span><br><span class="line"></span><br><span class="line">输入： addr 要更新的<span class="keyword">break</span>地址； ret 更新后的<span class="keyword">break</span>地址</span><br><span class="line">输出：<span class="number">0</span>-成功</span><br></pre></td></tr></table></figure>
+<ol>
+<li>如果 addr == NULL，返回当前 brk</li>
+<li>判断 addr 的合法性：与 proc_start_brk比较，不能比他还小</li>
+<li>处理 addr 与 proc_brk 在 page_not_aligned 的情况；并获得old proc_brk所在 virtual area 的最后一页 end_page<ul>
+<li>addr : newvfn (new virtual frame number)</li>
+<li>curproc-&gt;p_brk: oldvma-&gt;vma_end</li>
+<li>if(newvfn &gt; oldvma-&gt;vma_end): 对应于<code>malloc()</code></li>
+<li>if(newvfn &lt; oldvma-&gt;vma_end): 对应于<code>free()</code></li>
+</ul>
+</li>
+<li>最后更新两个量：<ul>
+<li>oldvma-&gt;vma_end = newvfn;</li>
+<li>curproc-&gt;p_brk = addr;</li>
+</ul>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -2709,7 +2720,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">31</span>
+                    <span class="site-state-item-count">30</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2732,9 +2743,7 @@
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -2805,9 +2814,7 @@
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">30</span>
+                    <span class="site-state-item-count">29</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

@@ -310,6 +310,170 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/01/Express-Framework/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/01/Express-Framework/" itemprop="url">Express Framework</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-01T14:44:43-07:00">2018-06-01</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/06/01/Express-Framework/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/06/01/Express-Framework/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="I-set"><a href="#I-set" class="headerlink" title="I. set()"></a>I. <code>set()</code></h2><blockquote>
+<p>You can use the express instance to store and retrieve variables. In this case, you can set the title to be “My Site” and retrieve it later with something like <code>var title = app.get(&#39;title&#39;);</code><strong>without the need to declare and keep a global variable messing around</strong></p>
+</blockquote>
+<p>即相当于在 Express的scope中设置全局变量</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">app.set(<span class="string">'title'</span>,<span class="string">'My Website'</span>);  <span class="comment">// set()</span></span><br><span class="line"><span class="keyword">var</span> title = app.get(<span class="string">'title'</span>);   <span class="comment">// get()</span></span><br><span class="line"></span><br><span class="line">等价于</span><br><span class="line"></span><br><span class="line">title = <span class="string">'My Website'</span></span><br></pre></td></tr></table></figure>
+<h2 id="II-bodyParser"><a href="#II-bodyParser" class="headerlink" title="II. bodyParser"></a>II. <code>bodyParser</code></h2><ol>
+<li><p>用来识别像<code>form</code>的<code>submit</code>默认提交的<code>urlencoded</code>格式数据，并将其放在<code>res.body</code>中</p>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.use(bodyParser.urlencoded(&#123; <span class="attr">extended</span>: <span class="literal">false</span> &#125;));</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>用来识别使用<code>fetch()</code>或<code>axios</code>提交的的<code>json</code>格式数据，并将其放在<code>res.body</code>中</p>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.use(bodyParser.json());</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="III-to-be-continued"><a href="#III-to-be-continued" class="headerlink" title="III. to be continued"></a>III. to be continued</h2>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/29/MERN-Stack-Online-Exam-System/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2482,198 +2646,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/14/Virtual-Memory-Allocation-brk-and-mmap/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/14/Virtual-Memory-Allocation-brk-and-mmap/" itemprop="url">VM - Virtual Memory Allocation: brk() and mmap() </a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-14T11:33:45-07:00">2018-04-14</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Courses/" itemprop="url" rel="index"><span itemprop="name">Courses</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/14/Virtual-Memory-Allocation-brk-and-mmap/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/14/Virtual-Memory-Allocation-brk-and-mmap/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Useful-Link"><a href="#Useful-Link" class="headerlink" title="Useful Link"></a>Useful Link</h2><p>Credit goes to:<br><a href="https://blog.csdn.net/gfgdsg/article/details/42709943" target="_blank" rel="noopener">https://blog.csdn.net/gfgdsg/article/details/42709943</a></p>
-<h2 id="Notice-page-granularity"><a href="#Notice-page-granularity" class="headerlink" title="Notice: page-granularity"></a>Notice: page-granularity</h2><p>All memory in virtual memory address space are <strong>page-based</strong>. It is the smallest unit of granularity, including the Heap segment in the following.</p>
-<h2 id="Virtual-Memory-Allocation-2-ways"><a href="#Virtual-Memory-Allocation-2-ways" class="headerlink" title="Virtual Memory Allocation (2 ways):"></a>Virtual Memory Allocation (2 ways):</h2><ol>
-<li><code>brk()</code> on Heap segment</li>
-<li><code>mmap()</code> mapped_file segment, between Heap and Stack</li>
-</ol>
-<p>Usually user process calls <code>malloc()</code> to invoke kernel<br>system calls <code>brk()</code> or <code>mmap()</code> to get a virtual memory. Which one will be executed depends on <strong>requesting memory size(128KB is the line)</strong></p>
-<ul>
-<li><em>size&lt;128KB</em>, kernel calls <code>brk()</code> to assign virtual memory on Heap to user process<ul>
-<li><strong>BAD:</strong> only be sequentially assign and free, like Stack</li>
-<li><strong>GOOD:</strong> can be used as cache ()</li>
-</ul>
-</li>
-<li><em>size&gt;128KB</em>, kerel calls <code>mmap()</code> to get a piece of memory between Heap and Stack to user process<ul>
-<li><strong>GOOD:</strong> can independently assign and free (flexible)</li>
-<li><strong>BAD:</strong> repeately causing page_fault to involve physical memory (CPU costly)</li>
-</ul>
-</li>
-</ul>
-<h2 id="System-API：do-brk"><a href="#System-API：do-brk" class="headerlink" title="System API：do_brk( )"></a>System API：do_brk( )</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">do_brk</span><span class="params">(<span class="keyword">void</span> *addr, <span class="keyword">void</span> **ret)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line">设置 process 地址空间中Heap Segment的break，即Heap的“堆顶”。  </span><br><span class="line">- <span class="built_in">malloc</span>()、<span class="built_in">free</span>()均会调用该API，增加、减小heap <span class="keyword">break</span></span><br><span class="line">- <span class="built_in">malloc</span>()时向高地址增加; <span class="built_in">free</span>()时向低地址减小</span><br><span class="line"></span><br><span class="line">输入： addr 要更新的<span class="keyword">break</span>地址； ret 更新后的<span class="keyword">break</span>地址</span><br><span class="line">输出：<span class="number">0</span>-成功</span><br></pre></td></tr></table></figure>
-<ol>
-<li>如果 addr == NULL，返回当前 brk</li>
-<li>判断 addr 的合法性：与 proc_start_brk比较，不能比他还小</li>
-<li>处理 addr 与 proc_brk 在 page_not_aligned 的情况；并获得old proc_brk所在 virtual area 的最后一页 end_page<ul>
-<li>addr : newvfn (new virtual frame number)</li>
-<li>curproc-&gt;p_brk: oldvma-&gt;vma_end</li>
-<li>if(newvfn &gt; oldvma-&gt;vma_end): 对应于<code>malloc()</code></li>
-<li>if(newvfn &lt; oldvma-&gt;vma_end): 对应于<code>free()</code></li>
-</ul>
-</li>
-<li>最后更新两个量：<ul>
-<li>oldvma-&gt;vma_end = newvfn;</li>
-<li>curproc-&gt;p_brk = addr;</li>
-</ul>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -2720,7 +2697,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">30</span>
+                    <span class="site-state-item-count">31</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

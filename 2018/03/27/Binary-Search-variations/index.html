@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.6" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.6">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.6" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.0.6',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Credit to : http://izualzhy.cn/algorithm/2014/04/18/binary-search-analysis I. 二分法及变种的注意点：1. 如何得到循环不变式【定义】就是在每次循环里，我们都可以保证要找的index在我们新构造 的区间里。【例子】如正常二分法，循环不变式表述如下：   if array[mid] &amp;gt; key:     right =">
+<meta name="keywords" content="binary search">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Binary Search variations">
+<meta property="og:url" content="http://yoursite.com/2018/03/27/Binary-Search-variations/index.html">
+<meta property="og:site_name" content="CMK">
+<meta property="og:description" content="Credit to : http://izualzhy.cn/algorithm/2014/04/18/binary-search-analysis I. 二分法及变种的注意点：1. 如何得到循环不变式【定义】就是在每次循环里，我们都可以保证要找的index在我们新构造 的区间里。【例子】如正常二分法，循环不变式表述如下：   if array[mid] &amp;gt; key:     right =">
+<meta property="og:updated_time" content="2018-04-09T19:04:21.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Binary Search variations">
+<meta name="twitter:description" content="Credit to : http://izualzhy.cn/algorithm/2014/04/18/binary-search-analysis I. 二分法及变种的注意点：1. 如何得到循环不变式【定义】就是在每次循环里，我们都可以保证要找的index在我们新构造 的区间里。【例子】如正常二分法，循环不变式表述如下：   if array[mid] &amp;gt; key:     right =">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/27/Binary-Search-variations/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Binary Search variations | CMK</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-116541729-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-116541729-1');
+</script>
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> 
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">CMK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Let's create something!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+          
+  <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+</li>
+
+      
+
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/27/Binary-Search-variations/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Binary Search variations</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-27T09:12:32-07:00">2018-03-27</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/27/Binary-Search-variations/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/03/27/Binary-Search-variations/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views: 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong><em>Credit to : <a href="http://izualzhy.cn/algorithm/2014/04/18/binary-search-analysis" target="_blank" rel="noopener">http://izualzhy.cn/algorithm/2014/04/18/binary-search-analysis</a></em></strong></p>
+<h2 id="I-二分法及变种的注意点："><a href="#I-二分法及变种的注意点：" class="headerlink" title="I. 二分法及变种的注意点："></a>I. 二分法及变种的注意点：</h2><h4 id="1-如何得到循环不变式"><a href="#1-如何得到循环不变式" class="headerlink" title="1. 如何得到循环不变式"></a>1. 如何得到循环不变式</h4><p>【定义】就是在每次循环里，我们都可以保证要找的index在我们新构造 的区间里。<br>【例子】如正常二分法，循环不变式表述如下：  </p>
+<pre><code>if array[mid] &gt; key:
+    right = mid - 1
+ else if array[mid] &lt; key:
+     left = mid + 1
+ else
+     return mid
+</code></pre><p>考虑中间值与key的关系： </p>
+<ul>
+<li>如果中间值比key大，那么[mid, right]的值我们都可以忽略掉了，这些值都比key要大。只要在[left, mid-1]里查找就是了。</li>
+<li>如果中间值比key小，那么[left, mid]的值可以 忽略掉，这些值都比key要小，只要在[mid+1, right]里查找就可以了。</li>
+<li>如果相等，表示找到了，可以直接返回。如果最后这个区间没有，那么就确实是没有 。所以说循环不变式，就是在每次循环里，我们都可以保证要找的index在我们新构造的区间里</li>
+</ul>
+<h4 id="2-数组是非递增还是非递减"><a href="#2-数组是非递增还是非递减" class="headerlink" title="2. 数组是非递增还是非递减"></a>2. 数组是非递增还是非递减</h4><h4 id="3-结束条件，即while-condition-应当是-lt-还是-lt"><a href="#3-结束条件，即while-condition-应当是-lt-还是-lt" class="headerlink" title="3. 结束条件，即while (condition) 应当是&lt;还是&lt;="></a>3. 结束条件，即while (condition) 应当是&lt;还是&lt;=</h4><pre><code>“&lt; ” 表明可选区间长度 2～n ；  OR    
+“&lt;= ” 表明可选区间长度 1～n 
+</code></pre><h4 id="4-求mid应当是向上取整还是向下取整"><a href="#4-求mid应当是向上取整还是向下取整" class="headerlink" title="4. 求mid应当是向上取整还是向下取整"></a>4. 求mid应当是向上取整还是向下取整</h4><pre><code>mid = (left + right) &gt;&gt;1       OR
+mid = (left + right + 1) &gt;&gt;1
+</code></pre><h4 id="5-while-结束后是否需要判断一次条件"><a href="#5-while-结束后是否需要判断一次条件" class="headerlink" title="5.  while 结束后是否需要判断一次条件"></a>5.  while 结束后是否需要判断一次条件</h4><pre><code>对应可选区间为2～n情况，将所有元素check完毕；  
+同时，调整mid取整方式，使该判断优雅
+</code></pre><hr>
+<h2 id="II-常见问题："><a href="#II-常见问题：" class="headerlink" title="II. 常见问题："></a>II. 常见问题：</h2><h4 id="1-查找值key的下标，如果不存在返回-1"><a href="#1-查找值key的下标，如果不存在返回-1" class="headerlink" title="1. 查找值key的下标，如果不存在返回-1."></a>1. 查找值key的下标，如果不存在返回-1.</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">BS</span><span class="params">(<span class="keyword">const</span> Vec Int&amp; vec, <span class="keyword">int</span> key)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>, right = vec.size() - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (left &lt;= right)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> mid = (left + right) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (vec[mid] &gt; key)</span><br><span class="line">            right = mid - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (vec[mid] &lt; key)</span><br><span class="line">            left = mid + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="keyword">return</span> mid;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果中间值比key大，那么[mid, right]的值我们都可以忽略掉了，这些值都比key要大。只要在[left, mid-1]里查找就是了。</li>
+<li>如果中间值比key小，那么[left, mid]的值可以 忽略掉，这些值都比key要小，只要在[mid+1, right]里查找就可以了。</li>
+<li>如果相等，表示找到了， 可以直接返回。</li>
+</ul>
+<p>因此，循环不变式就是在每次循环里，我们都可以保证要找的index在我们新构造 的区间里。如果最后这个区间没有，那么就确实是没有。<br><strong>注意mid的求法</strong>，可能会int越界，但我们先不用考虑这个问题，要记住的是这点：<u>mid是偏向left的，即如果left=1,right=2,则mid=1。</u></p>
+<h4 id="2-查找值key第一次出现的下标x，如果不存在返回-1"><a href="#2-查找值key第一次出现的下标x，如果不存在返回-1" class="headerlink" title="2. 查找值key第一次出现的下标x，如果不存在返回-1."></a>2. 查找值key第一次出现的下标x，如果不存在返回-1.</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">BS_First</span><span class="params">(<span class="keyword">const</span> VecInt&amp; vec, <span class="keyword">int</span> key)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>, right = vec.size() - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (left &lt; right)                 <span class="comment">//问题1，left &lt; right时继续，相等就break.</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> mid = (left + right) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (vec[mid] &lt; key)</span><br><span class="line">            left = mid + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            right = mid;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (vec[left] == key)               <span class="comment">//问题2,再判断一次。</span></span><br><span class="line">        <span class="keyword">return</span> left;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们仍然考虑中间值与key的关系：</p>
+<ul>
+<li>如果array[mid]&lt;key，那么x一定在[mid+1, right]区间里。</li>
+<li>如果array[mid]&gt;key，那么x一定在[left, mid-1]区间里。</li>
+<li>如果array[mid]≤key，那么不能推断任何关系。比如对key=1,数组{0,1,1,2,3},{0,0,0,1,2},array[mid] = array[2] ≤ 1，但一个在左半区间，一个在右半区间。</li>
+<li>如果array[mid]≥key，那么x一定在[left, mid]区间里。</li>
+<li>综合上面的结果，我们可以采用1,4即&lt;和≥的组合判断来实现我们的循环不变式，即循环过程中一直满足key在我们的区间里。</li>
+</ul>
+<p><strong>注意问题：</strong></p>
+<ul>
+<li>循环能否退出,我们注意到4的区间改变里是令right = mid,如果left=right=mid时，循环是无法退出的。换句话说，第一个问题我们始终在减小着区间，而在这个问题里，某种情况下区间是不会减小的！ —– 见代码</li>
+<li>循环退出后的判断问题，再看下我们的条件1,4组合，只是使得我们最后的区间满足了≥key，是否=key，还需要再判断一次。 —– 见代码</li>
+</ul>
+<h4 id="3-查找值key最后一次出现的下标x，如果不存在返回-1"><a href="#3-查找值key最后一次出现的下标x，如果不存在返回-1" class="headerlink" title="3. 查找值key最后一次出现的下标x，如果不存在返回-1."></a>3. 查找值key最后一次出现的下标x，如果不存在返回-1.</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">BS_Last</span><span class="params">(<span class="keyword">const</span> VecInt&amp; vec, <span class="keyword">int</span> key)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>, right = vec.size() - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (left &lt; right)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> mid = (left + right + <span class="number">1</span>) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (vec[mid] &gt; key)</span><br><span class="line">            right = mid - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            left = mid;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (vec[left] == key)</span><br><span class="line">        <span class="keyword">return</span> left;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>循环不变式（省去分析的过程，同上）：</p>
+<ul>
+<li>如果array[mid]&gt;key，那么x一定在[left, mid-1]区间里。</li>
+<li>如果array[mid]≤key, 那么x一定在[mid, right]区间里。</li>
+</ul>
+<p><strong>注意问题：</strong></p>
+<ul>
+<li>在条件2里，实际上我们是令left=mid，但是如前面提到的，如果left=1,right=2,那么mid=left=1，同时又进入到条件2,left=mid=1，即使我们在while设定了left &lt; right仍然无法退出循环，</li>
+<li>解决的办法很简单：mid = (left + right + 1) &gt;&gt; 1， 向上取整就可以了。</li>
+</ul>
+<h4 id="4-查找刚好小于key的元素下标x，如果不存在返回-1"><a href="#4-查找刚好小于key的元素下标x，如果不存在返回-1" class="headerlink" title="4. 查找刚好小于key的元素下标x，如果不存在返回-1."></a>4. 查找刚好小于key的元素下标x，如果不存在返回-1.</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">BS_Last_Less</span><span class="params">(<span class="keyword">const</span> VecInt&amp; vec, <span class="keyword">int</span> key)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>, right = vec.size() - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (left &lt; right)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> mid = (left + right + <span class="number">1</span>) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (vec[mid] &lt; key)</span><br><span class="line">            left = mid;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            right = mid - <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (vec[left] &lt; key)</span><br><span class="line">        <span class="keyword">return</span> left;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>循环不变式（省去分析的过程，同上）：</p>
+<ul>
+<li>如果array[mid]&lt;key，那么x在区间[mid, right]</li>
+<li>如果array[mid]≥key，那么x在区间[left, mid-1]</li>
+</ul>
+<h4 id="5-查找刚好大于key的元素下标x，如果不存在返回-1-等价于std-upper-bound"><a href="#5-查找刚好大于key的元素下标x，如果不存在返回-1-等价于std-upper-bound" class="headerlink" title="5. 查找刚好大于key的元素下标x，如果不存在返回-1,等价于std::upper_bound."></a>5. 查找刚好大于key的元素下标x，如果不存在返回-1,等价于std::upper_bound.</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">BS_First_Greater</span><span class="params">(<span class="keyword">const</span> VecInt&amp; vec, <span class="keyword">int</span> key)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>, right = vec.size() - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (left &lt; right)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> mid = (left + right) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (vec[mid] &gt; key)</span><br><span class="line">            right = mid;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            left = mid + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (vec[left] &gt; key)</span><br><span class="line">        <span class="keyword">return</span> left;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>循环不变式（省去分析的过程，同上）：</p>
+<ul>
+<li>如果array[mid]&gt;key，那么x在区间[left, mid]</li>
+<li>如果array[mid]≤key，那么x在区间[mid + 1, right]</li>
+</ul>
+<h4 id="6-查找第一个-gt-key的下标，如果不存在返回-1-等价于std-lower-bound"><a href="#6-查找第一个-gt-key的下标，如果不存在返回-1-等价于std-lower-bound" class="headerlink" title="6. 查找第一个&gt;=key的下标，如果不存在返回-1,等价于std::lower_bound."></a>6. 查找第一个&gt;=key的下标，如果不存在返回-1,等价于std::lower_bound.</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">BS_First_Greater_Or_Equal</span><span class="params">(<span class="keyword">const</span> VecInt&amp; vec, <span class="keyword">int</span> key)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>, right = vec.size() - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (left &lt; right)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> mid = (left + right) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (vec[mid] &lt; key)</span><br><span class="line">            left = mid +<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            right = mid;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (vec[left] &gt;= key)</span><br><span class="line">        <span class="keyword">return</span> left;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>循环不变式（省去分析的过程，同上）：</p>
+<ul>
+<li>如果array[mid]&lt;key，那么x在区间[mid + 1, right]</li>
+<li>如果array[mid]≥key，那么x在区间[left, mid]</li>
+</ul>
+<hr>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/binary-search/" rel="tag"># binary search</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/10/ES6/" rel="next" title="ES6">
+                <i class="fa fa-chevron-left"></i> ES6
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/27/Weather-Chat/" rel="prev" title="Weather Chat">
+                Weather Chat <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/sea.jpg"
+                alt="Mingkai Cao" />
+            
+              <p class="site-author-name" itemprop="name">Mingkai Cao</p>
+              <p class="site-description motion-element" itemprop="description">All-trade Jack, loves full-stack</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">33</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">31</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/caomingkai" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:mingkaic@usc.edu" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#I-二分法及变种的注意点："><span class="nav-number">1.</span> <span class="nav-text">I. 二分法及变种的注意点：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-如何得到循环不变式"><span class="nav-number">1.0.1.</span> <span class="nav-text">1. 如何得到循环不变式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-数组是非递增还是非递减"><span class="nav-number">1.0.2.</span> <span class="nav-text">2. 数组是非递增还是非递减</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-结束条件，即while-condition-应当是-lt-还是-lt"><span class="nav-number">1.0.3.</span> <span class="nav-text">3. 结束条件，即while (condition) 应当是&lt;还是&lt;=</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-求mid应当是向上取整还是向下取整"><span class="nav-number">1.0.4.</span> <span class="nav-text">4. 求mid应当是向上取整还是向下取整</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-while-结束后是否需要判断一次条件"><span class="nav-number">1.0.5.</span> <span class="nav-text">5.  while 结束后是否需要判断一次条件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#II-常见问题："><span class="nav-number">2.</span> <span class="nav-text">II. 常见问题：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-查找值key的下标，如果不存在返回-1"><span class="nav-number">2.0.1.</span> <span class="nav-text">1. 查找值key的下标，如果不存在返回-1.</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-查找值key第一次出现的下标x，如果不存在返回-1"><span class="nav-number">2.0.2.</span> <span class="nav-text">2. 查找值key第一次出现的下标x，如果不存在返回-1.</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-查找值key最后一次出现的下标x，如果不存在返回-1"><span class="nav-number">2.0.3.</span> <span class="nav-text">3. 查找值key最后一次出现的下标x，如果不存在返回-1.</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-查找刚好小于key的元素下标x，如果不存在返回-1"><span class="nav-number">2.0.4.</span> <span class="nav-text">4. 查找刚好小于key的元素下标x，如果不存在返回-1.</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-查找刚好大于key的元素下标x，如果不存在返回-1-等价于std-upper-bound"><span class="nav-number">2.0.5.</span> <span class="nav-text">5. 查找刚好大于key的元素下标x，如果不存在返回-1,等价于std::upper_bound.</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-查找第一个-gt-key的下标，如果不存在返回-1-等价于std-lower-bound"><span class="nav-number">2.0.6.</span> <span class="nav-text">6. 查找第一个&gt;=key的下标，如果不存在返回-1,等价于std::lower_bound.</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate"> 
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mingkai Cao</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Gemini</a> v6.0.6</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.6"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.6"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.6"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.6"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.6"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.6"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.6"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'hG8fgggWL7hK1jsXsRoVCNWv-MdYXbMMI',
+        appKey: 'VRAYsgwdkRyyb8bAFQ5uii6o',
+        placeholder: 'Any comment?',
+        avatar:'',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+    // 新增以下代码即可，可以移除.info下所有子节点
+    var infoEle = document.querySelector('#comments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0){
+      infoEle.childNodes.forEach(function(item) {
+        item.parentNode.removeChild(item);
+      });
+    }
+
+
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+<style>
+    #comments .vempty{
+        display: none;
+    }
+</style>
+
+</body>
+</html>

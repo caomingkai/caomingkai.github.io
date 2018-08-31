@@ -433,6 +433,21 @@
 <li>getPrefixNode</li>
 </ul>
 </li>
+<li><p>Time Complexity: [ <code>n</code> words, <code>K</code> is number of characters of the longest word ]</p>
+<ul>
+<li>build: O(nK)</li>
+<li>isWord: O(K)</li>
+<li>countWord: O(K)</li>
+<li>insert: O(K)</li>
+<li>delete: O(K)</li>
+</ul>
+</li>
+<li><p>Space Complexity: [<code>N</code> is the number of all characters appears in the dictionary ]</p>
+<ul>
+<li>too much space: O(N) +O(N^2) +O(N^3) +O(N^4) + O(N^K)</li>
+<li>good news is: when it is a really dictionary, all the space will be filled up, so not so much waste</li>
+</ul>
+</li>
 <li><p><code>delete</code> might be a little complex. The to-be-deleted word possibly :</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">when need delete a node, what should really to be done????</span><br><span class="line">    - delete the key from HashMap&lt;Character, Node&gt;</span><br><span class="line">    - reset to <span class="keyword">null</span> when using Node[]</span><br><span class="line">So, always ask two questions:</span><br><span class="line">	- the node to be deleted, is part of other <span class="keyword">long</span> word [by checking <span class="string">'children'</span>]?</span><br><span class="line">    - the node itself is the end of a word? [by checking <span class="string">'isWord'</span> &amp; <span class="string">'cnt'</span>]?</span><br></pre></td></tr></table></figure>
 <ul>

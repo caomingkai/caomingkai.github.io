@@ -310,6 +310,441 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/02/Note-of-Eloquent-JavaScript/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/02/Note-of-Eloquent-JavaScript/" itemprop="url">Note of Eloquent JavaScript</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-02T22:22:23-07:00">2018-10-02</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/02/Note-of-Eloquent-JavaScript/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/02/Note-of-Eloquent-JavaScript/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Value-Type-Operators"><a href="#Value-Type-Operators" class="headerlink" title="Value, Type, Operators"></a>Value, Type, Operators</h2><ol>
+<li><p>Object, Number, String, Boolean, null, undefined, Symbol</p>
+<ul>
+<li>Symbol: used for global unique value in Map: <a href="https://zhuanlan.zhihu.com/p/22652486" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/22652486</a></li>
+</ul>
+</li>
+<li><p><code>typeof</code> will return <strong>lowercase string type</strong></p>
+<ul>
+<li><code>typeof null</code> =&gt; <code>&quot;object&quot;</code></li>
+<li><code>typeof undefined</code> =&gt; <code>&quot;undefined&quot;</code></li>
+<li><code>typeof 5</code> =&gt; <code>&quot;number&quot;</code></li>
+<li><code>typeof Number(&quot;4&quot;)</code> =&gt; <code>&quot;number&quot;</code></li>
+<li><code>typeof NaN</code> =&gt; <code>&quot;number&quot;</code></li>
+<li><code>typeof Infinity</code> =&gt; <code>&quot;number&quot;</code></li>
+<li><code>typeof [1,2]</code> =&gt; <code>&quot;object&quot;</code></li>
+</ul>
+</li>
+<li><p>comparsion</p>
+<p>There is only one value in JavaScript that is not equal to itself, and that is <code>NaN</code>(“not a number”).</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(NaN == NaN)  // false !!!!</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>operator used on string / null / number</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">console.log(8 * null)   // → 0</span><br><span class="line">console.log(&quot;5&quot; - 1)    // → 4</span><br><span class="line">console.log(&quot;5&quot; + 1)    // → &quot;51&quot;  !!!</span><br><span class="line">console.log(&quot;5&quot; * 1)    // → 5</span><br><span class="line">console.log(&quot;five&quot; * 2) // → NaN</span><br><span class="line">console.log(false == 0) // → true</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>when <code>null</code> or <code>undefined</code> occurs on either side of the operator, it produces true only if both sides are one of <code>null</code> or <code>undefined</code>.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">console.log(null == undefined);</span><br><span class="line">// → true</span><br><span class="line">console.log(null == 0);</span><br><span class="line">// → falseProgram Structure</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="Program-Structure"><a href="#Program-Structure" class="headerlink" title="Program Structure"></a>Program Structure</h2><ol>
+<li><p><strong><u>scope</u></strong>: Each variable has a <u><em>scope</em></u>, which is the part of the program in which the binding is visible.</p>
+<ul>
+<li>all variables in JS have its own scope, we can use <code>this</code> to refer it</li>
+<li>useful in <strong>Closure</strong></li>
+</ul>
+</li>
+<li><p><strong><u>variable</u></strong> :are reference, think it as <strong>tentscles</strong>, not <strong>boxes</strong></p>
+</li>
+<li><p><strong><u>function (Important List Inside)</u></strong>: </p>
+<ul>
+<li><p><strong><u>optional arguments:</u></strong></p>
+<ul>
+<li>If you pass too many, the extra ones are <u>ignored</u>. </li>
+<li>If you pass too few, the missing parameters get assigned the value <code>undefined</code>.<ul>
+<li>use default value like this: <code>function power(base, exponent = 2) {...}</code></li>
+</ul>
+</li>
+<li>How to call a pass a function with <strong><u>variant num of parameters</u></strong>?: <code>funName(...arg)</code></li>
+</ul>
+</li>
+<li><p><strong><u>function expression</u></strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Define f to hold a function value</span></span><br><span class="line"><span class="keyword">const</span> f = <span class="function"><span class="keyword">function</span>(<span class="params">a</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(a + <span class="number">2</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong><u>function declaration</u></strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Declare g to be a function</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">g</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a * b * <span class="number">3.5</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong><u>arrow function</u></strong>: automatically bind its <code>scope</code> to <code>this</code> inside the function (variables with implicit <code>this</code>)</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// A less verbose function value</span></span><br><span class="line"><span class="keyword">let</span> h = <span class="function"><span class="params">a</span> =&gt;</span> a % <span class="number">3</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong><u>Closure</u></strong></p>
+<ul>
+<li>What happens to local bindings when the function call that created them is no longer active?</li>
+<li>This feature—<u><em>being able to reference a specific instance of a local variable in an <strong>enclosing scope</strong></em></u>—is called <strong><em>[closure]</em></strong></li>
+<li><em>Local variables inside the outer function are created again for every call</em></li>
+<li><em>Different calls can’t trample on one another’s local bindings.</em></li>
+</ul>
+</li>
+<li><p>built-in functions</p>
+<ul>
+<li><p><code>prompt()</code> can get user’s input using a popup box:  <code>let inputName = prompt(&quot;please input your name&quot;)</code></p>
+</li>
+<li><p><code>console.log()</code> can also print <strong><u>object</u></strong>, <code>console.log(&quot;this obj is&quot;, obj)</code>, instead of <code>console.log(&quot;this obj is&quot; + obj)</code></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="Data-Structures-Objects-and-Arrays"><a href="#Data-Structures-Objects-and-Arrays" class="headerlink" title="Data Structures: Objects and Arrays"></a>Data Structures: Objects and Arrays</h2><ol>
+<li><p><strong>Property of Object</strong> : </p>
+<ul>
+<li>Almost all JavaScript values have properties. The exceptions are <code>null</code> and <code>undefined</code>.</li>
+<li>2 ways to access properties:<ul>
+<li>obj.x</li>
+<li>obj[a]    //  a = “x”</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Method of Object:</strong></p>
+<ul>
+<li>2 ways to call methods:<ul>
+<li>obj.x</li>
+<li><strong>obj[a] (val)    //  a = “x”</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Mutability:</strong></p>
+<ul>
+<li><p><strong>Tip1:</strong> Regardless of whether you use regular or strict equality, object comparisons only evaluate to <code>true</code> <strong>if you compare the same exact object</strong>.</p>
+</li>
+<li><p>Why we need <strong>Mutability</strong>? - since we want want one obj affect others when we change one of them</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> object1 = &#123;<span class="attr">value</span>: <span class="number">10</span>&#125;;</span><br><span class="line"><span class="keyword">let</span> object2 = object1;</span><br><span class="line"></span><br><span class="line">object1.value = <span class="number">15</span>; 		 <span class="comment">// we update the value of object1</span></span><br><span class="line"><span class="built_in">console</span>.log(object2.value);  <span class="comment">// the value of object2 also changed, which is not what we want!</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>How to keep <strong>Mutability</strong>?</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> object1 = &#123;<span class="attr">value</span>: <span class="number">10</span>&#125;;</span><br><span class="line"><span class="keyword">let</span> object2 = &#123;...object1&#125;;</span><br><span class="line"></span><br><span class="line">object1.value = <span class="number">15</span>; 		 <span class="comment">// we update the value of object1</span></span><br><span class="line"><span class="built_in">console</span>.log(object2.value);  <span class="comment">// the value of object2 also changed, which is not what we want!</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/02/Memory-Game/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/02/Memory-Game/" itemprop="url">Memory Game</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-02T09:47:18-07:00">2018-10-02</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Portfolios/" itemprop="url" rel="index"><span itemprop="name">Portfolios</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/02/Memory-Game/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/02/Memory-Game/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Memory-Game"><a href="#Memory-Game" class="headerlink" title="Memory-Game"></a>Memory-Game</h1><h2 id="What"><a href="#What" class="headerlink" title="What?"></a>What?</h2><p>This is a memory game, developed using React, Ant Design, webpack, and CSS grid, etc.</p>
+<p><img width="600" alt="memory_game.png" src="https://github.com/caomingkai/Memory-Game/raw/master/memory_game.png"></p>
+<h2 id="How-to-run"><a href="#How-to-run" class="headerlink" title="How to run?"></a>How to run?</h2><ol>
+<li>git clone</li>
+<li>npm install</li>
+<li>npm start</li>
+</ol>
+<h2 id="Features"><a href="#Features" class="headerlink" title="Features"></a>Features</h2><ul>
+<li>Notify the user if they win or lose</li>
+<li>Hints assistance</li>
+<li>Allow the user to reset at any time</li>
+<li>Randomize the ‘cards’ layout every game</li>
+<li>Multi Player mode</li>
+<li>Tracking Scores</li>
+<li>Tracking Best Score</li>
+<li>Tracking time</li>
+<li>Adjustable number of cards in the game (difficulty levels)</li>
+</ul>
+<h2 id="To-do"><a href="#To-do" class="headerlink" title="To-do"></a>To-do</h2><ul>
+<li>Options &amp; Start UI substitute the game board UI at the beginning</li>
+<li>Hint feature: add keyboard press event</li>
+</ul>
+<h2 id="Layout-amp-Logic"><a href="#Layout-amp-Logic" class="headerlink" title="Layout &amp; Logic"></a>Layout &amp; Logic</h2><p><img width="600" alt="workflow.png" src="https://github.com/caomingkai/Memory-Game/raw/master/IMG_4519.JPG"></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/01/Event-Emitter/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -447,6 +882,8 @@
 </li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">class EventEmitter &#123;</span><br><span class="line">  constructor() &#123;</span><br><span class="line">    this.events = &#123;&#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  // 1. when emit, we call all the subscribers with the passed in data</span><br><span class="line">  emit(eventName, data) &#123;</span><br><span class="line">      const event = this.events[eventName];</span><br><span class="line">      if( event ) &#123;</span><br><span class="line">        event.forEach(fn =&gt; &#123;</span><br><span class="line">           fn.call(null, data);</span><br><span class="line">         &#125;);</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   // 2. push the callback: fn to its related event</span><br><span class="line">   subscribe(eventName, fn) &#123;</span><br><span class="line">      if(!this.events[eventName]) &#123;</span><br><span class="line">        this.events[eventName] = [];</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      this.events[eventName].push(fn);</span><br><span class="line"></span><br><span class="line">	  // 3.  return a function with &apos;this&apos; bound, when called, the emitter will remove the eventFn from its subscribers</span><br><span class="line">      return () =&gt; &#123;</span><br><span class="line">        this.events[eventName] = this.events[eventName].filter(eventFn =&gt; fn !== eventFn);</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong><em>FaceBook interview version</em></strong><br><a href="https://gist.github.com/kutyel/7d8f204a347840a6ee7220743957e504" target="_blank" rel="noopener">https://gist.github.com/kutyel/7d8f204a347840a6ee7220743957e504</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line"> * Create an event emitter that goes like this</span><br><span class="line"> * emitter = new Emitter();</span><br><span class="line"> *</span><br><span class="line"> * Allows you to subscribe to some event</span><br><span class="line"> * sub1 = emitter.subscribe(&apos;function_name&apos;, callback1);</span><br><span class="line"> * (you can have multiple callbacks to the same event)</span><br><span class="line"> * sub2 = emitter.subscribe(&apos;function_name&apos;, callback2);</span><br><span class="line"> *</span><br><span class="line"> * You can emit the event you want with this api</span><br><span class="line"> * (you can receive &apos;n&apos; number of arguments)</span><br><span class="line"> * sub1.emit(&apos;function_name&apos;, foo, bar);</span><br><span class="line"> *</span><br><span class="line"> * And allows you to release the subscription like this</span><br><span class="line"> * (but you should be able to still emit from sub2)</span><br><span class="line"> * sub1.release();</span><br><span class="line"> */</span><br><span class="line"> </span><br><span class="line">// facebook.js</span><br><span class="line"></span><br><span class="line">class Emitter &#123;</span><br><span class="line">  constructor(events = &#123;&#125;) &#123;</span><br><span class="line">    this.events = events</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  subscribe(name, cb) &#123;</span><br><span class="line">    (this.events[name] || (this.events[name] = [])).push(cb)</span><br><span class="line"></span><br><span class="line">    return &#123;</span><br><span class="line">      release: () =&gt; this.events[name] &amp;&amp;</span><br><span class="line">        this.events[name].splice(this.events[name].indexOf(cb) &gt;&gt;&gt; 0, 1)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  emit(name, ...args) &#123;</span><br><span class="line">    return (this.events[name] || []).map(fn =&gt; fn(...args))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default Emitter</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// test.js</span><br><span class="line"></span><br><span class="line">const expect = require(&apos;expect&apos;)</span><br><span class="line"></span><br><span class="line">const Emitter = require(&apos;./facebook&apos;)</span><br><span class="line"></span><br><span class="line">// Step 1</span><br><span class="line"></span><br><span class="line">let test = 0</span><br><span class="line"></span><br><span class="line">const emitter = new Emitter()</span><br><span class="line"></span><br><span class="line">emitter.emit(&apos;sum&apos;, 1)</span><br><span class="line"></span><br><span class="line">expect(test).toBe(0) // should trigger nothing</span><br><span class="line"></span><br><span class="line">const sub1 = emitter.subscribe(&apos;sum&apos;, num =&gt; (test = test + num))</span><br><span class="line"></span><br><span class="line">emitter.emit(&apos;sum&apos;, 1)</span><br><span class="line"></span><br><span class="line">expect(test).toBe(1) // should trigger 1 callback</span><br><span class="line"></span><br><span class="line">const sub2 = emitter.subscribe(&apos;sum&apos;, num =&gt; (test = test * num))</span><br><span class="line"></span><br><span class="line">emitter.emit(&apos;sum&apos;, 2)</span><br><span class="line"></span><br><span class="line">expect(test).toBe(6) // should trigger 2 callbacks</span><br><span class="line"></span><br><span class="line">// Step 2</span><br><span class="line"></span><br><span class="line">sub1.release()</span><br><span class="line"></span><br><span class="line">emitter.emit(&apos;sum&apos;, 3)</span><br><span class="line"></span><br><span class="line">expect(test).toBe(18) // should trigger 1 callback</span><br><span class="line"></span><br><span class="line">// Step 3</span><br><span class="line"></span><br><span class="line">const myEvent1 = emitter.subscribe(&apos;myEvent&apos;, () =&gt; 1)</span><br><span class="line">const myEvent2 = emitter.subscribe(&apos;myEvent&apos;, () =&gt; 2)</span><br><span class="line">const myEvent3 = emitter.subscribe(&apos;myEvent&apos;, () =&gt; true)</span><br><span class="line">const result = emitter.emit(&apos;myEvent&apos;)</span><br><span class="line"></span><br><span class="line">expect(result).toEqual([1, 2, true])</span><br><span class="line"></span><br><span class="line">console.info(&apos;You passed the test!!! 👏🏼 👏🏼 👏🏼&apos;)</span><br></pre></td></tr></table></figure>
 
           
         
@@ -1999,464 +2436,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/15/React-Router-v4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/15/React-Router-v4/" itemprop="url">React Router v4</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-15T21:21:05-07:00">2018-05-15</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/05/15/React-Router-v4/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/05/15/React-Router-v4/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="I-Three-types-of-Components："><a href="#I-Three-types-of-Components：" class="headerlink" title="I. Three types of Components："></a>I. Three types of Components：</h3><p><strong>1. router components</strong></p>
-<blockquote>
-<p>create a history object, 提供“前进”、“后退”</p>
-</blockquote>
-<ul>
-<li><strong><code>&lt;BrowserRouter&gt;</code></strong>: for server that responds to requests</li>
-<li><strong><code>&lt;HashRouter&gt;</code></strong>: for a static file server.</li>
-</ul>
-<p><strong>2. route matching components</strong></p>
-<blockquote>
-<p>comparing a <route>‘s path prop with the current location’s pathname<br>只要路由匹配，Route所在位置就会render相应的Component</route></p>
-</blockquote>
-<ul>
-<li><p><strong><code>&lt;Route&gt;</code> ：包容性路由</strong></p>
-<ul>
-<li>3个props： <ul>
-<li>path：匹配路径</li>
-<li>component：对应的组件</li>
-<li>render：没有可用组件时，直接render<ul>
-<li>1个state：</li>
-</ul>
-</li>
-<li>match</li>
-<li>match包含4个field：<code>isExact</code>,<code>params</code>,<code>path</code>,<code>url</code><ul>
-<li>1个context：</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>router obj</li>
-<li>router 包含 <code>history</code>,<code>routes</code></li>
-</ul>
-</li>
-<li><p><strong><code>&lt;Switch&gt;</code>：排他性路由</strong></p>
-  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;Switch&gt;</span><br><span class="line">    &lt;Route exact path=<span class="string">'/'</span> component=	&#123;Home&#125;/&gt;</span><br><span class="line">    &lt;Route path=<span class="string">'/about'</span> component=&#123;About&#125;/&gt;</span><br><span class="line">    &lt;Route path=<span class="string">'/contact'</span> component=&#123;Contact&#125;/&gt;</span><br><span class="line">    &lt;Route component=&#123;NoMatch&#125;/&gt;</span><br><span class="line">&lt;<span class="regexp">/Switch&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ when none of the above match, &lt;NoMatch&gt; will be rendered</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>How ？<br>iterate over all of its children <route> elements and only render the first one that matches the current location.</route></li>
-<li>Props: <code>component</code>, <code>render</code>, and <code>children</code></li>
-</ul>
-</li>
-</ul>
-<p><strong>3. navigation components</strong></p>
-<ul>
-<li><strong><code>&lt;Link&gt;</code></strong></li>
-<li><strong><code>&lt;NavLink&gt;</code></strong> :a special type of <link> that can style itself as “active” when its ‘to’ prop matches the current location.</li>
-<li><strong><code>&lt;Redirect&gt;</code></strong>: navigate using its ‘to’ prop<ul>
-<li>注意：不是 “函数”，而是“组件”，需要放在render中return</li>
-<li>没有路由解析时候，可以直接使用redirect，重定向到默认页面</li>
-</ul>
-</li>
-</ul>
-<h3 id="II-3种方式renders-Component"><a href="#II-3种方式renders-Component" class="headerlink" title="II. 3种方式renders Component"></a>II. 3种方式renders Component</h3><ul>
-<li><code>&lt;Route component&gt;</code></li>
-<li><code>&lt;Route render&gt;</code></li>
-<li><code>&lt;Route children&gt;</code></li>
-</ul>
-<h3 id="III-Route在render-component同时，传入3个量，作为component的props（不论3中方式的哪一种）"><a href="#III-Route在render-component同时，传入3个量，作为component的props（不论3中方式的哪一种）" class="headerlink" title="III. Route在render component同时，传入3个量，作为component的props（不论3中方式的哪一种）"></a>III. Route在render component同时，传入3个量，作为component的props（不论3中方式的哪一种）</h3><ul>
-<li>match</li>
-<li>history</li>
-<li>location</li>
-</ul>
-<p>比如render:func( )方式render conponent</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// eg1: </span></span><br><span class="line">  &lt;Route path=<span class="string">"/home"</span> render=&#123;() =&gt; &lt;div&gt;Home&lt;/div&gt;&#125;/&gt;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// eg2: wrapping/composing</span></span><br><span class="line">  <span class="keyword">const</span> FadingRoute = <span class="function">(<span class="params">&#123; component: Component, ...rest &#125;</span>) =&gt;</span> (</span><br><span class="line">    &lt;Route &#123;...rest&#125; render=&#123;props =&gt; (</span><br><span class="line">      &lt;FadeIn&gt;</span><br><span class="line">        &lt;Component &#123;...props&#125;/&gt;</span><br><span class="line">      &lt;<span class="regexp">/FadeIn&gt;</span></span><br><span class="line"><span class="regexp">    )&#125;/</span>&gt;</span><br><span class="line">  )</span><br><span class="line">  </span><br><span class="line">  &lt;FadingRoute path=<span class="string">"/cool"</span> component=&#123;Something&#125;/&gt;<span class="string">"</span></span><br><span class="line"><span class="string">  - render props: path、children／render／component、</span></span><br><span class="line"><span class="string">  - render state：match</span></span><br><span class="line"><span class="string">  - component props(route所render): history、location、match</span></span><br><span class="line"><span class="string">    "</span>不论是哪种方式render，都会拿到这三个props<span class="string">"</span></span><br><span class="line"><span class="string">  - 因此，eg2中render:func方式，直接将props作为function component的参数传入</span></span><br><span class="line"><span class="string">    "</span>render=&#123; props =&gt; (</span><br><span class="line">        &lt;FadeIn&gt;</span><br><span class="line">          &lt;Component &#123;...props&#125;/&gt;</span><br><span class="line">        &lt;<span class="regexp">/FadeIn&gt;</span></span><br><span class="line"><span class="regexp">      )&#125;"</span></span><br></pre></td></tr></table></figure>
-<h3 id="IV-Route-vs-Component如何关联"><a href="#IV-Route-vs-Component如何关联" class="headerlink" title="IV. Route vs Component如何关联"></a>IV. Route vs Component如何关联</h3><ul>
-<li>Router 将路径 match上之后，会调用相应的 Route， 由Route 将相关的参数：match、location、history等传入到 Component中</li>
-<li>Route 的 state: match、location 传入到 Component的 props: match、location</li>
-<li>The Route will render <dashboard {...props}=""> , where props are some router specific things that look like { match, location, history }. </dashboard></li>
-<li>If the user is not at /dashboard then the Route will render null. That’s pretty much all there is to it.</li>
-</ul>
-<h3 id="V-match-url-vs-match-path"><a href="#V-match-url-vs-match-path" class="headerlink" title="V. match.url vs match.path"></a>V. <code>match.url</code> vs <code>match.path</code></h3><blockquote>
-<p>A match object contains information about how a <route path=""> matched the URL.</route></p>
-</blockquote>
-<ul>
-<li>match：是 <code>route</code>的<code>state</code>；是<code>component</code>的<code>props</code></li>
-<li>Eg: consider the route <code>/users/:userId</code><ul>
-<li><code>match.path</code> - (string) 用于匹配路径模式。用于构建嵌套的 <route>; <code>match.path</code> would be <code>/users/:userId</code></route></li>
-<li><code>match.url</code> - (string) URL 匹配的部分。 用于构建嵌套的 <link>; <code>match.url</code> would have the :userId value filled in, e.g. “users/5”.”</li>
-</ul>
-</li>
-</ul>
-<h3 id="VI-match-params-表示-url-匹配上的变量值"><a href="#VI-match-params-表示-url-匹配上的变量值" class="headerlink" title="VI. match.params 表示 url 匹配上的变量值"></a>VI. <code>match.params</code> 表示 url 匹配上的变量值</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;Route path=<span class="string">"/:id"</span> component=&#123;Child&#125; /&gt;</span><br><span class="line"></span><br><span class="line">&#123;match.params.id&#125;</span><br></pre></td></tr></table></figure>
-<p>URL 后半部分由变量 id 兜住，如果进来的url为<code>/abc</code>，那么 <code>match.params.id = abc</code></p>
-<h3 id="VII-Eg-Custom-Link"><a href="#VII-Eg-Custom-Link" class="headerlink" title="VII. Eg: Custom Link"></a>VII. Eg: Custom Link</h3><blockquote>
-<p>Route实际上是 Component 的买办，为Component办事！<br>Route放在哪个位置，那里就有可能render出它携带的component(只要url match)</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;Route path=<span class="string">"/abc"</span> component=&#123;Child_1&#125; /&gt;</span><br><span class="line">&lt;Route path=<span class="string">"/abc"</span> component=&#123;Child_2&#125; /&gt;</span><br><span class="line">&lt;Route path=<span class="string">"/abc"</span> component=&#123;Child_3&#125; /&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="VIII-lt-Prompt-gt-：防止中途跳转"><a href="#VIII-lt-Prompt-gt-：防止中途跳转" class="headerlink" title="VIII. &lt;Prompt&gt;：防止中途跳转"></a>VIII. <code>&lt;Prompt&gt;</code>：防止中途跳转</h3><blockquote>
-<p>适用情况：用户在填表过程中，点击了“后退”或“跳转链接”，需弹窗询问<br><code>&lt;Prompt&gt;</code>是保留tag，跟<code>&lt;Link&gt;</code>一样</p>
-</blockquote>
-<ul>
-<li>创建一个wrapper，包含<code>&lt;form&gt;</code>, <code>&lt;Prompt&gt;</code></li>
-<li>wrapper中设置<code>state.inMiddle</code>，来决定是否render<code>&lt;Prompt&gt;</code></li>
-<li>改变<code>state.inMiddle</code>的根源：<code>form</code>中的<code>input</code>输入框；<ul>
-<li>只要有任何输入值，就将<code>state.inMiddle</code>置为<code>true</code></li>
-<li>提交form后，将form reset()之后，需要将<code>state.inMiddle</code>置为<code>false</code></li>
-</ul>
-</li>
-<li><code>Prompt</code>的props:<ul>
-<li><code>when</code>：检查<code>state.inMiddle</code></li>
-<li><code>message</code>: 决定弹窗的显示信息</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Form</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  state = &#123;</span><br><span class="line">    isBlocking: <span class="literal">false</span></span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; isBlocking &#125; = <span class="keyword">this</span>.state;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        &lt;form</span><br><span class="line">        onSubmit=&#123;event =&gt; &#123;</span><br><span class="line">          event.preventDefault();</span><br><span class="line">          event.target.reset();</span><br><span class="line">          <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">            isBlocking: <span class="literal">false</span></span><br><span class="line">          &#125;);</span><br><span class="line">        &#125;&#125;</span><br><span class="line">        &gt;</span><br><span class="line">        </span><br><span class="line">        &lt;Prompt</span><br><span class="line">          when=&#123;isBlocking&#125;</span><br><span class="line">          message=&#123;location =&gt;</span><br><span class="line">            <span class="string">`Are you sure you want to go to <span class="subst">$&#123;location.pathname&#125;</span>`</span></span><br><span class="line">          &#125;</span><br><span class="line">        /&gt;</span><br><span class="line"></span><br><span class="line">        &lt;input</span><br><span class="line">        placeholder=<span class="string">"type something"</span></span><br><span class="line">        onChange=&#123;event =&gt; &#123;</span><br><span class="line">          <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">            isBlocking: event.target.value.length &gt; <span class="number">0</span></span><br><span class="line">          &#125;);</span><br><span class="line">        &#125;&#125;</span><br><span class="line">        /&gt;</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        &lt;button&gt;Submit&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">      &lt;/</span>form&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ul>
-<li>Official API: <a href="https://reacttraining.com/react-router/web/guides/philosophy" target="_blank" rel="noopener">https://reacttraining.com/react-router/web/guides/philosophy</a></li>
-<li>中文版API：<a href="https://www.jianshu.com/p/e3adc9b5f75c" target="_blank" rel="noopener">https://www.jianshu.com/p/e3adc9b5f75c</a></li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/14/Node-MySQL/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/14/Node-MySQL/" itemprop="url">Node+MySQL</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-14T21:30:13-07:00">2018-05-14</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/05/14/Node-MySQL/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/05/14/Node-MySQL/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h3><p>This is a Node.js module, install:<br><code>npm install mysql --save</code></p>
-<h3 id="Connect"><a href="#Connect" class="headerlink" title="Connect"></a>Connect</h3><p>Before connecting to databases, make sure MySQL database is turned on.</p>
-<p>【注意】：</p>
-<ul>
-<li>先执行 <code>connect()</code>,让connection object与数据库建立连接。</li>
-<li>然后，在对该connection执行<code>.query(MySQL_Command, callback_func)</code></li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> mysql      = <span class="built_in">require</span>(<span class="string">'mysql'</span>);</span><br><span class="line"><span class="keyword">var</span> connection = mysql.createConnection(&#123;</span><br><span class="line">  host     : <span class="string">'example.org'</span>,</span><br><span class="line">  user     : <span class="string">'bob'</span>,</span><br><span class="line">  password : <span class="string">'secret'</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">connection.query(<span class="string">'SELECT 1'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">error, results, fields</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (error) <span class="keyword">throw</span> error;</span><br><span class="line">  <span class="comment">// connected!</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="Disconnect"><a href="#Disconnect" class="headerlink" title="Disconnect"></a>Disconnect</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">connection.end(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// Callback function</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="Escaping-query-values"><a href="#Escaping-query-values" class="headerlink" title="Escaping query values"></a>Escaping query values</h3><p>Three ways to avoid <strong>SQL injection</strong></p>
-<ul>
-<li>mysql.escape()</li>
-<li>connection.escape() </li>
-<li>pool.escape()</li>
-<li><code>?</code>placeholder</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1 -connection.escape()</span></span><br><span class="line"><span class="keyword">var</span> userId = <span class="string">'some user provided value'</span>;</span><br><span class="line"><span class="keyword">var</span> sql    = <span class="string">'SELECT * FROM users WHERE id = '</span> + connection.escape(userId);</span><br><span class="line">connection.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">error, results, fields</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (error) <span class="keyword">throw</span> error;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2 - ? placeholder</span></span><br><span class="line"><span class="keyword">var</span> adr = <span class="string">'Mountain 21'</span>;</span><br><span class="line"><span class="keyword">var</span> sql = <span class="string">'SELECT * FROM customers WHERE address = ?'</span>;</span><br><span class="line">con.query(sql, [adr], <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">  <span class="built_in">console</span>.log(result);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="Creating-a-Database"><a href="#Creating-a-Database" class="headerlink" title="Creating a Database"></a>Creating a Database</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">connection.query(<span class="string">"CREATE DATABASE mydb"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Database created"</span>);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="Creating-a-Table"><a href="#Creating-a-Table" class="headerlink" title="Creating a Table"></a>Creating a Table</h3><p>Two ways:</p>
-<ul>
-<li>create database and table simultenously</li>
-<li>first create database, and connect it; then create table with the connection</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// approach 1</span></span><br><span class="line"></span><br><span class="line">connection.query(<span class="string">"CREATE DATABASE db"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">error, rows, fields</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (error) <span class="keyword">throw</span> error;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">connection.query(<span class="string">"USE db"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">error, rows, fields</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (error) <span class="keyword">throw</span> error;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">connection.query(<span class="string">"CREATE TABLE tb(id INT, name VARCHAR(50))"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">error, rows, fields</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (error) <span class="keyword">throw</span> error;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//-----------------------</span></span><br><span class="line"><span class="comment">// approach 2</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> con = mysql.createConnection(&#123;</span><br><span class="line">  host: <span class="string">"localhost"</span>,</span><br><span class="line">  user: <span class="string">"yourusername"</span>,</span><br><span class="line">  password: <span class="string">"yourpassword"</span>,</span><br><span class="line">  database: <span class="string">"mydb"</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">con.connect(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> sql = <span class="string">"CREATE TABLE customers (name VARCHAR(255), address VARCHAR(255))"</span>;</span><br><span class="line"></span><br><span class="line">con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line"><span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Table created"</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="Selecting-From-a-Table"><a href="#Selecting-From-a-Table" class="headerlink" title="Selecting From a Table"></a>Selecting From a Table</h3><p>To select data from a table in MySQL, use the <code>SELECT</code> statement.</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"SELECT * FROM customers WHERE address = 'Park Lane 38'"</span>;</span><br><span class="line"></span><br><span class="line">con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="built_in">console</span>.log(result);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p><strong>Wildcard Characters</strong><code>%</code>: represent zero, one or multiple characters:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"SELECT * FROM customers WHERE address LIKE 'S%'"</span></span><br></pre></td></tr></table></figure>
-<h3 id="Insert-Into-Table"><a href="#Insert-Into-Table" class="headerlink" title="Insert Into Table"></a>Insert Into Table</h3><p>To fill a table in MySQL, use the <code>INSERT INTO</code> statement.</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"INSERT INTO customers (name, address) VALUES ('Company Inc', 'Highway 37')"</span>;</span><br><span class="line"></span><br><span class="line">con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line"><span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"1 record inserted"</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="Update-Table"><a href="#Update-Table" class="headerlink" title="Update Table"></a>Update Table</h3><p>You can update existing records in a table by using the <code>UPDATE</code> statement:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"UPDATE customers SET address = 'Canyon 123' WHERE address = 'Valley 345'"</span>;</span><br><span class="line"></span><br><span class="line">  con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="built_in">console</span>.log(result.affectedRows + <span class="string">" record(s) updated"</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="Sort-the-Result"><a href="#Sort-the-Result" class="headerlink" title="Sort the Result"></a>Sort the Result</h3><p>Use the <code>ORDER BY</code> statement to sort the result in ascending or descending order.</p>
-<p>The <code>ORDER BY</code> keyword sorts the result ascending by default. To sort the result in descending order, use the <code>DESC</code> keyword.</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"SELECT * FROM customers ORDER BY name DESC"</span>;</span><br><span class="line"></span><br><span class="line">con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="built_in">console</span>.log(result);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="Delete-Record"><a href="#Delete-Record" class="headerlink" title="Delete Record"></a>Delete Record</h3><p>You can delete records from an existing table by using the <code>DELETE FROM</code> statement:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"DELETE FROM customers WHERE address = 'Mountain 21'"</span>;</span><br><span class="line"></span><br><span class="line">con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Number of records deleted: "</span> + result.affectedRows);</span><br></pre></td></tr></table></figure>
-<h3 id="Limit-the-Result"><a href="#Limit-the-Result" class="headerlink" title="Limit the Result"></a>Limit the Result</h3><p>You can limit the number of records returned from the query, by using the <code>LIMIT</code> statement:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"SELECT * FROM customers LIMIT 5"</span>;</span><br><span class="line"></span><br><span class="line">con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line"><span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line"><span class="built_in">console</span>.log(result);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="Join-Two-or-More-Tables"><a href="#Join-Two-or-More-Tables" class="headerlink" title="Join Two or More Tables"></a>Join Two or More Tables</h3><p>Combine rows from two or more tables, based on a related column between them, by using a <code>JOIN</code> statement.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//users</span><br><span class="line"></span><br><span class="line">[</span><br><span class="line">  &#123; id: 1, name: &apos;John&apos;, favorite_product: 154&#125;,</span><br><span class="line">  &#123; id: 2, name: &apos;Peter&apos;, favorite_product: 154&#125;,</span><br><span class="line">  &#123; id: 3, name: &apos;Amy&apos;, favorite_product: 155&#125;,</span><br><span class="line">  &#123; id: 4, name: &apos;Hannah&apos;, favorite_product:&#125;,</span><br><span class="line">  &#123; id: 5, name: &apos;Michael&apos;, favorite_product:&#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// products</span><br><span class="line">[</span><br><span class="line">  &#123; id: 154, name: &apos;Chocolate Heaven&apos; &#125;,</span><br><span class="line">  &#123; id: 155, name: &apos;Tasty Lemons&apos; &#125;,</span><br><span class="line">  &#123; id: 156, name: &apos;Vanilla Dreams&apos; &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-<p><strong>1. Inner join</strong></p>
-<p>These two tables can be combined by using users’ favorite_product field and products’ id field.</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"SELECT users.name AS user, products.name AS favorite FROM users JOIN products ON users.favorite_product = products.id"</span>;</span><br><span class="line">    </span><br><span class="line">con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line"><span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line"><span class="built_in">console</span>.log(result);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p><strong>2. Left Join</strong><br>If you want to return all users, no matter if they have a favorite product or not, use the LEFT JOIN statement:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT users.name AS user,</span><br><span class="line">products.name AS favorite</span><br><span class="line">FROM users</span><br><span class="line">LEFT JOIN products ON users.favorite_product = products.id</span><br></pre></td></tr></table></figure>
-<p><strong>3. Right Join</strong><br>If you want to return <strong>all products</strong>, and the users who have them as their favorite, even if no user have them as their favorite, use the RIGHT JOIN statement:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT users.name AS user,</span><br><span class="line">products.name AS favorite</span><br><span class="line">FROM users</span><br><span class="line">RIGHT JOIN products ON users.favorite_product = products.id</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2508,7 +2487,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-count">37</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2608,7 +2587,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

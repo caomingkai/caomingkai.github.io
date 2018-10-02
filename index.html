@@ -305,6 +305,180 @@
 
   
 
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/01/Event Emitter/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/01/Event Emitter/" itemprop="url">Untitled</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-01T20:31:06-07:00">2018-10-01</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/01/Event Emitter/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/01/Event Emitter/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Event-Emitter"><a href="#Event-Emitter" class="headerlink" title="Event Emitter"></a>Event Emitter</h1><hr>
+<p>title: Event Emitter<br>comments: true<br>date: 2018-10-01 20:21:44<br>type: categories<br>categories: Full stack</p>
+<h2 id="tags-ES6"><a href="#tags-ES6" class="headerlink" title="tags: ES6"></a>tags: ES6</h2><h4 id="I-What-is-an-Event-Emitter"><a href="#I-What-is-an-Event-Emitter" class="headerlink" title="I. What is an Event Emitter?"></a>I. What is an Event Emitter?</h4><p>An <code>event emitter</code> is a <strong>utility object</strong>, which can be used to emit event, which can be subscribed by as many functions as we can. </p>
+<ol>
+<li><p>It is an event manager, manages differents event and its subscribers.</p>
+</li>
+<li><p>Also, we can see it as the <code>Redux</code>, which also dispatches(emits) actions, and handled by its reducers.</p>
+</li>
+<li>It widely used at Node.js ( asynchronous event-driven architecture)<ul>
+<li>certain kind of objects call emitters periodically to emit events that cause listener objects to be called.</li>
+<li>when a request comes requesting some resource, Node.js will register the subscriber: <code>responseToThisRequest()</code> on event: <code>thisTypeDataDone</code>. When data is obtained, will call <code>emitter.emit( thisTypeDataDone )</code>, to call the <code>responseToThisRequest()</code> corresponding all the requests.</li>
+</ul>
+</li>
+</ol>
+<h4 id="II-Why-and-when-do-we-need-it"><a href="#II-Why-and-when-do-we-need-it" class="headerlink" title="II. Why and when do we need it?"></a>II. Why and when do we need it?</h4><blockquote>
+<p>Whenever it makes sense for code to SUBSCRIBE to something rather than get a callback from something</p>
+<p><a href="https://stackoverflow.com/questions/38881170/when-should-i-use-eventemitter" target="_blank" rel="noopener">https://stackoverflow.com/questions/38881170/when-should-i-use-eventemitter</a></p>
+</blockquote>
+<p>If when a certain event happens, we have to deal many type of manipulation for that event’s result, then it is better to use the event emitter pattern. </p>
+<p>Instead put all functions inside an event callback, we subscribe all the function to that event, when the event happens, we emit the event!</p>
+<h4 id="III-How-to-use-it"><a href="#III-How-to-use-it" class="headerlink" title="III. How to use it?"></a>III. How to use it?</h4><p><strong>[Good Link]:</strong> <a href="https://netbasal.com/javascript-the-magic-behind-event-emitter-cce3abcbcef9" target="_blank" rel="noopener">https://netbasal.com/javascript-the-magic-behind-event-emitter-cce3abcbcef9</a></p>
+<p><strong>[Note]:  when pass in the callback function, we use arrow function, which already bind ‘this’ to the function, so that when the function be called, it knows what value it will update</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">let input = document.querySelector(&apos;input[type=&quot;text&quot;]&apos;);</span><br><span class="line">let button = document.querySelector(&apos;button&apos;);</span><br><span class="line">let h1 = document.querySelector(&apos;h1&apos;);</span><br><span class="line"></span><br><span class="line">button.addEventListener(&apos;click&apos;, () =&gt; &#123;</span><br><span class="line">  emitter.emit(&apos;event:name-changed&apos;, &#123;name: input.value&#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">let emitter = new EventEmitter();</span><br><span class="line">emitter.subscribe(&apos;event:name-changed&apos;, data =&gt; &#123;</span><br><span class="line">  h1.innerHTML = `Your name is: $&#123;data.name&#125;`;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>create an emitter util object</p>
+</li>
+<li><p>subscribe the desired callback function, using <code>emitter.subscribe(event, function.bind(this))</code></p>
+</li>
+<li><p>call <code>emitter.emit()</code> when the event happen</p>
+</li>
+</ol>
+<h4 id="IV-Write-one"><a href="#IV-Write-one" class="headerlink" title="IV. Write one!"></a>IV. Write one!</h4><ol>
+<li><strong><u>object:</u></strong> we need an object (utility object)</li>
+<li><u><strong>data structure:</strong></u> inside it, we need a data structure to store the <code>event</code> and its <code>subscribers</code>(callbacks)</li>
+<li><strong><u>methods:</u></strong>  all the methods<ul>
+<li><code>subscribe(event, callback)</code>: we need the return value to be an <code>unsubscribe()</code>, so we won’t result in the memory leak!</li>
+<li><code>emit()</code></li>
+</ul>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">class EventEmitter &#123;</span><br><span class="line">  constructor() &#123;</span><br><span class="line">    this.events = &#123;&#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  // 1. when emit, we call all the subscribers with the passed in data</span><br><span class="line">  emit(eventName, data) &#123;</span><br><span class="line">      const event = this.events[eventName];</span><br><span class="line">      if( event ) &#123;</span><br><span class="line">        event.forEach(fn =&gt; &#123;</span><br><span class="line">           fn.call(null, data);</span><br><span class="line">         &#125;);</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   // 2. push the callback: fn to its related event</span><br><span class="line">   subscribe(eventName, fn) &#123;</span><br><span class="line">      if(!this.events[eventName]) &#123;</span><br><span class="line">        this.events[eventName] = [];</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      this.events[eventName].push(fn);</span><br><span class="line"></span><br><span class="line">	  // 3.  return a function with &apos;this&apos; bound, when called, the emitter will remove the eventFn from its subscribers</span><br><span class="line">      return () =&gt; &#123;</span><br><span class="line">        this.events[eventName] = this.events[eventName].filter(eventFn =&gt; fn !== eventFn);</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
   <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
   
   
@@ -2267,265 +2441,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/23/React-Expense-Tracking-app/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/23/React-Expense-Tracking-app/" itemprop="url">React: Expense Tracking app</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-23T11:47:10-07:00">2018-04-23</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Portfolios/" itemprop="url" rel="index"><span itemprop="name">Portfolios</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/23/React-Expense-Tracking-app/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/23/React-Expense-Tracking-app/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="I-About"><a href="#I-About" class="headerlink" title="I. About"></a>I. About</h2><ul>
-<li>An expense tracking application proving CRUD using React.</li>
-<li>Github: <ul>
-<li><a href="https://github.com/caomingkai/Expense-Tracking.git" target="_blank" rel="noopener">https://github.com/caomingkai/Expense-Tracking.git</a></li>
-</ul>
-</li>
-<li><p><strong>Chart1: Create</strong></p>
-  <img src="/2018/04/23/React-Expense-Tracking-app/create.gif">
-</li>
-<li><p>**Chart2: Update</p>
-  <img src="/2018/04/23/React-Expense-Tracking-app/update.gif">
-</li>
-<li><p><strong>Chart3: Delete</strong></p>
-  <img src="/2018/04/23/React-Expense-Tracking-app/delete.gif">
-</li>
-</ul>
-<h2 id="II-Structure"><a href="#II-Structure" class="headerlink" title="II. Structure"></a>II. Structure</h2><h3 id="1-Components-Structure"><a href="#1-Components-Structure" class="headerlink" title="1. Components Structure"></a>1. Components Structure</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">App</span><br><span class="line"> |___ Summary</span><br><span class="line"> |___ Form _ _ _ _ RecordsAPI</span><br><span class="line"> |                    |</span><br><span class="line"> |___ Table           |</span><br><span class="line">         |_______ TableRow</span><br><span class="line">                      |____ TableDisplay</span><br><span class="line">                      |____ TableEdit</span><br></pre></td></tr></table></figure>
-<ul>
-<li><strong>App Component:</strong> is the data hub<ul>
-<li>state: <code>records</code> for entries in Table component</li>
-<li>state: <code>isLoaded</code> show loading info, before showing Table</li>
-<li>state: <code>error</code> </li>
-<li>method: <code>componentDidMount()</code> get data from database</li>
-<li>method: <code>addRecord()</code> passed to Form</li>
-<li>method: <code>deleteRecord()</code> passed to Table and TableRow</li>
-<li>method: <code>updateRecord()</code> passed to Table and TableRow</li>
-<li>method: <code>credits()</code> passed to Summary</li>
-<li>method: <code>debits()</code> passed to Summary</li>
-<li>method: <code>balance()</code> passed to Summary</li>
-</ul>
-</li>
-<li><strong>Summary Component:</strong> displays negative/ positive summation for the <code>records</code></li>
-<li><strong>Form Component:</strong> add <code>record</code> into <code>records</code>, updating Table</li>
-<li><strong>Table Component:</strong> just pass <code>records</code> to <strong>TableRow</strong></li>
-<li><strong>TableRow Component:</strong> display each <code>record</code> in <code>records</code></li>
-<li><strong>RecordsAPI:</strong> utility providing interface to make RESTful API call</li>
-</ul>
-<h3 id="2-File-Structure"><a href="#2-File-Structure" class="headerlink" title="2. File Structure"></a>2. File Structure</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">|__node_modules</span><br><span class="line">|</span><br><span class="line">|__public  </span><br><span class="line">|    |___ index.html</span><br><span class="line">|</span><br><span class="line">|__ src</span><br><span class="line">     |___ utils: RecordsAPI.js</span><br><span class="line">     |</span><br><span class="line">     |___ components:</span><br><span class="line">              |___ App.js</span><br><span class="line">              |___ Form.js</span><br><span class="line">              |___ Summary.js</span><br><span class="line">              |___ Table.js</span><br><span class="line">              |___ TableRow.js</span><br></pre></td></tr></table></figure>
-<h2 id="III-Ajax-request"><a href="#III-Ajax-request" class="headerlink" title="III. Ajax request"></a>III. Ajax request</h2><h3 id="Several-Ways"><a href="#Several-Ways" class="headerlink" title="Several Ways:"></a>Several Ways:</h3><ol>
-<li>Ajax Libraries<ul>
-<li>Axios<ul>
-<li>axios.get(url[, config])</li>
-<li>axios.delete(url[, config])</li>
-<li>axios.head(url[, config])</li>
-<li>axios.options(url[, config])</li>
-<li>axios.post(url[, data[, config]])</li>
-<li>axios.put(url[, data[, config]])</li>
-</ul>
-</li>
-<li>jQuery AJAX</li>
-</ul>
-</li>
-<li><p>Browser built-in <code>window.fetch</code></p>
-<p> No need to prepend “window” before <code>fetch()</code>: default obj</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">## No need to prepend "window" before fetch, this is the default obj</span><br><span class="line"></span><br><span class="line">  fetch(<span class="string">'http://example.com/movies.json'</span>)</span><br><span class="line">    .then(<span class="function"><span class="keyword">function</span>(<span class="params">response</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> response.json();</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function"><span class="keyword">function</span>(<span class="params">myJson</span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(myJson);</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="When-and-where-to-initiate-Ajax-call"><a href="#When-and-where-to-initiate-Ajax-call" class="headerlink" title="When and where to initiate Ajax call?"></a>When and where to initiate Ajax call?</h3><p>Do it in <code>componentDidMount</code> lifecycle method. So you can use setState to update your component when the data is retrieved.</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">componentDidMount() &#123;</span><br><span class="line">  fetch(<span class="string">"https://api.example.com/items"</span>)</span><br><span class="line">    .then(<span class="function"><span class="params">res</span> =&gt;</span> res.json())</span><br><span class="line">    .then(</span><br><span class="line">      (result) =&gt; &#123;</span><br><span class="line">        <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">          isLoaded: <span class="literal">true</span>,</span><br><span class="line">          items: result.items</span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="comment">// Note: it's important to handle errors here</span></span><br><span class="line">      <span class="comment">// instead of a catch() block so that we don't swallow</span></span><br><span class="line">      <span class="comment">// exceptions from actual bugs in components.</span></span><br><span class="line">      (error) =&gt; &#123;</span><br><span class="line">        <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">          isLoaded: <span class="literal">true</span>,</span><br><span class="line">          error</span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="IV-Concept"><a href="#IV-Concept" class="headerlink" title="IV. Concept"></a>IV. Concept</h2><h3 id="1-组件数据流-Model-gt-View"><a href="#1-组件数据流-Model-gt-View" class="headerlink" title="1. 组件数据流: Model -&gt; View"></a>1. 组件数据流: Model -&gt; View</h3><ul>
-<li><p>父组件M -&gt; 子组件V</p>
-<ul>
-<li>父组件prop 之间传给 子组件 prop</li>
-</ul>
-</li>
-<li><p>子组件M -&gt; 父组件V</p>
-<ul>
-<li>回调函数<ul>
-<li>父组件向子组件传递回调函数</li>
-<li>JS中，function是一等公民，因此传入的值会作为自身field保存起来；与C／Java不同。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>sibling 组件间传值 M-&gt;V<ul>
-<li>必须依靠二者共同父组件来传递<ul>
-<li>但等组件之间的关系越来越复杂时候，这种依靠父组件作为中间人传值方式 would be a mess！</li>
-<li>Redux comes into picture</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="2-双向绑定-Model-View"><a href="#2-双向绑定-Model-View" class="headerlink" title="2. 双向绑定: Model  View"></a>2. 双向绑定: Model <-> View</-></h3><ul>
-<li>通过绑定<code>&lt;input&gt;</code>的 <code>onChange()</code> 监视 View的变换</li>
-<li>在 onChange Handler中更新组件的值，完成 View =&gt; Model 的数据流。</li>
-</ul>
-<h3 id="3-React-生命周期"><a href="#3-React-生命周期" class="headerlink" title="3. React 生命周期"></a>3. React 生命周期</h3><ul>
-<li><strong>Mount</strong><ul>
-<li>constructor()</li>
-<li>componentWillMount()</li>
-<li>render()</li>
-<li>componentDidMount()</li>
-</ul>
-</li>
-<li><strong>Update</strong><ul>
-<li>componentWillReceiveProps(): 将接收新的props</li>
-<li>shouldComponentUpdate(): 是否应该被更新？</li>
-<li>componentWillUpdate(): 组件即将更新</li>
-<li>render(): 组件被渲染</li>
-<li>componentDidUpdate(): 组件完成更新</li>
-</ul>
-</li>
-<li><strong>Unmount</strong><ul>
-<li>componentWillUnmount(): 组件被卸载前做一些数据清除</li>
-</ul>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2577,7 +2492,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">34</span>
+                    <span class="site-state-item-count">35</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

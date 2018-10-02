@@ -99,24 +99,23 @@
 
 
 
-  <meta name="description" content="0. Why need special_read/write ? 这里的 special_read 是对 vnode 的统一抽象接口而言eg: read() / write() / mkdir() / link() / …  vnode 的类型(vn_mode)如下： S_IFDIR  directory    S_IFREG  regular    S_IFLNK  symlink   S_IF">
-<meta name="keywords" content="OS">
+  <meta name="description" content="Event Emitter title: Event Emittercomments: truedate: 2018-10-01 20:21:44type: categoriescategories: Full stack tags: ES6I. What is an Event Emitter?An event emitter is a utility object, which can be">
 <meta property="og:type" content="article">
-<meta property="og:title" content="FS - Vnode: Special_Read_Write for byte device">
-<meta property="og:url" content="http://yoursite.com/2018/04/01/Vnode-Special-Read-Write-for-byte-device/index.html">
+<meta property="og:title" content="CMK">
+<meta property="og:url" content="http://yoursite.com/2018/10/01/Event Emitter/index.html">
 <meta property="og:site_name" content="CMK">
-<meta property="og:description" content="0. Why need special_read/write ? 这里的 special_read 是对 vnode 的统一抽象接口而言eg: read() / write() / mkdir() / link() / …  vnode 的类型(vn_mode)如下： S_IFDIR  directory    S_IFREG  regular    S_IFLNK  symlink   S_IF">
-<meta property="og:updated_time" content="2018-04-16T07:06:03.000Z">
+<meta property="og:description" content="Event Emitter title: Event Emittercomments: truedate: 2018-10-01 20:21:44type: categoriescategories: Full stack tags: ES6I. What is an Event Emitter?An event emitter is a utility object, which can be">
+<meta property="og:updated_time" content="2018-10-02T04:17:55.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="FS - Vnode: Special_Read_Write for byte device">
-<meta name="twitter:description" content="0. Why need special_read/write ? 这里的 special_read 是对 vnode 的统一抽象接口而言eg: read() / write() / mkdir() / link() / …  vnode 的类型(vn_mode)如下： S_IFDIR  directory    S_IFREG  regular    S_IFLNK  symlink   S_IF">
+<meta name="twitter:title" content="CMK">
+<meta name="twitter:description" content="Event Emitter title: Event Emittercomments: truedate: 2018-10-01 20:21:44type: categoriescategories: Full stack tags: ES6I. What is an Event Emitter?An event emitter is a utility object, which can be">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/04/01/Vnode-Special-Read-Write-for-byte-device/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/10/01/Event Emitter/"/>
 
 
 
@@ -126,7 +125,7 @@
   };
 </script>
 
-  <title>FS - Vnode: Special_Read_Write for byte device | CMK</title>
+  <title> | CMK</title>
   
 
 
@@ -306,12 +305,12 @@
 
   
 
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/01/Vnode-Special-Read-Write-for-byte-device/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/01/Event Emitter/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Mingkai Cao">
@@ -328,7 +327,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">FS - Vnode: Special_Read_Write for byte device</h1>
+          <h1 class="post-title" itemprop="name headline"></h1>
         
 
         <div class="post-meta">
@@ -340,7 +339,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-01T12:33:03-07:00">2018-04-01</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-01T20:31:06-07:00">2018-10-01</time>
             
 
             
@@ -350,24 +349,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Courses/" itemprop="url" rel="index"><span itemprop="name">Courses</span></a></span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -376,8 +357,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/04/01/Vnode-Special-Read-Write-for-byte-device/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/01/Vnode-Special-Read-Write-for-byte-device/" itemprop="commentCount"></span>
+                <a href="/2018/10/01/Event Emitter/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/01/Event Emitter/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -413,50 +394,47 @@
       
 
       
-        <h2 id="0-Why-need-special-read-write"><a href="#0-Why-need-special-read-write" class="headerlink" title="0. Why need special_read/write ?"></a>0. Why need special_read/write ?</h2><ol start="0">
-<li>这里的 special_read 是对 vnode 的统一抽象接口而言<br>eg: read() / write() / mkdir() / link() / … </li>
-<li>vnode 的类型(vn_mode)如下：<ul>
-<li>S_IFDIR  directory   </li>
-<li>S_IFREG  regular   </li>
-<li>S_IFLNK  symlink  </li>
-<li>S_IFCHR  character special  </li>
-<li>S_IFBLK  block special </li>
+        <h1 id="Event-Emitter"><a href="#Event-Emitter" class="headerlink" title="Event Emitter"></a>Event Emitter</h1><hr>
+<p>title: Event Emitter<br>comments: true<br>date: 2018-10-01 20:21:44<br>type: categories<br>categories: Full stack</p>
+<h2 id="tags-ES6"><a href="#tags-ES6" class="headerlink" title="tags: ES6"></a>tags: ES6</h2><h4 id="I-What-is-an-Event-Emitter"><a href="#I-What-is-an-Event-Emitter" class="headerlink" title="I. What is an Event Emitter?"></a>I. What is an Event Emitter?</h4><p>An <code>event emitter</code> is a <strong>utility object</strong>, which can be used to emit event, which can be subscribed by as many functions as we can. </p>
+<ol>
+<li><p>It is an event manager, manages differents event and its subscribers.</p>
+</li>
+<li><p>Also, we can see it as the <code>Redux</code>, which also dispatches(emits) actions, and handled by its reducers.</p>
+</li>
+<li>It widely used at Node.js ( asynchronous event-driven architecture)<ul>
+<li>certain kind of objects call emitters periodically to emit events that cause listener objects to be called.</li>
+<li>when a request comes requesting some resource, Node.js will register the subscriber: <code>responseToThisRequest()</code> on event: <code>thisTypeDataDone</code>. When data is obtained, will call <code>emitter.emit( thisTypeDataDone )</code>, to call the <code>responseToThisRequest()</code> corresponding all the requests.</li>
 </ul>
 </li>
-<li>File System 使用 vnode 来抽象除了内存(memory)之外所有的设备，包括：硬盘、屏幕、键盘<ul>
-<li>因此在 File System 的世界，所有外设都由 vnode 统一映射</li>
-<li>区别在于: vnode 的成员变量 vn_mode 指定外设类型</li>
-<li>特殊的外设，vn_devid／vn_cdev／vn_bdev 记录了相关信息</li>
+</ol>
+<h4 id="II-Why-and-when-do-we-need-it"><a href="#II-Why-and-when-do-we-need-it" class="headerlink" title="II. Why and when do we need it?"></a>II. Why and when do we need it?</h4><blockquote>
+<p>Whenever it makes sense for code to SUBSCRIBE to something rather than get a callback from something</p>
+<p><a href="https://stackoverflow.com/questions/38881170/when-should-i-use-eventemitter" target="_blank" rel="noopener">https://stackoverflow.com/questions/38881170/when-should-i-use-eventemitter</a></p>
+</blockquote>
+<p>If when a certain event happens, we have to deal many type of manipulation for that event’s result, then it is better to use the event emitter pattern. </p>
+<p>Instead put all functions inside an event callback, we subscribe all the function to that event, when the event happens, we emit the event!</p>
+<h4 id="III-How-to-use-it"><a href="#III-How-to-use-it" class="headerlink" title="III. How to use it?"></a>III. How to use it?</h4><p><strong>[Good Link]:</strong> <a href="https://netbasal.com/javascript-the-magic-behind-event-emitter-cce3abcbcef9" target="_blank" rel="noopener">https://netbasal.com/javascript-the-magic-behind-event-emitter-cce3abcbcef9</a></p>
+<p><strong>[Note]:  when pass in the callback function, we use arrow function, which already bind ‘this’ to the function, so that when the function be called, it knows what value it will update</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">let input = document.querySelector(&apos;input[type=&quot;text&quot;]&apos;);</span><br><span class="line">let button = document.querySelector(&apos;button&apos;);</span><br><span class="line">let h1 = document.querySelector(&apos;h1&apos;);</span><br><span class="line"></span><br><span class="line">button.addEventListener(&apos;click&apos;, () =&gt; &#123;</span><br><span class="line">  emitter.emit(&apos;event:name-changed&apos;, &#123;name: input.value&#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">let emitter = new EventEmitter();</span><br><span class="line">emitter.subscribe(&apos;event:name-changed&apos;, data =&gt; &#123;</span><br><span class="line">  h1.innerHTML = `Your name is: $&#123;data.name&#125;`;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>create an emitter util object</p>
+</li>
+<li><p>subscribe the desired callback function, using <code>emitter.subscribe(event, function.bind(this))</code></p>
+</li>
+<li><p>call <code>emitter.emit()</code> when the event happen</p>
+</li>
+</ol>
+<h4 id="IV-Write-one"><a href="#IV-Write-one" class="headerlink" title="IV. Write one!"></a>IV. Write one!</h4><ol>
+<li><strong><u>object:</u></strong> we need an object (utility object)</li>
+<li><u><strong>data structure:</strong></u> inside it, we need a data structure to store the <code>event</code> and its <code>subscribers</code>(callbacks)</li>
+<li><strong><u>methods:</u></strong>  all the methods<ul>
+<li><code>subscribe(event, callback)</code>: we need the return value to be an <code>unsubscribe()</code>, so we won’t result in the memory leak!</li>
+<li><code>emit()</code></li>
 </ul>
 </li>
-<li>尽管不同的文件系统对不同类型的 vnode 统一管理，如：file vnode／directory vnode／char vnode／ block vnode；但是后两个特殊的 vnode 类型(char/block) 却不受文件系统的影响</li>
-<li>因为char／block 两类实际上相当于 IO 设备vnode节点，独立于文件系统；只不过为了接口统一，操作系统将 IO 设备的操作集成到 FS 文件系统中了。</li>
-<li>因此，对于char／block特设vnode 的抽象接口，应该交由相应的 IO设备去实现，而不应该在下放给 specific FS 去实现。这也是为什么在 vnode.c 这里要实现 special_read() | special_write()的原因</li>
 </ol>
-<h2 id="1-special-file-read"><a href="#1-special-file-read" class="headerlink" title="1. special file read"></a>1. special file read</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int special_file_read(vnode_t *file, off_t offset, </span><br><span class="line">                      void *buf, size_t count)</span><br><span class="line"></span><br><span class="line">输入：file-要读取的vnode、offset-偏移量、count-读多少字节数、buf-从文件读取的内容放到buf中</span><br><span class="line">输出：special file 的 read() 返回值</span><br></pre></td></tr></table></figure>
-<ul>
-<li>读取vnode的vn_mode，判断 file vnode 的类型<ol>
-<li>if S_ISBLK(file-&gt;vn_mode)，return -ENOTSUP;</li>
-<li>if S_ISCHR(file-&gt;vn_mode)，检查是否含有相关函数</li>
-</ol>
-</li>
-<li>交由 special file (char device) 去实现读操作<ol>
-<li>file-&gt;vn_cdev-&gt;cd_ops-&gt;read(file-&gt;vn_cdev, offset, buf, count);     </li>
-</ol>
-</li>
-</ul>
-<h2 id="2-special-file-write"><a href="#2-special-file-write" class="headerlink" title="2. special file write"></a>2. special file write</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int special_file_write(vnode_t *file, off_t offset,     </span><br><span class="line">                    const void *buf, size_t count)</span><br><span class="line"></span><br><span class="line">输入：file-要写入的vnode、offset-偏移量、count-写多少字节数、buf-从buf中读内容写到file中</span><br><span class="line">输出：special file 的 write() 返回值</span><br></pre></td></tr></table></figure>
-<ul>
-<li>读取vnode的vn_mode，判断 file vnode 的类型<ol>
-<li>if S_ISBLK(file-&gt;vn_mode)，return -ENOTSUP;</li>
-<li>if S_ISCHR(file-&gt;vn_mode)，检查是否含有相关函数</li>
-</ol>
-</li>
-<li>交由 special file (char device) 去实现写操作<ol>
-<li>file-&gt;vn_cdev-&gt;cd_ops-&gt;write(file-&gt;vn_cdev, offset, buf, count);</li>
-</ol>
-</li>
-</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">class EventEmitter &#123;</span><br><span class="line">  constructor() &#123;</span><br><span class="line">    this.events = &#123;&#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  // 1. when emit, we call all the subscribers with the passed in data</span><br><span class="line">  emit(eventName, data) &#123;</span><br><span class="line">      const event = this.events[eventName];</span><br><span class="line">      if( event ) &#123;</span><br><span class="line">        event.forEach(fn =&gt; &#123;</span><br><span class="line">           fn.call(null, data);</span><br><span class="line">         &#125;);</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   // 2. push the callback: fn to its related event</span><br><span class="line">   subscribe(eventName, fn) &#123;</span><br><span class="line">      if(!this.events[eventName]) &#123;</span><br><span class="line">        this.events[eventName] = [];</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      this.events[eventName].push(fn);</span><br><span class="line"></span><br><span class="line">	  // 3.  return a function with &apos;this&apos; bound, when called, the emitter will remove the eventFn from its subscribers</span><br><span class="line">      return () =&gt; &#123;</span><br><span class="line">        this.events[eventName] = this.events[eventName].filter(eventFn =&gt; fn !== eventFn);</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -475,12 +453,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/OS/" rel="tag"># OS</a>
-          
-        </div>
-      
 
       
       
@@ -490,8 +462,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/01/RAM-File-System/" rel="next" title="FS - RAM File System">
-                <i class="fa fa-chevron-left"></i> FS - RAM File System
+              <a href="/2018/08/31/Trie/" rel="next" title="Trie">
+                <i class="fa fa-chevron-left"></i> Trie
               </a>
             
           </div>
@@ -499,10 +471,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/04/01/How-does-OS-load-File-System/" rel="prev" title="FS - How does OS load File System">
-                FS - How does OS load File System <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -733,7 +701,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-Why-need-special-read-write"><span class="nav-number">1.</span> <span class="nav-text">0. Why need special_read/write ?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-special-file-read"><span class="nav-number">2.</span> <span class="nav-text">1. special file read</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-special-file-write"><span class="nav-number">3.</span> <span class="nav-text">2. special file write</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Event-Emitter"><span class="nav-number">1.</span> <span class="nav-text">Event Emitter</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#tags-ES6"><span class="nav-number">1.1.</span> <span class="nav-text">tags: ES6</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#I-What-is-an-Event-Emitter"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">I. What is an Event Emitter?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#II-Why-and-when-do-we-need-it"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">II. Why and when do we need it?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#III-How-to-use-it"><span class="nav-number">1.1.0.3.</span> <span class="nav-text">III. How to use it?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IV-Write-one"><span class="nav-number">1.1.0.4.</span> <span class="nav-text">IV. Write one!</span></a></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>

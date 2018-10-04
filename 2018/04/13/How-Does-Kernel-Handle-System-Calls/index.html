@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.6" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.6">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.6" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.0.6',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="I. An Example: read( ) User space: User process makes read() system call Interrupt: This will trap into kernel by software interrupt System API: Kernel executes its interrupt handler, in which sys_rea">
+<meta name="keywords" content="OS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How Does Kernel Handle System Calls">
+<meta property="og:url" content="http://yoursite.com/2018/04/13/How-Does-Kernel-Handle-System-Calls/index.html">
+<meta property="og:site_name" content="CMK">
+<meta property="og:description" content="I. An Example: read( ) User space: User process makes read() system call Interrupt: This will trap into kernel by software interrupt System API: Kernel executes its interrupt handler, in which sys_rea">
+<meta property="og:updated_time" content="2018-04-14T17:34:15.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="How Does Kernel Handle System Calls">
+<meta name="twitter:description" content="I. An Example: read( ) User space: User process makes read() system call Interrupt: This will trap into kernel by software interrupt System API: Kernel executes its interrupt handler, in which sys_rea">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/13/How-Does-Kernel-Handle-System-Calls/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>How Does Kernel Handle System Calls | CMK</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-116541729-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-116541729-1');
+</script>
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> 
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">CMK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Let's create something!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+          
+  <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+</li>
+
+      
+
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/13/How-Does-Kernel-Handle-System-Calls/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">How Does Kernel Handle System Calls</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-13T11:52:25-07:00">2018-04-13</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Courses/" itemprop="url" rel="index"><span itemprop="name">Courses</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/13/How-Does-Kernel-Handle-System-Calls/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/13/How-Does-Kernel-Handle-System-Calls/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views: 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="I-An-Example-read"><a href="#I-An-Example-read" class="headerlink" title="I. An Example: read( )"></a>I. An Example: read( )</h2><ol>
+<li><strong>User space:</strong> User process makes <code>read()</code> system call</li>
+<li><strong>Interrupt:</strong> This will <strong>trap</strong> into kernel by <strong>software interrupt</strong></li>
+<li><strong>System API:</strong> Kernel executes its <code>interrupt handler</code>, in which <code>sys_read() API</code> will be called<ul>
+<li><code>copy_from_user()</code> the read_args(fd/buff/…)</li>
+<li><code>page_alloc()</code> a temporary buffer</li>
+<li>call <code>do_read()</code>, and <code>copy_to_user()</code> the read bytes</li>
+<li><code>page_free()</code> that buffer</li>
+<li>return the number of bytes actually read, or if anything goes wrong</li>
+</ul>
+</li>
+<li><strong>File system API</strong>: Specific file system function <code>do_read()</code> will be executed.<ul>
+<li>注意：<code>do_read()</code>是 file system 的 system call</li>
+</ul>
+</li>
+</ol>
+<h2 id="II-System-API-for-file-operation"><a href="#II-System-API-for-file-operation" class="headerlink" title="II. System API for file operation"></a>II. System API for file operation</h2><h4 id="1-System-Read-API"><a href="#1-System-Read-API" class="headerlink" title="1. System Read API"></a>1. System Read API</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_read</span><span class="params">(<span class="keyword">read_args_t</span> *arg)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line">kernel “读”操作的API，自此由kernel执行一系列“读”相关的操作</span><br><span class="line"></span><br><span class="line">输入：arg，包含了user process read()的所有参数</span><br><span class="line">输出：实际读出的字节数</span><br></pre></td></tr></table></figure>
+<ol>
+<li>作为 interrupt routine 被调用；发生于 user process <code>read()</code> leading to <em>trap as software interrupt</em> into kernel 的时候</li>
+<li><code>copy_from_user()</code> 读取 user process <code>read()</code>的传入参数</li>
+<li>在 kernel address space 分配一块buffer，作为临时接收数据的区域</li>
+<li>调用 file system 的 <code>do_read()</code>，从 disk 中 读取数据到 buffer</li>
+<li><code>copy_to_user()</code>,将buffer 中读取到的数据 copy 到 user address space（低地址空间 0xc0000000 - 0xc0000000）</li>
+<li><code>page_free()</code>,将 buffer 释放</li>
+<li>根据 file system 读取的结果，返回ERROR 或者 读取的字节数</li>
+</ol>
+<h4 id="2-System-Write-API"><a href="#2-System-Write-API" class="headerlink" title="2. System Write API"></a>2. System Write API</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_write</span><span class="params">(<span class="keyword">write_args_t</span> *arg)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line">kernel “写”操作的API，自此由kernel执行一系列“写”相关的操作</span><br><span class="line"></span><br><span class="line">输入：arg，包含了user process write()的所有参数</span><br><span class="line">输出：实际写入的字节数</span><br></pre></td></tr></table></figure>
+<ol>
+<li>在kernel address space 开辟临时buffer，读取放置user 要写的数据</li>
+<li>从 user address space 拷贝 <code>read()</code> 输入参数，包括要写的数据</li>
+<li>调用 file system 的<code>do_write()</code>操作， write to disk</li>
+<li>释放 kernel address space 的临时 buffer</li>
+<li>返回ERROR 或者 写入的字符数</li>
+</ol>
+<h4 id="3-System-Get-Directory-Entry"><a href="#3-System-Get-Directory-Entry" class="headerlink" title="3. System Get Directory Entry"></a>3. System Get Directory Entry</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">do_getdent</span><span class="params">(<span class="keyword">int</span> fd, struct dirent *dirp)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line">对目录文件的操作，比如：</span><br><span class="line">- 获得位于指定字节数位置的子目录entry</span><br><span class="line">- 显示某个文件夹下所有子目录名称、大小等信息</span><br><span class="line"></span><br><span class="line">输入：fd(要读取的文件指针)、dirp(目标dir entry的容器)</span><br><span class="line">输出：count_bytes</span><br></pre></td></tr></table></figure>
+<ol>
+<li><code>copy_from_user()</code>从 user address space 读取参数到 kernel address space（从而知道用户都想干些啥？） </li>
+<li>循环调用 <code>do_getdent()</code> 以及 <code>copy_to_user()</code>，直到达到user process 指定的 字节数目<ul>
+<li><code>do_getdent()</code> 调用 file system API 读取目录，并将结果放在 dir 中</li>
+<li><code>copy_to_user()</code>将 dir 中的信息 copy 到 user address space 中去；这样就会在用户的 fd 下逐渐显示出读入的 sub dir entry 的名字、大小等信息</li>
+<li>读入的 count_bytes &gt;= user_args.count 时，跳出循环</li>
+</ul>
+</li>
+<li>返回实际读取到的目录所占字节数 count_bytes</li>
+</ol>
+<h4 id="4-Other-System-APIs-related-to-File-System"><a href="#4-Other-System-APIs-related-to-File-System" class="headerlink" title="4. Other System APIs related to File System"></a>4. Other System APIs related to File System</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_close</span><span class="params">(<span class="keyword">int</span> fd)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_dup</span><span class="params">(<span class="keyword">int</span> fd)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_dup2</span><span class="params">(<span class="keyword">const</span> <span class="keyword">dup2_args_t</span> *arg)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_mkdir</span><span class="params">(<span class="keyword">mkdir_args_t</span> *arg)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_rmdir</span><span class="params">(<span class="keyword">argstr_t</span> *arg)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_unlink</span><span class="params">(<span class="keyword">argstr_t</span> *arg)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_link</span><span class="params">(<span class="keyword">link_args_t</span> *arg)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_rename</span><span class="params">(<span class="keyword">rename_args_t</span> *arg)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_chdir</span><span class="params">(<span class="keyword">argstr_t</span> *arg)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_lseek</span><span class="params">(<span class="keyword">lseek_args_t</span> *args)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_open</span><span class="params">(<span class="keyword">open_args_t</span> *arg)</span></span></span><br></pre></td></tr></table></figure>
+<p>以上的 system API 都与 file system 有关。都经过以下过程：</p>
+<ol>
+<li>User process makes system call: <code>read()</code></li>
+<li>Traps into kernel as software interrupt: <code>interrupt handler</code></li>
+<li>Kernel execute corresponding API: <code>sys_read()</code></li>
+<li>Copy from user address space parameters into kernel address space</li>
+<li>Ask File System to complete relavent operation: <code>do_read()</code></li>
+<li>Copy to user address space with the result at kernel address space</li>
+</ol>
+<h2 id="III-Other-System-API-related-to-Virtual-Memory-System"><a href="#III-Other-System-API-related-to-Virtual-Memory-System" class="headerlink" title="III. Other System API related to Virtual Memory System"></a>III. Other System API related to Virtual Memory System</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_munmap</span><span class="params">(<span class="keyword">munmap_args_t</span> *args)</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">sys_mmap</span><span class="params">(<span class="keyword">mmap_args_t</span> *arg)</span></span></span><br><span class="line"><span class="function">pid_t <span class="title">sys_waitpid</span><span class="params">(<span class="keyword">waitpid_args_t</span> *args)</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">sys_brk</span><span class="params">(<span class="keyword">void</span> *addr)</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sys_sync</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_stat</span><span class="params">(<span class="keyword">stat_args_t</span> *arg)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_fork</span><span class="params">(<span class="keyword">regs_t</span> *regs)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_execve</span><span class="params">(<span class="keyword">execve_args_t</span> *args, <span class="keyword">regs_t</span> *regs)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_kshell</span><span class="params">(<span class="keyword">int</span> ttyid)</span></span></span><br></pre></td></tr></table></figure>
+<p>这些函数与“用户态” Process/ Thread/ Virtual Memory 的操作有关：</p>
+<ol>
+<li>由 user process 发起的 system call： <code>wait()</code></li>
+<li>经过software interrupt trap into kernel</li>
+<li>kernel 在调用相应的 system API，代替 user process 执行任务: <code>sys_waitpid()</code></li>
+<li>交给“进程系统” Process&amp; Memory System，来具体处理任务：<code>do_waitpid()</code></li>
+</ol>
+<h2 id="VI-Interrupt-handler-for-syscalls"><a href="#VI-Interrupt-handler-for-syscalls" class="headerlink" title="VI. Interrupt handler for syscalls"></a>VI. Interrupt handler for syscalls</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">syscall_handler</span><span class="params">(<span class="keyword">regs_t</span> *regs)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line">很重要的一个函数：</span><br><span class="line"><span class="number">1.</span> 使“用户态”程序在 make syscall 的时候，进入“内核态”</span><br><span class="line"><span class="number">2.</span> 根据 syscall_number，调用相应的 system API</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/OS/" rel="tag"># OS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/12/page-frame/" rel="next" title="VM - Page Frame">
+                <i class="fa fa-chevron-left"></i> VM - Page Frame
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/14/Virtual-Memory-Allocation-brk-and-mmap/" rel="prev" title="VM - Virtual Memory Allocation: brk() and mmap() ">
+                VM - Virtual Memory Allocation: brk() and mmap()  <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/sea.jpg"
+                alt="Mingkai Cao" />
+            
+              <p class="site-author-name" itemprop="name">Mingkai Cao</p>
+              <p class="site-description motion-element" itemprop="description">All-trade Jack, loves full-stack</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">38</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/caomingkai" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:mingkaic@usc.edu" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#I-An-Example-read"><span class="nav-number">1.</span> <span class="nav-text">I. An Example: read( )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#II-System-API-for-file-operation"><span class="nav-number">2.</span> <span class="nav-text">II. System API for file operation</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-System-Read-API"><span class="nav-number">2.0.1.</span> <span class="nav-text">1. System Read API</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-System-Write-API"><span class="nav-number">2.0.2.</span> <span class="nav-text">2. System Write API</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-System-Get-Directory-Entry"><span class="nav-number">2.0.3.</span> <span class="nav-text">3. System Get Directory Entry</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-Other-System-APIs-related-to-File-System"><span class="nav-number">2.0.4.</span> <span class="nav-text">4. Other System APIs related to File System</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#III-Other-System-API-related-to-Virtual-Memory-System"><span class="nav-number">3.</span> <span class="nav-text">III. Other System API related to Virtual Memory System</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VI-Interrupt-handler-for-syscalls"><span class="nav-number">4.</span> <span class="nav-text">VI. Interrupt handler for syscalls</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate"> 
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mingkai Cao</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Gemini</a> v6.0.6</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.6"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.6"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.6"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.6"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.6"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.6"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.6"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'hG8fgggWL7hK1jsXsRoVCNWv-MdYXbMMI',
+        appKey: 'VRAYsgwdkRyyb8bAFQ5uii6o',
+        placeholder: 'Any comment?',
+        avatar:'',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+    // 新增以下代码即可，可以移除.info下所有子节点
+    var infoEle = document.querySelector('#comments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0){
+      infoEle.childNodes.forEach(function(item) {
+        item.parentNode.removeChild(item);
+      });
+    }
+
+
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+<style>
+    #comments .vempty{
+        display: none;
+    }
+</style>
+
+</body>
+</html>

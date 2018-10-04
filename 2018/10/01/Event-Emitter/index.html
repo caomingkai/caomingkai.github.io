@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.6" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.6">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.6" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.0.6',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="I. What is an Event Emitter?An event emitter is a utility object, which can be used to emit event, which can be subscribed by as many functions as we can.   It is an event manager, manages differents">
+<meta name="keywords" content="ES6">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Event Emitter">
+<meta property="og:url" content="http://yoursite.com/2018/10/01/Event-Emitter/index.html">
+<meta property="og:site_name" content="CMK">
+<meta property="og:description" content="I. What is an Event Emitter?An event emitter is a utility object, which can be used to emit event, which can be subscribed by as many functions as we can.   It is an event manager, manages differents">
+<meta property="og:updated_time" content="2018-10-02T05:13:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Event Emitter">
+<meta name="twitter:description" content="I. What is an Event Emitter?An event emitter is a utility object, which can be used to emit event, which can be subscribed by as many functions as we can.   It is an event manager, manages differents">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/10/01/Event-Emitter/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Event Emitter | CMK</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-116541729-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-116541729-1');
+</script>
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> 
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">CMK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Let's create something!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+          
+  <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+</li>
+
+      
+
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/01/Event-Emitter/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Event Emitter</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-01T20:21:44-07:00">2018-10-01</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/01/Event-Emitter/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/01/Event-Emitter/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views: 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="I-What-is-an-Event-Emitter"><a href="#I-What-is-an-Event-Emitter" class="headerlink" title="I. What is an Event Emitter?"></a>I. What is an Event Emitter?</h4><p>An <code>event emitter</code> is a <strong>utility object</strong>, which can be used to emit event, which can be subscribed by as many functions as we can. </p>
+<ol>
+<li><p>It is an event manager, manages differents event and its subscribers.</p>
+</li>
+<li><p>Also, we can see it as the <code>Redux</code>, which also dispatches(emits) actions, and handled by its reducers.</p>
+</li>
+<li>It widely used at Node.js ( asynchronous event-driven architecture)<ul>
+<li>certain kind of objects call emitters periodically to emit events that cause listener objects to be called.</li>
+<li>when a request comes requesting some resource, Node.js will register the subscriber: <code>responseToThisRequest()</code> on event: <code>thisTypeDataDone</code>. When data is obtained, will call <code>emitter.emit( thisTypeDataDone )</code>, to call the <code>responseToThisRequest()</code> corresponding all the requests.</li>
+</ul>
+</li>
+</ol>
+<h4 id="II-Why-and-when-do-we-need-it"><a href="#II-Why-and-when-do-we-need-it" class="headerlink" title="II. Why and when do we need it?"></a>II. Why and when do we need it?</h4><blockquote>
+<p>Whenever it makes sense for code to SUBSCRIBE to something rather than get a callback from something</p>
+<p><a href="https://stackoverflow.com/questions/38881170/when-should-i-use-eventemitter" target="_blank" rel="noopener">https://stackoverflow.com/questions/38881170/when-should-i-use-eventemitter</a></p>
+</blockquote>
+<p>If when a certain event happens, we have to deal many type of manipulation for that event’s result, then it is better to use the event emitter pattern. </p>
+<p>Instead put all functions inside an event callback, we subscribe all the function to that event, when the event happens, we emit the event!</p>
+<h4 id="III-How-to-use-it"><a href="#III-How-to-use-it" class="headerlink" title="III. How to use it?"></a>III. How to use it?</h4><p><strong>[Good Link]:</strong> <a href="https://netbasal.com/javascript-the-magic-behind-event-emitter-cce3abcbcef9" target="_blank" rel="noopener">https://netbasal.com/javascript-the-magic-behind-event-emitter-cce3abcbcef9</a></p>
+<p><strong>[Note]:  when pass in the callback function, we use arrow function, which already bind ‘this’ to the function, so that when the function be called, it knows what value it will update</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">let input = document.querySelector(&apos;input[type=&quot;text&quot;]&apos;);</span><br><span class="line">let button = document.querySelector(&apos;button&apos;);</span><br><span class="line">let h1 = document.querySelector(&apos;h1&apos;);</span><br><span class="line"></span><br><span class="line">button.addEventListener(&apos;click&apos;, () =&gt; &#123;</span><br><span class="line">  emitter.emit(&apos;event:name-changed&apos;, &#123;name: input.value&#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">let emitter = new EventEmitter();</span><br><span class="line">emitter.subscribe(&apos;event:name-changed&apos;, data =&gt; &#123;</span><br><span class="line">  h1.innerHTML = `Your name is: $&#123;data.name&#125;`;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>create an emitter util object</p>
+</li>
+<li><p>subscribe the desired callback function, using <code>emitter.subscribe(event, function.bind(this))</code></p>
+</li>
+<li><p>call <code>emitter.emit()</code> when the event happen</p>
+</li>
+</ol>
+<h4 id="IV-Write-one"><a href="#IV-Write-one" class="headerlink" title="IV. Write one!"></a>IV. Write one!</h4><ol>
+<li><strong><u>object:</u></strong> we need an object (utility object)</li>
+<li><u><strong>data structure:</strong></u> inside it, we need a data structure to store the <code>event</code> and its <code>subscribers</code>(callbacks)</li>
+<li><strong><u>methods:</u></strong>  all the methods<ul>
+<li><code>subscribe(event, callback)</code>: we need the return value to be an <code>unsubscribe()</code>, so we won’t result in the memory leak!</li>
+<li><code>emit()</code></li>
+</ul>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">class EventEmitter &#123;</span><br><span class="line">  constructor() &#123;</span><br><span class="line">    this.events = &#123;&#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  // 1. when emit, we call all the subscribers with the passed in data</span><br><span class="line">  emit(eventName, data) &#123;</span><br><span class="line">      const event = this.events[eventName];</span><br><span class="line">      if( event ) &#123;</span><br><span class="line">        event.forEach(fn =&gt; &#123;</span><br><span class="line">           fn.call(null, data);</span><br><span class="line">         &#125;);</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   // 2. push the callback: fn to its related event</span><br><span class="line">   subscribe(eventName, fn) &#123;</span><br><span class="line">      if(!this.events[eventName]) &#123;</span><br><span class="line">        this.events[eventName] = [];</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      this.events[eventName].push(fn);</span><br><span class="line"></span><br><span class="line">	  // 3.  return a function with &apos;this&apos; bound, when called, the emitter will remove the eventFn from its subscribers</span><br><span class="line">      return () =&gt; &#123;</span><br><span class="line">        this.events[eventName] = this.events[eventName].filter(eventFn =&gt; fn !== eventFn);</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong><em>FaceBook interview version</em></strong><br><a href="https://gist.github.com/kutyel/7d8f204a347840a6ee7220743957e504" target="_blank" rel="noopener">https://gist.github.com/kutyel/7d8f204a347840a6ee7220743957e504</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line"> * Create an event emitter that goes like this</span><br><span class="line"> * emitter = new Emitter();</span><br><span class="line"> *</span><br><span class="line"> * Allows you to subscribe to some event</span><br><span class="line"> * sub1 = emitter.subscribe(&apos;function_name&apos;, callback1);</span><br><span class="line"> * (you can have multiple callbacks to the same event)</span><br><span class="line"> * sub2 = emitter.subscribe(&apos;function_name&apos;, callback2);</span><br><span class="line"> *</span><br><span class="line"> * You can emit the event you want with this api</span><br><span class="line"> * (you can receive &apos;n&apos; number of arguments)</span><br><span class="line"> * sub1.emit(&apos;function_name&apos;, foo, bar);</span><br><span class="line"> *</span><br><span class="line"> * And allows you to release the subscription like this</span><br><span class="line"> * (but you should be able to still emit from sub2)</span><br><span class="line"> * sub1.release();</span><br><span class="line"> */</span><br><span class="line"> </span><br><span class="line">// facebook.js</span><br><span class="line"></span><br><span class="line">class Emitter &#123;</span><br><span class="line">  constructor(events = &#123;&#125;) &#123;</span><br><span class="line">    this.events = events</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  subscribe(name, cb) &#123;</span><br><span class="line">    (this.events[name] || (this.events[name] = [])).push(cb)</span><br><span class="line"></span><br><span class="line">    return &#123;</span><br><span class="line">      release: () =&gt; this.events[name] &amp;&amp;</span><br><span class="line">        this.events[name].splice(this.events[name].indexOf(cb) &gt;&gt;&gt; 0, 1)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  emit(name, ...args) &#123;</span><br><span class="line">    return (this.events[name] || []).map(fn =&gt; fn(...args))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default Emitter</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// test.js</span><br><span class="line"></span><br><span class="line">const expect = require(&apos;expect&apos;)</span><br><span class="line"></span><br><span class="line">const Emitter = require(&apos;./facebook&apos;)</span><br><span class="line"></span><br><span class="line">// Step 1</span><br><span class="line"></span><br><span class="line">let test = 0</span><br><span class="line"></span><br><span class="line">const emitter = new Emitter()</span><br><span class="line"></span><br><span class="line">emitter.emit(&apos;sum&apos;, 1)</span><br><span class="line"></span><br><span class="line">expect(test).toBe(0) // should trigger nothing</span><br><span class="line"></span><br><span class="line">const sub1 = emitter.subscribe(&apos;sum&apos;, num =&gt; (test = test + num))</span><br><span class="line"></span><br><span class="line">emitter.emit(&apos;sum&apos;, 1)</span><br><span class="line"></span><br><span class="line">expect(test).toBe(1) // should trigger 1 callback</span><br><span class="line"></span><br><span class="line">const sub2 = emitter.subscribe(&apos;sum&apos;, num =&gt; (test = test * num))</span><br><span class="line"></span><br><span class="line">emitter.emit(&apos;sum&apos;, 2)</span><br><span class="line"></span><br><span class="line">expect(test).toBe(6) // should trigger 2 callbacks</span><br><span class="line"></span><br><span class="line">// Step 2</span><br><span class="line"></span><br><span class="line">sub1.release()</span><br><span class="line"></span><br><span class="line">emitter.emit(&apos;sum&apos;, 3)</span><br><span class="line"></span><br><span class="line">expect(test).toBe(18) // should trigger 1 callback</span><br><span class="line"></span><br><span class="line">// Step 3</span><br><span class="line"></span><br><span class="line">const myEvent1 = emitter.subscribe(&apos;myEvent&apos;, () =&gt; 1)</span><br><span class="line">const myEvent2 = emitter.subscribe(&apos;myEvent&apos;, () =&gt; 2)</span><br><span class="line">const myEvent3 = emitter.subscribe(&apos;myEvent&apos;, () =&gt; true)</span><br><span class="line">const result = emitter.emit(&apos;myEvent&apos;)</span><br><span class="line"></span><br><span class="line">expect(result).toEqual([1, 2, true])</span><br><span class="line"></span><br><span class="line">console.info(&apos;You passed the test!!! 👏🏼 👏🏼 👏🏼&apos;)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ES6/" rel="tag"># ES6</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/31/Trie/" rel="next" title="Trie">
+                <i class="fa fa-chevron-left"></i> Trie
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/02/Memory-Game/" rel="prev" title="Memory Game">
+                Memory Game <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/sea.jpg"
+                alt="Mingkai Cao" />
+            
+              <p class="site-author-name" itemprop="name">Mingkai Cao</p>
+              <p class="site-description motion-element" itemprop="description">All-trade Jack, loves full-stack</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">38</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/caomingkai" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:mingkaic@usc.edu" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#I-What-is-an-Event-Emitter"><span class="nav-number">1.</span> <span class="nav-text">I. What is an Event Emitter?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#II-Why-and-when-do-we-need-it"><span class="nav-number">2.</span> <span class="nav-text">II. Why and when do we need it?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#III-How-to-use-it"><span class="nav-number">3.</span> <span class="nav-text">III. How to use it?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IV-Write-one"><span class="nav-number">4.</span> <span class="nav-text">IV. Write one!</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate"> 
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mingkai Cao</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Gemini</a> v6.0.6</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.6"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.6"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.6"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.6"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.6"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.6"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.6"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'hG8fgggWL7hK1jsXsRoVCNWv-MdYXbMMI',
+        appKey: 'VRAYsgwdkRyyb8bAFQ5uii6o',
+        placeholder: 'Any comment?',
+        avatar:'',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+    // 新增以下代码即可，可以移除.info下所有子节点
+    var infoEle = document.querySelector('#comments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0){
+      infoEle.childNodes.forEach(function(item) {
+        item.parentNode.removeChild(item);
+      });
+    }
+
+
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+<style>
+    #comments .vempty{
+        display: none;
+    }
+</style>
+
+</body>
+</html>

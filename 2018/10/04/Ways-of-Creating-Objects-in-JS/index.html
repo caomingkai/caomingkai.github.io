@@ -99,24 +99,24 @@
 
 
 
-  <meta name="description" content="Useful LinkCredit goes to:https://blog.csdn.net/gfgdsg/article/details/42709943 Notice: page-granularityAll memory in virtual memory address space are page-based. It is the smallest unit of granularit">
-<meta name="keywords" content="OS">
+  <meta name="description" content="I. { }: Literal Constructor 123456var person = &amp;#123;    name = &quot;Anand&quot;,    getName = function()&amp;#123;      return this.name     &amp;#125;&amp;#125;   II. Object.create(): can be used on inheritance This can">
+<meta name="keywords" content="JavaScript Core">
 <meta property="og:type" content="article">
-<meta property="og:title" content="VM - Virtual Memory Allocation: brk() and mmap() ">
-<meta property="og:url" content="http://yoursite.com/2018/04/14/Virtual-Memory-Allocation-brk-and-mmap/index.html">
+<meta property="og:title" content="Create new Objects with Inheritance">
+<meta property="og:url" content="http://yoursite.com/2018/10/04/Ways-of-Creating-Objects-in-JS/index.html">
 <meta property="og:site_name" content="CMK">
-<meta property="og:description" content="Useful LinkCredit goes to:https://blog.csdn.net/gfgdsg/article/details/42709943 Notice: page-granularityAll memory in virtual memory address space are page-based. It is the smallest unit of granularit">
-<meta property="og:updated_time" content="2018-04-16T07:07:59.000Z">
+<meta property="og:description" content="I. { }: Literal Constructor 123456var person = &amp;#123;    name = &quot;Anand&quot;,    getName = function()&amp;#123;      return this.name     &amp;#125;&amp;#125;   II. Object.create(): can be used on inheritance This can">
+<meta property="og:updated_time" content="2018-10-04T20:41:49.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="VM - Virtual Memory Allocation: brk() and mmap() ">
-<meta name="twitter:description" content="Useful LinkCredit goes to:https://blog.csdn.net/gfgdsg/article/details/42709943 Notice: page-granularityAll memory in virtual memory address space are page-based. It is the smallest unit of granularit">
+<meta name="twitter:title" content="Create new Objects with Inheritance">
+<meta name="twitter:description" content="I. { }: Literal Constructor 123456var person = &amp;#123;    name = &quot;Anand&quot;,    getName = function()&amp;#123;      return this.name     &amp;#125;&amp;#125;   II. Object.create(): can be used on inheritance This can">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/04/14/Virtual-Memory-Allocation-brk-and-mmap/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/10/04/Ways-of-Creating-Objects-in-JS/"/>
 
 
 
@@ -126,7 +126,7 @@
   };
 </script>
 
-  <title>VM - Virtual Memory Allocation: brk() and mmap()  | CMK</title>
+  <title>Create new Objects with Inheritance | CMK</title>
   
 
 
@@ -333,7 +333,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/14/Virtual-Memory-Allocation-brk-and-mmap/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/04/Ways-of-Creating-Objects-in-JS/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Mingkai Cao">
@@ -350,7 +350,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">VM - Virtual Memory Allocation: brk() and mmap() </h1>
+          <h1 class="post-title" itemprop="name headline">Create new Objects with Inheritance</h1>
         
 
         <div class="post-meta">
@@ -362,7 +362,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-14T11:33:45-07:00">2018-04-14</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-04T11:54:04-07:00">2018-10-04</time>
             
 
             
@@ -383,7 +383,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Courses/" itemprop="url" rel="index"><span itemprop="name">Courses</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
 
                 
                 
@@ -398,8 +398,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/04/14/Virtual-Memory-Allocation-brk-and-mmap/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/14/Virtual-Memory-Allocation-brk-and-mmap/" itemprop="commentCount"></span>
+                <a href="/2018/10/04/Ways-of-Creating-Objects-in-JS/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/04/Ways-of-Creating-Objects-in-JS/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -435,42 +435,49 @@
       
 
       
-        <h2 id="Useful-Link"><a href="#Useful-Link" class="headerlink" title="Useful Link"></a>Useful Link</h2><p>Credit goes to:<br><a href="https://blog.csdn.net/gfgdsg/article/details/42709943" target="_blank" rel="noopener">https://blog.csdn.net/gfgdsg/article/details/42709943</a></p>
-<h2 id="Notice-page-granularity"><a href="#Notice-page-granularity" class="headerlink" title="Notice: page-granularity"></a>Notice: page-granularity</h2><p>All memory in virtual memory address space are <strong>page-based</strong>. It is the smallest unit of granularity, including the Heap segment in the following.</p>
-<h2 id="Virtual-Memory-Allocation-2-ways"><a href="#Virtual-Memory-Allocation-2-ways" class="headerlink" title="Virtual Memory Allocation (2 ways):"></a>Virtual Memory Allocation (2 ways):</h2><ol>
-<li><code>brk()</code> on Heap segment</li>
-<li><code>mmap()</code> mapped_file segment, between Heap and Stack</li>
+        <h2 id="I-Literal-Constructor"><a href="#I-Literal-Constructor" class="headerlink" title="I. { }: Literal Constructor"></a>I. <strong><code>{ }</code>: Literal Constructor</strong></h2><ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">    name = <span class="string">"Anand"</span>,</span><br><span class="line">    getName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.name </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
 </ol>
-<p>Usually user process calls <code>malloc()</code> to invoke kernel<br>system calls <code>brk()</code> or <code>mmap()</code> to get a virtual memory. Which one will be executed depends on <strong>requesting memory size(128KB is the line)</strong></p>
+<h2 id="II-Object-create-can-be-used-on-inheritance"><a href="#II-Object-create-can-be-used-on-inheritance" class="headerlink" title="II. Object.create(): can be used on inheritance"></a>II. <strong><code>Object.create()</code>: can be used on inheritance</strong></h2><ul>
+<li><p>This can create a new object from another object as it prototype</p>
+</li>
+<li><p>More efficient to use a prototype if you are going to have multiple objects sharing properties or methods.</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> proto = &#123;<span class="attr">name</span>: <span class="string">"default"</span>, <span class="attr">foo</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;&#125;</span><br><span class="line"><span class="keyword">let</span> obj1 = <span class="built_in">Object</span>.create(proto); obj1.name = <span class="string">"a"</span></span><br><span class="line"><span class="keyword">let</span> obj2 = <span class="built_in">Object</span>.create(proto); obj1.name = <span class="string">"b"</span></span><br><span class="line"><span class="keyword">let</span> obj3 = <span class="built_in">Object</span>.create(proto); obj1.name = <span class="string">"c"</span></span><br><span class="line"><span class="keyword">let</span> obj4 = <span class="built_in">Object</span>.create(proto); obj1.name = <span class="string">"d"</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="III-Function-Constructor-with-this-amp-new"><a href="#III-Function-Constructor-with-this-amp-new" class="headerlink" title="III. Function Constructor with this &amp; new"></a>III. <strong>Function Constructor with <code>this</code> &amp; <code>new</code></strong></h2><ul>
+<li><strong>Bad thing:</strong> every time, when we create an new object, it will occupy space for all attributes of <code>Person</code></li>
+<li><p><strong>Using <code>Prototype</code></strong></p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = name</span><br><span class="line">  <span class="keyword">this</span>.getName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.name</span><br><span class="line">  &#125; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> mycar = <span class="keyword">new</span> Person(<span class="string">'Eagle'</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="IV-Function-Constructor-amp-Prototype"><a href="#IV-Function-Constructor-amp-Prototype" class="headerlink" title="IV. Function Constructor &amp; Prototype"></a>IV. <strong>Function Constructor &amp; Prototype</strong></h2><ul>
+<li><p><code>prototype</code> is a <strong><u>shared object</u></strong>, where all its inheriting objects will share this same space, won’t create extra space for attributes inherited from <code>prototype</code></p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Graph</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.vertices = [];</span><br><span class="line">  <span class="keyword">this</span>.edges = [];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Graph.prototype = &#123;</span><br><span class="line">  addVertex: <span class="function"><span class="keyword">function</span>(<span class="params">v</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.vertices.push(v);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> g = <span class="keyword">new</span> Graph();</span><br><span class="line"><span class="comment">// g is an object with own properties 'vertices' and 'edges'.</span></span><br><span class="line"><span class="comment">// g.[[Prototype]] is the value of Graph.prototype when new Graph() is executed.</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="V-ES6-class"><a href="#V-ES6-class" class="headerlink" title="V. ES6 class"></a>V. <strong>ES6 <code>class</code></strong></h2><ol>
+<li><p>introduced a new set of keywords implementing <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes" target="_blank" rel="noopener">classes</a>. The new keywords include <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/class" target="_blank" rel="noopener"><code>class</code></a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/constructor" target="_blank" rel="noopener"><code>constructor</code></a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/static" target="_blank" rel="noopener"><code>static</code></a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/extends" target="_blank" rel="noopener"><code>extends</code></a>, and <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/super" target="_blank" rel="noopener"><code>super</code></a>.</p>
+</li>
+<li><p>all functions except <code>constructor</code> are put into the prototype of that object (<code>Square</code>)</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Polygon</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(height, width) &#123;</span><br><span class="line">    <span class="keyword">this</span>.height = height;</span><br><span class="line">    <span class="keyword">this</span>.width = width;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// inherit from another class</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Square</span> <span class="keyword">extends</span> <span class="title">Polygon</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(sideLength) &#123;</span><br><span class="line">    <span class="keyword">super</span>(sideLength, sideLength);</span><br><span class="line">  &#125;</span><br><span class="line">  get area() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.height * <span class="keyword">this</span>.width;</span><br><span class="line">  &#125;</span><br><span class="line">  set sideLength(newLength) &#123;</span><br><span class="line">    <span class="keyword">this</span>.height = newLength;</span><br><span class="line">    <span class="keyword">this</span>.width = newLength;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Use new to create object from class</span></span><br><span class="line"><span class="keyword">var</span> square = <span class="keyword">new</span> Square(<span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="VI-Singleton-one-object-of-a-kind"><a href="#VI-Singleton-one-object-of-a-kind" class="headerlink" title="VI. Singleton: one object of a kind"></a>VI. <strong>Singleton: <em><u>one object</u></em> of a kind</strong></h2><ul>
+<li><p><code>Singleton</code>  is used on class-based language</p>
+</li>
+<li><p>In jS, All objects created using literal constructor are singletons</p>
 <ul>
-<li><em>size&lt;128KB</em>, kernel calls <code>brk()</code> to assign virtual memory on Heap to user process<ul>
-<li><strong>BAD:</strong> only be sequentially assign and free, like Stack</li>
-<li><strong>GOOD:</strong> can be used as cache ()</li>
-</ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Robot = &#123;</span><br><span class="line">  metal: <span class="string">"Titanium"</span>,</span><br><span class="line">  killAllHumans: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(<span class="string">"Exterminate!"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Robot.killAllHumans();</span><br></pre></td></tr></table></figure>
 </li>
-<li><em>size&gt;128KB</em>, kerel calls <code>mmap()</code> to get a piece of memory between Heap and Stack to user process<ul>
-<li><strong>GOOD:</strong> can independently assign and free (flexible)</li>
-<li><strong>BAD:</strong> repeately causing page_fault to involve physical memory (CPU costly)</li>
 </ul>
 </li>
 </ul>
-<h2 id="System-API：do-brk"><a href="#System-API：do-brk" class="headerlink" title="System API：do_brk( )"></a>System API：do_brk( )</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">do_brk</span><span class="params">(<span class="keyword">void</span> *addr, <span class="keyword">void</span> **ret)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line">设置 process 地址空间中Heap Segment的break，即Heap的“堆顶”。  </span><br><span class="line">- <span class="built_in">malloc</span>()、<span class="built_in">free</span>()均会调用该API，增加、减小heap <span class="keyword">break</span></span><br><span class="line">- <span class="built_in">malloc</span>()时向高地址增加; <span class="built_in">free</span>()时向低地址减小</span><br><span class="line"></span><br><span class="line">输入： addr 要更新的<span class="keyword">break</span>地址； ret 更新后的<span class="keyword">break</span>地址</span><br><span class="line">输出：<span class="number">0</span>-成功</span><br></pre></td></tr></table></figure>
-<ol>
-<li>如果 addr == NULL，返回当前 brk</li>
-<li>判断 addr 的合法性：与 proc_start_brk比较，不能比他还小</li>
-<li>处理 addr 与 proc_brk 在 page_not_aligned 的情况；并获得old proc_brk所在 virtual area 的最后一页 end_page<ul>
-<li>addr : newvfn (new virtual frame number)</li>
-<li>curproc-&gt;p_brk: oldvma-&gt;vma_end</li>
-<li>if(newvfn &gt; oldvma-&gt;vma_end): 对应于<code>malloc()</code></li>
-<li>if(newvfn &lt; oldvma-&gt;vma_end): 对应于<code>free()</code></li>
-</ul>
-</li>
-<li>最后更新两个量：<ul>
-<li>oldvma-&gt;vma_end = newvfn;</li>
-<li>curproc-&gt;p_brk = addr;</li>
-</ul>
-</li>
-</ol>
 
       
     </div>
@@ -491,7 +498,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/OS/" rel="tag"># OS</a>
+            <a href="/tags/JavaScript-Core/" rel="tag"># JavaScript Core</a>
           
         </div>
       
@@ -504,8 +511,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/13/How-Does-Kernel-Handle-System-Calls/" rel="next" title="How Does Kernel Handle System Calls">
-                <i class="fa fa-chevron-left"></i> How Does Kernel Handle System Calls
+              <a href="/2018/10/03/Note-of-Eloquent-JavaScript-JS-and-Browser/" rel="next" title="Note of Eloquent JavaScript - Browser">
+                <i class="fa fa-chevron-left"></i> Note of Eloquent JavaScript - Browser
               </a>
             
           </div>
@@ -513,10 +520,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/04/18/VM-Virtual-memory-File-system-Memory-object-in-VM/" rel="prev" title="VM: Virtual memory + File system = Memory object(in VM)">
-                VM: Virtual memory + File system = Memory object(in VM) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -763,7 +766,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Useful-Link"><span class="nav-number">1.</span> <span class="nav-text">Useful Link</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Notice-page-granularity"><span class="nav-number">2.</span> <span class="nav-text">Notice: page-granularity</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Virtual-Memory-Allocation-2-ways"><span class="nav-number">3.</span> <span class="nav-text">Virtual Memory Allocation (2 ways):</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#System-API：do-brk"><span class="nav-number">4.</span> <span class="nav-text">System API：do_brk( )</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#I-Literal-Constructor"><span class="nav-number">1.</span> <span class="nav-text">I. { }: Literal Constructor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#II-Object-create-can-be-used-on-inheritance"><span class="nav-number">2.</span> <span class="nav-text">II. Object.create(): can be used on inheritance</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#III-Function-Constructor-with-this-amp-new"><span class="nav-number">3.</span> <span class="nav-text">III. Function Constructor with this &amp; new</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IV-Function-Constructor-amp-Prototype"><span class="nav-number">4.</span> <span class="nav-text">IV. Function Constructor &amp; Prototype</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#V-ES6-class"><span class="nav-number">5.</span> <span class="nav-text">V. ES6 class</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VI-Singleton-one-object-of-a-kind"><span class="nav-number">6.</span> <span class="nav-text">VI. Singleton: one object of a kind</span></a></li></ol></div>
             
 
           </div>

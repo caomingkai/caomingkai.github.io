@@ -106,7 +106,7 @@
 <meta property="og:url" content="http://yoursite.com/2018/10/02/Note-of-Eloquent-JavaScript/index.html">
 <meta property="og:site_name" content="CMK">
 <meta property="og:description" content="I. Value, Type, Operators Object, Number, String, Boolean, null, undefined, Symbol  Symbol: used for global unique value in Map: https://zhuanlan.zhihu.com/p/22652486   typeof will return lowercase st">
-<meta property="og:updated_time" content="2018-10-04T17:56:33.000Z">
+<meta property="og:updated_time" content="2018-10-04T18:03:42.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Note of Eloquent JavaScript - [Pure JS]">
 <meta name="twitter:description" content="I. Value, Type, Operators Object, Number, String, Boolean, null, undefined, Symbol  Symbol: used for global unique value in Map: https://zhuanlan.zhihu.com/p/22652486   typeof will return lowercase st">
@@ -804,7 +804,7 @@
 </li>
 <li><p><code>object.prototype === null</code></p>
 </li>
-<li><p><code>Object.create()</code>:  create an object with a specific prototype.</p>
+<li><p><code>Object.create()</code>:  create an object using anther object as the prototype. like <code>constructor()</code></p>
 </li>
 <li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> protoRabbit = &#123;</span><br><span class="line">  speak(line) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`The <span class="subst">$&#123;<span class="keyword">this</span>.type&#125;</span> rabbit says '<span class="subst">$&#123;line&#125;</span>'`</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">let</span> killerRabbit = <span class="built_in">Object</span>.create(protoRabbit);</span><br><span class="line">killerRabbit.type = <span class="string">"killer"</span>;</span><br><span class="line">killerRabbit.speak(<span class="string">"SKREEEE!"</span>);</span><br><span class="line"><span class="comment">// → The killer rabbit says 'SKREEEE!'</span></span><br></pre></td></tr></table></figure>
 </li>

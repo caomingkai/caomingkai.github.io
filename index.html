@@ -310,6 +310,459 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/03/Note-of-Eloquent-JavaScript-JS-and-Browser/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/03/Note-of-Eloquent-JavaScript-JS-and-Browser/" itemprop="url">Note of Eloquent JavaScript - Browser</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-03T15:53:04-07:00">2018-10-03</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/03/Note-of-Eloquent-JavaScript-JS-and-Browser/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/03/Note-of-Eloquent-JavaScript-JS-and-Browser/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="I-DOM"><a href="#I-DOM" class="headerlink" title="I. DOM"></a>I. DOM</h2><ol>
+<li><p><strong>what:</strong> document object model</p>
+</li>
+<li><p><strong>who&amp;why</strong>: </p>
+<ul>
+<li><u>the browser</u> build the DOM</li>
+<li>used to <u>draw the page</u> on screen</li>
+<li>provide <u>interface to JS</u> to dynamically manipulate elements on the page </li>
+</ul>
+</li>
+<li><p><strong>How to access it:</strong> <strong><code>document</code> object</strong></p>
+<ul>
+<li><code>document.documentElement</code> =&gt; ‘<html> …</html>‘</li>
+</ul>
+</li>
+<li><p><strong>moving throught the DOM tree</strong></p>
+<ul>
+<li><strong>traverse only element nodes</strong><ul>
+<li><code>children</code></li>
+<li></li>
+</ul>
+</li>
+<li><strong>traverse all node types</strong>: element node, text node, comment node, …<ul>
+<li><code>childNodes</code></li>
+<li><code>parentNode</code></li>
+<li><code>firstChild</code></li>
+<li><code>lastChild</code></li>
+<li><code>previousSibling</code></li>
+<li><code>nextSibling</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>traverse tree e.g.:</strong></p>
+<ul>
+<li><p><u>recursive functions</u> are often useful. The following function scans a document for text nodes containing a given string and returns <code>true</code> when it has found one:</p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">talksAbout</span>(<span class="params">node, string</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (node.nodeType == Node.ELEMENT_NODE) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; node.childNodes.length; i++) &#123;</span><br><span class="line">      <span class="keyword">if</span> (talksAbout(node.childNodes[i], string)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (node.nodeType == Node.TEXT_NODE) &#123;</span><br><span class="line">    <span class="keyword">return</span> node.nodeValue.indexOf(string) &gt; <span class="number">-1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(talksAbout(<span class="built_in">document</span>.body, <span class="string">"book"</span>));</span><br><span class="line"><span class="comment">// → true</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>find element</strong></p>
+<ol>
+<li><p><code>document.querySelector(&quot;idName&quot;);</code></p>
+<ul>
+<li>first <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element" target="_blank" rel="noopener"><code>Element</code></a> within the document that matches the specified selector, or group of selectors. If no matches are found, <code>null</code> is returned.</li>
+<li><code>var el = document.querySelector(&quot;.myclass&quot;);</code></li>
+<li><code>var el = document.querySelector(&quot;div.user-panel.main input[name=&#39;login&#39;]&quot;);</code><ul>
+<li>Here, the first <strong>&lt;input&gt;</strong> element with the name “login” (<code>&lt;input name=&quot;login&quot;/&gt;</code>) located inside a <strong>&lt;div&gt;</strong> whose class is “user-panel main” (<code>&lt;div class=&quot;user-panel main&quot;&gt;</code>) in the document is returned.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>document.getElementById(&quot;idName&quot;);</code></p>
+</li>
+<li><p><code>document.getElementsByTagName(&quot;idName&quot;);</code></p>
+</li>
+<li><p><code>document.getElementsByClassName(&quot;idName&quot;);</code></p>
+</li>
+<li><p><code>document.getElementsByName()</code>  when inside html we have <code>&lt;input name=&quot;down&quot;&gt;</code></p>
+</li>
+</ol>
+</li>
+<li><p><strong>change document</strong></p>
+<ol>
+<li><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">  <span class="keyword">let</span> paragraphs = <span class="built_in">document</span>.body.getElementsByTagName(<span class="string">"p"</span>);</span></span><br><span class="line"><span class="javascript">  <span class="built_in">document</span>.body.insertBefore(paragraphs[<span class="number">2</span>], paragraphs[<span class="number">0</span>]);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p><strong>create nodes</strong></p>
+<ol>
+<li><p><code>document.createTextNode(image.alt);</code></p>
+</li>
+<li><p><code>image.parentNode.replaceChild(text, image);</code></p>
+</li>
+<li><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>The <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"img/cat.png"</span> <span class="attr">alt</span>=<span class="string">"Cat"</span>&gt;</span> in the</span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"img/hat.png"</span> <span class="attr">alt</span>=<span class="string">"Hat"</span>&gt;</span>.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">"replaceImages()"</span>&gt;</span>Replace<span class="tag">&lt;/<span class="name">button</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">  <span class="function"><span class="keyword">function</span> <span class="title">replaceImages</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">let</span> images = <span class="built_in">document</span>.body.getElementsByTagName(<span class="string">"img"</span>);</span></span><br><span class="line"><span class="javascript">    <span class="keyword">for</span> (<span class="keyword">let</span> i = images.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">let</span> image = images[i];</span></span><br><span class="line"><span class="javascript">      <span class="keyword">if</span> (image.alt) &#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> text = <span class="built_in">document</span>.createTextNode(image.alt);</span></span><br><span class="line"><span class="undefined">        image.parentNode.replaceChild(text, image);</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">  &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p><strong>attributes</strong></p>
+<ul>
+<li>HTML allows setting any attribute you want on nodes. <code>&lt;p data=&quot;52&quot;&gt;</code></li>
+<li><p><code>setAttribute</code> &amp; <code>getAttribute</code></p>
+</li>
+<li><p>original attributes: <code>href</code>, <code>class</code>, <code>style</code></p>
+</li>
+<li>custom attributes: <code>data</code>, <code>myown</code></li>
+</ul>
+</li>
+</ol>
+<h2 id="II-CSS"><a href="#II-CSS" class="headerlink" title="II. CSS"></a>II. CSS</h2><ol>
+<li><p><strong>CSS specificity</strong></p>
+<ul>
+<li><p>inline_style=1000</p>
+</li>
+<li><p>id=100</p>
+</li>
+<li><p>class=10</p>
+</li>
+<li><p>element=1</p>
+</li>
+<li><p>e.g. </p>
+<ul>
+<li><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">A</span>: <span class="selector-tag">h1</span></span><br><span class="line"><span class="selector-tag">B</span>: <span class="selector-id">#content</span> <span class="selector-tag">h1</span></span><br><span class="line">C: &lt;div id="content"&gt;&lt;h1 style="color: #ffffff"&gt;Heading&lt;/h1&gt;&lt;/div&gt;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">The</span> <span class="selector-tag">specificity</span> <span class="selector-tag">of</span> <span class="selector-tag">A</span> <span class="selector-tag">is</span> 1 (<span class="selector-tag">one</span> <span class="selector-tag">element</span>)</span><br><span class="line"><span class="selector-tag">The</span> <span class="selector-tag">specificity</span> <span class="selector-tag">of</span> <span class="selector-tag">B</span> <span class="selector-tag">is</span> 101 (<span class="selector-tag">one</span> <span class="selector-tag">ID</span> <span class="selector-tag">reference</span> <span class="selector-tag">and</span> <span class="selector-tag">one</span> <span class="selector-tag">element</span>)</span><br><span class="line"><span class="selector-tag">The</span> <span class="selector-tag">specificity</span> <span class="selector-tag">of</span> <span class="selector-tag">C</span> <span class="selector-tag">is</span> 1000 (<span class="selector-tag">inline</span> <span class="selector-tag">styling</span>)</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">Since</span> 1 &lt; 101 &lt; 1000, <span class="selector-tag">the</span> <span class="selector-tag">third</span> <span class="selector-tag">rule</span> (<span class="selector-tag">C</span>) <span class="selector-tag">has</span> <span class="selector-tag">a</span> <span class="selector-tag">greater</span> <span class="selector-tag">level</span> <span class="selector-tag">of</span> <span class="selector-tag">specificity</span>, <span class="selector-tag">and</span> <span class="selector-tag">therefore</span> <span class="selector-tag">will</span> <span class="selector-tag">be</span> <span class="selector-tag">applied</span>.</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>multiple class name for element</strong>: <code>&lt;p class=&quot;leftAlign title&quot;&gt; content &lt;/p&gt;</code></p>
+</li>
+<li><p><strong>e.g.:</strong></p>
+<ol>
+<li><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* p elements with id 'main' and with classes a and b */</span></span><br><span class="line"><span class="selector-tag">p</span><span class="selector-id">#main</span><span class="selector-class">.a</span><span class="selector-class">.b</span> &#123;</span><br><span class="line">  <span class="attribute">margin-bottom</span>: <span class="number">20px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>p &gt; a {…}</code> applies the given styles to all <code>&lt;a&gt;</code> tags that are <strong>direct</strong> children of <code>&lt;p&gt;</code> tags. </p>
+</li>
+<li><p><code>p a {…}</code> applies to all <code>&lt;a&gt;</code> tags inside <code>&lt;p&gt;</code>tags, whether they are <strong>direct or indirect</strong> children.</p>
+</li>
+</ol>
+</li>
+<li><p><strong>position &amp; animation</strong></p>
+<ol>
+<li><p><u><strong>position:</strong></u> <code>transform</code>: used for <u>rotation</u>, <u>move</u>, <u>skew</u></p>
+<ul>
+<li><code>translate(x, y)</code>:  horizontally and vertically move</li>
+<li><code>translateX(x)</code>: horizontally move</li>
+<li><code>translateY(y)</code>: vertically move</li>
+<li><code>scale(x,y)</code>: zoom in &amp; out according to x-axis/ y-axis</li>
+<li><code>rotate(90deg)</code>: <strong>num&amp;deg: </strong>the angle is specified in the parameter </li>
+<li><code>skew(x-angle,y-angle)</code>: <strong>num&amp;deg: </strong>the angle is specified in the parameter </li>
+</ul>
+</li>
+<li><p><u><strong>animation:</strong></u> </p>
+<ul>
+<li><p><code>animation-name: mymove;</code>, <code>mymove</code> is created using <code>@keyframes</code> rule specifies the animation code</p>
+</li>
+<li><p><code>animation-duration</code>:</p>
+</li>
+<li><p><code>animation-delay</code>:</p>
+</li>
+<li><p><code>animation-iteration-count: 2</code>:</p>
+</li>
+<li><p>e.g. </p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">background</span>: red;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">    <span class="attribute">-webkit-animation-name</span>: mymove; <span class="comment">/* Safari 4.0 - 8.0 */</span></span><br><span class="line">    <span class="attribute">-webkit-animation-duration</span>: <span class="number">5s</span>; <span class="comment">/* Safari 4.0 - 8.0 */</span></span><br><span class="line">    <span class="attribute">animation-name</span>: mymove;</span><br><span class="line">    <span class="attribute">animation-duration</span>: <span class="number">5s</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Safari 4.0 - 8.0 */</span></span><br><span class="line">@-<span class="keyword">webkit</span>-<span class="keyword">keyframes</span> mymove &#123;</span><br><span class="line">    <span class="selector-tag">from</span> &#123;<span class="attribute">left</span>: <span class="number">0px</span>;&#125;</span><br><span class="line">    <span class="selector-tag">to</span> &#123;<span class="attribute">left</span>: <span class="number">200px</span>;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@<span class="keyword">keyframes</span> mymove &#123;</span><br><span class="line">    <span class="selector-tag">from</span> &#123;<span class="attribute">left</span>: <span class="number">0px</span>;&#125;</span><br><span class="line">    <span class="selector-tag">to</span> &#123;<span class="attribute">left</span>: <span class="number">200px</span>;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="III-event-handler"><a href="#III-event-handler" class="headerlink" title="III. event handler"></a>III. event handler</h2><ol>
+<li><p><strong><em>event object</em></strong></p>
+<ul>
+<li>event handler functions are passed an argument: <strong><em>event object</em></strong></li>
+<li><code>event.target.innerHTML</code> or <code>event.target.value</code></li>
+</ul>
+</li>
+<li><p><strong>two ways to handle event</strong></p>
+<ul>
+<li><p><code>onclick</code> attribute: But can <u><em>only add one handler</em></u>, since a node can have only one <code>onclick</code> attr</p>
+</li>
+<li><p><code>addEventListener(event, callback)</code>: can add <u><em>many handlers</em></u></p>
+</li>
+<li><p><code>removeEventListener(event, callback)</code>: will remove handler on this event</p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;button&gt;Act-once button&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">&lt;script&gt;</span></span><br><span class="line"><span class="regexp">  let button = document.querySelector("button");</span></span><br><span class="line"><span class="regexp">  function once() &#123;</span></span><br><span class="line"><span class="regexp">    console.log("Done.");</span></span><br><span class="line"><span class="regexp">    button.removeEventListener("click", once);</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">  button.addEventListener("click", once);</span></span><br><span class="line"><span class="regexp">&lt;/</span>script&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>event loop</strong></p>
+<ul>
+<li>Never put too much <u>synchronous</u> work inside <u>asynchronous</u> callback! It will make page freezing!</li>
+<li>If have to, use the <u><strong>web worker</strong></u>:  is a JS <em><u>process</u></em> that runs alongside the main script, on its own timeline</li>
+</ul>
+</li>
+<li><p><strong>propagation</strong> </p>
+<ul>
+<li><p>the event will like ‘ <strong><u>bubble</u></strong>‘, propagation upward to elements who also registered for this event</p>
+<ul>
+<li><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// when inner div clicked, both "fun_2", "fun_1" will be called!!</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">'outer'</span> <span class="attr">onclick</span>=<span class="string">"fun_1()"</span>&gt;</span> </span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">'inner'</span> <span class="attr">onclick</span>=<span class="string">"fun_2()"</span> &gt;</span></span><br><span class="line">		</span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>stopPropagation</code> can <u>prevent bubbling</u>, prevent handlers further up from receiving the event</p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;A paragraph <span class="keyword">with</span> a &lt;button&gt;button&lt;<span class="regexp">/button&gt;.&lt;/</span>p&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  <span class="keyword">let</span> para = <span class="built_in">document</span>.querySelector(<span class="string">"p"</span>);</span><br><span class="line">  <span class="keyword">let</span> button = <span class="built_in">document</span>.querySelector(<span class="string">"button"</span>);</span><br><span class="line">  para.addEventListener(<span class="string">"mousedown"</span>, () =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Handler for paragraph."</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">  button.addEventListener(<span class="string">"mousedown"</span>, event =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Handler for button."</span>);</span><br><span class="line">    event.stopPropagation();</span><br><span class="line">  &#125;);</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Default action</strong></p>
+<ul>
+<li><p><strong>[Important]: </strong>JavaScript event handlers are called <strong><em>before</em></strong> the default behavior takes place. </p>
+</li>
+<li><p>If you click a link, you will be taken to the link’s target. </p>
+</li>
+<li><p>If you press the down arrow, the browser will scroll the page down. </p>
+</li>
+<li><p>If you right-click, you’ll get a context menu. </p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href=<span class="string">"https://developer.mozilla.org/"</span>&gt;MDN&lt;<span class="regexp">/a&gt;</span></span><br><span class="line"><span class="regexp">&lt;script&gt;</span></span><br><span class="line"><span class="regexp">  let link = document.querySelector("a");</span></span><br><span class="line"><span class="regexp">  link.addEventListener("click", event =&gt; &#123;</span></span><br><span class="line"><span class="regexp">    console.log("Nope.");</span></span><br><span class="line"><span class="regexp">    event.preventDefault();</span></span><br><span class="line"><span class="regexp">  &#125;);</span></span><br><span class="line"><span class="regexp">&lt;/</span>script&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>event type:</p>
+<ol>
+<li><p>key</p>
+</li>
+<li><p>mouse</p>
+</li>
+<li><p>touchscreen</p>
+</li>
+<li><p><strong>scroll</strong></p>
+<ul>
+<li><p>Whenever an element is scrolled, a <code>&quot;scroll&quot;</code> event is fired on it</p>
+</li>
+<li><p><strong>e.g.:</strong> draws a progress bar above the document and updates it to fill up as you scroll down</p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line">  #progress &#123;</span><br><span class="line">    border-bottom: <span class="number">2</span>px solid blue;</span><br><span class="line">    width: <span class="number">0</span>;</span><br><span class="line">    position: fixed;</span><br><span class="line">    top: <span class="number">0</span>; left: <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;<span class="regexp">/style&gt;</span></span><br><span class="line"><span class="regexp">&lt;div id="progress"&gt;&lt;/</span>div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  <span class="comment">// Create some content</span></span><br><span class="line">  <span class="built_in">document</span>.body.appendChild(<span class="built_in">document</span>.createTextNode(</span><br><span class="line">    <span class="string">"supercalifragilisticexpialidocious "</span>.repeat(<span class="number">1000</span>)));</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> bar = <span class="built_in">document</span>.querySelector(<span class="string">"#progress"</span>);</span><br><span class="line">  <span class="built_in">window</span>.addEventListener(<span class="string">"scroll"</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> max = <span class="built_in">document</span>.body.scrollHeight - innerHeight;</span><br><span class="line">    bar.style.width = <span class="string">`<span class="subst">$&#123;(pageYOffset <span class="regexp">/ max) * 100&#125;%`;</span></span></span></span><br><span class="line"><span class="string"><span class="subst"><span class="regexp">  &#125;);</span></span></span></span><br><span class="line"><span class="string"><span class="subst"><span class="regexp">&lt;/</span>script&gt;</span></span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><strong>scrollHeight</strong>: <code>ENTIRE  content &amp; padding (visible or not)</code></p>
+</li>
+<li><p><strong>offsetHeight</strong>: <code>VISIBLE content &amp; padding</code> <code>+ border + scrollbar</code></p>
+</li>
+<li><p><strong>clientHeight</strong>: <code>VISIBLE content &amp; padding</code></p>
+</li>
+<li><p><a href="https://stackoverflow.com/questions/22675126/what-is-offsetheight-clientheight-scrollheight" target="_blank" rel="noopener">https://stackoverflow.com/questions/22675126/what-is-offsetheight-clientheight-scrollheight</a></p>
+</li>
+<li><p><strong>outerHeight:</strong> height in pixels of the whole browser window, browser’s out-most height</p>
+</li>
+<li><p><strong>innerHeight:</strong> Height in pixels of the browser window viewport including the horizontal scrollbar</p>
+</li>
+<li><p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/innerHeight" target="_blank" rel="noopener">https://developer.mozilla.org/en-US/docs/Web/API/Window/innerHeight</a></p>
+</li>
+</ul>
+</li>
+<li><p><strong>focus event</strong></p>
+<ol>
+<li><p><code>focus</code> &amp; <code>blur</code></p>
+</li>
+<li><p>e.g.: <strong>prompt</strong> </p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;Name: <span class="xml"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">data-help</span>=<span class="string">"Your full name"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line">&lt;p&gt;Age: <span class="xml"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">data-help</span>=<span class="string">"Your age in years"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line">&lt;p id=<span class="string">"help"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">  <span class="keyword">let</span> help = <span class="built_in">document</span>.querySelector(<span class="string">"#help"</span>);</span><br><span class="line">  <span class="keyword">let</span> fields = <span class="built_in">document</span>.querySelectorAll(<span class="string">"input"</span>);</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> field <span class="keyword">of</span> <span class="built_in">Array</span>.from(fields)) &#123;</span><br><span class="line">    field.addEventListener(<span class="string">"focus"</span>, event =&gt; &#123;</span><br><span class="line">      <span class="keyword">let</span> text = event.target.getAttribute(<span class="string">"data-help"</span>);</span><br><span class="line">      help.textContent = text;</span><br><span class="line">    &#125;);</span><br><span class="line">    field.addEventListener(<span class="string">"blur"</span>, event =&gt; &#123;</span><br><span class="line">      help.textContent = <span class="string">""</span>;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="IV-Timers"><a href="#IV-Timers" class="headerlink" title="IV. Timers"></a>IV. Timers</h2><ol>
+<li><code>handler = setTimeout(callback, time)</code></li>
+<li><code>clearTimeout(handler)</code></li>
+<li><code>handler = setInterval(callback, time)</code></li>
+<li><p><code>clearInterval(handler)</code></p>
+</li>
+<li><p>e.g.: </p>
+<ol>
+<li><p><u>make a bomb</u>: cancel a function you have scheduled</p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. make it explods after 500ms</span></span><br><span class="line"><span class="keyword">let</span> bombTimer = setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"BOOM!"</span>);</span><br><span class="line">&#125;, <span class="number">500</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. since synchronous, can clear timer before it explods</span></span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">Math</span>.random() &lt; <span class="number">0.5</span>) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"Defused."</span>);</span><br><span class="line">  clearTimeout(bombTimer);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p>make a ticker: </p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> ticks = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">let</span> clock = setInterval(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"tick"</span>, ticks++);</span><br><span class="line">  <span class="keyword">if</span> (ticks == <span class="number">10</span>) &#123;</span><br><span class="line">    clearInterval(clock);     <span class="comment">// can access outter var: clock</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"stop."</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;, <span class="number">200</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="V-Debounce-Throttle"><a href="#V-Debounce-Throttle" class="headerlink" title="V. Debounce / Throttle"></a>V. Debounce / Throttle</h2><ol>
+<li><p><strong>why <u>Debounce &amp; Throttling</u>?</strong> </p>
+<ul>
+<li><strong><u>Debounce</u></strong>: For events like <u>keydown, scroll</u>, we don’t want to trigger event in the middle of it, but only want to trigger after user pause! <em>(ie. we only care the <strong>final result</strong>)</em></li>
+<li><u><strong>Throttling</strong></u>: For events like <u>mouseover</u>, we don’t want to trigger event every for every single move, but only want to trigger it every <code>200ms</code> if such event happens (<em>ie. we only care <strong>sample results</strong></em>)</li>
+</ul>
+</li>
+<li><p><strong>Debounce e.g. : </strong>debouce keydown  [ <code>setTimeout()</code> ]</p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. clear last timer for each keydown event, </span></span><br><span class="line"><span class="comment">// 2. execute callback function after setting time</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// This way, if two keydown events happen less than 500ms, </span></span><br><span class="line"><span class="comment">// the first one will be cleard, won't execute the callback function</span></span><br><span class="line">&lt;textarea&gt;Type something here...&lt;<span class="regexp">/textarea&gt;</span></span><br><span class="line"><span class="regexp">&lt;script&gt;</span></span><br><span class="line"><span class="regexp">  let textarea = document.querySelector("textarea");</span></span><br><span class="line"><span class="regexp">  let timeout;</span></span><br><span class="line"><span class="regexp">  textarea.addEventListener("input", () =&gt; &#123;</span></span><br><span class="line"><span class="regexp">    clearTimeout(timeout);  </span></span><br><span class="line"><span class="regexp">    timeout = setTimeout(() =&gt; &#123;console.log("Typed!"); &#125;, 500);</span></span><br><span class="line"><span class="regexp">  &#125;);</span></span><br><span class="line"><span class="regexp">&lt;/</span>script&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p><strong>Throttling e.g.: </strong>throttle mouseover[ <code>setTimeout()</code> ]</p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. scheduled first sampling</span></span><br><span class="line"><span class="comment">// 2. only when scheduled, we execute function;</span></span><br><span class="line"><span class="comment">//    - set scheduled to be false</span></span><br><span class="line"><span class="comment">//    - after 1000ms, set scheduled to be true</span></span><br><span class="line">&lt;script&gt;</span><br><span class="line">  <span class="keyword">let</span> scheduled = <span class="literal">true</span>;</span><br><span class="line">  <span class="built_in">window</span>.addEventListener(<span class="string">"mousemove"</span>, event =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (scheduled) &#123;</span><br><span class="line">      <span class="built_in">document</span>.body.textContent = <span class="string">`Mouse at <span class="subst">$&#123;event.pageX&#125;</span>, <span class="subst">$&#123;event.pageY&#125;</span>`</span>;</span><br><span class="line">      scheduled = <span class="literal">false</span>;</span><br><span class="line">      setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123; scheduled = <span class="literal">true</span>; &#125;, <span class="number">1000</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/02/Note-of-Eloquent-JavaScript/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2607,261 +3060,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/17/2-egg-Puzzle/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/17/2-egg-Puzzle/" itemprop="url">The Joy of Egg-Dropping(2-egg Puzzle)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-17T22:03:40-07:00">2018-05-17</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/05/17/2-egg-Puzzle/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/05/17/2-egg-Puzzle/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="I-Problem-statement"><a href="#I-Problem-statement" class="headerlink" title="I. Problem statement"></a>I. Problem statement</h3><p><strong>1. Easy version</strong></p>
-<blockquote>
-<p>Given infinite number of same eggs, try with minimun trials to find out  the highest floor where tossing the egg won’t result in egg crash. The building has 200 floors.</p>
-</blockquote>
-<ul>
-<li>变量：N=200</li>
-<li>目标：试验次数最小</li>
-<li>约束：none</li>
-</ul>
-<p><strong>2. Hard version</strong></p>
-<blockquote>
-<p>Only 2 eggs were given, try with minimun trials to find the highest floor where tossing the egg won’t result in egg crash. The building has 200 floors. (The egg can be reused as long as it is intact)</p>
-</blockquote>
-<ul>
-<li>变量：F=200, E=2</li>
-<li>目标：试验次数最小</li>
-<li>约束：</li>
-</ul>
-<h3 id="II-Solution-for-easy-version"><a href="#II-Solution-for-easy-version" class="headerlink" title="II. Solution for easy version"></a>II. Solution for easy version</h3><p>Since the number of eggs we can use is unlimited, we can use the <strong>fastest approach in the universe</strong> to find the unknown target in a list: <code>binary search</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">- left direction: break </span><br><span class="line">- right direction:intact</span><br><span class="line"></span><br><span class="line">0          100        200</span><br><span class="line">         /     \</span><br><span class="line">        50      150</span><br><span class="line">      /   \    /   \</span><br><span class="line">     25   75  125  175</span><br><span class="line">    / \  </span><br><span class="line">  ...   </span><br><span class="line"></span><br><span class="line">Toss an egg on floor 100:</span><br><span class="line">1. if egg break, toss another on floor 50;</span><br><span class="line">    1.1 if egg break, toss another on floor 25;</span><br><span class="line">        1.1.1 ...</span><br><span class="line">        1.1.2 ...</span><br><span class="line">    1.2 if doesn&apos;t break, toss another on floor 75;</span><br><span class="line">        1.2.1 ...</span><br><span class="line">        1.2.2 ...</span><br><span class="line">2. if doesn&apos;t break, toss another on floor 150;</span><br><span class="line">    2.1 if egg break, toss another on floor 125;</span><br><span class="line">        2.1.1 ...</span><br><span class="line">        2.1.2 ...</span><br><span class="line">    2.2 if doesn&apos;t break, toss another on floor 175;</span><br><span class="line">        2.2.1 ...</span><br><span class="line">        2.2.2 ...</span><br></pre></td></tr></table></figure>
-<h3 id="III-Solution-for-hard-version"><a href="#III-Solution-for-hard-version" class="headerlink" title="III. Solution for hard version"></a>III. Solution for hard version</h3><p>Since it is not so intuitive at first glance, we will take a few trials to get a deeper understanding of this problem.</p>
-<p>General idea:   </p>
-<blockquote>
-<p>egg-1 used to narrow down possible range<br>egg-2 used to sequentially find the target floor</p>
-</blockquote>
-<ol>
-<li><p><strong>[egg-1 with step=10]</strong> egg-1 tossed on floor 20,40,60,80,100,120,… with a step=20</p>
-<ul>
-<li>worst-case: 29 trials<ul>
-<li>egg-1 tossed on 200 and break: 10 trials</li>
-<li>egg-2 tossed on 199 (from 181), break: 19 trials</li>
-</ul>
-</li>
-<li>best-case: 2 trials<ul>
-<li>egg-1 tossed on 20 and break: 1 trials</li>
-<li>egg-2 tossed on 1: 1 trials</li>
-</ul>
-</li>
-<li>for this method, what is the min trials can we say?<ul>
-<li>29 trials(the worst case), no worse than it</li>
-<li>we cannot guarantee it is the best case</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>[edge case: BS]</strong> egg-1 tossed on floor 100, 200</p>
-<ul>
-<li>worst-case: 201 trials<ul>
-<li>egg-1 tossed on 200 and break: 2 trials</li>
-<li>egg-2 tossed on 199 (from 101), break: 199 trials</li>
-</ul>
-</li>
-<li>best-case: 2 trials<ul>
-<li>egg-1 tossed on 100 and break: 1 trials</li>
-<li>egg-2 tossed on 1: 1 trials</li>
-</ul>
-</li>
-<li>for this method, what is the min trials can we say?<ul>
-<li>201 trials(the worst case), no worse than it</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>[Solution 1]</strong> </p>
-<ul>
-<li><a href="https://www.zhihu.com/question/19690210/answer/22937826" target="_blank" rel="noopener">https://www.zhihu.com/question/19690210/answer/22937826</a></li>
-<li>the ‘step’ affect min-trial</li>
-<li>we want control ‘step’ to make the trials of worst case and best case as close as possible; This way it will divvy up the trial between worst and best cases</li>
-<li>Goal: worst case trials = best case trials</li>
-<li>egg-1 tossed on floor x, 2x-1, 3x-2, .. 1</li>
-<li>蛋一第一次扔在X层，第二次扔在比原来高 X-1层，… 高2， 高1，使得X+(X-1)+…+2+1=200</li>
-<li>最坏情况(=最好情况)总的次数就是：<ul>
-<li>如果在第X层就碎，那么蛋二最坏情况要扔X-1，所以总数是 1+X-1=X</li>
-<li>如果在X+(X-1)碎，那么蛋二最坏情况要扔 X-2，所以2+X-2=X</li>
-</ul>
-</li>
-<li><p>x = 20</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">|_|__</span><br><span class="line">|_|     x-2</span><br><span class="line">|_|__   </span><br><span class="line">|_|     x-1</span><br><span class="line">|_|___ </span><br><span class="line">|_|     x</span><br><span class="line">|_|</span><br><span class="line">|_|___</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>假设蛋一第一次扔在X层，第二次扔在比原来高 X-1层，… 高2， 高1，使得X+(X-1)+…+2+1=100，那么最坏情况总的次数就是：如果在第X层就碎，那么蛋二最坏情况要扔X-1，所以总数是 1+X-1=X如果在X+(X-1)碎，那么蛋二最坏情况要扔 X-2，所以2+X-2=X</p>
-</li>
-</ul>
-</li>
-</ol>
-<ol start="4">
-<li><p><strong>[Solution 2]</strong> </p>
-<ul>
-<li><p>链接：<a href="https://www.zhihu.com/question/19690210/answer/125713075" target="_blank" rel="noopener">https://www.zhihu.com/question/19690210/answer/125713075</a></p>
-</li>
-<li><p>子问题F[i, j]: H的可行范围为[0, i]，手上还有j个鸡蛋的时候，最坏情况下的最小试验次数是多少。我们的目标函数就是F[N, K]。</p>
-</li>
-<li>这个能够设立是基于这样一种想法，如果H的可能范围目前是[L, R]，那么其状态与[0, R-L]是完全一致的，所以我们仅仅记录有可行范围的宽度就可以了。</li>
-<li><code>F[i, j]=min{max{F[k-1, j-1], F[i-k, j]}}+1，</code><ul>
-<li>其中1&lt;=k&lt;=i。k表示这一次实验是从k楼把鸡蛋扔下去，扔下去有两种结果。</li>
-<li>一种是鸡蛋碎了，那么剩余的鸡蛋个数是j-1，H的可行范围变为[0, k-1]，那么需要的最少实验次数为F[k-1, j-1]。</li>
-<li>另一种是鸡蛋没碎，那么剩余的鸡蛋个数是j，H的可行范围是[k, i]，那么需要的最少实验次数是F[k-i, j]。</li>
-</ul>
-</li>
-<li>由于题目所求的是最坏情况下的最优策略，所以对每种k情况内取max，再对所有k取min。</li>
-<li>边界条件为<code>F[0, j]=0，F[i, 1]=i</code>。</li>
-<li>时间复杂度为O(NK^2)。</li>
-</ul>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2913,7 +3111,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">37</span>
+                    <span class="site-state-item-count">38</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -3019,7 +3217,15 @@
                     
                       
                     
-                    <span class="site-state-item-count">35</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">39</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

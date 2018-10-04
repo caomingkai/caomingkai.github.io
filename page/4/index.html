@@ -310,6 +310,221 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/27/News-Recommendation-using-Wed-Mining/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/27/News-Recommendation-using-Wed-Mining/" itemprop="url">News Recommendation using Wed Mining</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-27T15:02:08-07:00">2018-03-27</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Portfolios/" itemprop="url" rel="index"><span itemprop="name">Portfolios</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/27/News-Recommendation-using-Wed-Mining/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/03/27/News-Recommendation-using-Wed-Mining/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="I-Introduction"><a href="#I-Introduction" class="headerlink" title="I. Introduction"></a>I. Introduction</h2><p>An internet-based news aggregator, providing hot news scraping on popular news sources, with recommendation feature based on users’ preference with the help of Machine Learning.</p>
+<p><strong>#Github</strong>: <a href="https://github.com/caomingkai/News_Recommendation_System" target="_blank" rel="noopener">https://github.com/caomingkai/News_Recommendation_System</a>  </p>
+<p><strong>Pull it and run it with Shell script!</strong></p>
+<ul>
+<li><strong>Firstly, run <code>./launcher.sh</code>:</strong><ul>
+<li>run redis</li>
+<li>run mongoDB locally</li>
+<li>start recommendation service(python)</li>
+<li>start backend service(phython)</li>
+<li>start web-server service(Node.js + ReactJS)</li>
+</ul>
+</li>
+<li><strong>Secondly, run <code>./news_pipeline_launcher.sh</code>:</strong><ul>
+<li>run redis</li>
+<li>run mongoDB locally</li>
+<li>install python requirements</li>
+<li>start news_topic_modeling_service (python Machine Learning)</li>
+<li>start news collecting service(data pipeline + web scraping)</li>
+</ul>
+</li>
+</ul>
+<h2 id="II-Tech-stack"><a href="#II-Tech-stack" class="headerlink" title="II. Tech stack:"></a>II. Tech stack:</h2><ul>
+<li><strong>Front end:  React, Express, Node.js, OAuth</strong><ul>
+<li>Built a responsive single-page web application for users to browse news (React, Node.js, RPC, SOA, JWT)</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><strong>Back end: Python RPC, MongoDB, Redis, RabbitMQ</strong><ul>
+<li>Service Oriented, multiple backends serving via JSON RPC</li>
+<li>Implemented a data pipeline which monitors, scrapes and deduplicates news</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><strong>News recommendation system: Tensorflow, DNN, NLP</strong><ul>
+<li>Designed and built an offline training pipeline for news topic modeling</li>
+<li>Deployed an online classifying service for news topic modeling using trained model</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><strong>News topic classifying system: TF-IDF, NLP, RabbitMQ</strong><ul>
+<li>Implemented a click event log processor which collects users’ click logs, updated a news model for each user</li>
+</ul>
+</li>
+</ul>
+<p><strong>Chart1: Login Page with Authentication</strong><br><img src="/2018/03/27/News-Recommendation-using-Wed-Mining/loginPage.png" title="This is an image"></p>
+<p><strong>Chart2: News feed page</strong><br><img src="/2018/03/27/News-Recommendation-using-Wed-Mining/newsPage.png" title="This is an image"></p>
+<h2 id="III-System-structure"><a href="#III-System-structure" class="headerlink" title="III. System structure:"></a>III. System structure:</h2><ol>
+<li><strong>Front end tier</strong>: React &amp; Node.js</li>
+<li><strong>Back end tier</strong>: providing RPC API for communication among different tiers</li>
+<li><strong>News recommendation system</strong>: time decay algorithm</li>
+<li><strong>News topic classifying system</strong>: Tensorflow with 2-layer CNN model for classification</li>
+<li><strong>data pipeline</strong>: get news sources<ul>
+<li>News monitor: gets news from News.API</li>
+<li>News scraper: web scraper</li>
+<li>News deduper: news TF-IDF deduplication</li>
+</ul>
+</li>
+</ol>
+<p><strong>Chart 3: System with Machine Learning module</strong><br><img src="https://github.com/caomingkai/News_Recommendation_System/raw/master/with%20ML%20topic%20classification1.png" alt="chart"></p>
+<p><strong>Chart 4: System with Recommendation module</strong><br><img src="https://github.com/caomingkai/News_Recommendation_System/raw/master/with%20Recommendation%20module.png" alt="chart"></p>
+<p><strong>Chart 5: Service dependency</strong><br><img src="https://github.com/caomingkai/News_Recommendation_System/raw/master/chart.jpg" alt="chart"></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/27/Facebook-Custom-Search/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2182,7 +2397,7 @@ mid = (left + right + 1) &gt;&gt;1
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">37</span>
+                    <span class="site-state-item-count">38</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2288,7 +2503,15 @@ mid = (left + right + 1) &gt;&gt;1
                     
                       
                     
-                    <span class="site-state-item-count">35</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">39</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

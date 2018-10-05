@@ -99,24 +99,24 @@
 
 
 
-  <meta name="description" content="I. Main idea:similar to Python string’s format method like “ A is {title} of B”.format(title=”father”); Whereas, template engine is also a formatter, but much more powerful.  An important phase in any">
-<meta name="keywords" content="Python">
+  <meta name="description" content="I. Flux 4 parts of Flux architecture:  View Actions Dispatcher Store   Relationship  Store: model object managing all data; has updating methods as well provide data to View provide updating methods t">
+<meta name="keywords" content="Flux, Redux, ReactJS">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Web Template Engine">
-<meta property="og:url" content="http://yoursite.com/2018/03/27/Web-Template-Engine/index.html">
+<meta property="og:title" content="Flux &amp; Redux">
+<meta property="og:url" content="http://yoursite.com/2018/10/04/Flux-Redux/index.html">
 <meta property="og:site_name" content="CMK">
-<meta property="og:description" content="I. Main idea:similar to Python string’s format method like “ A is {title} of B”.format(title=”father”); Whereas, template engine is also a formatter, but much more powerful.  An important phase in any">
-<meta property="og:updated_time" content="2018-04-09T19:06:24.000Z">
+<meta property="og:description" content="I. Flux 4 parts of Flux architecture:  View Actions Dispatcher Store   Relationship  Store: model object managing all data; has updating methods as well provide data to View provide updating methods t">
+<meta property="og:updated_time" content="2018-10-05T04:05:45.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Web Template Engine">
-<meta name="twitter:description" content="I. Main idea:similar to Python string’s format method like “ A is {title} of B”.format(title=”father”); Whereas, template engine is also a formatter, but much more powerful.  An important phase in any">
+<meta name="twitter:title" content="Flux &amp; Redux">
+<meta name="twitter:description" content="I. Flux 4 parts of Flux architecture:  View Actions Dispatcher Store   Relationship  Store: model object managing all data; has updating methods as well provide data to View provide updating methods t">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/03/27/Web-Template-Engine/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/10/04/Flux-Redux/"/>
 
 
 
@@ -126,7 +126,7 @@
   };
 </script>
 
-  <title>Web Template Engine | CMK</title>
+  <title>Flux & Redux | CMK</title>
   
 
 
@@ -311,7 +311,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/27/Web-Template-Engine/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/04/Flux-Redux/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Mingkai Cao">
@@ -328,7 +328,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Web Template Engine</h1>
+          <h1 class="post-title" itemprop="name headline">Flux & Redux</h1>
         
 
         <div class="post-meta">
@@ -340,7 +340,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-27T10:02:04-07:00">2018-03-27</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-04T21:04:19-07:00">2018-10-04</time>
             
 
             
@@ -361,7 +361,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Portfolios/" itemprop="url" rel="index"><span itemprop="name">Portfolios</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
 
                 
                 
@@ -376,8 +376,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/03/27/Web-Template-Engine/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/03/27/Web-Template-Engine/" itemprop="commentCount"></span>
+                <a href="/2018/10/04/Flux-Redux/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/04/Flux-Redux/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -413,71 +413,88 @@
       
 
       
-        <h3 id="I-Main-idea"><a href="#I-Main-idea" class="headerlink" title="I. Main idea:"></a>I. Main idea:</h3><p>similar to Python string’s <strong>format method</strong> like “ A is {title} of B”.format(title=”father”); Whereas, <strong>template engine</strong> is also a formatter, but much more powerful.</p>
-<blockquote>
-<p>An important phase in any web application is generating HTML to be served to the browser.</p>
-</blockquote>
-<blockquote>
-<p>Very few HTML pages are completely static: they involve at least a small amount of <strong>dynamic data</strong>, such as the user’s name. Usually, they contain a great deal of dynamic data: product listings, friends’ news updates, and so on.</p>
-</blockquote>
-<blockquote>
-<p>The mostly-static style used in templates is the opposite of how most programming languages work.</p>
-</blockquote>
-<blockquote>
-<p>A template language flips this around: <strong>the template file is mostly static literal text, with special notation to indicate the executable dynamic parts.</strong></p>
-</blockquote>
-<h3 id="II-tech-stacks"><a href="#II-tech-stacks" class="headerlink" title="II. tech stacks"></a>II. tech stacks</h3><p> <strong>Python – Template language Django</strong></p>
-<p><strong>Github</strong>: <a href="https://github.com/caomingkai/500-Lines-Or-Less" target="_blank" rel="noopener">https://github.com/caomingkai/500-Lines-Or-Less</a></p>
-<h3 id="III-template-syntax"><a href="#III-template-syntax" class="headerlink" title="III. template syntax"></a>III. template syntax</h3><ol>
-<li><p>dot : </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;The price is: &#123;&#123;product.price&#125;&#125;, with a &#123;&#123;product.discount&#125;&#125;% discount.&lt;/p&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>filters with pipe character: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;Short name: &#123;&#123;story.subject|slugify|lower&#125;&#125;&lt;/p&gt;</span><br></pre></td></tr></table></figure></p>
-</li>
-<li><p>logic control: </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;Products:&lt;/p&gt;</span><br><span class="line">&lt;ul&gt;</span><br><span class="line">&#123;% for product in product_list %&#125;</span><br><span class="line">    &lt;li&gt;&#123;&#123; product.name &#125;&#125;: &#123;&#123; product.price|format_price &#125;&#125;&lt;/li&gt;</span><br><span class="line">&#123;% endfor %&#125;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>comment:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;# This is the best template ever! #&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="III-Two-approach-to-implement-the-Template-Engine"><a href="#III-Two-approach-to-implement-the-Template-Engine" class="headerlink" title="III. Two approach to implement the Template Engine"></a>III. Two approach to implement the Template Engine</h3><ol>
-<li><p>Two main phases: <strong>parsing the template</strong>, and then <strong>rendering the template</strong></p>
-</li>
-<li><p>For ‘parsing phase’:</p>
-</li>
-</ol>
+        <h2 id="I-Flux"><a href="#I-Flux" class="headerlink" title="I. Flux"></a>I. Flux</h2><ol>
+<li><p><strong>4 parts of Flux architecture:</strong></p>
 <ul>
-<li>interpretation (Django )</li>
-<li>compilation (Jinja2 and Mako | also, we will use)</li>
+<li>View</li>
+<li>Actions</li>
+<li>Dispatcher</li>
+<li>Store</li>
 </ul>
-<h3 id="IV-Compiling-to-Python"><a href="#IV-Compiling-to-Python" class="headerlink" title="IV. Compiling to Python"></a>IV. Compiling to Python</h3><ol>
-<li>The template engine will compile templates to Python method called <strong>“render_function(context, do_dots)”</strong></li>
-<li>context dictionary : carry kinds of dynamic variables to be embedded in template</li>
-<li>do_dots method: passed-in method name, handling dot access</li>
-</ol>
-<h3 id="V-Code-bulider"><a href="#V-Code-bulider" class="headerlink" title="V. Code_bulider"></a>V. Code_bulider</h3><ol>
-<li>Being called by template object, to help to read passed-in lines, using <strong>‘add-line()’</strong></li>
-<li>Integrate lines into a well-formed python script</li>
-<li>return to templage object the final executable script by calling “ exec(python_source, global_namespace)”</li>
-</ol>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Code-builder</span><br><span class="line">    |__   add_line()    : read in ready-to-run python lines</span><br><span class="line">    |__   add_section() : set aside space for later variable assignment</span><br><span class="line">    |__   indent()      : indent to form well-formed python</span><br><span class="line">    |__   dedent()      : dedent to form well-formed python</span><br><span class="line">    |__   get_globles() : 1- call "exec(python_source, global_namespace)"</span><br><span class="line">                          2- return executable script by calling get_globles()['render_function']</span><br></pre></td></tr></table></figure>
-<h3 id="VI-Template"><a href="#VI-Template" class="headerlink" title="VI. Template"></a>VI. Template</h3><ol>
-<li>used to handle template, and parse it into executable lines</li>
-<li>call functions of Code-builder object, to produce an executable script to output ‘HTML string’</li>
-<li>with helper function: do_dots()</li>
-</ol>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Template</span><br><span class="line">    |__   __init__(context):   1- read context( ie, values for var in template )</span><br><span class="line">    |                          2- break down template text by Regex into 4 cases</span><br><span class="line">    |                          3- call functions of Code_bulider to produce HTML</span><br><span class="line">    |</span><br><span class="line">    |__   4 cases:             1- Literal content(pure string)</span><br><span class="line">    |                          2- &#123;&#123; ..... &#125;&#125; variables, converted to string</span><br><span class="line">    |                             For case 1 and 2, just concatenate them;</span><br><span class="line">    |                          3- &#123;# ..... #&#125;</span><br><span class="line">    |                             Just ignore</span><br><span class="line">    |                          4- &#123;% ..... %&#125; control statements</span><br><span class="line">    |                             4.1- ops_stack() for nested control statements</span><br><span class="line">    |                             4.2- filter_handler() for 'var|upper'</span><br><span class="line">    |                             4.3- indent()/ dedent()</span><br><span class="line">    |</span><br><span class="line">    |__   self._render_function() = code.get_globles['render_function'];</span><br><span class="line">    |</span><br><span class="line">    |__   render():             calls self._render_function() with context param</span><br></pre></td></tr></table></figure>
-<h3 id="VII-Template-Test"><a href="#VII-Template-Test" class="headerlink" title="VII. Template Test"></a>VII. Template Test</h3><ul>
-<li>great introduction of unittest: <a href="https://www.jianshu.com/p/38948d0d73f5" target="_blank" rel="noopener">https://www.jianshu.com/p/38948d0d73f5</a></li>
-<li>unittest是Python自带的单元测试框架，我们可以用其来作为我们自动化测试框架的用例组织执行框架</li>
+</li>
+<li><p><strong>Relationship</strong></p>
+<ul>
+<li><strong>Store:</strong> model object managing all data; has updating methods as well<ul>
+<li>provide data to <u>View</u></li>
+<li>provide updating methods to <u>Actions</u></li>
 </ul>
+</li>
+<li><strong>Dispatcher:  </strong>extends <code>Event Emitter object</code><ul>
+<li>used by component to <u>register event &amp; callbacks</u></li>
+<li>used by component to <u>emit actions to call store updating methods</u></li>
+</ul>
+</li>
+<li><strong>View:</strong> receive data from store</li>
+<li><strong>Actions: </strong>used by <u><em>component</em></u> to let <u><em>dispather</em></u> <u>emit actions</u></li>
+<li>Great article: <a href="http://www.ruanyifeng.com/blog/2016/01/flux.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2016/01/flux.html</a></li>
+</ul>
+</li>
+</ol>
+<h2 id="II-Redux"><a href="#II-Redux" class="headerlink" title="II. Redux"></a>II. Redux</h2><ol>
+<li><p><strong><code>store</code></strong> </p>
 <ol>
-<li>unittest的流程：写好TestCase，然后由TestLoader加载TestCase到TestSuite，然后由TextTestRunner来运行TestSuite，运行的结果保存在TextTestResult中，我们通过命令行或者unittest.main()执行时，main会调用TextTestRunner中的run来执行，或者我们可以直接通过TextTestRunner来执行用例。</li>
-<li>一个class继承unittest.TestCase即是一个TestCase，其中以 test 开头的方法在load时被加载为一个真正的TestCase。</li>
-<li>verbosity参数可以控制执行结果的输出，0 是简单报告、1 是一般报告、2 是详细报告。<br>可以通过addTest和addTests向suite中添加case或suite，可以用TestLoader的loadTestsFrom__()方法</li>
-<li>用 setUp()、tearDown()、setUpClass()以及 tearDownClass()可以在用例执行前布置环境，以及在用例执行后清理环境</li>
-<li>我们可以通过skip，skipIf，skipUnless装饰器跳过某个case，或者用TestCase.skipTest方法。<br>参数中加stream，可以将报告输出到文件：可以用TextTestRunner输出txt报告，以及可以用HTMLTestRunner输出html报告。</li>
+<li><code>getState()</code>: source of data</li>
+<li><code>dispath()</code>: emit actions, execute <u>reducer</u> to update state</li>
+<li><code>subscribe()</code>: component subscribe to receive updated state</li>
+</ol>
+</li>
+<li><p><strong>reducer</strong></p>
+<ul>
+<li>like<code>emitter.on</code>, used to register all the <u>updating functions</u> for related <u>actions</u></li>
+<li>pure function</li>
+<li><code>combineReducers()</code>: used to make logic clean</li>
+</ul>
+</li>
+<li><p><strong>Store implementation</strong></p>
+<ol>
+<li><p>How to use the <code>store</code> object</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createStore &#125; <span class="keyword">from</span> <span class="string">'redux'</span>;</span><br><span class="line"><span class="keyword">let</span> &#123; subscribe, dispatch, getState &#125; = createStore(reducer);</span><br><span class="line"><span class="comment">// or </span></span><br><span class="line"><span class="keyword">let</span> store = createStore(todoApp, <span class="built_in">window</span>.STATE_FROM_SERVER)</span><br><span class="line">store.getState()</span><br><span class="line">store.dispatch()</span><br><span class="line">store.subscribe()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>redux provide an interface <code>createStore()</code> to create the <code>store</code> object</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> createStore = <span class="function">(<span class="params">reducer</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> state;</span><br><span class="line">  <span class="keyword">let</span> listeners = [];</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> getState = <span class="function"><span class="params">()</span> =&gt;</span> state;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> dispatch = <span class="function">(<span class="params">action</span>) =&gt;</span> &#123;</span><br><span class="line">    state = reducer(state, action);</span><br><span class="line">    listeners.forEach(<span class="function"><span class="params">listener</span> =&gt;</span> listener());</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> subscribe = <span class="function">(<span class="params">listener</span>) =&gt;</span> &#123;</span><br><span class="line">    listeners.push(listener);</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      listeners = listeners.filter(<span class="function"><span class="params">l</span> =&gt;</span> l !== listener);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  dispatch(&#123;&#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123; getState, dispatch, subscribe &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p><strong>An example using Redux</strong></p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Counter = <span class="function">(<span class="params">&#123; value, onIncrement, onDecrement &#125;</span>) =&gt;</span> (</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">  &lt;h1&gt;&#123;value&#125;&lt;<span class="regexp">/h1&gt;</span></span><br><span class="line"><span class="regexp">  &lt;button onClick=&#123;onIncrement&#125;&gt;+&lt;/</span>button&gt;</span><br><span class="line">  &lt;button onClick=&#123;onDecrement&#125;&gt;-&lt;/button&gt;</span><br><span class="line">  &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">);</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">const reducer = (state = 0, action) =&gt; &#123;</span></span><br><span class="line"><span class="regexp">  switch (action.type) &#123;</span></span><br><span class="line"><span class="regexp">    case 'INCREMENT': return state + 1;</span></span><br><span class="line"><span class="regexp">    case 'DECREMENT': return state - 1;</span></span><br><span class="line"><span class="regexp">    default: return state;</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">const store = createStore(reducer);</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">const render = () =&gt; &#123;</span></span><br><span class="line"><span class="regexp">  ReactDOM.render(</span></span><br><span class="line"><span class="regexp">    &lt;Counter</span></span><br><span class="line"><span class="regexp">      value=&#123;store.getState()&#125;</span></span><br><span class="line"><span class="regexp">      onIncrement=&#123;() =&gt; store.dispatch(&#123;type: 'INCREMENT'&#125;)&#125;</span></span><br><span class="line"><span class="regexp">      onDecrement=&#123;() =&gt; store.dispatch(&#123;type: 'DECREMENT'&#125;)&#125;</span></span><br><span class="line"><span class="regexp">    /</span>&gt;,</span><br><span class="line">    <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>)</span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">render();</span><br><span class="line">store.subscribe(render);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="III-React-Redux-package"><a href="#III-React-Redux-package" class="headerlink" title="III. React-Redux package"></a>III. React-Redux package</h2><ol>
+<li><code>connect()</code>: <ul>
+<li>connect <u>UI component</u> with it outer <u>Controller component</u></li>
+<li>usage: <code>const Contrainer = connect(mapStateToprops, mapDispatchToProps)(UIComponent)</code></li>
+</ul>
+</li>
+<li><code>mapStateToProps()</code><ul>
+<li>map <code>state</code> in Redux store to UI </li>
+<li>like <code>eventEmitter.subscribe()</code>, will always get the updated state from Redux</li>
+</ul>
+</li>
+<li><p><code>mapDispatchToProps</code></p>
+<ul>
+<li>map <code>actions dispatch()</code> in Redux to UI</li>
+<li>like <code>eventEmitter.emit()</code>, will trigger actions when UI event is fired, to execute reducer to update the state</li>
+</ul>
+</li>
+<li><p><code>&lt;Provider&gt;</code> component</p>
+<ul>
+<li>an outer container, used to pass the <code>state</code> to inner components</li>
+<li>using <code>context</code> attribute</li>
+</ul>
+</li>
 </ol>
 
       
@@ -499,7 +516,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Python/" rel="tag"># Python</a>
+            <a href="/tags/Flux-Redux-ReactJS/" rel="tag"># Flux, Redux, ReactJS</a>
           
         </div>
       
@@ -512,8 +529,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/27/Weather-Chat/" rel="next" title="Weather Chat">
-                <i class="fa fa-chevron-left"></i> Weather Chat
+              <a href="/2018/10/04/Ways-of-Creating-Objects-in-JS/" rel="next" title="Create new Objects with Inheritance">
+                <i class="fa fa-chevron-left"></i> Create new Objects with Inheritance
               </a>
             
           </div>
@@ -521,10 +538,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/03/27/eCommerce-Website-Design/" rel="prev" title="eCommerce Website Design">
-                eCommerce Website Design <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -773,7 +786,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#I-Main-idea"><span class="nav-number">1.</span> <span class="nav-text">I. Main idea:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#II-tech-stacks"><span class="nav-number">2.</span> <span class="nav-text">II. tech stacks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#III-template-syntax"><span class="nav-number">3.</span> <span class="nav-text">III. template syntax</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#III-Two-approach-to-implement-the-Template-Engine"><span class="nav-number">4.</span> <span class="nav-text">III. Two approach to implement the Template Engine</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IV-Compiling-to-Python"><span class="nav-number">5.</span> <span class="nav-text">IV. Compiling to Python</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#V-Code-bulider"><span class="nav-number">6.</span> <span class="nav-text">V. Code_bulider</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VI-Template"><span class="nav-number">7.</span> <span class="nav-text">VI. Template</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VII-Template-Test"><span class="nav-number">8.</span> <span class="nav-text">VII. Template Test</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#I-Flux"><span class="nav-number">1.</span> <span class="nav-text">I. Flux</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#II-Redux"><span class="nav-number">2.</span> <span class="nav-text">II. Redux</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#III-React-Redux-package"><span class="nav-number">3.</span> <span class="nav-text">III. React-Redux package</span></a></li></ol></div>
             
 
           </div>

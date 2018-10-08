@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.6" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.6">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.6" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.6',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Why use React?Credit to: https://reactjs.org/blog/2013/06/05/why-react.html  React is not MVC, is only “V” Support small, reusable component efficient DOM update, using diff algorithm reconcilation pr">
+<meta name="keywords" content="ReactJS,DOM,CSS,HTML render,Observable">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Facebook Interview Preparation">
+<meta property="og:url" content="http://yoursite.com/2018/10/06/Facebook-Interview-Preparation/index.html">
+<meta property="og:site_name" content="CMK">
+<meta property="og:description" content="Why use React?Credit to: https://reactjs.org/blog/2013/06/05/why-react.html  React is not MVC, is only “V” Support small, reusable component efficient DOM update, using diff algorithm reconcilation pr">
+<meta property="og:updated_time" content="2018-10-08T16:55:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Facebook Interview Preparation">
+<meta name="twitter:description" content="Why use React?Credit to: https://reactjs.org/blog/2013/06/05/why-react.html  React is not MVC, is only “V” Support small, reusable component efficient DOM update, using diff algorithm reconcilation pr">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/10/06/Facebook-Interview-Preparation/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Facebook Interview Preparation | CMK</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-116541729-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-116541729-1');
+</script>
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> 
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">CMK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Let's create something!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+          
+  <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+</li>
+
+      
+
+      
+    </ul>
+  
+
+  
+    
+
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/06/Facebook-Interview-Preparation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Facebook Interview Preparation</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-06T19:07:47-07:00">2018-10-06</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/06/Facebook-Interview-Preparation/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/06/Facebook-Interview-Preparation/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views: 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Why-use-React"><a href="#Why-use-React" class="headerlink" title="Why use React?"></a>Why use React?</h2><p>Credit to: <a href="https://reactjs.org/blog/2013/06/05/why-react.html" target="_blank" rel="noopener">https://reactjs.org/blog/2013/06/05/why-react.html</a></p>
+<ol>
+<li>React is not MVC, is only “V”</li>
+<li>Support small, <strong>reusable</strong> component</li>
+<li>efficient DOM update, using <strong>diff algorithm</strong><ul>
+<li><code>reconcilation process</code>: the way React used to update real DOM, by only updating changed components node and its children</li>
+<li>Every time <code>props</code> or <code>state</code> change leading to <code>render()</code> execution, which will produce either a <code>String</code> or <code>virtual DOM node</code>; </li>
+<li>Either way, React will compare it with previous <code>String</code> or <code>virtual DOM node</code>, to determine which node in real DOM need to be updated</li>
+<li><code>diff/reconcilation</code> process only happens after <code>render()</code>, it will compare current tree with previous tree</li>
+</ul>
+</li>
+<li><code>key</code> in a list of nodes: make <code>diff</code> efficiently<ol>
+<li>there are cases that a node is added in front to a list, without <code>key</code>, React just compare each pair of nodes from previous tree and current tree, and re-render all the nodes in real DOM in that list; Even thought, it only needs to insert a new node to real DOM tree</li>
+<li>Attaching a <code>key</code> to each node in a list, will help React know which node need to be re-render in real  DOM tree.</li>
+<li>Nodes with the same <code>key</code> inside a list, will be stable across different re-renders</li>
+</ol>
+</li>
+</ol>
+<h2 id="React-Lifecyle"><a href="#React-Lifecyle" class="headerlink" title="React Lifecyle"></a>React Lifecyle</h2><ol>
+<li><h2 id="How-to-implement-infinite-scroll-loading"><a href="#How-to-implement-infinite-scroll-loading" class="headerlink" title="How to implement infinite scroll loading"></a>How to implement infinite scroll loading</h2></li>
+<li><p>Credit to: <a href="https://segmentfault.com/a/1190000004974824" target="_blank" rel="noopener">https://segmentfault.com/a/1190000004974824</a></p>
+</li>
+<li><p>Which event do we use?</p>
+<ul>
+<li>We assume the user will scroll down the screen, in order to load more content</li>
+<li>So we use the <code>scroll</code> event on <code>window</code> or <code>block element</code> with a height set already</li>
+</ul>
+</li>
+<li><p>Three conditions for AJAX cal</p>
+<ol>
+<li><code>container bottom - window bottom &lt; certain value</code> ,i.e. the container don’t have too much content to show</li>
+<li>not in the middle of loading</li>
+<li>still have content to load, i.e. not the end of all the content</li>
+</ol>
+</li>
+<li><p>code </p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> isLoading = <span class="literal">false</span>;</span><br><span class="line"><span class="keyword">var</span> isEnd = <span class="literal">false</span>;</span><br><span class="line"><span class="keyword">var</span> triggerDistance = <span class="number">200</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fetchData</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> distance = container.getBoundingClientRect().bottom - <span class="built_in">window</span>.innerHeight;</span><br><span class="line">  <span class="keyword">if</span> ( !isLoading &amp;&amp; !isEnd &amp;&amp; distance &lt; triggerDistance ) &#123;</span><br><span class="line"></span><br><span class="line">    isLoading = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">    fetch(path).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">      isLoading = <span class="literal">false</span>;</span><br><span class="line">      <span class="comment">// if not end, will short-circut latter statement</span></span><br><span class="line">      <span class="comment">// if reach end, will still check the latter one, which will set isEnd to true</span></span><br><span class="line">      res.data.length === <span class="number">0</span> &amp;&amp; isEnd = <span class="literal">true</span>; </span><br><span class="line">      doSomething(res.data);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'scroll'</span>, fetchData);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="The-rendering-order-CSS-JS-HTML"><a href="#The-rendering-order-CSS-JS-HTML" class="headerlink" title="The rendering order: CSS, JS, HTML"></a>The rendering order: CSS, JS, HTML</h2><ol>
+<li><p>credit to:</p>
+<ul>
+<li><a href="https://bitsofco.de/async-vs-defer/" target="_blank" rel="noopener">https://bitsofco.de/async-vs-defer/</a></li>
+<li><a href="https://www.cnblogs.com/yingsong/p/6170780.html" target="_blank" rel="noopener">https://www.cnblogs.com/yingsong/p/6170780.html</a></li>
+</ul>
+</li>
+<li><p>General order</p>
+<ol>
+<li><p>JS in <code>&lt;head&gt;</code> will block downloading of following resource</p>
+</li>
+<li><p>Browser downloads and parses HTML to DOM</p>
+</li>
+<li><p>when encounter <code>&lt;script&gt;</code>, </p>
+<ul>
+<li>if not external, <strong><u>render engine</u></strong> hand control power to <strong><u>js engine</u></strong></li>
+<li>if is external, render engine <u>keep rendering</u>, while downloads external</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="CSS-float-amp-position-amp-box-model"><a href="#CSS-float-amp-position-amp-box-model" class="headerlink" title="CSS:   float &amp;  position &amp; box model"></a>CSS:   <code>float</code> &amp;  <code>position</code> &amp; <code>box model</code></h2><h2 id="CSS-cursor-pointer"><a href="#CSS-cursor-pointer" class="headerlink" title="CSS:  cursor: pointer"></a>CSS:  <code>cursor: pointer</code></h2><h2 id="CSS-px-vs-rem-vs-em"><a href="#CSS-px-vs-rem-vs-em" class="headerlink" title="CSS:  px vs rem vs em"></a>CSS:  <code>px</code> vs <code>rem</code> vs <code>em</code></h2><h2 id="CSS-block-vs-inline-vs-inline-block"><a href="#CSS-block-vs-inline-vs-inline-block" class="headerlink" title="CSS: block vs inline vs inline-block"></a>CSS: <code>block</code> vs <code>inline</code> vs <code>inline-block</code></h2><h2 id="CSS-how-to-vertically-center-an-element"><a href="#CSS-how-to-vertically-center-an-element" class="headerlink" title="CSS: how to vertically center an element?"></a>CSS: how to vertically center an element?</h2><ol>
+<li>parent without <code>height</code> &amp; <code>width</code></li>
+<li>parent with <code>height</code> &amp; <code>width</code></li>
+</ol>
+<h2 id="DOM-structure"><a href="#DOM-structure" class="headerlink" title="DOM structure"></a>DOM structure</h2><ol>
+<li><p>difference between <code>HTMLCollection</code> &amp; <code>NodeList</code></p>
+<ul>
+<li><p><code>HTMLCollection</code>: a collection of <strong>element nodes</strong></p>
+</li>
+<li><p><code>NodeList</code>: a collection of <strong>all types of nodes: element node/ text node/ comment node</strong></p>
+</li>
+<li>convert them to array, to extract info: <code>Array.prototype.slice.call(NodeList)</code></li>
+</ul>
+</li>
+<li><p>everything in an HTML document is a <u>node</u>:</p>
+<ul>
+<li>The entire document is a <strong><em>document</em> node</strong></li>
+<li>Every HTML element is an <strong><em>element</em> node</strong></li>
+<li>The text inside HTML elements are <strong><em>text</em> nodes</strong></li>
+<li>All comments are <strong><em>comment</em> nodes</strong></li>
+</ul>
+</li>
+<li><p>navigate across the DOM tree using attibutes: [<u><em>element node, text node, comment node</em></u>]</p>
+<ol>
+<li>parentNode</li>
+<li>childNodes [<em>nodenumber</em>]</li>
+<li>firstChild</li>
+<li>lastChild</li>
+<li>nextSibling</li>
+<li>previousSibling</li>
+</ol>
+</li>
+<li><p><u><strong>A common error in DOM processing is to expect an element node to contain text.</strong></u></p>
+<ol>
+<li><p><code>&lt;title id=&quot;demo&quot;&gt;DOM Tutorial&lt;/title&gt;</code></p>
+</li>
+<li><p>The element node <code>&lt;title&gt;</code> (in the example above) does <strong>not</strong> contain text.</p>
+</li>
+<li><p>It contains a <strong>text node</strong> with the value “DOM Tutorial”.</p>
+</li>
+<li><p>The value of the text node can be accessed by the node’s <strong>innerHTML</strong> property:</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myTitle = <span class="built_in">document</span>.getElementById(<span class="string">"demo"</span>).innerHTML;</span><br><span class="line"></span><br><span class="line"><span class="comment">// or</span></span><br><span class="line"><span class="keyword">var</span> myTitle = <span class="built_in">document</span>.getElementById(<span class="string">"demo"</span>).firstChild.nodeValue;</span><br><span class="line"></span><br><span class="line"><span class="comment">// or</span></span><br><span class="line"><span class="keyword">var</span> myTitle = <span class="built_in">document</span>.getElementById(<span class="string">"demo"</span>).childNodes[<span class="number">0</span>].nodeValue;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="DOM-API"><a href="#DOM-API" class="headerlink" title="DOM API:"></a>DOM API:</h2><ol>
+<li><p><strong>get style &amp; set style of an element</strong></p>
+<ul>
+<li><p>set style</p>
+<ul>
+<li>directly use it as attribute <code>elements.style.fontSize = &#39;10px&#39;</code></li>
+<li>NOTE: the style name must be <strong>camelCase</strong></li>
+</ul>
+</li>
+<li><p>get style: </p>
+<ul>
+<li><p>if style is set using <code>style</code> or <code>js</code>, directly get the style</p>
+</li>
+<li><p>if style is set using <code>css</code> without <code>element.style</code> keyword, we will use <code>getComputedStyle()</code></p>
+</li>
+<li><p><code>document.defaultView.getComputedStyle(ele,null).getPropertyValue(&quot;font-size&quot;)</code></p>
+</li>
+<li><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">cStyles</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">  <span class="keyword">var</span> RefDiv = <span class="built_in">document</span>.getElementById(<span class="string">"d1"</span>);</span></span><br><span class="line"><span class="javascript">  <span class="keyword">var</span> txtHeight = <span class="built_in">document</span>.getElementById(<span class="string">"t1"</span>);</span></span><br><span class="line"><span class="javascript">  <span class="keyword">var</span> h_style = <span class="built_in">document</span>.defaultView.getComputedStyle(RefDiv, <span class="literal">null</span>).getPropertyValue(<span class="string">"height"</span>);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">  txtHeight.value = h_style;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css"><span class="selector-id">#d1</span> &#123;</span></span><br><span class="line"><span class="undefined">  margin-left: 10px;</span></span><br><span class="line"><span class="undefined">  background-color: rgb(173, 216, 230); </span></span><br><span class="line"><span class="undefined">  height: 20px;</span></span><br><span class="line"><span class="undefined">  max-width: 20px;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"d1"</span>&gt;</span>&amp;nbsp;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">""</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">onclick</span>=<span class="string">"cStyles();"</span>&gt;</span>getComputedStyle<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    height<span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">"t1"</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">value</span>=<span class="string">"1"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong><code>console.trace()</code> can be used to trace the call stack of a certain function</strong></p>
+</li>
+<li><p><code>addEventListener</code> &amp; <code>removeEventListener</code></p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Attach an event handler to the document</span></span><br><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">"mousemove"</span>, myFunction);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Remove the event handler from the document</span></span><br><span class="line"><span class="built_in">document</span>.removeEventListener(<span class="string">"mousemove"</span>, myFunction);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>createAttribute()</code> &amp; <code>setAttributeNode()</code></p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myFunction</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> h1 = <span class="built_in">document</span>.getElementsByTagName(<span class="string">"H1"</span>)[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">var</span> att = <span class="built_in">document</span>.createAttribute(<span class="string">"class"</span>);</span><br><span class="line">    att.value = <span class="string">"democlass"</span>;</span><br><span class="line">    h1.setAttributeNode(att);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>createElement()</code>  &amp; <code>intersetBefore()</code> &amp;  <code>appendChild()</code></p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> btn = <span class="built_in">document</span>.createElement(<span class="string">"BUTTON"</span>);        <span class="comment">// Create a &lt;button&gt; element</span></span><br><span class="line"><span class="keyword">var</span> t = <span class="built_in">document</span>.createTextNode(<span class="string">"CLICK ME"</span>);       <span class="comment">// Create a text node</span></span><br><span class="line">btn.appendChild(t);                                <span class="comment">// Append the text to &lt;button&gt;</span></span><br><span class="line"><span class="built_in">document</span>.body.appendChild(btn);                    <span class="comment">// Append &lt;button&gt; to &lt;body&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p><code>querySelector</code>  &amp; <code>querySelectorAll()</code></p>
+<ol>
+<li><p><a href="https://www.w3schools.com/cssref/css_selectors.asp" target="_blank" rel="noopener">https://www.w3schools.com/cssref/css_selectors.asp</a></p>
+</li>
+<li><p><code>querySelector()</code> returns <strong>the first element</strong> that matches a specified <em>CSS selector(s)</em> </p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. select first p element whose parent is a div</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myFunction</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> x = <span class="built_in">document</span>.querySelector(<span class="string">"div &gt; p"</span>);</span><br><span class="line">    x.style.backgroundColor = <span class="string">"red"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. select all a element has target attribute</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myFunction</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">document</span>.querySelector(<span class="string">"a[target]"</span>).style.border = <span class="string">"10px solid red"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p><code>querySelectorAll()</code> returns <strong>all elements</strong> in the document that matches a specified CSS selector(s), as a static <strong><u>NodeList object</u></strong>.</p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myFunction</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> x = <span class="built_in">document</span>.querySelectorAll(<span class="string">"a[target]"</span>);</span><br><span class="line">    <span class="keyword">var</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; x.length; i++) &#123;</span><br><span class="line">        x[i].style.border = <span class="string">"10px solid red"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p><strong><code>element.childNodes</code> vs <code>element.children</code></strong></p>
+<ul>
+<li><code>element.childNodes</code> :  returns a <code>NodeList object</code>,  including <u>element nodes</u>, <u>text nodes,</u> and <u>comment nodes</u></li>
+<li><code>element.children</code>: return a <code>HTMLCollection object</code></li>
+<li>difference: <ul>
+<li><strong>childNodes</strong>: contain all nodes, including <u>text nodes</u> and <u>comment nodes</u> </li>
+<li><strong>children</strong>: only contain <u>element nodes.</u></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong><code>element.firstChild</code> vs <code>element.firstElementChild</code></strong></p>
+<ul>
+<li>difference: <ul>
+<li><strong>firstChild</strong> returns the first child node as an <u>element node</u>, a <u>text node</u> or a <u>comment node</u> (depending on which one’s first), </li>
+<li><strong>firstElementChild</strong> returns the first child node as an <u>element node</u> (ignores text and comment nodes).</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong><code>element.parentNode</code> vs <code>element.parentElement</code></strong></p>
+<ul>
+<li><p><strong>parentElement: </strong> returns <em>null</em> if the parent node is not an element node</p>
+</li>
+<li><p><strong>parentNode: </strong> is probably the most popular</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.body.parentNode; <span class="comment">// Returns the &lt;html&gt; element</span></span><br><span class="line"><span class="built_in">document</span>.body.parentElement; <span class="comment">// Returns the &lt;html&gt; element</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">document</span>.documentElement.parentNode; <span class="comment">// Returns the Document node</span></span><br><span class="line"><span class="built_in">document</span>.documentElement.parentElement; <span class="comment">// Returns null (&lt;html&gt; does not have a parent ELEMENT node)</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><strong><code>element.previousSibling</code> vs <code>element.previousElementSibling</code></strong></p>
+<ul>
+<li><strong>previousSibling: </strong> returns the previous sibling node as an element node, a text node or a comment node</li>
+<li><strong>previousElementSibling: </strong> returns the previous sibling node as an element node (ignores text and comment nodes).</li>
+</ul>
+</li>
+<li><p>sdf</p>
+</li>
+</ol>
+<h2 id="DOM-events"><a href="#DOM-events" class="headerlink" title="DOM events"></a>DOM events</h2><ol>
+<li><code>onload</code></li>
+<li><code>onchange</code></li>
+<li><code>onfocus</code></li>
+<li><code>onmouseover</code> &amp; <code>onmouseout</code></li>
+<li><strong><code>onclick</code> &amp; <code>onmousedown</code> &amp; <code>onmouseup</code></strong></li>
+<li><strong><code>onkeypress</code> &amp; <code>onkeydown</code> &amp; <code>onkeyup</code></strong></li>
+<li><code>onresize</code></li>
+<li><code>onscroll</code></li>
+<li>event propagation: <em>bubbling</em> &amp; <em>capturing</em><ul>
+<li><strong>Event propagation</strong> is a way of defining the element <u>order</u> when an event occurs. </li>
+<li><u><strong><em>bubbling</em></strong></u>:  the inner most element’s event is handled first and then the outer: the <code>&lt;p&gt;</code> element’s click event is handled first, then the <code>&lt;div&gt;</code> element’s click event.</li>
+<li><strong><em><u>capturing</u></em></strong>:  the outer most element’s event is handled first and then the inner: the <code>&lt;div&gt;</code> element’s click event will be handled first, then the<code>&lt;p&gt;</code> element’s click event.</li>
+</ul>
+</li>
+</ol>
+<h2 id="What-can-be-put-inside-lt-head-gt"><a href="#What-can-be-put-inside-lt-head-gt" class="headerlink" title="What can be put inside &lt;head&gt;?"></a>What can be put inside <code>&lt;head&gt;</code>?</h2><p><a href="https://github.com/xiaoyu2er/HEAD" target="_blank" rel="noopener">https://github.com/xiaoyu2er/HEAD</a></p>
+<h2 id="JS-coding-mutate-array-according-new-indices"><a href="#JS-coding-mutate-array-according-new-indices" class="headerlink" title="JS coding: mutate array according new indices"></a>JS coding: mutate array according new indices</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">Given an input array and another array that describes a <span class="keyword">new</span> index <span class="keyword">for</span> each element, mutate the input array so that each element ends up <span class="keyword">in</span> their <span class="keyword">new</span> index. </span><br><span class="line"></span><br><span class="line"><span class="comment">// ---------------- in-place mutate array ------------</span></span><br><span class="line"><span class="keyword">var</span> arr =    [<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>,<span class="string">"d"</span>,<span class="string">"e"</span>,<span class="string">"f"</span>];</span><br><span class="line"><span class="keyword">var</span> indices = [<span class="number">2</span>,  <span class="number">3</span>,  <span class="number">4</span>,  <span class="number">0</span>,  <span class="number">5</span>, <span class="number">1</span>];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Solution1: real in-place solution!</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">inPlaceChange</span>(<span class="params"> arr, indices</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>( arr.length &lt;= <span class="number">1</span> ) <span class="keyword">return</span> arr</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">let</span> toPut = arr[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">let</span> index = indices[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">while</span>( i &lt; arr.length )&#123;</span><br><span class="line">        <span class="keyword">let</span> swap = arr[index]</span><br><span class="line">        arr[index] = toPut</span><br><span class="line">        toPut = swap</span><br><span class="line">        index = indices[index]</span><br><span class="line">        i++</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">inPlaceChange(arr, indices)</span><br><span class="line"><span class="built_in">console</span>.log(arr)</span><br><span class="line"></span><br><span class="line"><span class="comment">//---------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> arr =    [<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>,<span class="string">"d"</span>,<span class="string">"e"</span>,<span class="string">"f"</span>];</span><br><span class="line"><span class="keyword">var</span> indices = [<span class="number">2</span>,  <span class="number">3</span>,  <span class="number">4</span>,  <span class="number">0</span>,  <span class="number">5</span>, <span class="number">1</span>];</span><br><span class="line"><span class="comment">// Solution 2: not real in-place, cause map() use extra space</span></span><br><span class="line"><span class="keyword">let</span> arr = indices.map( <span class="function">(<span class="params">id, index</span>)=&gt;</span>arr[indices.indexOf(index)] )</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"updated arr: "</span>, arr)</span><br></pre></td></tr></table></figure>
+<h2 id="lt-script-async-gt-amp-lt-script-defer-gt"><a href="#lt-script-async-gt-amp-lt-script-defer-gt" class="headerlink" title="&lt;script async&gt; &amp; &lt;script defer&gt;"></a><code>&lt;script async&gt;</code> &amp; <code>&lt;script defer&gt;</code></h2><ol>
+<li>normal <code>&lt;script src=&quot;script.js&quot; &gt;</code><ul>
+<li>The HTML parsing is paused for the script to be both <strong>fetched</strong> and <strong>executed</strong></li>
+</ul>
+</li>
+<li><p><code>&lt;script async&gt;</code></p>
+<ul>
+<li>The HTML parsing is <u>not</u> paused for the script to be <strong>fetched</strong>,</li>
+<li>but still be paused for js to be <strong>executed</strong></li>
+</ul>
+</li>
+<li><p><code>&lt;script defer&gt;</code></p>
+<ul>
+<li>The HTML parsing is <u>not</u> paused for the script to be <strong>fetched</strong>,</li>
+<li>oppositely, the <strong>execution of js is paused</strong> util the HTML finish parsing</li>
+<li>same as <code>&lt;script&gt;</code> right before the <code>&lt;/body&gt;</code> tag</li>
+</ul>
+</li>
+</ol>
+<h2 id="How-to-flatten-an-array"><a href="#How-to-flatten-an-array" class="headerlink" title="How to flatten an array?"></a>How to flatten an array?</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment">	[1, [2, [ [3, 4], 5], 6], [7, 8], 9] =&gt; [1, 2, 3, 4, 5, 6, 7, 8,  9]</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// 1. iterative [stack]</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">flatten1</span>(<span class="params"> arr </span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> res = []</span><br><span class="line">    <span class="keyword">let</span> stack = []</span><br><span class="line">    stack.push(arr)</span><br><span class="line">    <span class="keyword">while</span>( stack.length &gt; <span class="number">0</span> )&#123;</span><br><span class="line">        <span class="keyword">let</span> item = stack.pop()</span><br><span class="line">        <span class="keyword">if</span>( !<span class="built_in">Array</span>.isArray(item) )&#123;</span><br><span class="line">            res.push(item)</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">for</span>( <span class="keyword">let</span> i = item.length<span class="number">-1</span>; i &gt;=<span class="number">0</span>; i-- )&#123;</span><br><span class="line">                stack.push(item[i])</span><br><span class="line">            &#125; </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2.1 recursive </span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">flatten2</span>(<span class="params">arr</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> res = []</span><br><span class="line">    <span class="keyword">if</span>( !<span class="built_in">Array</span>.isArray(arr) )&#123;</span><br><span class="line">        res.push(arr)</span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line">    &#125;</span><br><span class="line">    res.concat(...arr.map(flatten2))</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 2.2 shorter recursive version</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">flatten</span>(<span class="params">a</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">Array</span>.isArray(a) ? [].concat(...a.map(flatten)) : a;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> test1 = [<span class="number">1</span>, [<span class="number">2</span>, <span class="number">3</span>, [<span class="number">4</span>, <span class="number">5</span>]], <span class="number">6</span>, [<span class="number">7</span>, [<span class="number">8</span>, <span class="number">9</span>], <span class="number">10</span>], <span class="number">11</span>]</span><br><span class="line"><span class="keyword">let</span> test2 = []</span><br><span class="line"><span class="keyword">let</span> test3 = [<span class="number">1</span>]</span><br><span class="line"><span class="keyword">let</span> test4 = <span class="number">1</span></span><br><span class="line"><span class="keyword">let</span> test5 = [[[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]]]</span><br><span class="line"><span class="keyword">let</span> test6 = [[[]],[],[],[],[[[]]]]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// let arrayFlattened1 = flatten1(test1).toString()</span></span><br><span class="line"><span class="comment">// let arrayFlattened2 = flatten1(test2).toString()</span></span><br><span class="line"><span class="comment">// let arrayFlattened3 = flatten1(test3).toString()</span></span><br><span class="line"><span class="comment">// let arrayFlattened4 = flatten1(test4).toString()</span></span><br><span class="line"><span class="comment">// let arrayFlattened5 = flatten1(test5).toString()</span></span><br><span class="line"><span class="comment">// let arrayFlattened6 = flatten1(test6).toString()</span></span><br><span class="line"><span class="keyword">let</span> arrayFlattened1 = flatten2(test1).toString()</span><br><span class="line"><span class="keyword">let</span> arrayFlattened2 = flatten2(test2).toString()</span><br><span class="line"><span class="keyword">let</span> arrayFlattened3 = flatten2(test3).toString()</span><br><span class="line"><span class="keyword">let</span> arrayFlattened4 = flatten2(test4).toString()</span><br><span class="line"><span class="keyword">let</span> arrayFlattened5 = flatten2(test5).toString()</span><br><span class="line"><span class="keyword">let</span> arrayFlattened6 = flatten2(test6).toString()</span><br><span class="line"><span class="built_in">console</span>.log(arrayFlattened1)</span><br><span class="line"><span class="built_in">console</span>.log(arrayFlattened2)</span><br><span class="line"><span class="built_in">console</span>.log(arrayFlattened3)</span><br><span class="line"><span class="built_in">console</span>.log(arrayFlattened4)</span><br><span class="line"><span class="built_in">console</span>.log(arrayFlattened5)</span><br><span class="line"><span class="built_in">console</span>.log(arrayFlattened6)</span><br></pre></td></tr></table></figure>
+<h2 id="How-to-check-data-types-in-JS"><a href="#How-to-check-data-types-in-JS" class="headerlink" title="How to check data types in JS"></a>How to check data types in JS</h2><p><a href="https://webbjocke.com/javascript-check-data-types/" target="_blank" rel="noopener">https://webbjocke.com/javascript-check-data-types/</a></p>
+<h2 id="write-a-promise"><a href="#write-a-promise" class="headerlink" title="write a promise"></a>write a promise</h2><p> Promise</p>
+<h2 id="RxJS-Observable"><a href="#RxJS-Observable" class="headerlink" title="RxJS - Observable"></a>RxJS - Observable</h2><ol>
+<li><p><strong>Observer pattern</strong>: subject (publisher) &amp; observer (subscriber)</p>
+<ul>
+<li><p>use case: <u>add event to DOM</u> </p>
+</li>
+<li><p>implementation</p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. Subject</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Subject</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">constructor</span>() &#123;</span><br><span class="line">        <span class="keyword">this</span>.observerCollection = [];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    registerObserver(observer) &#123;</span><br><span class="line">        <span class="keyword">this</span>.observerCollection.push(observer);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    unregisterObserver(observer) &#123;</span><br><span class="line">        <span class="keyword">let</span> index = <span class="keyword">this</span>.observerCollection.indexOf(observer);</span><br><span class="line">        <span class="keyword">if</span>(index &gt;= <span class="number">0</span>) <span class="keyword">this</span>.observerCollection.splice(index, <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    notifyObservers() &#123;</span><br><span class="line">        <span class="keyword">this</span>.observerCollection.forEach(<span class="function">(<span class="params">observer</span>)=&gt;</span>observer.notify());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. Observer</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Observer</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">constructor</span>(name) &#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    notify() &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;<span class="keyword">this</span>.name&#125;</span> has been notified.`</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// use case</span></span><br><span class="line"><span class="keyword">let</span> subject = <span class="keyword">new</span> Subject(); <span class="comment">// 创建主题对象</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> observer1 = <span class="keyword">new</span> Observer(<span class="string">'semlinker'</span>); <span class="comment">// 创建观察者A - 'semlinker'</span></span><br><span class="line"><span class="keyword">let</span> observer2 = <span class="keyword">new</span> Observer(<span class="string">'lolo'</span>); <span class="comment">// 创建观察者B - 'lolo'</span></span><br><span class="line"></span><br><span class="line">subject.registerObserver(observer1); <span class="comment">// 注册观察者A</span></span><br><span class="line">subject.registerObserver(observer2); <span class="comment">// 注册观察者B</span></span><br><span class="line"> </span><br><span class="line">subject.notifyObservers(); <span class="comment">// 通知观察者</span></span><br><span class="line"></span><br><span class="line">subject.unregisterObserver(observer1); <span class="comment">// 移除观察者A</span></span><br><span class="line"></span><br><span class="line">subject.notifyObservers(); <span class="comment">// 验证是否成功移除</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Iterator pattern</strong></p>
+<ul>
+<li><p><u>Why use it</u>:  offer a way to visit interal elements <u>without exposing internal implementing details </u></p>
+</li>
+<li><p>drawback: one-way &amp; irreversible</p>
+</li>
+<li><p>data structure of the return value: <code>next()</code> </p>
+<ul>
+<li>=&gt; <code>{ done: false, value: elementValue }</code></li>
+<li>=&gt; <code>{ done: true, value: undefined }</code></li>
+</ul>
+</li>
+<li><p>Implementation of Array Iterator</p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Array Iterator using closure</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">makeIterator</span>(<span class="params">array</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> nextIndex = <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">       next: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">           <span class="keyword">return</span> nextIndex &lt; array.length ?</span><br><span class="line">               &#123;<span class="attr">value</span>: array[nextIndex++], <span class="attr">done</span>: <span class="literal">false</span>&#125; :</span><br><span class="line">               &#123;<span class="attr">done</span>: <span class="literal">true</span>&#125;;</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// use case</span></span><br><span class="line"><span class="keyword">var</span> it = makeIterator([<span class="string">'yo'</span>, <span class="string">'ya'</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(it.next().value); <span class="comment">// 'yo'</span></span><br><span class="line"><span class="built_in">console</span>.log(it.next().value); <span class="comment">// 'ya'</span></span><br><span class="line"><span class="built_in">console</span>.log(it.next().done);  <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><strong>ES6 Iterator: </strong> <code>Symbol.iterator</code> can create iterator for an iterable object</p>
+<ul>
+<li><p>How to use?</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>];</span><br><span class="line"><span class="keyword">let</span> iter = arr[<span class="built_in">Symbol</span>.iterator]();</span><br><span class="line"></span><br><span class="line">&gt; iter.next()</span><br><span class="line">&#123; <span class="attr">value</span>: <span class="string">'a'</span>, <span class="attr">done</span>: <span class="literal">false</span> &#125;</span><br><span class="line">&gt; iter.next()</span><br><span class="line">&#123; <span class="attr">value</span>: <span class="string">'b'</span>, <span class="attr">done</span>: <span class="literal">false</span> &#125;</span><br><span class="line">&gt; iter.next()</span><br><span class="line">&#123; <span class="attr">value</span>: <span class="string">'c'</span>, <span class="attr">done</span>: <span class="literal">false</span> &#125;</span><br><span class="line">&gt; iter.next()</span><br><span class="line">&#123; <span class="attr">value</span>: <span class="literal">undefined</span>, <span class="attr">done</span>: <span class="literal">true</span> &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>iterable object: <strong>Arrays, Strings, Maps, Sets, DOM</strong></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Observable</strong></p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ReactJS/" rel="tag"># ReactJS</a>
+          
+            <a href="/tags/DOM/" rel="tag"># DOM</a>
+          
+            <a href="/tags/CSS/" rel="tag"># CSS</a>
+          
+            <a href="/tags/HTML-render/" rel="tag"># HTML render</a>
+          
+            <a href="/tags/Observable/" rel="tag"># Observable</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/05/A-Way-to-Make-an-Efficient-React-Timer/" rel="next" title="A Way to Make an Efficient React Timer">
+                <i class="fa fa-chevron-left"></i> A Way to Make an Efficient React Timer
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/07/Search-for-a-Symmetric-Node/" rel="prev" title="Search for a Symmetric Node">
+                Search for a Symmetric Node <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/sea.jpg"
+                alt="Mingkai Cao" />
+            
+              <p class="site-author-name" itemprop="name">Mingkai Cao</p>
+              <p class="site-description motion-element" itemprop="description">All-trade Jack, loves full-stack</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">44</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">53</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/caomingkai" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:mingkaic@usc.edu" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Why-use-React"><span class="nav-number">1.</span> <span class="nav-text">Why use React?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-Lifecyle"><span class="nav-number">2.</span> <span class="nav-text">React Lifecyle</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-implement-infinite-scroll-loading"><span class="nav-number">3.</span> <span class="nav-text">How to implement infinite scroll loading</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-rendering-order-CSS-JS-HTML"><span class="nav-number">4.</span> <span class="nav-text">The rendering order: CSS, JS, HTML</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS-float-amp-position-amp-box-model"><span class="nav-number">5.</span> <span class="nav-text">CSS:   float &amp;  position &amp; box model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS-cursor-pointer"><span class="nav-number">6.</span> <span class="nav-text">CSS:  cursor: pointer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS-px-vs-rem-vs-em"><span class="nav-number">7.</span> <span class="nav-text">CSS:  px vs rem vs em</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS-block-vs-inline-vs-inline-block"><span class="nav-number">8.</span> <span class="nav-text">CSS: block vs inline vs inline-block</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS-how-to-vertically-center-an-element"><span class="nav-number">9.</span> <span class="nav-text">CSS: how to vertically center an element?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DOM-structure"><span class="nav-number">10.</span> <span class="nav-text">DOM structure</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DOM-API"><span class="nav-number">11.</span> <span class="nav-text">DOM API:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DOM-events"><span class="nav-number">12.</span> <span class="nav-text">DOM events</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#What-can-be-put-inside-lt-head-gt"><span class="nav-number">13.</span> <span class="nav-text">What can be put inside &lt;head&gt;?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JS-coding-mutate-array-according-new-indices"><span class="nav-number">14.</span> <span class="nav-text">JS coding: mutate array according new indices</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lt-script-async-gt-amp-lt-script-defer-gt"><span class="nav-number">15.</span> <span class="nav-text">&lt;script async&gt; &amp; &lt;script defer&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-flatten-an-array"><span class="nav-number">16.</span> <span class="nav-text">How to flatten an array?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-check-data-types-in-JS"><span class="nav-number">17.</span> <span class="nav-text">How to check data types in JS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#write-a-promise"><span class="nav-number">18.</span> <span class="nav-text">write a promise</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RxJS-Observable"><span class="nav-number">19.</span> <span class="nav-text">RxJS - Observable</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate"> 
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mingkai Cao</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.6</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.6"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.6"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.6"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.6"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.6"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'hG8fgggWL7hK1jsXsRoVCNWv-MdYXbMMI',
+        appKey: 'VRAYsgwdkRyyb8bAFQ5uii6o',
+        placeholder: 'Any comment?',
+        avatar:'',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+    // 新增以下代码即可，可以移除.info下所有子节点
+    var infoEle = document.querySelector('#comments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0){
+      infoEle.childNodes.forEach(function(item) {
+        item.parentNode.removeChild(item);
+      });
+    }
+
+
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+<style>
+    #comments .vempty{
+        display: none;
+    }
+</style>
+
+</body>
+</html>

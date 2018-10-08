@@ -332,6 +332,619 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/07/Search-for-a-Symmetric-Node/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/07/Search-for-a-Symmetric-Node/" itemprop="url">Search for a Symmetric Node</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-07T20:34:30-07:00">2018-10-07</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/07/Search-for-a-Symmetric-Node/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/07/Search-for-a-Symmetric-Node/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h2><p>Given two DOM trees with the same structure, and one node in tree1, try to find its symmetric node in tree2</p>
+<h2 id="Solution-1"><a href="#Solution-1" class="headerlink" title="Solution 1"></a>Solution 1</h2><p>If we are not so familiar with DOM API, we might forget there is an attribute for each DOM element: <code>parentNode</code>. Then we might just traverse both trees at the same time, when we encounter the node in tree1, the node in tree2 is what we want.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getSymmetricNode</span>(<span class="params">target, root1, root2</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>( target === root1 ) <span class="keyword">return</span> root2</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">0</span>; i &lt; root1.childNodes.length; i++ )&#123;</span><br><span class="line">        <span class="keyword">let</span> node1 = root1.childNodes[i]     </span><br><span class="line">        <span class="keyword">let</span> node2 = root2.childNodes[i]</span><br><span class="line">        <span class="keyword">if</span>( node1 === target ) <span class="keyword">return</span> node2</span><br><span class="line">		getSymmetricNode(target, node1, node2 )</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>Time Complexity: <strong>O(b^d)  [d: depth, b: branches]</strong>, which is BAD!</li>
+</ol>
+<h2 id="Solution-2-Improved"><a href="#Solution-2-Improved" class="headerlink" title="Solution 2 [Improved ]"></a>Solution 2 [Improved ]</h2><p>Actually there is an convenient attribute we could utilize, that is <code>parentNode</code></p>
+<ol>
+<li>First, we could go up to find that <u><strong>path</strong> from root1 to target</u><ul>
+<li>The path is consist of indices of node on that path</li>
+</ul>
+</li>
+<li>Using that path of indices, we could go downwards from root2 to find the desired node</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> getSymmetricNode = <span class="function">(<span class="params">target, root1, root2</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> path = getIndexPath( target, root1 )</span><br><span class="line">    <span class="keyword">return</span> getNode( path, root2 )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> getIndexPath = <span class="function">(<span class="params">target, root1</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> path = []</span><br><span class="line">    <span class="keyword">let</span> curNode = target</span><br><span class="line">    <span class="keyword">while</span>( curNode &amp;&amp; curNode.parentNode )&#123;</span><br><span class="line">        <span class="keyword">let</span> index = curNode.parentNode.indexOf(curNode)</span><br><span class="line">        path.push(index)</span><br><span class="line">        curNode = curNode.parentNode</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> path</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> getNode =<span class="function">(<span class="params">path, root</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> node</span><br><span class="line">    <span class="keyword">while</span>( path.length &gt; <span class="number">0</span> )&#123;</span><br><span class="line">        node = root.childNodes[path.pop()]</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> node</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Testing"><a href="#Testing" class="headerlink" title="Testing"></a>Testing</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line">// Testing</span><br><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Hello World<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"root1"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"node1"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"root2"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"node2"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="javascript">      <span class="comment">// --------------- 1: O(b^d) --------------</span></span></span><br><span class="line"><span class="javascript">      <span class="function"><span class="keyword">function</span> <span class="title">getSymmetricNode1</span>(<span class="params">target, root1, root2</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">if</span>( target === root1 ) <span class="keyword">return</span> root2</span></span><br><span class="line"><span class="javascript">          <span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">0</span>; i &lt; root1.childNodes.length; i++ )&#123;</span></span><br><span class="line"><span class="javascript">              <span class="keyword">let</span> node1 = root1.childNodes[i]     </span></span><br><span class="line"><span class="javascript">              <span class="keyword">let</span> node2 = root2.childNodes[i]</span></span><br><span class="line"><span class="javascript">              <span class="keyword">let</span> res = getSymmetricNode1(target, node1, node2)</span></span><br><span class="line"><span class="javascript">              <span class="keyword">if</span>( <span class="literal">null</span> !== res ) <span class="keyword">return</span> res</span></span><br><span class="line"><span class="undefined">                </span></span><br><span class="line"><span class="undefined">          &#125;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">return</span> <span class="literal">null</span></span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="javascript">      <span class="comment">// -------------- 2: O(b*d) ---------------</span></span></span><br><span class="line"><span class="javascript">      <span class="function"><span class="keyword">function</span> <span class="title">getSymmetricNode</span>(<span class="params">target, root1, root2</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">let</span> path = getIndexPath( target, root1 )</span></span><br><span class="line"><span class="javascript">          <span class="keyword">return</span> getNode( path, root2 )</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">      <span class="function"><span class="keyword">function</span> <span class="title">getChildNodesArray</span>(<span class="params">node</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> <span class="built_in">Array</span>.prototype.slice.call(node.childNodes)</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="javascript">      <span class="function"><span class="keyword">function</span> <span class="title">getIndexPath</span>(<span class="params">target, root1</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">let</span> path = []</span></span><br><span class="line"><span class="javascript">          <span class="keyword">let</span> curNode = target</span></span><br><span class="line"><span class="javascript">          <span class="keyword">while</span>( curNode !==root1 &amp;&amp; curNode &amp;&amp; curNode.parentNode )&#123;</span></span><br><span class="line"><span class="javascript">              <span class="keyword">let</span> index = getChildNodesArray(curNode.parentNode).indexOf(curNode)</span></span><br><span class="line"><span class="undefined">              path.push(index)</span></span><br><span class="line"><span class="undefined">              curNode = curNode.parentNode</span></span><br><span class="line"><span class="undefined">          &#125;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">return</span> path</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="javascript">      <span class="function"><span class="keyword">function</span> <span class="title">getNode</span>(<span class="params">path, root</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">let</span> node = root</span></span><br><span class="line"><span class="javascript">          <span class="keyword">while</span>( path.length &gt; <span class="number">0</span> )&#123;</span></span><br><span class="line"><span class="undefined">              node = getChildNodesArray(node)[path.pop()]</span></span><br><span class="line"><span class="undefined">          &#125;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">return</span> node</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">      <span class="keyword">const</span> root1 = <span class="built_in">document</span>.getElementById(<span class="string">'root1'</span>);</span></span><br><span class="line"><span class="javascript">      <span class="keyword">const</span> root2 = <span class="built_in">document</span>.getElementById(<span class="string">'root2'</span>);</span></span><br><span class="line"><span class="javascript">      <span class="keyword">const</span> node1 = <span class="built_in">document</span>.getElementById(<span class="string">'node1'</span>);</span></span><br><span class="line"><span class="javascript">      <span class="keyword">const</span> node2 = <span class="built_in">document</span>.getElementById(<span class="string">'node2'</span>);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">      <span class="keyword">const</span> nodeX = getSymmetricNode(node1, root1, root2 );</span></span><br><span class="line"><span class="javascript">      <span class="built_in">console</span>.log(nodeX)</span></span><br><span class="line"><span class="javascript">      <span class="built_in">console</span>.log(nodeX === node2); <span class="comment">// true</span></span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/06/Facebook-Interview-Preparation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/06/Facebook-Interview-Preparation/" itemprop="url">Facebook Interview Preparation</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-06T19:07:47-07:00">2018-10-06</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/06/Facebook-Interview-Preparation/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/06/Facebook-Interview-Preparation/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Why-use-React"><a href="#Why-use-React" class="headerlink" title="Why use React?"></a>Why use React?</h2><p>Credit to: <a href="https://reactjs.org/blog/2013/06/05/why-react.html" target="_blank" rel="noopener">https://reactjs.org/blog/2013/06/05/why-react.html</a></p>
+<ol>
+<li>React is not MVC, is only “V”</li>
+<li>Support small, <strong>reusable</strong> component</li>
+<li>efficient DOM update, using <strong>diff algorithm</strong><ul>
+<li><code>reconcilation process</code>: the way React used to update real DOM, by only updating changed components node and its children</li>
+<li>Every time <code>props</code> or <code>state</code> change leading to <code>render()</code> execution, which will produce either a <code>String</code> or <code>virtual DOM node</code>; </li>
+<li>Either way, React will compare it with previous <code>String</code> or <code>virtual DOM node</code>, to determine which node in real DOM need to be updated</li>
+<li><code>diff/reconcilation</code> process only happens after <code>render()</code>, it will compare current tree with previous tree</li>
+</ul>
+</li>
+<li><code>key</code> in a list of nodes: make <code>diff</code> efficiently<ol>
+<li>there are cases that a node is added in front to a list, without <code>key</code>, React just compare each pair of nodes from previous tree and current tree, and re-render all the nodes in real DOM in that list; Even thought, it only needs to insert a new node to real DOM tree</li>
+<li>Attaching a <code>key</code> to each node in a list, will help React know which node need to be re-render in real  DOM tree.</li>
+<li>Nodes with the same <code>key</code> inside a list, will be stable across different re-renders</li>
+</ol>
+</li>
+</ol>
+<h2 id="React-Lifecyle"><a href="#React-Lifecyle" class="headerlink" title="React Lifecyle"></a>React Lifecyle</h2><ol>
+<li><h2 id="How-to-implement-infinite-scroll-loading"><a href="#How-to-implement-infinite-scroll-loading" class="headerlink" title="How to implement infinite scroll loading"></a>How to implement infinite scroll loading</h2></li>
+<li><p>Credit to: <a href="https://segmentfault.com/a/1190000004974824" target="_blank" rel="noopener">https://segmentfault.com/a/1190000004974824</a></p>
+</li>
+<li><p>Which event do we use?</p>
+<ul>
+<li>We assume the user will scroll down the screen, in order to load more content</li>
+<li>So we use the <code>scroll</code> event on <code>window</code> or <code>block element</code> with a height set already</li>
+</ul>
+</li>
+<li><p>Three conditions for AJAX cal</p>
+<ol>
+<li><code>container bottom - window bottom &lt; certain value</code> ,i.e. the container don’t have too much content to show</li>
+<li>not in the middle of loading</li>
+<li>still have content to load, i.e. not the end of all the content</li>
+</ol>
+</li>
+<li><p>code </p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> isLoading = <span class="literal">false</span>;</span><br><span class="line"><span class="keyword">var</span> isEnd = <span class="literal">false</span>;</span><br><span class="line"><span class="keyword">var</span> triggerDistance = <span class="number">200</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fetchData</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> distance = container.getBoundingClientRect().bottom - <span class="built_in">window</span>.innerHeight;</span><br><span class="line">  <span class="keyword">if</span> ( !isLoading &amp;&amp; !isEnd &amp;&amp; distance &lt; triggerDistance ) &#123;</span><br><span class="line"></span><br><span class="line">    isLoading = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">    fetch(path).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">      isLoading = <span class="literal">false</span>;</span><br><span class="line">      <span class="comment">// if not end, will short-circut latter statement</span></span><br><span class="line">      <span class="comment">// if reach end, will still check the latter one, which will set isEnd to true</span></span><br><span class="line">      res.data.length === <span class="number">0</span> &amp;&amp; isEnd = <span class="literal">true</span>; </span><br><span class="line">      doSomething(res.data);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'scroll'</span>, fetchData);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="The-rendering-order-CSS-JS-HTML"><a href="#The-rendering-order-CSS-JS-HTML" class="headerlink" title="The rendering order: CSS, JS, HTML"></a>The rendering order: CSS, JS, HTML</h2><ol>
+<li><p>credit to:</p>
+<ul>
+<li><a href="https://bitsofco.de/async-vs-defer/" target="_blank" rel="noopener">https://bitsofco.de/async-vs-defer/</a></li>
+<li><a href="https://www.cnblogs.com/yingsong/p/6170780.html" target="_blank" rel="noopener">https://www.cnblogs.com/yingsong/p/6170780.html</a></li>
+</ul>
+</li>
+<li><p>General order</p>
+<ol>
+<li><p>JS in <code>&lt;head&gt;</code> will block downloading of following resource</p>
+</li>
+<li><p>Browser downloads and parses HTML to DOM</p>
+</li>
+<li><p>when encounter <code>&lt;script&gt;</code>, </p>
+<ul>
+<li>if not external, <strong><u>render engine</u></strong> hand control power to <strong><u>js engine</u></strong></li>
+<li>if is external, render engine <u>keep rendering</u>, while downloads external</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="CSS-float-amp-position-amp-box-model"><a href="#CSS-float-amp-position-amp-box-model" class="headerlink" title="CSS:   float &amp;  position &amp; box model"></a>CSS:   <code>float</code> &amp;  <code>position</code> &amp; <code>box model</code></h2><h2 id="CSS-cursor-pointer"><a href="#CSS-cursor-pointer" class="headerlink" title="CSS:  cursor: pointer"></a>CSS:  <code>cursor: pointer</code></h2><h2 id="CSS-px-vs-rem-vs-em"><a href="#CSS-px-vs-rem-vs-em" class="headerlink" title="CSS:  px vs rem vs em"></a>CSS:  <code>px</code> vs <code>rem</code> vs <code>em</code></h2><h2 id="CSS-block-vs-inline-vs-inline-block"><a href="#CSS-block-vs-inline-vs-inline-block" class="headerlink" title="CSS: block vs inline vs inline-block"></a>CSS: <code>block</code> vs <code>inline</code> vs <code>inline-block</code></h2><h2 id="CSS-how-to-vertically-center-an-element"><a href="#CSS-how-to-vertically-center-an-element" class="headerlink" title="CSS: how to vertically center an element?"></a>CSS: how to vertically center an element?</h2><ol>
+<li>parent without <code>height</code> &amp; <code>width</code></li>
+<li>parent with <code>height</code> &amp; <code>width</code></li>
+</ol>
+<h2 id="DOM-structure"><a href="#DOM-structure" class="headerlink" title="DOM structure"></a>DOM structure</h2><ol>
+<li><p>difference between <code>HTMLCollection</code> &amp; <code>NodeList</code></p>
+<ul>
+<li><p><code>HTMLCollection</code>: a collection of <strong>element nodes</strong></p>
+</li>
+<li><p><code>NodeList</code>: a collection of <strong>all types of nodes: element node/ text node/ comment node</strong></p>
+</li>
+<li>convert them to array, to extract info: <code>Array.prototype.slice.call(NodeList)</code></li>
+</ul>
+</li>
+<li><p>everything in an HTML document is a <u>node</u>:</p>
+<ul>
+<li>The entire document is a <strong><em>document</em> node</strong></li>
+<li>Every HTML element is an <strong><em>element</em> node</strong></li>
+<li>The text inside HTML elements are <strong><em>text</em> nodes</strong></li>
+<li>All comments are <strong><em>comment</em> nodes</strong></li>
+</ul>
+</li>
+<li><p>navigate across the DOM tree using attibutes: [<u><em>element node, text node, comment node</em></u>]</p>
+<ol>
+<li>parentNode</li>
+<li>childNodes [<em>nodenumber</em>]</li>
+<li>firstChild</li>
+<li>lastChild</li>
+<li>nextSibling</li>
+<li>previousSibling</li>
+</ol>
+</li>
+<li><p><u><strong>A common error in DOM processing is to expect an element node to contain text.</strong></u></p>
+<ol>
+<li><p><code>&lt;title id=&quot;demo&quot;&gt;DOM Tutorial&lt;/title&gt;</code></p>
+</li>
+<li><p>The element node <code>&lt;title&gt;</code> (in the example above) does <strong>not</strong> contain text.</p>
+</li>
+<li><p>It contains a <strong>text node</strong> with the value “DOM Tutorial”.</p>
+</li>
+<li><p>The value of the text node can be accessed by the node’s <strong>innerHTML</strong> property:</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myTitle = <span class="built_in">document</span>.getElementById(<span class="string">"demo"</span>).innerHTML;</span><br><span class="line"></span><br><span class="line"><span class="comment">// or</span></span><br><span class="line"><span class="keyword">var</span> myTitle = <span class="built_in">document</span>.getElementById(<span class="string">"demo"</span>).firstChild.nodeValue;</span><br><span class="line"></span><br><span class="line"><span class="comment">// or</span></span><br><span class="line"><span class="keyword">var</span> myTitle = <span class="built_in">document</span>.getElementById(<span class="string">"demo"</span>).childNodes[<span class="number">0</span>].nodeValue;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="DOM-API"><a href="#DOM-API" class="headerlink" title="DOM API:"></a>DOM API:</h2><ol>
+<li><p><strong>get style &amp; set style of an element</strong></p>
+<ul>
+<li><p>set style</p>
+<ul>
+<li>directly use it as attribute <code>elements.style.fontSize = &#39;10px&#39;</code></li>
+<li>NOTE: the style name must be <strong>camelCase</strong></li>
+</ul>
+</li>
+<li><p>get style: </p>
+<ul>
+<li><p>if style is set using <code>style</code> or <code>js</code>, directly get the style</p>
+</li>
+<li><p>if style is set using <code>css</code> without <code>element.style</code> keyword, we will use <code>getComputedStyle()</code></p>
+</li>
+<li><p><code>document.defaultView.getComputedStyle(ele,null).getPropertyValue(&quot;font-size&quot;)</code></p>
+</li>
+<li><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">cStyles</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">  <span class="keyword">var</span> RefDiv = <span class="built_in">document</span>.getElementById(<span class="string">"d1"</span>);</span></span><br><span class="line"><span class="javascript">  <span class="keyword">var</span> txtHeight = <span class="built_in">document</span>.getElementById(<span class="string">"t1"</span>);</span></span><br><span class="line"><span class="javascript">  <span class="keyword">var</span> h_style = <span class="built_in">document</span>.defaultView.getComputedStyle(RefDiv, <span class="literal">null</span>).getPropertyValue(<span class="string">"height"</span>);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">  txtHeight.value = h_style;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css"><span class="selector-id">#d1</span> &#123;</span></span><br><span class="line"><span class="undefined">  margin-left: 10px;</span></span><br><span class="line"><span class="undefined">  background-color: rgb(173, 216, 230); </span></span><br><span class="line"><span class="undefined">  height: 20px;</span></span><br><span class="line"><span class="undefined">  max-width: 20px;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"d1"</span>&gt;</span>&amp;nbsp;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">""</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">onclick</span>=<span class="string">"cStyles();"</span>&gt;</span>getComputedStyle<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    height<span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">"t1"</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">value</span>=<span class="string">"1"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong><code>console.trace()</code> can be used to trace the call stack of a certain function</strong></p>
+</li>
+<li><p><code>addEventListener</code> &amp; <code>removeEventListener</code></p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Attach an event handler to the document</span></span><br><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">"mousemove"</span>, myFunction);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Remove the event handler from the document</span></span><br><span class="line"><span class="built_in">document</span>.removeEventListener(<span class="string">"mousemove"</span>, myFunction);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>createAttribute()</code> &amp; <code>setAttributeNode()</code></p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myFunction</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> h1 = <span class="built_in">document</span>.getElementsByTagName(<span class="string">"H1"</span>)[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">var</span> att = <span class="built_in">document</span>.createAttribute(<span class="string">"class"</span>);</span><br><span class="line">    att.value = <span class="string">"democlass"</span>;</span><br><span class="line">    h1.setAttributeNode(att);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>createElement()</code>  &amp; <code>intersetBefore()</code> &amp;  <code>appendChild()</code></p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> btn = <span class="built_in">document</span>.createElement(<span class="string">"BUTTON"</span>);        <span class="comment">// Create a &lt;button&gt; element</span></span><br><span class="line"><span class="keyword">var</span> t = <span class="built_in">document</span>.createTextNode(<span class="string">"CLICK ME"</span>);       <span class="comment">// Create a text node</span></span><br><span class="line">btn.appendChild(t);                                <span class="comment">// Append the text to &lt;button&gt;</span></span><br><span class="line"><span class="built_in">document</span>.body.appendChild(btn);                    <span class="comment">// Append &lt;button&gt; to &lt;body&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p><code>querySelector</code>  &amp; <code>querySelectorAll()</code></p>
+<ol>
+<li><p><a href="https://www.w3schools.com/cssref/css_selectors.asp" target="_blank" rel="noopener">https://www.w3schools.com/cssref/css_selectors.asp</a></p>
+</li>
+<li><p><code>querySelector()</code> returns <strong>the first element</strong> that matches a specified <em>CSS selector(s)</em> </p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. select first p element whose parent is a div</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myFunction</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> x = <span class="built_in">document</span>.querySelector(<span class="string">"div &gt; p"</span>);</span><br><span class="line">    x.style.backgroundColor = <span class="string">"red"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. select all a element has target attribute</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myFunction</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">document</span>.querySelector(<span class="string">"a[target]"</span>).style.border = <span class="string">"10px solid red"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p><code>querySelectorAll()</code> returns <strong>all elements</strong> in the document that matches a specified CSS selector(s), as a static <strong><u>NodeList object</u></strong>.</p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myFunction</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> x = <span class="built_in">document</span>.querySelectorAll(<span class="string">"a[target]"</span>);</span><br><span class="line">    <span class="keyword">var</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; x.length; i++) &#123;</span><br><span class="line">        x[i].style.border = <span class="string">"10px solid red"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p><strong><code>element.childNodes</code> vs <code>element.children</code></strong></p>
+<ul>
+<li><code>element.childNodes</code> :  returns a <code>NodeList object</code>,  including <u>element nodes</u>, <u>text nodes,</u> and <u>comment nodes</u></li>
+<li><code>element.children</code>: return a <code>HTMLCollection object</code></li>
+<li>difference: <ul>
+<li><strong>childNodes</strong>: contain all nodes, including <u>text nodes</u> and <u>comment nodes</u> </li>
+<li><strong>children</strong>: only contain <u>element nodes.</u></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong><code>element.firstChild</code> vs <code>element.firstElementChild</code></strong></p>
+<ul>
+<li>difference: <ul>
+<li><strong>firstChild</strong> returns the first child node as an <u>element node</u>, a <u>text node</u> or a <u>comment node</u> (depending on which one’s first), </li>
+<li><strong>firstElementChild</strong> returns the first child node as an <u>element node</u> (ignores text and comment nodes).</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong><code>element.parentNode</code> vs <code>element.parentElement</code></strong></p>
+<ul>
+<li><p><strong>parentElement: </strong> returns <em>null</em> if the parent node is not an element node</p>
+</li>
+<li><p><strong>parentNode: </strong> is probably the most popular</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.body.parentNode; <span class="comment">// Returns the &lt;html&gt; element</span></span><br><span class="line"><span class="built_in">document</span>.body.parentElement; <span class="comment">// Returns the &lt;html&gt; element</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">document</span>.documentElement.parentNode; <span class="comment">// Returns the Document node</span></span><br><span class="line"><span class="built_in">document</span>.documentElement.parentElement; <span class="comment">// Returns null (&lt;html&gt; does not have a parent ELEMENT node)</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><strong><code>element.previousSibling</code> vs <code>element.previousElementSibling</code></strong></p>
+<ul>
+<li><strong>previousSibling: </strong> returns the previous sibling node as an element node, a text node or a comment node</li>
+<li><strong>previousElementSibling: </strong> returns the previous sibling node as an element node (ignores text and comment nodes).</li>
+</ul>
+</li>
+<li><p>sdf</p>
+</li>
+</ol>
+<h2 id="DOM-events"><a href="#DOM-events" class="headerlink" title="DOM events"></a>DOM events</h2><ol>
+<li><code>onload</code></li>
+<li><code>onchange</code></li>
+<li><code>onfocus</code></li>
+<li><code>onmouseover</code> &amp; <code>onmouseout</code></li>
+<li><strong><code>onclick</code> &amp; <code>onmousedown</code> &amp; <code>onmouseup</code></strong></li>
+<li><strong><code>onkeypress</code> &amp; <code>onkeydown</code> &amp; <code>onkeyup</code></strong></li>
+<li><code>onresize</code></li>
+<li><code>onscroll</code></li>
+<li>event propagation: <em>bubbling</em> &amp; <em>capturing</em><ul>
+<li><strong>Event propagation</strong> is a way of defining the element <u>order</u> when an event occurs. </li>
+<li><u><strong><em>bubbling</em></strong></u>:  the inner most element’s event is handled first and then the outer: the <code>&lt;p&gt;</code> element’s click event is handled first, then the <code>&lt;div&gt;</code> element’s click event.</li>
+<li><strong><em><u>capturing</u></em></strong>:  the outer most element’s event is handled first and then the inner: the <code>&lt;div&gt;</code> element’s click event will be handled first, then the<code>&lt;p&gt;</code> element’s click event.</li>
+</ul>
+</li>
+</ol>
+<h2 id="What-can-be-put-inside-lt-head-gt"><a href="#What-can-be-put-inside-lt-head-gt" class="headerlink" title="What can be put inside &lt;head&gt;?"></a>What can be put inside <code>&lt;head&gt;</code>?</h2><p><a href="https://github.com/xiaoyu2er/HEAD" target="_blank" rel="noopener">https://github.com/xiaoyu2er/HEAD</a></p>
+<h2 id="JS-coding-mutate-array-according-new-indices"><a href="#JS-coding-mutate-array-according-new-indices" class="headerlink" title="JS coding: mutate array according new indices"></a>JS coding: mutate array according new indices</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">Given an input array and another array that describes a <span class="keyword">new</span> index <span class="keyword">for</span> each element, mutate the input array so that each element ends up <span class="keyword">in</span> their <span class="keyword">new</span> index. </span><br><span class="line"></span><br><span class="line"><span class="comment">// ---------------- in-place mutate array ------------</span></span><br><span class="line"><span class="keyword">var</span> arr =    [<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>,<span class="string">"d"</span>,<span class="string">"e"</span>,<span class="string">"f"</span>];</span><br><span class="line"><span class="keyword">var</span> indices = [<span class="number">2</span>,  <span class="number">3</span>,  <span class="number">4</span>,  <span class="number">0</span>,  <span class="number">5</span>, <span class="number">1</span>];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Solution1: real in-place solution!</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">inPlaceChange</span>(<span class="params"> arr, indices</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>( arr.length &lt;= <span class="number">1</span> ) <span class="keyword">return</span> arr</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">let</span> toPut = arr[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">let</span> index = indices[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">while</span>( i &lt; arr.length )&#123;</span><br><span class="line">        <span class="keyword">let</span> swap = arr[index]</span><br><span class="line">        arr[index] = toPut</span><br><span class="line">        toPut = swap</span><br><span class="line">        index = indices[index]</span><br><span class="line">        i++</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">inPlaceChange(arr, indices)</span><br><span class="line"><span class="built_in">console</span>.log(arr)</span><br><span class="line"></span><br><span class="line"><span class="comment">//---------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> arr =    [<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>,<span class="string">"d"</span>,<span class="string">"e"</span>,<span class="string">"f"</span>];</span><br><span class="line"><span class="keyword">var</span> indices = [<span class="number">2</span>,  <span class="number">3</span>,  <span class="number">4</span>,  <span class="number">0</span>,  <span class="number">5</span>, <span class="number">1</span>];</span><br><span class="line"><span class="comment">// Solution 2: not real in-place, cause map() use extra space</span></span><br><span class="line"><span class="keyword">let</span> arr = indices.map( <span class="function">(<span class="params">id, index</span>)=&gt;</span>arr[indices.indexOf(index)] )</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"updated arr: "</span>, arr)</span><br></pre></td></tr></table></figure>
+<h2 id="lt-script-async-gt-amp-lt-script-defer-gt"><a href="#lt-script-async-gt-amp-lt-script-defer-gt" class="headerlink" title="&lt;script async&gt; &amp; &lt;script defer&gt;"></a><code>&lt;script async&gt;</code> &amp; <code>&lt;script defer&gt;</code></h2><ol>
+<li>normal <code>&lt;script src=&quot;script.js&quot; &gt;</code><ul>
+<li>The HTML parsing is paused for the script to be both <strong>fetched</strong> and <strong>executed</strong></li>
+</ul>
+</li>
+<li><p><code>&lt;script async&gt;</code></p>
+<ul>
+<li>The HTML parsing is <u>not</u> paused for the script to be <strong>fetched</strong>,</li>
+<li>but still be paused for js to be <strong>executed</strong></li>
+</ul>
+</li>
+<li><p><code>&lt;script defer&gt;</code></p>
+<ul>
+<li>The HTML parsing is <u>not</u> paused for the script to be <strong>fetched</strong>,</li>
+<li>oppositely, the <strong>execution of js is paused</strong> util the HTML finish parsing</li>
+<li>same as <code>&lt;script&gt;</code> right before the <code>&lt;/body&gt;</code> tag</li>
+</ul>
+</li>
+</ol>
+<h2 id="How-to-flatten-an-array"><a href="#How-to-flatten-an-array" class="headerlink" title="How to flatten an array?"></a>How to flatten an array?</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment">	[1, [2, [ [3, 4], 5], 6], [7, 8], 9] =&gt; [1, 2, 3, 4, 5, 6, 7, 8,  9]</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// 1. iterative [stack]</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">flatten1</span>(<span class="params"> arr </span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> res = []</span><br><span class="line">    <span class="keyword">let</span> stack = []</span><br><span class="line">    stack.push(arr)</span><br><span class="line">    <span class="keyword">while</span>( stack.length &gt; <span class="number">0</span> )&#123;</span><br><span class="line">        <span class="keyword">let</span> item = stack.pop()</span><br><span class="line">        <span class="keyword">if</span>( !<span class="built_in">Array</span>.isArray(item) )&#123;</span><br><span class="line">            res.push(item)</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">for</span>( <span class="keyword">let</span> i = item.length<span class="number">-1</span>; i &gt;=<span class="number">0</span>; i-- )&#123;</span><br><span class="line">                stack.push(item[i])</span><br><span class="line">            &#125; </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2.1 recursive </span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">flatten2</span>(<span class="params">arr</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> res = []</span><br><span class="line">    <span class="keyword">if</span>( !<span class="built_in">Array</span>.isArray(arr) )&#123;</span><br><span class="line">        res.push(arr)</span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line">    &#125;</span><br><span class="line">    res.concat(...arr.map(flatten2))</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 2.2 shorter recursive version</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">flatten</span>(<span class="params">a</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">Array</span>.isArray(a) ? [].concat(...a.map(flatten)) : a;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> test1 = [<span class="number">1</span>, [<span class="number">2</span>, <span class="number">3</span>, [<span class="number">4</span>, <span class="number">5</span>]], <span class="number">6</span>, [<span class="number">7</span>, [<span class="number">8</span>, <span class="number">9</span>], <span class="number">10</span>], <span class="number">11</span>]</span><br><span class="line"><span class="keyword">let</span> test2 = []</span><br><span class="line"><span class="keyword">let</span> test3 = [<span class="number">1</span>]</span><br><span class="line"><span class="keyword">let</span> test4 = <span class="number">1</span></span><br><span class="line"><span class="keyword">let</span> test5 = [[[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]]]</span><br><span class="line"><span class="keyword">let</span> test6 = [[[]],[],[],[],[[[]]]]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// let arrayFlattened1 = flatten1(test1).toString()</span></span><br><span class="line"><span class="comment">// let arrayFlattened2 = flatten1(test2).toString()</span></span><br><span class="line"><span class="comment">// let arrayFlattened3 = flatten1(test3).toString()</span></span><br><span class="line"><span class="comment">// let arrayFlattened4 = flatten1(test4).toString()</span></span><br><span class="line"><span class="comment">// let arrayFlattened5 = flatten1(test5).toString()</span></span><br><span class="line"><span class="comment">// let arrayFlattened6 = flatten1(test6).toString()</span></span><br><span class="line"><span class="keyword">let</span> arrayFlattened1 = flatten2(test1).toString()</span><br><span class="line"><span class="keyword">let</span> arrayFlattened2 = flatten2(test2).toString()</span><br><span class="line"><span class="keyword">let</span> arrayFlattened3 = flatten2(test3).toString()</span><br><span class="line"><span class="keyword">let</span> arrayFlattened4 = flatten2(test4).toString()</span><br><span class="line"><span class="keyword">let</span> arrayFlattened5 = flatten2(test5).toString()</span><br><span class="line"><span class="keyword">let</span> arrayFlattened6 = flatten2(test6).toString()</span><br><span class="line"><span class="built_in">console</span>.log(arrayFlattened1)</span><br><span class="line"><span class="built_in">console</span>.log(arrayFlattened2)</span><br><span class="line"><span class="built_in">console</span>.log(arrayFlattened3)</span><br><span class="line"><span class="built_in">console</span>.log(arrayFlattened4)</span><br><span class="line"><span class="built_in">console</span>.log(arrayFlattened5)</span><br><span class="line"><span class="built_in">console</span>.log(arrayFlattened6)</span><br></pre></td></tr></table></figure>
+<h2 id="How-to-check-data-types-in-JS"><a href="#How-to-check-data-types-in-JS" class="headerlink" title="How to check data types in JS"></a>How to check data types in JS</h2><p><a href="https://webbjocke.com/javascript-check-data-types/" target="_blank" rel="noopener">https://webbjocke.com/javascript-check-data-types/</a></p>
+<h2 id="write-a-promise"><a href="#write-a-promise" class="headerlink" title="write a promise"></a>write a promise</h2><p> Promise</p>
+<h2 id="RxJS-Observable"><a href="#RxJS-Observable" class="headerlink" title="RxJS - Observable"></a>RxJS - Observable</h2><ol>
+<li><p><strong>Observer pattern</strong>: subject (publisher) &amp; observer (subscriber)</p>
+<ul>
+<li><p>use case: <u>add event to DOM</u> </p>
+</li>
+<li><p>implementation</p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. Subject</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Subject</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">constructor</span>() &#123;</span><br><span class="line">        <span class="keyword">this</span>.observerCollection = [];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    registerObserver(observer) &#123;</span><br><span class="line">        <span class="keyword">this</span>.observerCollection.push(observer);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    unregisterObserver(observer) &#123;</span><br><span class="line">        <span class="keyword">let</span> index = <span class="keyword">this</span>.observerCollection.indexOf(observer);</span><br><span class="line">        <span class="keyword">if</span>(index &gt;= <span class="number">0</span>) <span class="keyword">this</span>.observerCollection.splice(index, <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    notifyObservers() &#123;</span><br><span class="line">        <span class="keyword">this</span>.observerCollection.forEach(<span class="function">(<span class="params">observer</span>)=&gt;</span>observer.notify());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. Observer</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Observer</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">constructor</span>(name) &#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    notify() &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;<span class="keyword">this</span>.name&#125;</span> has been notified.`</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// use case</span></span><br><span class="line"><span class="keyword">let</span> subject = <span class="keyword">new</span> Subject(); <span class="comment">// 创建主题对象</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> observer1 = <span class="keyword">new</span> Observer(<span class="string">'semlinker'</span>); <span class="comment">// 创建观察者A - 'semlinker'</span></span><br><span class="line"><span class="keyword">let</span> observer2 = <span class="keyword">new</span> Observer(<span class="string">'lolo'</span>); <span class="comment">// 创建观察者B - 'lolo'</span></span><br><span class="line"></span><br><span class="line">subject.registerObserver(observer1); <span class="comment">// 注册观察者A</span></span><br><span class="line">subject.registerObserver(observer2); <span class="comment">// 注册观察者B</span></span><br><span class="line"> </span><br><span class="line">subject.notifyObservers(); <span class="comment">// 通知观察者</span></span><br><span class="line"></span><br><span class="line">subject.unregisterObserver(observer1); <span class="comment">// 移除观察者A</span></span><br><span class="line"></span><br><span class="line">subject.notifyObservers(); <span class="comment">// 验证是否成功移除</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Iterator pattern</strong></p>
+<ul>
+<li><p><u>Why use it</u>:  offer a way to visit interal elements <u>without exposing internal implementing details </u></p>
+</li>
+<li><p>drawback: one-way &amp; irreversible</p>
+</li>
+<li><p>data structure of the return value: <code>next()</code> </p>
+<ul>
+<li>=&gt; <code>{ done: false, value: elementValue }</code></li>
+<li>=&gt; <code>{ done: true, value: undefined }</code></li>
+</ul>
+</li>
+<li><p>Implementation of Array Iterator</p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Array Iterator using closure</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">makeIterator</span>(<span class="params">array</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> nextIndex = <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">       next: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">           <span class="keyword">return</span> nextIndex &lt; array.length ?</span><br><span class="line">               &#123;<span class="attr">value</span>: array[nextIndex++], <span class="attr">done</span>: <span class="literal">false</span>&#125; :</span><br><span class="line">               &#123;<span class="attr">done</span>: <span class="literal">true</span>&#125;;</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// use case</span></span><br><span class="line"><span class="keyword">var</span> it = makeIterator([<span class="string">'yo'</span>, <span class="string">'ya'</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(it.next().value); <span class="comment">// 'yo'</span></span><br><span class="line"><span class="built_in">console</span>.log(it.next().value); <span class="comment">// 'ya'</span></span><br><span class="line"><span class="built_in">console</span>.log(it.next().done);  <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><strong>ES6 Iterator: </strong> <code>Symbol.iterator</code> can create iterator for an iterable object</p>
+<ul>
+<li><p>How to use?</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>];</span><br><span class="line"><span class="keyword">let</span> iter = arr[<span class="built_in">Symbol</span>.iterator]();</span><br><span class="line"></span><br><span class="line">&gt; iter.next()</span><br><span class="line">&#123; <span class="attr">value</span>: <span class="string">'a'</span>, <span class="attr">done</span>: <span class="literal">false</span> &#125;</span><br><span class="line">&gt; iter.next()</span><br><span class="line">&#123; <span class="attr">value</span>: <span class="string">'b'</span>, <span class="attr">done</span>: <span class="literal">false</span> &#125;</span><br><span class="line">&gt; iter.next()</span><br><span class="line">&#123; <span class="attr">value</span>: <span class="string">'c'</span>, <span class="attr">done</span>: <span class="literal">false</span> &#125;</span><br><span class="line">&gt; iter.next()</span><br><span class="line">&#123; <span class="attr">value</span>: <span class="literal">undefined</span>, <span class="attr">done</span>: <span class="literal">true</span> &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>iterable object: <strong>Arrays, Strings, Maps, Sets, DOM</strong></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Observable</strong></p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/05/A-Way-to-Make-an-Efficient-React-Timer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2716,415 +3329,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/31/Trie/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/31/Trie/" itemprop="url">Trie</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-31T10:07:43-07:00">2018-08-31</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/08/31/Trie/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/08/31/Trie/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="what"><a href="#what" class="headerlink" title="what"></a>what</h2><p>Trie, is actually a more general tree, also <strong>prefix tree</strong>.</p>
-<p>Used for <strong><em>massive</em></strong> words process, dictionary representation, and lexicographic sorting, word frequency calc.</p>
-<h2 id="How"><a href="#How" class="headerlink" title="How"></a>How</h2><h4 id="I-TrieNode"><a href="#I-TrieNode" class="headerlink" title="I. TrieNode"></a>I. TrieNode</h4><p>TrieNode has mainly two parts:</p>
-<ol>
-<li><code>children</code>, to link next possible characters appear in a words. If only considering ‘A-Z’, there is 26 children at most</li>
-<li>info used to record current TrieNode<ul>
-<li><code>isWord</code>, denotes previous character is a word or not.</li>
-<li><code>cnt</code>, denotes number of words consist of current prefix</li>
-</ul>
-</li>
-</ol>
-<p><strong><em>Note:</em></strong> this representation is a little different from binary tree, in which info data are stored for current Node. However, in Trie, info data are stored for previous Node, as follows:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">For dictionary: &#123; <span class="string">"a"</span>, <span class="string">"bd"</span>, <span class="string">"c"</span> &#125;, the Trie would be represented as following:</span><br><span class="line"></span><br><span class="line"><span class="function">root <span class="title">TrieNode</span><span class="params">(<span class="number">0xefe4</span>)</span></span></span><br><span class="line"><span class="function">- cnt: 0</span></span><br><span class="line"><span class="function">- isWord: <span class="keyword">false</span></span></span><br><span class="line"><span class="function">- children:</span>&#123;<span class="string">'a'</span>: TrieNode , <span class="string">'b'</span>: TrieNode, <span class="string">'c'</span>: TrieNode, ... &#125;</span><br><span class="line">            /				      |				          \</span><br><span class="line">            TrieNode(<span class="number">0xffe3</span>)	TrieNode(<span class="number">0xffe4</span>)   			TrieNode(<span class="number">0xffe5</span>)</span><br><span class="line">            - cnt: <span class="number">1</span>			- cnt: <span class="number">0</span>					- cnt: <span class="number">1</span></span><br><span class="line">            - isWord: <span class="keyword">true</span>		- isWord: <span class="keyword">false</span>				- isWord: <span class="keyword">false</span></span><br><span class="line">            - children: <span class="keyword">null</span>	- children: &#123;<span class="string">'d'</span>:TrieNode&#125;  - children: <span class="keyword">null</span></span><br><span class="line">                                    |</span><br><span class="line">                                   ...</span><br></pre></td></tr></table></figure>
-<h2 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h2><ul>
-<li><p>interfaces</p>
-<ul>
-<li>build (constructor)</li>
-<li>isWord</li>
-<li>countWord</li>
-<li>insert</li>
-<li>delete</li>
-<li>hasPrefix</li>
-<li>getPrefixNode</li>
-</ul>
-</li>
-<li><p>Time Complexity: [ <code>n</code> words, <code>K</code> is number of characters of the longest word ]</p>
-<ul>
-<li>build: O(nK)</li>
-<li>isWord: O(K)</li>
-<li>countWord: O(K)</li>
-<li>insert: O(K)</li>
-<li>delete: O(K)</li>
-</ul>
-</li>
-<li><p>Space Complexity: [<code>N</code> is the number of all characters appears in the dictionary ]</p>
-<ul>
-<li>too much space: O(N) +O(N^2) +O(N^3) +O(N^4) + O(N^K)</li>
-<li>good news is: when it is a really dictionary, all the space will be filled up, so not so much waste</li>
-</ul>
-</li>
-<li><p><code>delete</code> might be a little complex. The to-be-deleted word possibly :</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">when need delete a node, what should really to be done????</span><br><span class="line">    - delete the key from HashMap&lt;Character, Node&gt;</span><br><span class="line">    - reset to <span class="keyword">null</span> when using Node[]</span><br><span class="line">So, always ask two questions:</span><br><span class="line">	- the node to be deleted, is part of other <span class="keyword">long</span> word [by checking <span class="string">'children'</span>]?</span><br><span class="line">    - the node itself is the end of a word? [by checking <span class="string">'isWord'</span> &amp; <span class="string">'cnt'</span>]?</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>null</code>, empty string, not exists in the Trie</li>
-<li>contains other short words: “abc”, “ab”<ul>
-<li><strong>recursively from bottom to top</strong> delete node, till the longest prefix</li>
-</ul>
-</li>
-<li>has same words as itself: “abc”, “abc”<ul>
-<li>don’t delete node, only update <code>cnt</code></li>
-</ul>
-</li>
-<li>being a prefix of other long words: “abc”, “abcde”<ul>
-<li>don’t delete node, only update <code>isWord</code></li>
-</ul>
-</li>
-<li>share prefix with other words: “abc”, “abd”<ul>
-<li><strong>recursively from bottom to top</strong> delete node, till the longest prefix</li>
-</ul>
-</li>
-<li>only itself in the dictionary, not affect others “abc”<ul>
-<li>delte all nodes</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">int</span> cnt;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">boolean</span> isWord;</span><br><span class="line">	<span class="keyword">public</span> Map&lt;Character, Node&gt; children;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.cnt = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">this</span>.isWord = <span class="keyword">false</span>;</span><br><span class="line">		<span class="keyword">this</span>.children = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Trie</span></span>&#123;</span><br><span class="line">	Node root;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Trie</span><span class="params">( String[] strArr )</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.root = <span class="keyword">new</span> Node();</span><br><span class="line">		<span class="keyword">for</span>( String str : strArr )&#123;</span><br><span class="line">			insert( str );</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasPrefix</span><span class="params">(String str )</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>( str == <span class="keyword">null</span> || str.length() == <span class="number">0</span> ) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">		<span class="keyword">int</span> len = str.length();</span><br><span class="line">		Node cur = <span class="keyword">this</span>.root;</span><br><span class="line">		<span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++ )&#123;</span><br><span class="line">			<span class="keyword">char</span> ch = str.charAt(i);</span><br><span class="line">			<span class="keyword">if</span>( !cur.children.containsKey(ch) ) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">			cur = cur.children.get(ch);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> Node <span class="title">getPrefixNode</span> <span class="params">(String str)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>( !hasPrefix(str) ) <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">		<span class="keyword">int</span> len = str.length();</span><br><span class="line">		Node cur = <span class="keyword">this</span>.root;</span><br><span class="line">		<span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++ )&#123;</span><br><span class="line">			<span class="keyword">char</span> ch = str.charAt(i);</span><br><span class="line">			cur = cur.children.get(ch);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> cur;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">( String str )</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>( str == <span class="keyword">null</span> || str.length() == <span class="number">0</span> ) <span class="keyword">return</span>;</span><br><span class="line">		<span class="keyword">int</span> len = str.length();</span><br><span class="line">		Node cur = <span class="keyword">this</span>.root;</span><br><span class="line">		<span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++ )&#123;</span><br><span class="line">			<span class="keyword">char</span> ch = str.charAt(i);</span><br><span class="line">			<span class="keyword">if</span>( !cur.children.containsKey(ch) )&#123;</span><br><span class="line">				cur.children.put( ch, <span class="keyword">new</span> Node() );</span><br><span class="line">			&#125;</span><br><span class="line">			cur = cur.children.get(ch);</span><br><span class="line">		&#125;</span><br><span class="line">		cur.cnt++;</span><br><span class="line">		cur.isWord = <span class="keyword">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">delete</span> <span class="params">(String str )</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>( str == <span class="keyword">null</span> || str.length() == <span class="number">0</span> ) <span class="keyword">return</span>;</span><br><span class="line">		<span class="keyword">if</span>( !hasPrefix(str) ) <span class="keyword">return</span>;</span><br><span class="line">		Node cur = getPrefixNode(str);</span><br><span class="line">		cur.cnt--; </span><br><span class="line">		<span class="keyword">if</span>(cur.cnt &lt; <span class="number">0</span>) cur.cnt = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">if</span>(cur.cnt &gt; <span class="number">0</span>) <span class="keyword">return</span>; 	<span class="comment">// at this position, there still word exist</span></span><br><span class="line">		<span class="keyword">else</span>&#123;						<span class="comment">// at this position, there no word exist</span></span><br><span class="line">			<span class="keyword">if</span>( cur.children.size() &gt; <span class="number">0</span> ) &#123;	<span class="comment">// but can be prefix of other words</span></span><br><span class="line">				cur.isWord = <span class="keyword">false</span>;</span><br><span class="line">				<span class="keyword">return</span>;</span><br><span class="line">			&#125;<span class="keyword">else</span>&#123;							<span class="comment">// not a word, nor a prefix of others</span></span><br><span class="line">				deleteNode(str);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteNode</span><span class="params">( String str )</span></span>&#123;</span><br><span class="line">		<span class="keyword">int</span> len = str.length();</span><br><span class="line">		<span class="keyword">if</span>( len == <span class="number">0</span> ) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">		String prevStr = str.substring(<span class="number">0</span>, len-<span class="number">1</span>);</span><br><span class="line">		Node prevNode = getPrefixNode(prevStr);</span><br><span class="line">		prevNode.children.remove(str.charAt(len-<span class="number">1</span>));</span><br><span class="line">		<span class="keyword">if</span>( prevNode.children.size()==<span class="number">0</span> &amp;&amp; prevNode.cnt==<span class="number">0</span> ) delete(prevStr);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isWord</span><span class="params">( String str )</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>( !hasPrefix(str) ) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">		<span class="keyword">return</span> getPrefixNode(str).isWord;</span><br><span class="line">	&#125;	</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">countWord</span><span class="params">( String str )</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>( !hasPrefix(str) ) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">return</span> getPrefixNode(str).cnt;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TrieTree</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">( String[] args )</span></span>&#123;</span><br><span class="line">		String[] dict = &#123; <span class="string">"a"</span>, <span class="string">"ab"</span>, <span class="string">"ab"</span>, <span class="string">"abc"</span>, <span class="string">"abc"</span>, <span class="string">"abc"</span>, <span class="string">"abcd"</span>, <span class="string">"ac"</span>, <span class="string">"acd"</span>, <span class="string">"ad"</span>, <span class="string">"2,24"</span>,  <span class="string">"2,2,4"</span> &#125;;</span><br><span class="line">		Trie trieTree = <span class="keyword">new</span> Trie(dict);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// String isWordTest1 = "ab";</span></span><br><span class="line">		<span class="comment">// String isWordTest2 = "";</span></span><br><span class="line">		<span class="comment">// String isWordTest3 = "a";</span></span><br><span class="line">		<span class="comment">// String isWordTest4 = "abcd";</span></span><br><span class="line">		<span class="comment">// String isWordTest5 = "abcde";</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">// String countTest = "abc";</span></span><br><span class="line">		<span class="comment">// String insertTest = "abc";</span></span><br><span class="line">		</span><br><span class="line"></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.isWord(isWordTest1));</span></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.isWord(isWordTest2));</span></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.isWord(isWordTest3));</span></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.isWord(isWordTest4));</span></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.isWord(isWordTest5));</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.countWord(countTest));</span></span><br><span class="line">		<span class="comment">// trieTree.insert(insertTest);</span></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.countWord(countTest));</span></span><br><span class="line">		<span class="comment">// trieTree.insert(insertTest);</span></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.countWord(countTest));</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="comment">// String hasPrefixTest1 = "abcd";</span></span><br><span class="line">		<span class="comment">// String hasPrefixTest2 = "2,2";</span></span><br><span class="line">		<span class="comment">// String hasPrefixTest3 = "abcdd";</span></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.hasPrefix(hasPrefixTest1));</span></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.hasPrefix(hasPrefixTest2));</span></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.hasPrefix(hasPrefixTest3));</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		String deleteTest1 = <span class="string">"abcd"</span>;</span><br><span class="line">		String deleteTest2 = <span class="string">"abc"</span>;</span><br><span class="line">		String deleteTest3 = <span class="string">"ab"</span>;</span><br><span class="line">		trieTree.delete(deleteTest1);</span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest3)); <span class="comment">// 2</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest2)); <span class="comment">// 3</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest1)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println();</span><br><span class="line"></span><br><span class="line">		trieTree.delete(deleteTest1);</span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest3)); <span class="comment">// 2</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest2)); <span class="comment">// 3</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest1)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println();</span><br><span class="line"></span><br><span class="line">		trieTree.delete(deleteTest2);</span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest3)); <span class="comment">// 2</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest2)); <span class="comment">// 2</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest1)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println();</span><br><span class="line">		</span><br><span class="line">		trieTree.delete(deleteTest2);</span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest3)); <span class="comment">// 2</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest2)); <span class="comment">// 1</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest1)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println();</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		trieTree.delete(deleteTest2);</span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest3)); <span class="comment">// 2</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest2)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest1)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println();</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line"></span><br><span class="line">		trieTree.delete(deleteTest2);</span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest3)); <span class="comment">// 2</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest2)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest1)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println();</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line"></span><br><span class="line">		trieTree.delete(deleteTest3);</span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest3)); <span class="comment">// 1</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest2)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest1)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println();</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line"></span><br><span class="line">		trieTree.delete(deleteTest3);</span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest3)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest2)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest1)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println();</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line"></span><br><span class="line">		trieTree.delete(deleteTest1);</span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest3)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest2)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest1)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println();</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/23/Specifio-Work-Summary/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/23/Specifio-Work-Summary/" itemprop="url">Specifio Work Summary</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-23T20:04:05-07:00">2018-08-23</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Portfolios/" itemprop="url" rel="index"><span itemprop="name">Portfolios</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/08/23/Specifio-Work-Summary/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/08/23/Specifio-Work-Summary/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="I-PHP-legacy-website-to-React"><a href="#I-PHP-legacy-website-to-React" class="headerlink" title="I. PHP legacy website to React"></a>I. PHP legacy website to React</h2><h4 id="1-Current-website-PHP"><a href="#1-Current-website-PHP" class="headerlink" title="1. Current website (PHP)"></a>1. Current website (PHP)</h4><p>The company website in use is the old one at <a href="https://specif.io/" target="_blank" rel="noopener">https://specif.io/</a>.<br>Hopefully, Our new website will be put into use by October, 2018.</p>
-<h4 id="2-New-website-React-Gatsby-Sass"><a href="#2-New-website-React-Gatsby-Sass" class="headerlink" title="2. New website (React, Gatsby, Sass)"></a>2. New website (React, Gatsby, Sass)</h4><p>The new website is currently on staging, but you can still visit it through this link: <a href="https://publicdocker.specif.io/" target="_blank" rel="noopener">https://publicdocker.specif.io/</a></p>
-<p><strong>New features:</strong></p>
-<ul>
-<li>Static webpage auto generating from Markdown file <strong>(Gatsby.js)</strong></li>
-<li>better layout &amp; color scheme <strong>(React)</strong></li>
-<li>more user friendly</li>
-<li>more intuitive</li>
-<li>convey more information</li>
-</ul>
-<h2 id="II-Admin-Panel"><a href="#II-Admin-Panel" class="headerlink" title="II. Admin Panel"></a>II. Admin Panel</h2><p>Developped Admin Panel for both internal and external use, with 3-level privileged access.</p>
-<p><img src="https://github.com/caomingkai/specifio_projects/raw/master/Admin%20Panel/docPlan.png" alt="Admin Panel"></p>
-<h4 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction:"></a>1. Introduction:</h4><ol>
-<li><p>With Specifio’s Doc Plans feature, practitioners can control how Specifio creates draft applications so they consistently meet the preferences and requirements of clients and reviewers.</p>
-</li>
-<li><p>A practitioner’s “active” Doc Plan controls the appearance, content, and structure of the auto-drafts created by Specifio.</p>
-</li>
-<li><p>Practitioners can design a collection of different Doc Plans for different clients, technologies, or reviewers.</p>
-</li>
-<li><p>Doc Plans can be shared among registered users within your firm.</p>
-</li>
-</ol>
-<h4 id="2-Snapshots-for-key-features"><a href="#2-Snapshots-for-key-features" class="headerlink" title="2. Snapshots for key features"></a>2. Snapshots for key features</h4><ul>
-<li><p><strong>Video: Live demo page for setting like layout, format and content of their Doc Plans</strong></p>
-<p>  <a href="http://www.youtube.com/watch?feature=player_embedded&v=Gl8TfGINxko" target="_blank"><img src="http://img.youtube.com/vi/Gl8TfGINxko/0.jpg" alt="Doc Editor" width="400" height="300" border="8"></a></p>
-</li>
-<li><p><strong>Dashboard</strong></p>
-<p>  <img width="400" alt="auth0" src="https://github.com/caomingkai/specifio_projects/raw/master/Admin%20Panel/dashboard1.png"><br>  <br><br>  <img width="400" alt="auth0" src="https://github.com/caomingkai/specifio_projects/raw/master/Admin%20Panel/dashboard2.png"></p>
-</li>
-<li><p><strong>Auth0 integration</strong></p>
-<p>  <img width="400" alt="auth0" src="https://github.com/caomingkai/specifio_projects/raw/master/Admin%20Panel/auth0.png"></p>
-</li>
-<li><p><strong>Manage doc plans</strong></p>
-<p>  <img width="400" alt="docPlan.png" src="https://github.com/caomingkai/specifio_projects/raw/master/Admin%20Panel/docPlan.png"></p>
-</li>
-<li><p><strong>Manage profile</strong></p>
-<p>   <img width="400" alt="profile.png" src="https://github.com/caomingkai/specifio_projects/raw/master/Admin%20Panel/profile.png"></p>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3176,7 +3380,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">42</span>
+                    <span class="site-state-item-count">44</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -3308,7 +3512,17 @@
                     
                       
                     
-                    <span class="site-state-item-count">48</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">53</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

@@ -332,6 +332,353 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/08/Stack-Queue-Implementation-using-JS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/08/Stack-Queue-Implementation-using-JS/" itemprop="url">Stack & Queue Implementation using JS</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-08T22:08:58-07:00">2018-10-08</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/08/Stack-Queue-Implementation-using-JS/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/08/Stack-Queue-Implementation-using-JS/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Stack"><a href="#Stack" class="headerlink" title="Stack"></a>Stack</h2><ol>
+<li><p>interfaces:</p>
+<ul>
+<li><code>stack.size</code></li>
+<li><code>stack.peek()</code></li>
+<li><code>stack.push</code></li>
+<li><code>stack.pop()</code></li>
+<li><code>stack.isEmpty()</code></li>
+<li><code>stack.clear()</code></li>
+</ul>
+</li>
+<li><p>implementation: </p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * Note: this version use `null` as Error symbol,</span></span><br><span class="line"><span class="comment"> *		 so you cannot push null into the stack</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Stack</span></span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>()&#123; <span class="keyword">this</span>.data = [] &#125;</span><br><span class="line">    </span><br><span class="line">    get size()&#123; <span class="keyword">return</span> <span class="keyword">this</span>.data.length &#125;</span><br><span class="line">    </span><br><span class="line">    isEmpty()&#123;  <span class="keyword">return</span> <span class="keyword">this</span>.data.length === <span class="number">0</span> &#125;</span><br><span class="line">    </span><br><span class="line">    peek()&#123; <span class="keyword">return</span> <span class="keyword">this</span>.data[<span class="keyword">this</span>.data.length<span class="number">-1</span>] &#125;</span><br><span class="line">    </span><br><span class="line">    push(item)&#123;</span><br><span class="line">        <span class="keyword">if</span>( <span class="keyword">typeof</span> item ===<span class="string">"undefined"</span> || item === <span class="literal">null</span> ) <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        <span class="keyword">this</span>.data.push(item)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    pop(item)&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>.data.length === <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.data.pop();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    clear()&#123; <span class="keyword">this</span>.data = [] &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* ---- Testing  ---- */</span></span><br><span class="line"><span class="keyword">let</span> s = <span class="keyword">new</span> Stack()</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>,s.size)  		<span class="comment">// 0</span></span><br><span class="line"><span class="built_in">console</span>.log(s.pop())  		<span class="comment">// null</span></span><br><span class="line"><span class="built_in">console</span>.log(s.push())  		<span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(s.push(<span class="literal">null</span>))  	<span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(s.push(<span class="number">1</span>))  	<span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(s.push(<span class="number">1</span>))  	<span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>,s.size)  		<span class="comment">// 2</span></span><br><span class="line"><span class="built_in">console</span>.log(s.push(<span class="number">2</span>))  	<span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>,s.size)  		<span class="comment">// 3</span></span><br><span class="line"><span class="built_in">console</span>.log(s.pop())  		<span class="comment">// 2</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>, s.size)  		<span class="comment">// 2</span></span><br><span class="line"><span class="built_in">console</span>.log(s.pop())  		<span class="comment">// 1</span></span><br><span class="line"><span class="built_in">console</span>.log(s.pop())  		<span class="comment">// 1</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>, s.size)  		<span class="comment">// 0</span></span><br><span class="line"><span class="built_in">console</span>.log(s.pop())  		<span class="comment">// null</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>, s.size)  		<span class="comment">// 0</span></span><br><span class="line"><span class="built_in">console</span>.log(s.isEmpty())   <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="Queue"><a href="#Queue" class="headerlink" title="Queue"></a>Queue</h2><ol>
+<li><p>interfaces:</p>
+<ul>
+<li><code>queue.size</code></li>
+<li><code>queue.peek()</code></li>
+<li><code>queue.push</code></li>
+<li><code>queue.pop()</code></li>
+<li><code>queue.isEmpty()</code></li>
+<li><code>queue.clear()</code></li>
+</ul>
+</li>
+<li><p>implementation:</p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * Note: this version can add any object into Queue</span></span><br><span class="line"><span class="comment"> *		 But need to call `isEmpty()` when necessary</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Queue</span></span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>()&#123; <span class="keyword">this</span>.items = []  &#125;</span><br><span class="line">    </span><br><span class="line">    get size()&#123; <span class="keyword">return</span> <span class="keyword">this</span>.items.length; &#125;</span><br><span class="line">    </span><br><span class="line">    isEmpty()&#123; <span class="keyword">return</span> <span class="keyword">this</span>.items.length === <span class="number">0</span> &#125;</span><br><span class="line">    </span><br><span class="line">    offer(item)&#123; <span class="keyword">this</span>.items.push(item) &#125;</span><br><span class="line">    </span><br><span class="line">    poll()&#123; <span class="keyword">return</span> <span class="keyword">this</span>.items.shift() &#125;</span><br><span class="line">    </span><br><span class="line">    peek()&#123; <span class="keyword">return</span> <span class="keyword">this</span>.items[<span class="number">0</span>] &#125;</span><br><span class="line">    </span><br><span class="line">    clear()&#123; <span class="keyword">this</span>.items = [] &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* ---- Testing  ---- */</span></span><br><span class="line"><span class="keyword">let</span> q = <span class="keyword">new</span> Queue()</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>, q.size)<span class="comment">// 0</span></span><br><span class="line"><span class="built_in">console</span>.log(q.offer(<span class="literal">null</span>))  </span><br><span class="line"><span class="built_in">console</span>.log(q.offer(<span class="literal">null</span>))  </span><br><span class="line"><span class="built_in">console</span>.log(q.items)	  			<span class="comment">// [null, null]</span></span><br><span class="line"><span class="built_in">console</span>.log(q.offer(<span class="number">1</span>))  </span><br><span class="line"><span class="built_in">console</span>.log(q.items)	  			<span class="comment">// [null, null, 1]</span></span><br><span class="line"><span class="built_in">console</span>.log(q.poll())  		<span class="comment">// null</span></span><br><span class="line"><span class="built_in">console</span>.log(q.offer(<span class="number">2</span>))  	<span class="comment">// [null, 1, 2]</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>,q.size)<span class="comment">// 3</span></span><br><span class="line"><span class="built_in">console</span>.log(q.poll())  	</span><br><span class="line"><span class="built_in">console</span>.log(q.items)	  			<span class="comment">// [1, 2]</span></span><br><span class="line"><span class="built_in">console</span>.log(q.poll())  		<span class="comment">// 1</span></span><br><span class="line"><span class="built_in">console</span>.log(q.items)	  			<span class="comment">// [2]</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>, q.size)<span class="comment">// 1</span></span><br><span class="line"><span class="built_in">console</span>.log(q.poll())  		 <span class="comment">// 2</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>, q.size)<span class="comment">// 0</span></span><br><span class="line"><span class="built_in">console</span>.log(q.isEmpty())     <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/08/How-to-implement-auto-complete/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/08/How-to-implement-auto-complete/" itemprop="url">How to implement auto-complete?</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-08T20:13:10-07:00">2018-10-08</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/08/How-to-implement-auto-complete/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/08/How-to-implement-auto-complete/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="I-Logic"><a href="#I-Logic" class="headerlink" title="I. Logic"></a>I. Logic</h2><ol>
+<li>For each <code>input</code>, wait 500ms to make API call, to load 40 items</li>
+<li><code>scroll</code> down close to bottom ( less than 20px left ), make API call to load another 40 items</li>
+<li>could add local <code>cache</code>, to speed up response</li>
+</ol>
+<h2 id="II-code"><a href="#II-code" class="headerlink" title="II. code"></a>II. code</h2><ol>
+<li><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">#wrapper &#123;</span></span><br><span class="line"><span class="undefined">    margin-top: 10px;</span></span><br><span class="line"><span class="undefined">    overflow: auto;</span></span><br><span class="line"><span class="undefined">    width: 250px;</span></span><br><span class="line"><span class="undefined">    display: inline-block;</span></span><br><span class="line"><span class="undefined">    border: 1px solid red;</span></span><br><span class="line"><span class="undefined">    overflow: hidden;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">.listWrapper&#123;</span></span><br><span class="line"><span class="undefined">	border: 1px solid blue;</span></span><br><span class="line"><span class="undefined">    height: 200px;</span></span><br><span class="line"><span class="undefined">    width: 140px;</span></span><br><span class="line"><span class="undefined">    overflow: auto;</span></span><br><span class="line"><span class="undefined">    scroll: auto;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"wrapper"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">"inputText"</span> /&gt;</span> </span><br><span class="line">      <span class="tag">&lt;<span class="name">button</span>&gt;</span>submit<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">	</span></span><br><span class="line"><span class="javascript">    <span class="keyword">let</span> body = <span class="built_in">document</span>.getElementsByTagName(<span class="string">"BODY"</span>)[<span class="number">0</span>]</span></span><br><span class="line"><span class="javascript">    <span class="keyword">let</span> data = <span class="built_in">Array</span>.from(&#123;<span class="attr">length</span>: <span class="number">40</span>&#125;, () =&gt; <span class="string">"recommdation"</span>+<span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * <span class="number">40</span>));</span></span><br><span class="line"><span class="undefined">    </span></span><br><span class="line"><span class="javascript">	<span class="keyword">const</span> API = <span class="string">"https://www.demo.com/potentialList"</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">let</span> isFetching = <span class="literal">false</span>  <span class="comment">// used for scroll</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">let</span> isEnd = <span class="literal">false</span>		<span class="comment">// used for scroll</span></span></span><br><span class="line"><span class="undefined">    </span></span><br><span class="line"><span class="undefined">    </span></span><br><span class="line"><span class="javascript">    <span class="comment">// create new element below &lt;input&gt; inside div wrapper. For both 'input' &amp; 'scroll'</span></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">appendList</span>(<span class="params">elementCollection, wrapper, isScroll</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">if</span>(isScroll)&#123;</span></span><br><span class="line"><span class="javascript">        	<span class="keyword">let</span> listWrapper = <span class="built_in">document</span>.getElementsByClassName(<span class="string">"listWrapper"</span>)[<span class="number">0</span>]</span></span><br><span class="line"><span class="javascript">            data.forEach( <span class="function"><span class="params">ele</span>=&gt;</span>&#123;</span></span><br><span class="line"><span class="javascript">                <span class="keyword">let</span> itemNode = <span class="built_in">document</span>.createElement(<span class="string">"DIV"</span>)</span></span><br><span class="line"><span class="javascript">                <span class="keyword">let</span> textNode = <span class="built_in">document</span>.createTextNode(ele)</span></span><br><span class="line"><span class="undefined">                itemNode.appendChild(textNode)</span></span><br><span class="line"><span class="undefined">                listWrapper.appendChild(itemNode)</span></span><br><span class="line"><span class="undefined">            &#125;)</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span></span></span><br><span class="line"><span class="undefined">    	&#125;</span></span><br><span class="line"><span class="undefined">        </span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> oldlistWrapper = <span class="built_in">document</span>.getElementsByClassName(<span class="string">"listWrapper"</span>)</span></span><br><span class="line"><span class="javascript">        <span class="keyword">if</span>(oldlistWrapper.length &gt; <span class="number">0</span>)&#123;</span></span><br><span class="line"><span class="undefined">          wrapper.removeChild(oldlistWrapper[0])</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="javascript">    	<span class="keyword">let</span> listWrapper = <span class="built_in">document</span>.createElement(<span class="string">"DIV"</span>)</span></span><br><span class="line"><span class="javascript">    	listWrapper.setAttribute(<span class="string">"class"</span>, <span class="string">"listWrapper"</span>)</span></span><br><span class="line"><span class="javascript">    	<span class="keyword">let</span> list = <span class="built_in">Array</span>.prototype.slice.call(elementCollection)</span></span><br><span class="line"><span class="javascript">        data.forEach( <span class="function"><span class="params">ele</span>=&gt;</span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">let</span> itemNode = <span class="built_in">document</span>.createElement(<span class="string">"DIV"</span>)</span></span><br><span class="line"><span class="javascript">            <span class="keyword">let</span> textNode = <span class="built_in">document</span>.createTextNode(ele)</span></span><br><span class="line"><span class="undefined">            itemNode.appendChild(textNode)</span></span><br><span class="line"><span class="undefined">            listWrapper.appendChild(itemNode)</span></span><br><span class="line"><span class="undefined">        &#125;)</span></span><br><span class="line"><span class="javascript">        listWrapper.addEventListener(<span class="string">"click"</span>, putToInput)</span></span><br><span class="line"><span class="javascript">        listWrapper.addEventListener(<span class="string">"scroll"</span>, scrollHandler)</span></span><br><span class="line"><span class="undefined">        wrapper.appendChild(listWrapper)</span></span><br><span class="line"><span class="undefined">        </span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    </span></span><br><span class="line"><span class="undefined">    </span></span><br><span class="line"><span class="javascript">    <span class="comment">// onclick callback for items provided</span></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">putToInput</span>(<span class="params">e</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">    	<span class="keyword">let</span> input = <span class="built_in">document</span>.getElementById(<span class="string">"inputText"</span>)</span></span><br><span class="line"><span class="javascript">    	<span class="keyword">let</span> wrapper = <span class="built_in">document</span>.getElementById(<span class="string">"wrapper"</span>)</span></span><br><span class="line"><span class="javascript">    	<span class="keyword">let</span> listWrapper = <span class="built_in">document</span>.getElementsByClassName(<span class="string">"listWrapper"</span>)[<span class="number">0</span>]</span></span><br><span class="line"><span class="undefined">        input.value = e.target.innerHTML</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(e.target)</span></span><br><span class="line"><span class="undefined">        wrapper.removeChild(listWrapper)</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    </span></span><br><span class="line"><span class="undefined">    </span></span><br><span class="line"><span class="javascript">    <span class="comment">// make API call</span></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">makeAPICall</span>(<span class="params">API, val, isScroll</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">      <span class="built_in">console</span>.log(<span class="string">"val: "</span>, val)</span></span><br><span class="line"><span class="javascript">      <span class="comment">// 1. first check local cache</span></span></span><br><span class="line"><span class="undefined">        </span></span><br><span class="line"><span class="javascript">      <span class="comment">// 2. hit fail, call API</span></span></span><br><span class="line"><span class="javascript">      <span class="keyword">let</span> ajax = <span class="keyword">new</span> XMLHttpRequest()</span></span><br><span class="line"><span class="javascript">      ajax.open(<span class="string">"GET"</span>, <span class="string">"https://www.w3schools.com/js/ajax_info.txt"</span>, <span class="literal">true</span>)</span></span><br><span class="line"><span class="javascript">      ajax.onreadystatechange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">if</span>(<span class="keyword">this</span>.readyState === <span class="number">4</span> &amp;&amp; <span class="keyword">this</span>.status === <span class="number">200</span> )&#123;</span></span><br><span class="line"><span class="javascript">          <span class="built_in">console</span>.log(<span class="keyword">this</span>.responseText)</span></span><br><span class="line"><span class="javascript">          <span class="keyword">let</span> parser = <span class="keyword">new</span> DOMParser()</span></span><br><span class="line"><span class="javascript">          <span class="keyword">let</span> a = parser.parseFromString(<span class="keyword">this</span>.responseText, <span class="string">"text/html"</span>)</span></span><br><span class="line"><span class="javascript">          <span class="built_in">console</span>.log(a)</span></span><br><span class="line"><span class="javascript">          <span class="keyword">let</span> body = a.getElementsByTagName(<span class="string">"BODY"</span>)[<span class="number">0</span>]</span></span><br><span class="line"><span class="javascript">          <span class="keyword">let</span> wrapper = <span class="built_in">document</span>.getElementById(<span class="string">"wrapper"</span>)</span></span><br><span class="line"><span class="javascript">          <span class="keyword">if</span>(val.localeCompare(<span class="string">"scroll made request"</span>)===<span class="number">0</span>)&#123;</span></span><br><span class="line"><span class="javascript">          	isFetching = <span class="literal">false</span></span></span><br><span class="line"><span class="undefined">          &#125;</span></span><br><span class="line"><span class="undefined">          appendList(data, wrapper, isScroll)</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">      ajax.send()</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    </span></span><br><span class="line"><span class="javascript">    <span class="comment">// scroll handler for listWrapper</span></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">scrollHandler</span>(<span class="params">e</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">    	<span class="keyword">let</span> listWrapper = e.target</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> boxHeight = listWrapper.clientHeight</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> scrollTop = listWrapper.scrollTop</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> scrollHeight = listWrapper.scrollHeight</span></span><br><span class="line"><span class="undefined">        </span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> remainder = scrollHeight - scrollTop</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> diff = remainder - boxHeight</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">"box height: "</span>, boxHeight)</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">"scrollTop: "</span>, scrollTop)</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">"scrollHeight: "</span>, scrollHeight)</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">"diff: "</span>, diff)</span></span><br><span class="line"><span class="undefined">        </span></span><br><span class="line"><span class="javascript">        <span class="keyword">if</span>( diff &lt; <span class="number">20</span> &amp;&amp; !isFetching &amp;&amp; !isEnd )&#123;</span></span><br><span class="line"><span class="javascript">        	isFetching = <span class="literal">true</span></span></span><br><span class="line"><span class="javascript">        	makeAPICall(API, <span class="string">"scroll made request"</span>, <span class="literal">true</span>)</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    </span></span><br><span class="line"><span class="javascript">	<span class="comment">// debounce 500ms to make API call</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">let</span> timeHandler = <span class="literal">null</span></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">inputHandler</span>(<span class="params">e</span>)</span>&#123;</span></span><br><span class="line"><span class="undefined">    	clearTimeout(timeHandler)</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> val = e.target.value</span></span><br><span class="line"><span class="javascript">    	timeHandler = setTimeout( <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;makeAPICall(API, <span class="string">"keypress made request"</span>, <span class="literal">false</span>)&#125; ,<span class="number">500</span> )</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    </span></span><br><span class="line"><span class="javascript">	<span class="keyword">let</span> input = <span class="built_in">document</span>.getElementById(<span class="string">"inputText"</span>)</span></span><br><span class="line"><span class="javascript">    addEventListener(<span class="string">"input"</span>, inputHandler)</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/07/Search-for-a-Symmetric-Node/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -597,7 +944,39 @@
       
         
           
-            <h2 id="Why-use-React"><a href="#Why-use-React" class="headerlink" title="Why use React?"></a>Why use React?</h2><p>Credit to: <a href="https://reactjs.org/blog/2013/06/05/why-react.html" target="_blank" rel="noopener">https://reactjs.org/blog/2013/06/05/why-react.html</a></p>
+            <h2 id="HTML-Accessibility-Tag"><a href="#HTML-Accessibility-Tag" class="headerlink" title="HTML Accessibility Tag"></a>HTML Accessibility Tag</h2><ol>
+<li><p>To improve accessiblity, we are encouraged to use semantic tag of HTML5</p>
+<ul>
+<li><strong><u>MDS</u></strong>: <a href="https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Cross_browser_testing/Accessibility" target="_blank" rel="noopener">https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Cross_browser_testing/Accessibility</a></li>
+</ul>
+</li>
+<li><p>Why to use it?</p>
+<ul>
+<li><a href="https://stackoverflow.com/questions/17272019/why-to-use-html5-semantic-tag-instead-of-div" target="_blank" rel="noopener">https://stackoverflow.com/questions/17272019/why-to-use-html5-semantic-tag-instead-of-div</a></li>
+</ul>
+</li>
+<li><p>Common semantic tags</p>
+<ul>
+<li></li>
+</ul>
+</li>
+<li><p>native keyboard accessibility</p>
+<ul>
+<li></li>
+</ul>
+</li>
+<li><p>How to improve accessibility?</p>
+<ul>
+<li><p>use <code>:focus</code> &amp; <code>:hover</code> pseudo-class to highlight the chosen tag</p>
+<ul>
+<li><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:hover</span>, <span class="selector-tag">input</span><span class="selector-pseudo">:hover</span>, <span class="selector-tag">button</span><span class="selector-pseudo">:hover</span>, <span class="selector-tag">select</span><span class="selector-pseudo">:hover</span>,</span><br><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:focus</span>, <span class="selector-tag">input</span><span class="selector-pseudo">:focus</span>, <span class="selector-tag">button</span><span class="selector-pseudo">:focus</span>, <span class="selector-tag">select</span><span class="selector-pseudo">:focus</span> &#123;</span><br><span class="line">  <span class="attribute">font-weight</span>: bold;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="Why-use-React"><a href="#Why-use-React" class="headerlink" title="Why use React?"></a>Why use React?</h2><p>Credit to: <a href="https://reactjs.org/blog/2013/06/05/why-react.html" target="_blank" rel="noopener">https://reactjs.org/blog/2013/06/05/why-react.html</a></p>
 <ol>
 <li>React is not MVC, is only “V”</li>
 <li>Support small, <strong>reusable</strong> component</li>
@@ -637,21 +1016,6 @@
 <li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> isLoading = <span class="literal">false</span>;</span><br><span class="line"><span class="keyword">var</span> isEnd = <span class="literal">false</span>;</span><br><span class="line"><span class="keyword">var</span> triggerDistance = <span class="number">200</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fetchData</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> distance = container.getBoundingClientRect().bottom - <span class="built_in">window</span>.innerHeight;</span><br><span class="line">  <span class="keyword">if</span> ( !isLoading &amp;&amp; !isEnd &amp;&amp; distance &lt; triggerDistance ) &#123;</span><br><span class="line"></span><br><span class="line">    isLoading = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">    fetch(path).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">      isLoading = <span class="literal">false</span>;</span><br><span class="line">      <span class="comment">// if not end, will short-circut latter statement</span></span><br><span class="line">      <span class="comment">// if reach end, will still check the latter one, which will set isEnd to true</span></span><br><span class="line">      res.data.length === <span class="number">0</span> &amp;&amp; isEnd = <span class="literal">true</span>; </span><br><span class="line">      doSomething(res.data);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'scroll'</span>, fetchData);</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<h2 id="How-to-implement-auto-complete"><a href="#How-to-implement-auto-complete" class="headerlink" title="How to implement auto-complete?"></a>How to implement auto-complete?</h2><ol>
-<li><p>Logic</p>
-<ul>
-<li>After every <code>input</code>, wait 500ms to make API call, load 40 items</li>
-<li><code>scroll</code> down close to bottom ( less than 20px space left ), make API call to load another 40 items</li>
-<li>could add local <code>cache</code>, to speed up response</li>
-</ul>
-</li>
-<li><p>code</p>
-<ol>
-<li><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css"><span class="selector-id">#wrapper</span> &#123;</span></span><br><span class="line"><span class="undefined">    margin-top: 10px;</span></span><br><span class="line"><span class="undefined">    overflow: auto;</span></span><br><span class="line"><span class="undefined">    width: 250px;</span></span><br><span class="line"><span class="undefined">    display: inline-block;</span></span><br><span class="line"><span class="undefined">    border: 1px solid red;</span></span><br><span class="line"><span class="undefined">    overflow: hidden;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="css"><span class="selector-class">.listWrapper</span>&#123;</span></span><br><span class="line"><span class="undefined">	border: 1px solid blue;</span></span><br><span class="line"><span class="undefined">    height: 200px;</span></span><br><span class="line"><span class="undefined">    width: 140px;</span></span><br><span class="line"><span class="undefined">    overflow: auto;</span></span><br><span class="line"><span class="undefined">    scroll: auto;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"wrapper"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">"inputText"</span> /&gt;</span> </span><br><span class="line">      <span class="tag">&lt;<span class="name">button</span>&gt;</span>submit<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">	</span></span><br><span class="line"><span class="javascript">    <span class="keyword">let</span> body = <span class="built_in">document</span>.getElementsByTagName(<span class="string">"BODY"</span>)[<span class="number">0</span>]</span></span><br><span class="line"><span class="javascript">    <span class="keyword">let</span> data = <span class="built_in">Array</span>.from(&#123;<span class="attr">length</span>: <span class="number">40</span>&#125;, () =&gt; <span class="string">"recommdation"</span>+<span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * <span class="number">40</span>));</span></span><br><span class="line"><span class="undefined">    </span></span><br><span class="line"><span class="javascript">	<span class="keyword">const</span> API = <span class="string">"https://www.demo.com/potentialList"</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">let</span> isFetching = <span class="literal">false</span>  <span class="comment">// used for scroll</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">let</span> isEnd = <span class="literal">false</span>		<span class="comment">// used for scroll</span></span></span><br><span class="line"><span class="undefined">    </span></span><br><span class="line"><span class="undefined">    </span></span><br><span class="line"><span class="javascript">    <span class="comment">// create new element below &lt;input&gt; inside div wrapper. For both 'input' &amp; 'scroll'</span></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">appendList</span>(<span class="params">elementCollection, wrapper, isScroll</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">if</span>(isScroll)&#123;</span></span><br><span class="line"><span class="javascript">        	<span class="keyword">let</span> listWrapper = <span class="built_in">document</span>.getElementsByClassName(<span class="string">"listWrapper"</span>)[<span class="number">0</span>]</span></span><br><span class="line"><span class="javascript">            data.forEach( <span class="function"><span class="params">ele</span>=&gt;</span>&#123;</span></span><br><span class="line"><span class="javascript">                <span class="keyword">let</span> itemNode = <span class="built_in">document</span>.createElement(<span class="string">"DIV"</span>)</span></span><br><span class="line"><span class="javascript">                <span class="keyword">let</span> textNode = <span class="built_in">document</span>.createTextNode(ele)</span></span><br><span class="line"><span class="undefined">                itemNode.appendChild(textNode)</span></span><br><span class="line"><span class="undefined">                listWrapper.appendChild(itemNode)</span></span><br><span class="line"><span class="undefined">            &#125;)</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span></span></span><br><span class="line"><span class="undefined">    	&#125;</span></span><br><span class="line"><span class="undefined">        </span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> oldlistWrapper = <span class="built_in">document</span>.getElementsByClassName(<span class="string">"listWrapper"</span>)</span></span><br><span class="line"><span class="javascript">        <span class="keyword">if</span>(oldlistWrapper.length &gt; <span class="number">0</span>)&#123;</span></span><br><span class="line"><span class="undefined">          wrapper.removeChild(oldlistWrapper[0])</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="javascript">    	<span class="keyword">let</span> listWrapper = <span class="built_in">document</span>.createElement(<span class="string">"DIV"</span>)</span></span><br><span class="line"><span class="javascript">    	listWrapper.setAttribute(<span class="string">"class"</span>, <span class="string">"listWrapper"</span>)</span></span><br><span class="line"><span class="javascript">    	<span class="keyword">let</span> list = <span class="built_in">Array</span>.prototype.slice.call(elementCollection)</span></span><br><span class="line"><span class="javascript">        data.forEach( <span class="function"><span class="params">ele</span>=&gt;</span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">let</span> itemNode = <span class="built_in">document</span>.createElement(<span class="string">"DIV"</span>)</span></span><br><span class="line"><span class="javascript">            <span class="keyword">let</span> textNode = <span class="built_in">document</span>.createTextNode(ele)</span></span><br><span class="line"><span class="undefined">            itemNode.appendChild(textNode)</span></span><br><span class="line"><span class="undefined">            listWrapper.appendChild(itemNode)</span></span><br><span class="line"><span class="undefined">        &#125;)</span></span><br><span class="line"><span class="javascript">        listWrapper.addEventListener(<span class="string">"click"</span>, putToInput)</span></span><br><span class="line"><span class="javascript">        listWrapper.addEventListener(<span class="string">"scroll"</span>, scrollHandler)</span></span><br><span class="line"><span class="undefined">        wrapper.appendChild(listWrapper)</span></span><br><span class="line"><span class="undefined">        </span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    </span></span><br><span class="line"><span class="undefined">    </span></span><br><span class="line"><span class="javascript">    <span class="comment">// onclick callback for items provided</span></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">putToInput</span>(<span class="params">e</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">    	<span class="keyword">let</span> input = <span class="built_in">document</span>.getElementById(<span class="string">"inputText"</span>)</span></span><br><span class="line"><span class="javascript">    	<span class="keyword">let</span> wrapper = <span class="built_in">document</span>.getElementById(<span class="string">"wrapper"</span>)</span></span><br><span class="line"><span class="javascript">    	<span class="keyword">let</span> listWrapper = <span class="built_in">document</span>.getElementsByClassName(<span class="string">"listWrapper"</span>)[<span class="number">0</span>]</span></span><br><span class="line"><span class="undefined">        input.value = e.target.innerHTML</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(e.target)</span></span><br><span class="line"><span class="undefined">        wrapper.removeChild(listWrapper)</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    </span></span><br><span class="line"><span class="undefined">    </span></span><br><span class="line"><span class="javascript">    <span class="comment">// make API call</span></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">makeAPICall</span>(<span class="params">API, val, isScroll</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">      <span class="built_in">console</span>.log(<span class="string">"val: "</span>, val)</span></span><br><span class="line"><span class="javascript">      <span class="comment">// 1. first check local cache</span></span></span><br><span class="line"><span class="undefined">        </span></span><br><span class="line"><span class="javascript">      <span class="comment">// 2. hit fail, call API</span></span></span><br><span class="line"><span class="javascript">      <span class="keyword">let</span> ajax = <span class="keyword">new</span> XMLHttpRequest()</span></span><br><span class="line"><span class="javascript">      ajax.open(<span class="string">"GET"</span>, <span class="string">"https://www.w3schools.com/js/ajax_info.txt"</span>, <span class="literal">true</span>)</span></span><br><span class="line"><span class="javascript">      ajax.onreadystatechange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">if</span>(<span class="keyword">this</span>.readyState === <span class="number">4</span> &amp;&amp; <span class="keyword">this</span>.status === <span class="number">200</span> )&#123;</span></span><br><span class="line"><span class="javascript">          <span class="built_in">console</span>.log(<span class="keyword">this</span>.responseText)</span></span><br><span class="line"><span class="javascript">          <span class="keyword">let</span> parser = <span class="keyword">new</span> DOMParser()</span></span><br><span class="line"><span class="javascript">          <span class="keyword">let</span> a = parser.parseFromString(<span class="keyword">this</span>.responseText, <span class="string">"text/html"</span>)</span></span><br><span class="line"><span class="javascript">          <span class="built_in">console</span>.log(a)</span></span><br><span class="line"><span class="javascript">          <span class="keyword">let</span> body = a.getElementsByTagName(<span class="string">"BODY"</span>)[<span class="number">0</span>]</span></span><br><span class="line"><span class="javascript">          <span class="keyword">let</span> wrapper = <span class="built_in">document</span>.getElementById(<span class="string">"wrapper"</span>)</span></span><br><span class="line"><span class="javascript">          <span class="keyword">if</span>(val.localeCompare(<span class="string">"scroll made request"</span>)===<span class="number">0</span>)&#123;</span></span><br><span class="line"><span class="javascript">          	isFetching = <span class="literal">false</span></span></span><br><span class="line"><span class="undefined">          &#125;</span></span><br><span class="line"><span class="undefined">          appendList(data, wrapper, isScroll)</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">      ajax.send()</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    </span></span><br><span class="line"><span class="javascript">    <span class="comment">// scroll handler for listWrapper</span></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">scrollHandler</span>(<span class="params">e</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">    	<span class="keyword">let</span> listWrapper = e.target</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> boxHeight = listWrapper.clientHeight</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> scrollTop = listWrapper.scrollTop</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> scrollHeight = listWrapper.scrollHeight</span></span><br><span class="line"><span class="undefined">        </span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> remainder = scrollHeight - scrollTop</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> diff = remainder - boxHeight</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">"box height: "</span>, boxHeight)</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">"scrollTop: "</span>, scrollTop)</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">"scrollHeight: "</span>, scrollHeight)</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">"diff: "</span>, diff)</span></span><br><span class="line"><span class="undefined">        </span></span><br><span class="line"><span class="javascript">        <span class="keyword">if</span>( diff &lt; <span class="number">20</span> &amp;&amp; !isFetching &amp;&amp; !isEnd )&#123;</span></span><br><span class="line"><span class="javascript">        	isFetching = <span class="literal">true</span></span></span><br><span class="line"><span class="javascript">        	makeAPICall(API, <span class="string">"scroll made request"</span>, <span class="literal">true</span>)</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    </span></span><br><span class="line"><span class="javascript">	<span class="comment">// debounce 500ms to make API call</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">let</span> timeHandler = <span class="literal">null</span></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">inputHandler</span>(<span class="params">e</span>)</span>&#123;</span></span><br><span class="line"><span class="undefined">    	clearTimeout(timeHandler)</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> val = e.target.value</span></span><br><span class="line"><span class="javascript">    	timeHandler = setTimeout( <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;makeAPICall(API, <span class="string">"keypress made request"</span>, <span class="literal">false</span>)&#125; ,<span class="number">500</span> )</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    </span></span><br><span class="line"><span class="javascript">	<span class="keyword">let</span> input = <span class="built_in">document</span>.getElementById(<span class="string">"inputText"</span>)</span></span><br><span class="line"><span class="javascript">    addEventListener(<span class="string">"input"</span>, inputHandler)</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-</ol>
 <h2 id="The-rendering-order-CSS-JS-HTML"><a href="#The-rendering-order-CSS-JS-HTML" class="headerlink" title="The rendering order: CSS, JS, HTML"></a>The rendering order: CSS, JS, HTML</h2><ol>
 <li><p>credit to:</p>
 <ul>
@@ -674,7 +1038,54 @@
 </ol>
 </li>
 </ol>
-<h2 id="CSS-float-amp-position-amp-box-model"><a href="#CSS-float-amp-position-amp-box-model" class="headerlink" title="CSS:   float &amp;  position &amp; box model"></a>CSS:   <code>float</code> &amp;  <code>position</code> &amp; <code>box model</code></h2><h2 id="CSS-cursor-pointer"><a href="#CSS-cursor-pointer" class="headerlink" title="CSS:  cursor: pointer"></a>CSS:  <code>cursor: pointer</code></h2><h2 id="CSS-px-vs-rem-vs-em"><a href="#CSS-px-vs-rem-vs-em" class="headerlink" title="CSS:  px vs rem vs em"></a>CSS:  <code>px</code> vs <code>rem</code> vs <code>em</code></h2><h2 id="CSS-block-vs-inline-vs-inline-block"><a href="#CSS-block-vs-inline-vs-inline-block" class="headerlink" title="CSS: block vs inline vs inline-block"></a>CSS: <code>block</code> vs <code>inline</code> vs <code>inline-block</code></h2><h2 id="CSS-how-to-vertically-center-an-element"><a href="#CSS-how-to-vertically-center-an-element" class="headerlink" title="CSS: how to vertically center an element?"></a>CSS: how to vertically center an element?</h2><ol>
+<h2 id="CSS-lt-img-src-quot-quot-gt-will-download"><a href="#CSS-lt-img-src-quot-quot-gt-will-download" class="headerlink" title="CSS: &lt;img src=&quot;&quot; /&gt; will download?"></a>CSS: <code>&lt;img src=&quot;&quot; /&gt;</code> will download?</h2><h2 id="CSS-profile-amp-edit-image-link"><a href="#CSS-profile-amp-edit-image-link" class="headerlink" title="CSS: profile &amp; edit image link"></a>CSS: profile &amp; edit image link</h2><ol>
+<li>Implement the requirement</li>
+<li>consider accessibility<ul>
+<li></li>
+</ul>
+</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">// 1. Mouse is not over the picture</span><br><span class="line">+-------------+</span><br><span class="line">|             |</span><br><span class="line">|             |</span><br><span class="line">|   picture   |</span><br><span class="line">|             |</span><br><span class="line">|             |</span><br><span class="line">+-------------+</span><br><span class="line"></span><br><span class="line">// 2. Mouse is anywhere over picture</span><br><span class="line">+--------+----+</span><br><span class="line">|        |edit| <span class="tag">&lt;<span class="name">---</span> <span class="attr">links</span> <span class="attr">to</span> /<span class="attr">edit.php</span></span></span><br><span class="line"><span class="tag">|        +<span class="attr">----</span>+      <span class="attr">icon</span> <span class="attr">url:</span> /<span class="attr">edit_icon.png</span></span></span><br><span class="line"><span class="tag">|   <span class="attr">picture</span>   |</span></span><br><span class="line">|             | &lt;--- links to /profile.php</span><br><span class="line">|             |      picture url: /profile_pic.png 来源一亩.三分地论坛. </span><br><span class="line">+-------------+</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">      <span class="selector-class">.imgWrapper</span>&#123;</span></span><br><span class="line"><span class="undefined">        width: 100px;</span></span><br><span class="line"><span class="undefined">        height: 100px;</span></span><br><span class="line"><span class="undefined">        border: 1px solid red;</span></span><br><span class="line"><span class="undefined">        position: relative;</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="css">      <span class="selector-id">#image1</span>&#123;</span></span><br><span class="line"><span class="undefined">        width: 100%;</span></span><br><span class="line"><span class="undefined">        height: 100%;</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="css">      <span class="selector-id">#image2</span>&#123;</span></span><br><span class="line"><span class="undefined">        position: absolute;</span></span><br><span class="line"><span class="undefined">        top: 0;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">right</span><span class="selector-pseudo">:0</span>;</span></span><br><span class="line"><span class="undefined">        width: 50px;</span></span><br><span class="line"><span class="undefined">        height: 50px;</span></span><br><span class="line"><span class="undefined">        display: none;</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="css">      <span class="selector-class">.imgWrapper</span><span class="selector-pseudo">:hover</span> <span class="selector-id">#image2</span>&#123;</span></span><br><span class="line"><span class="undefined">        display: block;</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"imgWrapper"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://stackoverflow.com/questions/1827965/is-putting-a-div-inside-an-anchor-ever-correct"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">"image1"</span> <span class="attr">src</span>=<span class="string">"https://www.w3schools.com/html/pic_trulli.jpg"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">        </span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://developer.mozilla.org/en-US/docs/Learn/Accessibility"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">"image2"</span> <span class="attr">src</span>=<span class="string">"https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/UniversalEditButton3.png/220px-UniversalEditButton3.png"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="CSS"><a href="#CSS" class="headerlink" title="CSS:"></a>CSS:</h2><ol>
+<li><code>float</code> &amp;  <code>position</code> &amp; <code>box model</code></li>
+<li><p><code>cursor: pointer</code></p>
+</li>
+<li><p><code>px</code> vs <code>rem</code> vs <code>em</code></p>
+</li>
+<li><p><code>block</code> vs <code>inline</code> vs <code>inline-block</code></p>
+</li>
+<li><p><code>width</code> &amp; <code>height</code></p>
+<ul>
+<li><p>make  the aspect-ratio stay the same: <strong><u>adjust one, set other one <code>auto</code></u></strong></p>
+<ul>
+<li><p>tweak image while keep aspect-ratio the same</p>
+</li>
+<li><p>some time will overflow: can add <code>overflow: hidden</code> to its parent</p>
+<ul>
+<li><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span>&#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.img</span>&#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">height</span>: auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>max-width</code> vs <code>width</code></p>
+<ul>
+<li><p><code>width</code>: set the tentative value`</p>
+</li>
+<li><p><code>max-width</code> set the rule, to restrict the value of <code>width</code></p>
+</li>
+<li><p>some time can change the aspect-ratio</p>
+<ul>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.image&#123;</span><br><span class="line">	width: 100%;</span><br><span class="line">    height: 100%;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="CSS-how-to-vertically-center-an-element"><a href="#CSS-how-to-vertically-center-an-element" class="headerlink" title="CSS: how to vertically center an element?"></a>CSS: how to vertically center an element?</h2><ol>
 <li>parent without <code>height</code> &amp; <code>width</code></li>
 <li>parent with <code>height</code> &amp; <code>width</code></li>
 </ol>
@@ -822,22 +1233,69 @@
 </li>
 </ol>
 <h2 id="DOM-events"><a href="#DOM-events" class="headerlink" title="DOM events"></a>DOM events</h2><ol>
-<li><code>onload</code></li>
-<li><code>onchange</code></li>
+<li><p><strong><u>[Trick]</u>: </strong> bind data on element as <code>attribute</code>, then use <code>e.target.getAttribute(&quot;data-info&quot;)</code></p>
+</li>
+<li><p>common types: </p>
+<ul>
+<li><p><code>onload</code></p>
+</li>
+<li><p><code>oninput</code></p>
+</li>
+<li><p><code>onchange</code></p>
+</li>
 <li><code>onfocus</code></li>
 <li><code>onmouseover</code> &amp; <code>onmouseout</code></li>
 <li><strong><code>onclick</code> &amp; <code>onmousedown</code> &amp; <code>onmouseup</code></strong></li>
 <li><strong><code>onkeypress</code> &amp; <code>onkeydown</code> &amp; <code>onkeyup</code></strong></li>
 <li><code>onresize</code></li>
 <li><code>onscroll</code></li>
-<li>event propagation: <em>bubbling</em> &amp; <em>capturing</em><ul>
+</ul>
+</li>
+<li><p>event propagation: <em>bubbling</em> &amp; <em>capturing</em></p>
+<ul>
 <li><strong>Event propagation</strong> is a way of defining the element <u>order</u> when an event occurs. </li>
 <li><u><strong><em>bubbling</em></strong></u>:  the inner most element’s event is handled first and then the outer: the <code>&lt;p&gt;</code> element’s click event is handled first, then the <code>&lt;div&gt;</code> element’s click event.</li>
 <li><strong><em><u>capturing</u></em></strong>:  the outer most element’s event is handled first and then the inner: the <code>&lt;div&gt;</code> element’s click event will be handled first, then the<code>&lt;p&gt;</code> element’s click event.</li>
 </ul>
 </li>
 </ol>
-<h2 id="What-can-be-put-inside-lt-head-gt"><a href="#What-can-be-put-inside-lt-head-gt" class="headerlink" title="What can be put inside &lt;head&gt;?"></a>What can be put inside <code>&lt;head&gt;</code>?</h2><p><a href="https://github.com/xiaoyu2er/HEAD" target="_blank" rel="noopener">https://github.com/xiaoyu2er/HEAD</a></p>
+<h2 id="Array-like-object-under-the-hood"><a href="#Array-like-object-under-the-hood" class="headerlink" title="Array-like object under the hood"></a>Array-like object under the hood</h2><ol>
+<li><strong>All credit to</strong>: <a href="http://2ality.com/2013/05/quirk-array-like-objects.html" target="_blank" rel="noopener">http://2ality.com/2013/05/quirk-array-like-objects.html</a></li>
+<li>An array-like object<ul>
+<li>only has: <ul>
+<li><code>index</code> to access to elements: <code>a[0]</code></li>
+<li>the property <code>length</code> that tells us how many elements the object has: <code>a.length</code></li>
+</ul>
+</li>
+<li>does not have: array methods such as <code>push</code>, <code>forEach</code> and <code>indexOf</code>; <strong>have to <u>borrow</u> these methods</strong></li>
+<li><u><strong>“borrow” : </strong></u> that why we use:<ul>
+<li><code>[].slice(array-like)</code> </li>
+<li><code>[].indexOf(array-like)</code></li>
+<li><code>[].forEach(array-like)</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Two examples of array-like objects<ul>
+<li>result of the DOM method <code>document.getElementsByClassName()</code> (many DOM methods return array-like objects)</li>
+<li>the special variable <code>arguments</code> . <ul>
+<li>You can determine the number of arguments via <code>arguments.length</code></li>
+<li>you can access a single argument, e.g. read the first argument: <code>arguments[0]</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Array methods, however, have to be borrowed. You can do that, because most of those methods are </li>
+</ol>
+<p>generic</p>
+<p>​    </p>
+<h2 id="What-can-be-put-inside-lt-head-gt"><a href="#What-can-be-put-inside-lt-head-gt" class="headerlink" title="What can be put inside &lt;head&gt;?"></a>What can be put inside <code>&lt;head&gt;</code>?</h2><p> Three ways to convert Array-like objects to Array.</p>
+<ol>
+<li>Array.prototype.slice.call(arguments)`</li>
+<li><code>Array.from(arguments)</code></li>
+<li>use <code>bind</code> to create a <strong>new function</strong> <code>slice()</code> function on array-like object, so we <strong><u>can reuse it</u></strong></li>
+</ol>
+<p><a href="https://github.com/xiaoyu2er/HEAD" target="_blank" rel="noopener">https://github.com/xiaoyu2er/HEAD</a></p>
 <h2 id="JS-coding-mutate-array-according-new-indices"><a href="#JS-coding-mutate-array-according-new-indices" class="headerlink" title="JS coding: mutate array according new indices"></a>JS coding: mutate array according new indices</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">Given an input array and another array that describes a <span class="keyword">new</span> index <span class="keyword">for</span> each element, mutate the input array so that each element ends up <span class="keyword">in</span> their <span class="keyword">new</span> index. </span><br><span class="line"></span><br><span class="line"><span class="comment">// ---------------- in-place mutate array ------------</span></span><br><span class="line"><span class="keyword">var</span> arr =    [<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>,<span class="string">"d"</span>,<span class="string">"e"</span>,<span class="string">"f"</span>];</span><br><span class="line"><span class="keyword">var</span> indices = [<span class="number">2</span>,  <span class="number">3</span>,  <span class="number">4</span>,  <span class="number">0</span>,  <span class="number">5</span>, <span class="number">1</span>];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Solution1: real in-place solution!</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">inPlaceChange</span>(<span class="params"> arr, indices</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>( arr.length &lt;= <span class="number">1</span> ) <span class="keyword">return</span> arr</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">let</span> toPut = arr[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">let</span> index = indices[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">while</span>( i &lt; arr.length )&#123;</span><br><span class="line">        <span class="keyword">let</span> swap = arr[index]</span><br><span class="line">        arr[index] = toPut</span><br><span class="line">        toPut = swap</span><br><span class="line">        index = indices[index]</span><br><span class="line">        i++</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">inPlaceChange(arr, indices)</span><br><span class="line"><span class="built_in">console</span>.log(arr)</span><br><span class="line"></span><br><span class="line"><span class="comment">//---------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> arr =    [<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>,<span class="string">"d"</span>,<span class="string">"e"</span>,<span class="string">"f"</span>];</span><br><span class="line"><span class="keyword">var</span> indices = [<span class="number">2</span>,  <span class="number">3</span>,  <span class="number">4</span>,  <span class="number">0</span>,  <span class="number">5</span>, <span class="number">1</span>];</span><br><span class="line"><span class="comment">// Solution 2: not real in-place, cause map() use extra space</span></span><br><span class="line"><span class="keyword">let</span> arr = indices.map( <span class="function">(<span class="params">id, index</span>)=&gt;</span>arr[indices.indexOf(index)] )</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"updated arr: "</span>, arr)</span><br></pre></td></tr></table></figure>
 <h2 id="lt-script-async-gt-amp-lt-script-defer-gt"><a href="#lt-script-async-gt-amp-lt-script-defer-gt" class="headerlink" title="&lt;script async&gt; &amp; &lt;script defer&gt;"></a><code>&lt;script async&gt;</code> &amp; <code>&lt;script defer&gt;</code></h2><ol>
 <li>normal <code>&lt;script src=&quot;script.js&quot; &gt;</code><ul>
@@ -922,7 +1380,7 @@
 </ol>
 </li>
 </ol>
-<h2 id="RxJS-Observable"><a href="#RxJS-Observable" class="headerlink" title="RxJS - Observable"></a>RxJS - Observable</h2><ol>
+<h2 id="Generator"><a href="#Generator" class="headerlink" title="Generator"></a>Generator</h2><h2 id="RxJS-Observable"><a href="#RxJS-Observable" class="headerlink" title="RxJS - Observable"></a>RxJS - Observable</h2><ol>
 <li><p><strong>Observer pattern</strong>: subject (publisher) &amp; observer (subscriber)</p>
 <ul>
 <li><p>use case: <u>add event to DOM</u> </p>
@@ -2903,508 +3361,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/01/Event-Emitter/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/01/Event-Emitter/" itemprop="url">Event Emitter</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-01T20:21:44-07:00">2018-10-01</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/10/01/Event-Emitter/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/01/Event-Emitter/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="I-What-is-an-Event-Emitter"><a href="#I-What-is-an-Event-Emitter" class="headerlink" title="I. What is an Event Emitter?"></a>I. What is an Event Emitter?</h4><p>An <code>event emitter</code> is a <strong>utility object</strong>, which can be used to emit event, which can be subscribed by as many functions as we can. </p>
-<ol>
-<li><p>It is an event manager, manages differents event and its subscribers.</p>
-</li>
-<li><p>Also, we can see it as the <code>Redux</code>, which also dispatches(emits) actions, and handled by its reducers.</p>
-</li>
-<li>It widely used at Node.js ( asynchronous event-driven architecture)<ul>
-<li>certain kind of objects call emitters periodically to emit events that cause listener objects to be called.</li>
-<li>when a request comes requesting some resource, Node.js will register the subscriber: <code>responseToThisRequest()</code> on event: <code>thisTypeDataDone</code>. When data is obtained, will call <code>emitter.emit( thisTypeDataDone )</code>, to call the <code>responseToThisRequest()</code> corresponding all the requests.</li>
-</ul>
-</li>
-</ol>
-<h4 id="II-Why-and-when-do-we-need-it"><a href="#II-Why-and-when-do-we-need-it" class="headerlink" title="II. Why and when do we need it?"></a>II. Why and when do we need it?</h4><blockquote>
-<p>Whenever it makes sense for code to SUBSCRIBE to something rather than get a callback from something</p>
-<p><a href="https://stackoverflow.com/questions/38881170/when-should-i-use-eventemitter" target="_blank" rel="noopener">https://stackoverflow.com/questions/38881170/when-should-i-use-eventemitter</a></p>
-</blockquote>
-<p>If when a certain event happens, we have to deal many type of manipulation for that event’s result, then it is better to use the event emitter pattern. </p>
-<p>Instead put all functions inside an event callback, we subscribe all the function to that event, when the event happens, we emit the event!</p>
-<h4 id="III-How-to-use-it"><a href="#III-How-to-use-it" class="headerlink" title="III. How to use it?"></a>III. How to use it?</h4><p><strong>[Good Link]:</strong> <a href="https://netbasal.com/javascript-the-magic-behind-event-emitter-cce3abcbcef9" target="_blank" rel="noopener">https://netbasal.com/javascript-the-magic-behind-event-emitter-cce3abcbcef9</a></p>
-<p><strong>[Note]:  when pass in the callback function, we use arrow function, which already bind ‘this’ to the function, so that when the function be called, it knows what value it will update</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">let</span> input = <span class="built_in">document</span>.querySelector(<span class="string">'input[type="text"]'</span>);</span><br><span class="line"><span class="keyword">let</span> button = <span class="built_in">document</span>.querySelector(<span class="string">'button'</span>);</span><br><span class="line"><span class="keyword">let</span> h1 = <span class="built_in">document</span>.querySelector(<span class="string">'h1'</span>);</span><br><span class="line"></span><br><span class="line">button.addEventListener(<span class="string">'click'</span>, () =&gt; &#123;</span><br><span class="line">  emitter.emit(<span class="string">'event:name-changed'</span>, &#123;<span class="attr">name</span>: input.value&#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> emitter = <span class="keyword">new</span> EventEmitter();</span><br><span class="line">emitter.subscribe(<span class="string">'event:name-changed'</span>, data =&gt; &#123;</span><br><span class="line">  h1.innerHTML = <span class="string">`Your name is: <span class="subst">$&#123;data.name&#125;</span>`</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<ol>
-<li><p>create an emitter util object</p>
-</li>
-<li><p>subscribe the desired callback function, using <code>emitter.subscribe(event, function.bind(this))</code></p>
-</li>
-<li><p>call <code>emitter.emit()</code> when the event happen</p>
-</li>
-</ol>
-<h4 id="IV-Write-one"><a href="#IV-Write-one" class="headerlink" title="IV. Write one!"></a>IV. Write one!</h4><ol>
-<li><strong><u>object:</u></strong> we need an object (utility object)</li>
-<li><u><strong>data structure:</strong></u> inside it, we need a data structure to store the <code>event</code> and its <code>subscribers</code>(callbacks)</li>
-<li><strong><u>methods:</u></strong>  all the methods<ul>
-<li><code>subscribe(event, callback)</code>: we need the return value to be an <code>unsubscribe()</code>, so we won’t result in the memory leak!</li>
-<li><code>emit()</code></li>
-</ul>
-</li>
-</ol>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">EventEmitter</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="keyword">this</span>.events = &#123;&#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  on(event, listener) &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span>.events[event] !== <span class="string">'object'</span>) &#123;</span><br><span class="line">          <span class="keyword">this</span>.events[event] = [];</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">this</span>.events[event].push(listener);</span><br><span class="line">      <span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">this</span>.removeListener(event, listener);</span><br><span class="line">  &#125;</span><br><span class="line">    </span><br><span class="line">  removeListener(event, listener) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span>.events[event] === <span class="string">'object'</span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> idx = <span class="keyword">this</span>.events[event].indexOf(listener);</span><br><span class="line">        <span class="keyword">if</span> (idx &gt; <span class="number">-1</span>) &#123;</span><br><span class="line">          <span class="keyword">this</span>.events[event].splice(idx, <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  emit(event, ...args) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span>.events[event] === <span class="string">'object'</span>) &#123;</span><br><span class="line">      <span class="keyword">this</span>.events[event].forEach(</span><br><span class="line">        listener =&gt; &#123;<span class="keyword">if</span>(<span class="keyword">typeof</span> listener === <span class="string">'function'</span>) listener.apply(<span class="literal">null</span>, args)&#125;</span><br><span class="line">      );</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// register a wrapper function containing the listener on this event,</span></span><br><span class="line">  <span class="comment">// when get executed, </span></span><br><span class="line">  <span class="comment">//   - first remove it on this event;</span></span><br><span class="line">  <span class="comment">//   - then execute real listener</span></span><br><span class="line">  once(event, listener) &#123;</span><br><span class="line">    <span class="keyword">const</span> remove = <span class="keyword">this</span>.on(event, (...args) =&gt; &#123;</span><br><span class="line">        remove();</span><br><span class="line">        listener.apply(<span class="literal">null</span>, args);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> emitter = <span class="keyword">new</span> EventEmitter()</span><br><span class="line"><span class="comment">// Test 1: invalid callback function</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Test 1: Nothing should be print out"</span>)</span><br><span class="line">emitter.on(<span class="string">"a"</span>, <span class="number">1</span>);</span><br><span class="line">emitter.emit(<span class="string">"a"</span>);</span><br><span class="line"><span class="built_in">console</span>.log()</span><br><span class="line"></span><br><span class="line"><span class="comment">// Test 2: add mutilple callback function to an event</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Test 2: callback 1, 2, 3"</span>)</span><br><span class="line">emitter.on(<span class="string">"b"</span>, ()=&gt;&#123;<span class="built_in">console</span>.log(<span class="string">"event b callback 1"</span>)&#125;);</span><br><span class="line">emitter.on(<span class="string">"b"</span>, ()=&gt;&#123;<span class="built_in">console</span>.log(<span class="string">"event b callback 2"</span>)&#125;);</span><br><span class="line"><span class="keyword">let</span> off1 = emitter.on(<span class="string">"b"</span>, ()=&gt;&#123;<span class="built_in">console</span>.log(<span class="string">"event b callback 3"</span>)&#125;);</span><br><span class="line">emitter.emit(<span class="string">"b"</span>);</span><br><span class="line"><span class="built_in">console</span>.log()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Test 3: unsubscribe one callback from an event queue</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Test 3: callback 1, 2"</span>)</span><br><span class="line">off1();</span><br><span class="line">emitter.emit(<span class="string">"b"</span>); </span><br><span class="line"><span class="built_in">console</span>.log()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Test 4: subscribe other event &amp; callbacks at the same time</span></span><br><span class="line"><span class="keyword">let</span> data = &#123;<span class="attr">digit</span>: <span class="number">1</span>&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Test 4:  digit should be 11 &amp; 14 "</span>)</span><br><span class="line">emitter.on(<span class="string">"c"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123; data.digit+=<span class="number">1</span> &#125;);</span><br><span class="line">emitter.on(<span class="string">"c"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123; data.digit+=<span class="number">2</span> &#125;);</span><br><span class="line">emitter.on(<span class="string">"d"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123; data.digit+=<span class="number">3</span> &#125;);;</span><br><span class="line"><span class="keyword">let</span> off2 = emitter.on(<span class="string">"d"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123; data.digit+=<span class="number">4</span> &#125;);</span><br><span class="line"></span><br><span class="line">emitter.emit(<span class="string">"c"</span>, data); </span><br><span class="line">emitter.emit(<span class="string">"d"</span>, data);  </span><br><span class="line"><span class="built_in">console</span>.log(data.digit)</span><br><span class="line">      </span><br><span class="line">off2()</span><br><span class="line">emitter.emit(<span class="string">"d"</span>, data);  </span><br><span class="line"><span class="built_in">console</span>.log(data.digit)</span><br><span class="line"><span class="built_in">console</span>.log()</span><br><span class="line">      </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Test 5: subscribe other event &amp; callbacks</span></span><br><span class="line"><span class="keyword">let</span> data2 = &#123;<span class="attr">digit</span>: <span class="number">5</span>&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Test 5: digit should be 11"</span>)</span><br><span class="line">emitter.emit(<span class="string">"d"</span>, data2 ); </span><br><span class="line">emitter.emit(<span class="string">"c"</span>, data2 ); </span><br><span class="line"><span class="built_in">console</span>.log(data2.digit)   </span><br><span class="line"><span class="built_in">console</span>.log()</span><br><span class="line"></span><br><span class="line"><span class="comment">// Test 6: test once</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Test 6: should only print once"</span>)</span><br><span class="line">emitter.once(<span class="string">"test 6"</span>, ()=&gt;&#123;<span class="built_in">console</span>.log(<span class="string">"should only print once"</span>)&#125; ); </span><br><span class="line">emitter.emit(<span class="string">"test 6"</span> ); </span><br><span class="line">emitter.emit(<span class="string">"test 6"</span> ); </span><br><span class="line">emitter.emit(<span class="string">"test 6"</span> ); </span><br><span class="line"><span class="built_in">console</span>.log()</span><br></pre></td></tr></table></figure>
-<p><strong><em>FaceBook interview version</em></strong><br><a href="https://gist.github.com/kutyel/7d8f204a347840a6ee7220743957e504" target="_blank" rel="noopener">https://gist.github.com/kutyel/7d8f204a347840a6ee7220743957e504</a></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Create an event emitter that goes like this</span></span><br><span class="line"><span class="comment"> * emitter = new Emitter();</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Allows you to subscribe to some event</span></span><br><span class="line"><span class="comment"> * sub1 = emitter.subscribe('function_name', callback1);</span></span><br><span class="line"><span class="comment"> * (you can have multiple callbacks to the same event)</span></span><br><span class="line"><span class="comment"> * sub2 = emitter.subscribe('function_name', callback2);</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * You can emit the event you want with this api</span></span><br><span class="line"><span class="comment"> * (you can receive 'n' number of arguments)</span></span><br><span class="line"><span class="comment"> * sub1.emit('function_name', foo, bar);</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * And allows you to release the subscription like this</span></span><br><span class="line"><span class="comment"> * (but you should be able to still emit from sub2)</span></span><br><span class="line"><span class="comment"> * sub1.release();</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// facebook.js</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Emitter</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(events = &#123;&#125;) &#123;</span><br><span class="line">    <span class="keyword">this</span>.events = events</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  subscribe(name, cb) &#123;</span><br><span class="line">    (<span class="keyword">this</span>.events[name] || (<span class="keyword">this</span>.events[name] = [])).push(cb)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      release: <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">this</span>.events[name] &amp;&amp;</span><br><span class="line">        <span class="keyword">this</span>.events[name].splice(<span class="keyword">this</span>.events[name].indexOf(cb) &gt;&gt;&gt; <span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  emit(name, ...args) &#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">this</span>.events[name] || []).map(<span class="function"><span class="params">fn</span> =&gt;</span> fn(...args))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> Emitter</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// test.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> expect = <span class="built_in">require</span>(<span class="string">'expect'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Emitter = <span class="built_in">require</span>(<span class="string">'./facebook'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Step 1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> test = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> emitter = <span class="keyword">new</span> Emitter()</span><br><span class="line"></span><br><span class="line">emitter.emit(<span class="string">'sum'</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">expect(test).toBe(<span class="number">0</span>) <span class="comment">// should trigger nothing</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> sub1 = emitter.subscribe(<span class="string">'sum'</span>, num =&gt; (test = test + num))</span><br><span class="line"></span><br><span class="line">emitter.emit(<span class="string">'sum'</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">expect(test).toBe(<span class="number">1</span>) <span class="comment">// should trigger 1 callback</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> sub2 = emitter.subscribe(<span class="string">'sum'</span>, num =&gt; (test = test * num))</span><br><span class="line"></span><br><span class="line">emitter.emit(<span class="string">'sum'</span>, <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">expect(test).toBe(<span class="number">6</span>) <span class="comment">// should trigger 2 callbacks</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Step 2</span></span><br><span class="line"></span><br><span class="line">sub1.release()</span><br><span class="line"></span><br><span class="line">emitter.emit(<span class="string">'sum'</span>, <span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">expect(test).toBe(<span class="number">18</span>) <span class="comment">// should trigger 1 callback</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Step 3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> myEvent1 = emitter.subscribe(<span class="string">'myEvent'</span>, () =&gt; <span class="number">1</span>)</span><br><span class="line"><span class="keyword">const</span> myEvent2 = emitter.subscribe(<span class="string">'myEvent'</span>, () =&gt; <span class="number">2</span>)</span><br><span class="line"><span class="keyword">const</span> myEvent3 = emitter.subscribe(<span class="string">'myEvent'</span>, () =&gt; <span class="literal">true</span>)</span><br><span class="line"><span class="keyword">const</span> result = emitter.emit(<span class="string">'myEvent'</span>)</span><br><span class="line"></span><br><span class="line">expect(result).toEqual([<span class="number">1</span>, <span class="number">2</span>, <span class="literal">true</span>])</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.info(<span class="string">'You passed the test!!! 👏🏼 👏🏼 👏🏼'</span>)</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/05/this-arrow-function/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/05/this-arrow-function/" itemprop="url">'this' & arrow function</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-05T21:51:55-07:00">2018-09-05</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/09/05/this-arrow-function/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/09/05/this-arrow-function/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="I-this-in-function"><a href="#I-this-in-function" class="headerlink" title="I. this in function"></a>I. <code>this</code> in function</h2><ol>
-<li><p><strong>what is <code>this</code> ?</strong></p>
-<ul>
-<li>all <strong><u>regular</u></strong> functions have <code>this</code> keyword</li>
-<li><code>this</code> determines how a function is called <strong><u>on whom</u></strong>!</li>
-</ul>
-</li>
-<li><p><strong><code>this</code> in global context</strong></p>
-<ul>
-<li><p><code>this</code> refers  gloabl object, no matter in strict mode or not</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// In web browsers, the window object is also the global object:</span><br><span class="line">console.log(this === window); // true</span><br><span class="line"></span><br><span class="line">a = 37;</span><br><span class="line">console.log(window.a); // 37</span><br><span class="line"></span><br><span class="line">this.b = &quot;MDN&quot;;</span><br><span class="line">console.log(window.b)  // &quot;MDN&quot;</span><br><span class="line">console.log(b)         // &quot;MDN&quot;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><u><strong><code>this</code> in function context [important]</strong></u></p>
-<p>There are 7 cases that different function context results in different <code>this</code> reference;</p>
-<blockquote>
-<p><u>The value of <code>this</code></u> depend on how the function is called</p>
-</blockquote>
-<ol>
-<li><p><code>this</code> in <strong><u>simple call</u></strong></p>
-<ul>
-<li><p>non-strict mode</p>
-<p>if <code>this</code> is not set explicitly, it default to global object</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> <span class="keyword">this</span>; &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// In a browser:</span></span><br><span class="line">f1() === <span class="built_in">window</span>; <span class="comment">// true </span></span><br><span class="line"></span><br><span class="line"><span class="comment">// In Node:</span></span><br><span class="line">f1() === global; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>strict mode</p>
-<p>if <code>this</code> is not set explicitly, the value of <code>this</code> remains <code>undefined</code></p>
-</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f2</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"><span class="meta">  'use strict'</span>; <span class="comment">// see strict mode</span></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">f2() === <span class="literal">undefined</span>; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>change the value of <code>this</code>, using <code>apply()</code> or <code>call()</code></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// An object can be passed as the first argument to call or apply and this will be bound to it.</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123;<span class="attr">a</span>: <span class="string">'Custom'</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// This property is set on the global object</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="string">'Global'</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">whatsThis</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.a;  <span class="comment">// The value of this is dependent on how the function is called</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">whatsThis();          <span class="comment">// 'Global'</span></span><br><span class="line">whatsThis.call(obj);  <span class="comment">// 'Custom'</span></span><br><span class="line">whatsThis.apply(obj); <span class="comment">// 'Custom'</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><code>this</code> in <strong><u><code>bind()</code> method</u></strong></p>
-<ul>
-<li><p>NOTE: <code>bind()</code> doesn’t change the orignal function, instead it return a <strong><u>new function</u></strong> with updated value of <code>this</code></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> <span class="keyword">this</span>.a; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> g = f.bind(&#123;<span class="attr">a</span>: <span class="string">'azerty'</span>&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(g()); <span class="comment">// azerty</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> h = g.bind(&#123;<span class="attr">a</span>: <span class="string">'yoo'</span>&#125;); <span class="comment">// bind only works once!</span></span><br><span class="line"><span class="built_in">console</span>.log(h()); <span class="comment">// azerty</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> o = &#123;<span class="attr">a</span>: <span class="number">37</span>, <span class="attr">f</span>: f, <span class="attr">g</span>: g, <span class="attr">h</span>: h&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(o.a, o.f(), o.g(), o.h()); <span class="comment">// 37,37, azerty, azerty</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><code>this</code> in <u><strong>arrow function</strong></u></p>
-<ul>
-<li><p><code>this</code> cannot be changed, it default to the value of the <strong><u>enclosing lexical context</u></strong>‘s <code>this</code></p>
-</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> globalObject = <span class="keyword">this</span>;</span><br><span class="line"><span class="keyword">var</span> foo = <span class="function">(<span class="params">(</span>) =&gt;</span> <span class="keyword">this</span>);</span><br><span class="line"><span class="built_in">console</span>.log(foo() === globalObject); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>About <code>call()</code> &amp; <code>apply()</code></p>
-<ul>
-<li><p>if <code>this</code> arg is passed to call, bind, or apply on invocation of an arrow function it will be <strong><u>ignored</u></strong>.</p>
-</li>
-<li><p>the <code>thisArg</code> still works</p>
-</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Call as a method of an object</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123;<span class="attr">func</span>: foo&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(obj.func() === globalObject); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Attempt to set this using call</span></span><br><span class="line"><span class="built_in">console</span>.log(foo.call(obj) === globalObject); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Attempt to set this using bind</span></span><br><span class="line">foo = foo.bind(obj);</span><br><span class="line"><span class="built_in">console</span>.log(foo() === globalObject); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-<p><strong><u>another example:</u></strong>  <code>this</code> of arrow function, directly depends on its enclosing context </p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Create obj with a method bar that returns a function that</span></span><br><span class="line"><span class="comment">// returns its this. The returned function is created as </span></span><br><span class="line"><span class="comment">// an arrow function, so its this is permanently bound to the</span></span><br><span class="line"><span class="comment">// this of its enclosing function. The value of bar can be set</span></span><br><span class="line"><span class="comment">// in the call, which in turn sets the value of the </span></span><br><span class="line"><span class="comment">// returned function.</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123;<span class="attr">bar</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">                    <span class="keyword">var</span> x = <span class="function">(<span class="params">(</span>) =&gt;</span> <span class="keyword">this</span>);</span><br><span class="line">                    <span class="keyword">return</span> x;</span><br><span class="line">                  &#125;</span><br><span class="line">          &#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Call bar as a method of obj, setting its this to obj</span></span><br><span class="line"><span class="comment">// Assign a reference to the returned function to fn</span></span><br><span class="line"><span class="keyword">var</span> fn = obj.bar();</span><br><span class="line"></span><br><span class="line"><span class="comment">// Call fn without setting this, would normally default</span></span><br><span class="line"><span class="comment">// to the global object or undefined in strict mode</span></span><br><span class="line"><span class="built_in">console</span>.log(fn() === obj); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// But caution if you reference the method of obj without calling it</span></span><br><span class="line"><span class="keyword">var</span> fn2 = obj.bar;</span><br><span class="line"><span class="comment">// Then calling the arrow function this is equals to window because it follows the this from bar.</span></span><br><span class="line"><span class="built_in">console</span>.log(fn2()() == <span class="built_in">window</span>); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><code>this</code> in <u><strong>object method</strong></u></p>
-<ul>
-<li><p>When a function is called as a method of an object, its <code>this</code> is set to <strong><u>the object</u></strong> the method is called on.</p>
-</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> o = &#123;</span><br><span class="line">  prop: <span class="number">37</span>,</span><br><span class="line">  f: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.prop;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(o.f()); <span class="comment">// 37</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>this</code> on the object’s prototype chain</p>
-<p>If the method is on an object’s prototype chain, <code>this</code> refers to the object the method was called on, as if the method were on the object.</p>
-</li>
-</ul>
-</li>
-<li><p><code>this</code> in <u><strong>constructor</strong></u></p>
-<ul>
-<li><p><code>this</code> is bound to the <strong><u>new object being constructed</u></strong></p>
-</li>
-<li><p><strong>#A#</strong>  if <code>constructor</code> doesn’t return: result of <code>new</code> will be the object bound to <code>this</code></p>
-</li>
-<li><p><strong>#B#</strong>  if <code>constructor</code> return an object: result of <code>new</code> will be the return value</p>
-</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">C</span>(<span class="params"></span>) </span>&#123; <span class="keyword">this</span>.a = <span class="number">37</span>; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> o = <span class="keyword">new</span> C();</span><br><span class="line"><span class="built_in">console</span>.log(o.a); <span class="comment">// 37</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">C2</span>(<span class="params"></span>) </span>&#123;   </span><br><span class="line">  <span class="keyword">this</span>.a = <span class="number">37</span>;</span><br><span class="line">  <span class="keyword">return</span> &#123;<span class="attr">a</span>: <span class="number">38</span>&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// if an object was returned during construction, then the new object that this was bound to simply gets discarded.</span></span><br><span class="line"></span><br><span class="line">o = <span class="keyword">new</span> C2();</span><br><span class="line"><span class="built_in">console</span>.log(o.a); <span class="comment">// 38</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><code>this</code> in <u><strong>DOM event handler</strong></u></p>
-<ul>
-<li><p><code>this</code> is set to the <strong><u>target element</u></strong> the event fired from</p>
-</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// When called as a listener, turns the related element blue</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bluify</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// Always true</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span> === e.currentTarget); </span><br><span class="line">  <span class="comment">// true when currentTarget and target are the same object</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span> === e.target);</span><br><span class="line">  <span class="keyword">this</span>.style.backgroundColor = <span class="string">'#A5D9F3'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Get a list of every element in the document</span></span><br><span class="line"><span class="keyword">var</span> elements = <span class="built_in">document</span>.getElementsByTagName(<span class="string">'*'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Add bluify as a click listener so when the</span></span><br><span class="line"><span class="comment">// element is clicked on, it turns blue</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; elements.length; i++) &#123;</span><br><span class="line">  elements[i].addEventListener(<span class="string">'click'</span>, bluify, <span class="literal">false</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><code>this</code> in <u><strong>inline event handler</strong></u></p>
-<ul>
-<li><p><code>this</code> is set to the DOM element <strong><u>where the listener is placed</u></strong></p>
-</li>
-<li><p>however, only the outer code has its <code>this</code> set this way</p>
-</li>
-<li><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 1. this will refer to 'button' --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">"alert(this.tagName.toLowerCase());"</span>&gt;</span></span><br><span class="line">  Show this</span><br><span class="line"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 2. 'this' will refer to 'window' --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">"alert((function() &#123; return this; &#125;)());"</span>&gt;</span></span><br><span class="line">  Show inner this</span><br><span class="line"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ol>
-</li>
-</ol>
-<h2 id="II-arrow-function"><a href="#II-arrow-function" class="headerlink" title="II. arrow function"></a>II. arrow function</h2><ol>
-<li><p>Best suited for <strong><u>non-method</u></strong> functions, ie. not related to method in <em>object</em></p>
-</li>
-<li><p>No separate <code>this</code> of its own, <em>using others’</em></p>
-<ul>
-<li><p>An arrow function does not have its own <code>this</code></p>
-</li>
-<li><p><code>this</code> value of the enclosing lexical context is used </p>
-</li>
-<li><p>how to find <code>this</code> of enclosing lexical context:</p>
-<ul>
-<li><p>check if <code>this</code>  is present in current scope;</p>
-</li>
-<li><p>check <code>this</code> is present in its enclosing scope;</p>
-</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//---------- version1: works -----------------</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.age = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  setInterval(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.age++; <span class="comment">// |this| properly refers to the Person object</span></span><br><span class="line">  &#125;, <span class="number">1000</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> Person();</span><br><span class="line"></span><br><span class="line"><span class="comment">//---------- version2: doesn't work ----------</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// The Person() constructor defines `this` as an instance of itself.</span></span><br><span class="line">  <span class="keyword">this</span>.age = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  setInterval(<span class="function"><span class="keyword">function</span> <span class="title">growUp</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// In non-strict mode, the growUp() function defines `this` </span></span><br><span class="line">    <span class="comment">// as the global object (because it's where growUp() is executed.), </span></span><br><span class="line">    <span class="comment">// which is different from the `this`</span></span><br><span class="line">    <span class="comment">// defined by the Person() constructor. </span></span><br><span class="line">    <span class="keyword">this</span>.age++;</span><br><span class="line">  &#125;, <span class="number">1000</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> Person();</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>No binding of <code>arguments</code></p>
-<ul>
-<li><p>Arrow functions do not have their own <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments" target="_blank" rel="noopener"><code>arguments</code> object</a>.</p>
-</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="built_in">arguments</span> = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">var</span> arr = <span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">arguments</span>[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">arr(); <span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> f = <span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">arguments</span>[<span class="number">0</span>] + n; <span class="comment">// foo's implicit arguments binding. arguments[0] is n</span></span><br><span class="line">  <span class="keyword">return</span> f();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo(<span class="number">3</span>); <span class="comment">// 6</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>using <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters" target="_blank" rel="noopener">rest parameters</a> is a good alternative to using an <code>arguments</code> object</p>
-</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">n</span>) </span>&#123; </span><br><span class="line">  <span class="keyword">var</span> f = <span class="function">(<span class="params">...args</span>) =&gt;</span> args[<span class="number">0</span>] + n; </span><br><span class="line">  <span class="keyword">return</span> f(<span class="number">10</span>); </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo(<span class="number">1</span>); <span class="comment">// 11</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><u><strong>When not use arrow function?  ==&gt;  when need <code>this</code> explicitly</strong> </u></p>
-<ol>
-<li><p>don’t use as <u>methods of object</u>: </p>
-<ul>
-<li><p>because we need <code>this</code>, but arrow function doesn’t have its own <code>this</code></p>
-</li>
-<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&apos;use strict&apos;;</span><br><span class="line"></span><br><span class="line">var obj = &#123;</span><br><span class="line">  i: 10,</span><br><span class="line">  b: () =&gt; console.log(this.i, this),</span><br><span class="line">  c: function() &#123;</span><br><span class="line">    console.log(this.i, this);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">obj.b(); // prints undefined, Window &#123;...&#125; (or the global object)</span><br><span class="line">obj.c(); // prints 10, Object &#123;...&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>don’t use as <u>function constructor</u>:  because we will use <code>new</code> to construct , which need <code>this</code></p>
-</li>
-<li><p>don’t add <code>prototype</code> to it:  because it doesn’t have <code>this</code></p>
-</li>
-<li><p>don’t use in <code>yeild</code> or <code>generators</code>: </p>
-</li>
-</ol>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3456,7 +3412,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">44</span>
+                    <span class="site-state-item-count">46</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -3600,7 +3556,23 @@
                     
                       
                     
-                    <span class="site-state-item-count">54</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">62</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

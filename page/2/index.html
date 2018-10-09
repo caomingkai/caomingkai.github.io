@@ -332,6 +332,508 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/01/Event-Emitter/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/01/Event-Emitter/" itemprop="url">Event Emitter</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-01T20:21:44-07:00">2018-10-01</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/01/Event-Emitter/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/01/Event-Emitter/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="I-What-is-an-Event-Emitter"><a href="#I-What-is-an-Event-Emitter" class="headerlink" title="I. What is an Event Emitter?"></a>I. What is an Event Emitter?</h4><p>An <code>event emitter</code> is a <strong>utility object</strong>, which can be used to emit event, which can be subscribed by as many functions as we can. </p>
+<ol>
+<li><p>It is an event manager, manages differents event and its subscribers.</p>
+</li>
+<li><p>Also, we can see it as the <code>Redux</code>, which also dispatches(emits) actions, and handled by its reducers.</p>
+</li>
+<li>It widely used at Node.js ( asynchronous event-driven architecture)<ul>
+<li>certain kind of objects call emitters periodically to emit events that cause listener objects to be called.</li>
+<li>when a request comes requesting some resource, Node.js will register the subscriber: <code>responseToThisRequest()</code> on event: <code>thisTypeDataDone</code>. When data is obtained, will call <code>emitter.emit( thisTypeDataDone )</code>, to call the <code>responseToThisRequest()</code> corresponding all the requests.</li>
+</ul>
+</li>
+</ol>
+<h4 id="II-Why-and-when-do-we-need-it"><a href="#II-Why-and-when-do-we-need-it" class="headerlink" title="II. Why and when do we need it?"></a>II. Why and when do we need it?</h4><blockquote>
+<p>Whenever it makes sense for code to SUBSCRIBE to something rather than get a callback from something</p>
+<p><a href="https://stackoverflow.com/questions/38881170/when-should-i-use-eventemitter" target="_blank" rel="noopener">https://stackoverflow.com/questions/38881170/when-should-i-use-eventemitter</a></p>
+</blockquote>
+<p>If when a certain event happens, we have to deal many type of manipulation for that event’s result, then it is better to use the event emitter pattern. </p>
+<p>Instead put all functions inside an event callback, we subscribe all the function to that event, when the event happens, we emit the event!</p>
+<h4 id="III-How-to-use-it"><a href="#III-How-to-use-it" class="headerlink" title="III. How to use it?"></a>III. How to use it?</h4><p><strong>[Good Link]:</strong> <a href="https://netbasal.com/javascript-the-magic-behind-event-emitter-cce3abcbcef9" target="_blank" rel="noopener">https://netbasal.com/javascript-the-magic-behind-event-emitter-cce3abcbcef9</a></p>
+<p><strong>[Note]:  when pass in the callback function, we use arrow function, which already bind ‘this’ to the function, so that when the function be called, it knows what value it will update</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">let</span> input = <span class="built_in">document</span>.querySelector(<span class="string">'input[type="text"]'</span>);</span><br><span class="line"><span class="keyword">let</span> button = <span class="built_in">document</span>.querySelector(<span class="string">'button'</span>);</span><br><span class="line"><span class="keyword">let</span> h1 = <span class="built_in">document</span>.querySelector(<span class="string">'h1'</span>);</span><br><span class="line"></span><br><span class="line">button.addEventListener(<span class="string">'click'</span>, () =&gt; &#123;</span><br><span class="line">  emitter.emit(<span class="string">'event:name-changed'</span>, &#123;<span class="attr">name</span>: input.value&#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> emitter = <span class="keyword">new</span> EventEmitter();</span><br><span class="line">emitter.subscribe(<span class="string">'event:name-changed'</span>, data =&gt; &#123;</span><br><span class="line">  h1.innerHTML = <span class="string">`Your name is: <span class="subst">$&#123;data.name&#125;</span>`</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>create an emitter util object</p>
+</li>
+<li><p>subscribe the desired callback function, using <code>emitter.subscribe(event, function.bind(this))</code></p>
+</li>
+<li><p>call <code>emitter.emit()</code> when the event happen</p>
+</li>
+</ol>
+<h4 id="IV-Write-one"><a href="#IV-Write-one" class="headerlink" title="IV. Write one!"></a>IV. Write one!</h4><ol>
+<li><strong><u>object:</u></strong> we need an object (utility object)</li>
+<li><u><strong>data structure:</strong></u> inside it, we need a data structure to store the <code>event</code> and its <code>subscribers</code>(callbacks)</li>
+<li><strong><u>methods:</u></strong>  all the methods<ul>
+<li><code>subscribe(event, callback)</code>: we need the return value to be an <code>unsubscribe()</code>, so we won’t result in the memory leak!</li>
+<li><code>emit()</code></li>
+</ul>
+</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">EventEmitter</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="keyword">this</span>.events = &#123;&#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  on(event, listener) &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span>.events[event] !== <span class="string">'object'</span>) &#123;</span><br><span class="line">          <span class="keyword">this</span>.events[event] = [];</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">this</span>.events[event].push(listener);</span><br><span class="line">      <span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">this</span>.removeListener(event, listener);</span><br><span class="line">  &#125;</span><br><span class="line">    </span><br><span class="line">  removeListener(event, listener) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span>.events[event] === <span class="string">'object'</span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> idx = <span class="keyword">this</span>.events[event].indexOf(listener);</span><br><span class="line">        <span class="keyword">if</span> (idx &gt; <span class="number">-1</span>) &#123;</span><br><span class="line">          <span class="keyword">this</span>.events[event].splice(idx, <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  emit(event, ...args) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span>.events[event] === <span class="string">'object'</span>) &#123;</span><br><span class="line">      <span class="keyword">this</span>.events[event].forEach(</span><br><span class="line">        listener =&gt; &#123;<span class="keyword">if</span>(<span class="keyword">typeof</span> listener === <span class="string">'function'</span>) listener.apply(<span class="literal">null</span>, args)&#125;</span><br><span class="line">      );</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// register a wrapper function containing the listener on this event,</span></span><br><span class="line">  <span class="comment">// when get executed, </span></span><br><span class="line">  <span class="comment">//   - first remove it on this event;</span></span><br><span class="line">  <span class="comment">//   - then execute real listener</span></span><br><span class="line">  once(event, listener) &#123;</span><br><span class="line">    <span class="keyword">const</span> remove = <span class="keyword">this</span>.on(event, (...args) =&gt; &#123;</span><br><span class="line">        remove();</span><br><span class="line">        listener.apply(<span class="literal">null</span>, args);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> emitter = <span class="keyword">new</span> EventEmitter()</span><br><span class="line"><span class="comment">// Test 1: invalid callback function</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Test 1: Nothing should be print out"</span>)</span><br><span class="line">emitter.on(<span class="string">"a"</span>, <span class="number">1</span>);</span><br><span class="line">emitter.emit(<span class="string">"a"</span>);</span><br><span class="line"><span class="built_in">console</span>.log()</span><br><span class="line"></span><br><span class="line"><span class="comment">// Test 2: add mutilple callback function to an event</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Test 2: callback 1, 2, 3"</span>)</span><br><span class="line">emitter.on(<span class="string">"b"</span>, ()=&gt;&#123;<span class="built_in">console</span>.log(<span class="string">"event b callback 1"</span>)&#125;);</span><br><span class="line">emitter.on(<span class="string">"b"</span>, ()=&gt;&#123;<span class="built_in">console</span>.log(<span class="string">"event b callback 2"</span>)&#125;);</span><br><span class="line"><span class="keyword">let</span> off1 = emitter.on(<span class="string">"b"</span>, ()=&gt;&#123;<span class="built_in">console</span>.log(<span class="string">"event b callback 3"</span>)&#125;);</span><br><span class="line">emitter.emit(<span class="string">"b"</span>);</span><br><span class="line"><span class="built_in">console</span>.log()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Test 3: unsubscribe one callback from an event queue</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Test 3: callback 1, 2"</span>)</span><br><span class="line">off1();</span><br><span class="line">emitter.emit(<span class="string">"b"</span>); </span><br><span class="line"><span class="built_in">console</span>.log()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Test 4: subscribe other event &amp; callbacks at the same time</span></span><br><span class="line"><span class="keyword">let</span> data = &#123;<span class="attr">digit</span>: <span class="number">1</span>&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Test 4:  digit should be 11 &amp; 14 "</span>)</span><br><span class="line">emitter.on(<span class="string">"c"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123; data.digit+=<span class="number">1</span> &#125;);</span><br><span class="line">emitter.on(<span class="string">"c"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123; data.digit+=<span class="number">2</span> &#125;);</span><br><span class="line">emitter.on(<span class="string">"d"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123; data.digit+=<span class="number">3</span> &#125;);;</span><br><span class="line"><span class="keyword">let</span> off2 = emitter.on(<span class="string">"d"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123; data.digit+=<span class="number">4</span> &#125;);</span><br><span class="line"></span><br><span class="line">emitter.emit(<span class="string">"c"</span>, data); </span><br><span class="line">emitter.emit(<span class="string">"d"</span>, data);  </span><br><span class="line"><span class="built_in">console</span>.log(data.digit)</span><br><span class="line">      </span><br><span class="line">off2()</span><br><span class="line">emitter.emit(<span class="string">"d"</span>, data);  </span><br><span class="line"><span class="built_in">console</span>.log(data.digit)</span><br><span class="line"><span class="built_in">console</span>.log()</span><br><span class="line">      </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Test 5: subscribe other event &amp; callbacks</span></span><br><span class="line"><span class="keyword">let</span> data2 = &#123;<span class="attr">digit</span>: <span class="number">5</span>&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Test 5: digit should be 11"</span>)</span><br><span class="line">emitter.emit(<span class="string">"d"</span>, data2 ); </span><br><span class="line">emitter.emit(<span class="string">"c"</span>, data2 ); </span><br><span class="line"><span class="built_in">console</span>.log(data2.digit)   </span><br><span class="line"><span class="built_in">console</span>.log()</span><br><span class="line"></span><br><span class="line"><span class="comment">// Test 6: test once</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Test 6: should only print once"</span>)</span><br><span class="line">emitter.once(<span class="string">"test 6"</span>, ()=&gt;&#123;<span class="built_in">console</span>.log(<span class="string">"should only print once"</span>)&#125; ); </span><br><span class="line">emitter.emit(<span class="string">"test 6"</span> ); </span><br><span class="line">emitter.emit(<span class="string">"test 6"</span> ); </span><br><span class="line">emitter.emit(<span class="string">"test 6"</span> ); </span><br><span class="line"><span class="built_in">console</span>.log()</span><br></pre></td></tr></table></figure>
+<p><strong><em>FaceBook interview version</em></strong><br><a href="https://gist.github.com/kutyel/7d8f204a347840a6ee7220743957e504" target="_blank" rel="noopener">https://gist.github.com/kutyel/7d8f204a347840a6ee7220743957e504</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Create an event emitter that goes like this</span></span><br><span class="line"><span class="comment"> * emitter = new Emitter();</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Allows you to subscribe to some event</span></span><br><span class="line"><span class="comment"> * sub1 = emitter.subscribe('function_name', callback1);</span></span><br><span class="line"><span class="comment"> * (you can have multiple callbacks to the same event)</span></span><br><span class="line"><span class="comment"> * sub2 = emitter.subscribe('function_name', callback2);</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * You can emit the event you want with this api</span></span><br><span class="line"><span class="comment"> * (you can receive 'n' number of arguments)</span></span><br><span class="line"><span class="comment"> * sub1.emit('function_name', foo, bar);</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * And allows you to release the subscription like this</span></span><br><span class="line"><span class="comment"> * (but you should be able to still emit from sub2)</span></span><br><span class="line"><span class="comment"> * sub1.release();</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// facebook.js</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Emitter</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(events = &#123;&#125;) &#123;</span><br><span class="line">    <span class="keyword">this</span>.events = events</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  subscribe(name, cb) &#123;</span><br><span class="line">    (<span class="keyword">this</span>.events[name] || (<span class="keyword">this</span>.events[name] = [])).push(cb)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      release: <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">this</span>.events[name] &amp;&amp;</span><br><span class="line">        <span class="keyword">this</span>.events[name].splice(<span class="keyword">this</span>.events[name].indexOf(cb) &gt;&gt;&gt; <span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  emit(name, ...args) &#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">this</span>.events[name] || []).map(<span class="function"><span class="params">fn</span> =&gt;</span> fn(...args))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> Emitter</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// test.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> expect = <span class="built_in">require</span>(<span class="string">'expect'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Emitter = <span class="built_in">require</span>(<span class="string">'./facebook'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Step 1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> test = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> emitter = <span class="keyword">new</span> Emitter()</span><br><span class="line"></span><br><span class="line">emitter.emit(<span class="string">'sum'</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">expect(test).toBe(<span class="number">0</span>) <span class="comment">// should trigger nothing</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> sub1 = emitter.subscribe(<span class="string">'sum'</span>, num =&gt; (test = test + num))</span><br><span class="line"></span><br><span class="line">emitter.emit(<span class="string">'sum'</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">expect(test).toBe(<span class="number">1</span>) <span class="comment">// should trigger 1 callback</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> sub2 = emitter.subscribe(<span class="string">'sum'</span>, num =&gt; (test = test * num))</span><br><span class="line"></span><br><span class="line">emitter.emit(<span class="string">'sum'</span>, <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">expect(test).toBe(<span class="number">6</span>) <span class="comment">// should trigger 2 callbacks</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Step 2</span></span><br><span class="line"></span><br><span class="line">sub1.release()</span><br><span class="line"></span><br><span class="line">emitter.emit(<span class="string">'sum'</span>, <span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">expect(test).toBe(<span class="number">18</span>) <span class="comment">// should trigger 1 callback</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Step 3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> myEvent1 = emitter.subscribe(<span class="string">'myEvent'</span>, () =&gt; <span class="number">1</span>)</span><br><span class="line"><span class="keyword">const</span> myEvent2 = emitter.subscribe(<span class="string">'myEvent'</span>, () =&gt; <span class="number">2</span>)</span><br><span class="line"><span class="keyword">const</span> myEvent3 = emitter.subscribe(<span class="string">'myEvent'</span>, () =&gt; <span class="literal">true</span>)</span><br><span class="line"><span class="keyword">const</span> result = emitter.emit(<span class="string">'myEvent'</span>)</span><br><span class="line"></span><br><span class="line">expect(result).toEqual([<span class="number">1</span>, <span class="number">2</span>, <span class="literal">true</span>])</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.info(<span class="string">'You passed the test!!! 👏🏼 👏🏼 👏🏼'</span>)</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/05/this-arrow-function/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/05/this-arrow-function/" itemprop="url">'this' & arrow function</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-05T21:51:55-07:00">2018-09-05</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/09/05/this-arrow-function/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/09/05/this-arrow-function/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="I-this-in-function"><a href="#I-this-in-function" class="headerlink" title="I. this in function"></a>I. <code>this</code> in function</h2><ol>
+<li><p><strong>what is <code>this</code> ?</strong></p>
+<ul>
+<li>all <strong><u>regular</u></strong> functions have <code>this</code> keyword</li>
+<li><code>this</code> determines how a function is called <strong><u>on whom</u></strong>!</li>
+</ul>
+</li>
+<li><p><strong><code>this</code> in global context</strong></p>
+<ul>
+<li><p><code>this</code> refers  gloabl object, no matter in strict mode or not</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// In web browsers, the window object is also the global object:</span><br><span class="line">console.log(this === window); // true</span><br><span class="line"></span><br><span class="line">a = 37;</span><br><span class="line">console.log(window.a); // 37</span><br><span class="line"></span><br><span class="line">this.b = &quot;MDN&quot;;</span><br><span class="line">console.log(window.b)  // &quot;MDN&quot;</span><br><span class="line">console.log(b)         // &quot;MDN&quot;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><u><strong><code>this</code> in function context [important]</strong></u></p>
+<p>There are 7 cases that different function context results in different <code>this</code> reference;</p>
+<blockquote>
+<p><u>The value of <code>this</code></u> depend on how the function is called</p>
+</blockquote>
+<ol>
+<li><p><code>this</code> in <strong><u>simple call</u></strong></p>
+<ul>
+<li><p>non-strict mode</p>
+<p>if <code>this</code> is not set explicitly, it default to global object</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> <span class="keyword">this</span>; &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// In a browser:</span></span><br><span class="line">f1() === <span class="built_in">window</span>; <span class="comment">// true </span></span><br><span class="line"></span><br><span class="line"><span class="comment">// In Node:</span></span><br><span class="line">f1() === global; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>strict mode</p>
+<p>if <code>this</code> is not set explicitly, the value of <code>this</code> remains <code>undefined</code></p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f2</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"><span class="meta">  'use strict'</span>; <span class="comment">// see strict mode</span></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">f2() === <span class="literal">undefined</span>; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>change the value of <code>this</code>, using <code>apply()</code> or <code>call()</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// An object can be passed as the first argument to call or apply and this will be bound to it.</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123;<span class="attr">a</span>: <span class="string">'Custom'</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// This property is set on the global object</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="string">'Global'</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">whatsThis</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.a;  <span class="comment">// The value of this is dependent on how the function is called</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">whatsThis();          <span class="comment">// 'Global'</span></span><br><span class="line">whatsThis.call(obj);  <span class="comment">// 'Custom'</span></span><br><span class="line">whatsThis.apply(obj); <span class="comment">// 'Custom'</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>this</code> in <strong><u><code>bind()</code> method</u></strong></p>
+<ul>
+<li><p>NOTE: <code>bind()</code> doesn’t change the orignal function, instead it return a <strong><u>new function</u></strong> with updated value of <code>this</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> <span class="keyword">this</span>.a; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> g = f.bind(&#123;<span class="attr">a</span>: <span class="string">'azerty'</span>&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(g()); <span class="comment">// azerty</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> h = g.bind(&#123;<span class="attr">a</span>: <span class="string">'yoo'</span>&#125;); <span class="comment">// bind only works once!</span></span><br><span class="line"><span class="built_in">console</span>.log(h()); <span class="comment">// azerty</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> o = &#123;<span class="attr">a</span>: <span class="number">37</span>, <span class="attr">f</span>: f, <span class="attr">g</span>: g, <span class="attr">h</span>: h&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(o.a, o.f(), o.g(), o.h()); <span class="comment">// 37,37, azerty, azerty</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>this</code> in <u><strong>arrow function</strong></u></p>
+<ul>
+<li><p><code>this</code> cannot be changed, it default to the value of the <strong><u>enclosing lexical context</u></strong>‘s <code>this</code></p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> globalObject = <span class="keyword">this</span>;</span><br><span class="line"><span class="keyword">var</span> foo = <span class="function">(<span class="params">(</span>) =&gt;</span> <span class="keyword">this</span>);</span><br><span class="line"><span class="built_in">console</span>.log(foo() === globalObject); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>About <code>call()</code> &amp; <code>apply()</code></p>
+<ul>
+<li><p>if <code>this</code> arg is passed to call, bind, or apply on invocation of an arrow function it will be <strong><u>ignored</u></strong>.</p>
+</li>
+<li><p>the <code>thisArg</code> still works</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Call as a method of an object</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123;<span class="attr">func</span>: foo&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(obj.func() === globalObject); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Attempt to set this using call</span></span><br><span class="line"><span class="built_in">console</span>.log(foo.call(obj) === globalObject); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Attempt to set this using bind</span></span><br><span class="line">foo = foo.bind(obj);</span><br><span class="line"><span class="built_in">console</span>.log(foo() === globalObject); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p><strong><u>another example:</u></strong>  <code>this</code> of arrow function, directly depends on its enclosing context </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Create obj with a method bar that returns a function that</span></span><br><span class="line"><span class="comment">// returns its this. The returned function is created as </span></span><br><span class="line"><span class="comment">// an arrow function, so its this is permanently bound to the</span></span><br><span class="line"><span class="comment">// this of its enclosing function. The value of bar can be set</span></span><br><span class="line"><span class="comment">// in the call, which in turn sets the value of the </span></span><br><span class="line"><span class="comment">// returned function.</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123;<span class="attr">bar</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">                    <span class="keyword">var</span> x = <span class="function">(<span class="params">(</span>) =&gt;</span> <span class="keyword">this</span>);</span><br><span class="line">                    <span class="keyword">return</span> x;</span><br><span class="line">                  &#125;</span><br><span class="line">          &#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Call bar as a method of obj, setting its this to obj</span></span><br><span class="line"><span class="comment">// Assign a reference to the returned function to fn</span></span><br><span class="line"><span class="keyword">var</span> fn = obj.bar();</span><br><span class="line"></span><br><span class="line"><span class="comment">// Call fn without setting this, would normally default</span></span><br><span class="line"><span class="comment">// to the global object or undefined in strict mode</span></span><br><span class="line"><span class="built_in">console</span>.log(fn() === obj); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// But caution if you reference the method of obj without calling it</span></span><br><span class="line"><span class="keyword">var</span> fn2 = obj.bar;</span><br><span class="line"><span class="comment">// Then calling the arrow function this is equals to window because it follows the this from bar.</span></span><br><span class="line"><span class="built_in">console</span>.log(fn2()() == <span class="built_in">window</span>); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>this</code> in <u><strong>object method</strong></u></p>
+<ul>
+<li><p>When a function is called as a method of an object, its <code>this</code> is set to <strong><u>the object</u></strong> the method is called on.</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> o = &#123;</span><br><span class="line">  prop: <span class="number">37</span>,</span><br><span class="line">  f: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.prop;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(o.f()); <span class="comment">// 37</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>this</code> on the object’s prototype chain</p>
+<p>If the method is on an object’s prototype chain, <code>this</code> refers to the object the method was called on, as if the method were on the object.</p>
+</li>
+</ul>
+</li>
+<li><p><code>this</code> in <u><strong>constructor</strong></u></p>
+<ul>
+<li><p><code>this</code> is bound to the <strong><u>new object being constructed</u></strong></p>
+</li>
+<li><p><strong>#A#</strong>  if <code>constructor</code> doesn’t return: result of <code>new</code> will be the object bound to <code>this</code></p>
+</li>
+<li><p><strong>#B#</strong>  if <code>constructor</code> return an object: result of <code>new</code> will be the return value</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">C</span>(<span class="params"></span>) </span>&#123; <span class="keyword">this</span>.a = <span class="number">37</span>; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> o = <span class="keyword">new</span> C();</span><br><span class="line"><span class="built_in">console</span>.log(o.a); <span class="comment">// 37</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">C2</span>(<span class="params"></span>) </span>&#123;   </span><br><span class="line">  <span class="keyword">this</span>.a = <span class="number">37</span>;</span><br><span class="line">  <span class="keyword">return</span> &#123;<span class="attr">a</span>: <span class="number">38</span>&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// if an object was returned during construction, then the new object that this was bound to simply gets discarded.</span></span><br><span class="line"></span><br><span class="line">o = <span class="keyword">new</span> C2();</span><br><span class="line"><span class="built_in">console</span>.log(o.a); <span class="comment">// 38</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>this</code> in <u><strong>DOM event handler</strong></u></p>
+<ul>
+<li><p><code>this</code> is set to the <strong><u>target element</u></strong> the event fired from</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// When called as a listener, turns the related element blue</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bluify</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// Always true</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span> === e.currentTarget); </span><br><span class="line">  <span class="comment">// true when currentTarget and target are the same object</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span> === e.target);</span><br><span class="line">  <span class="keyword">this</span>.style.backgroundColor = <span class="string">'#A5D9F3'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Get a list of every element in the document</span></span><br><span class="line"><span class="keyword">var</span> elements = <span class="built_in">document</span>.getElementsByTagName(<span class="string">'*'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Add bluify as a click listener so when the</span></span><br><span class="line"><span class="comment">// element is clicked on, it turns blue</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; elements.length; i++) &#123;</span><br><span class="line">  elements[i].addEventListener(<span class="string">'click'</span>, bluify, <span class="literal">false</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>this</code> in <u><strong>inline event handler</strong></u></p>
+<ul>
+<li><p><code>this</code> is set to the DOM element <strong><u>where the listener is placed</u></strong></p>
+</li>
+<li><p>however, only the outer code has its <code>this</code> set this way</p>
+</li>
+<li><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 1. this will refer to 'button' --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">"alert(this.tagName.toLowerCase());"</span>&gt;</span></span><br><span class="line">  Show this</span><br><span class="line"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 2. 'this' will refer to 'window' --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">"alert((function() &#123; return this; &#125;)());"</span>&gt;</span></span><br><span class="line">  Show inner this</span><br><span class="line"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="II-arrow-function"><a href="#II-arrow-function" class="headerlink" title="II. arrow function"></a>II. arrow function</h2><ol>
+<li><p>Best suited for <strong><u>non-method</u></strong> functions, ie. not related to method in <em>object</em></p>
+</li>
+<li><p>No separate <code>this</code> of its own, <em>using others’</em></p>
+<ul>
+<li><p>An arrow function does not have its own <code>this</code></p>
+</li>
+<li><p><code>this</code> value of the enclosing lexical context is used </p>
+</li>
+<li><p>how to find <code>this</code> of enclosing lexical context:</p>
+<ul>
+<li><p>check if <code>this</code>  is present in current scope;</p>
+</li>
+<li><p>check <code>this</code> is present in its enclosing scope;</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//---------- version1: works -----------------</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.age = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  setInterval(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.age++; <span class="comment">// |this| properly refers to the Person object</span></span><br><span class="line">  &#125;, <span class="number">1000</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> Person();</span><br><span class="line"></span><br><span class="line"><span class="comment">//---------- version2: doesn't work ----------</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// The Person() constructor defines `this` as an instance of itself.</span></span><br><span class="line">  <span class="keyword">this</span>.age = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  setInterval(<span class="function"><span class="keyword">function</span> <span class="title">growUp</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// In non-strict mode, the growUp() function defines `this` </span></span><br><span class="line">    <span class="comment">// as the global object (because it's where growUp() is executed.), </span></span><br><span class="line">    <span class="comment">// which is different from the `this`</span></span><br><span class="line">    <span class="comment">// defined by the Person() constructor. </span></span><br><span class="line">    <span class="keyword">this</span>.age++;</span><br><span class="line">  &#125;, <span class="number">1000</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> Person();</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>No binding of <code>arguments</code></p>
+<ul>
+<li><p>Arrow functions do not have their own <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments" target="_blank" rel="noopener"><code>arguments</code> object</a>.</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="built_in">arguments</span> = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">var</span> arr = <span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">arguments</span>[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">arr(); <span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> f = <span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">arguments</span>[<span class="number">0</span>] + n; <span class="comment">// foo's implicit arguments binding. arguments[0] is n</span></span><br><span class="line">  <span class="keyword">return</span> f();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo(<span class="number">3</span>); <span class="comment">// 6</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>using <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters" target="_blank" rel="noopener">rest parameters</a> is a good alternative to using an <code>arguments</code> object</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">n</span>) </span>&#123; </span><br><span class="line">  <span class="keyword">var</span> f = <span class="function">(<span class="params">...args</span>) =&gt;</span> args[<span class="number">0</span>] + n; </span><br><span class="line">  <span class="keyword">return</span> f(<span class="number">10</span>); </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo(<span class="number">1</span>); <span class="comment">// 11</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><u><strong>When not use arrow function?  ==&gt;  when need <code>this</code> explicitly</strong> </u></p>
+<ol>
+<li><p>don’t use as <u>methods of object</u>: </p>
+<ul>
+<li><p>because we need <code>this</code>, but arrow function doesn’t have its own <code>this</code></p>
+</li>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&apos;use strict&apos;;</span><br><span class="line"></span><br><span class="line">var obj = &#123;</span><br><span class="line">  i: 10,</span><br><span class="line">  b: () =&gt; console.log(this.i, this),</span><br><span class="line">  c: function() &#123;</span><br><span class="line">    console.log(this.i, this);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">obj.b(); // prints undefined, Window &#123;...&#125; (or the global object)</span><br><span class="line">obj.c(); // prints 10, Object &#123;...&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>don’t use as <u>function constructor</u>:  because we will use <code>new</code> to construct , which need <code>this</code></p>
+</li>
+<li><p>don’t add <code>prototype</code> to it:  because it doesn’t have <code>this</code></p>
+</li>
+<li><p>don’t use in <code>yeild</code> or <code>generators</code>: </p>
+</li>
+</ol>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/31/Trie/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2023,7 +2525,7 @@
 <li>location</li>
 </ul>
 <p>比如render:func( )方式render conponent</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// eg1: </span></span><br><span class="line">  &lt;Route path=<span class="string">"/home"</span> render=&#123;() =&gt; &lt;div&gt;Home&lt;/div&gt;&#125;/&gt;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// eg2: wrapping/composing</span></span><br><span class="line">  <span class="keyword">const</span> FadingRoute = <span class="function">(<span class="params">&#123; component: Component, ...rest &#125;</span>) =&gt;</span> (</span><br><span class="line">    &lt;Route &#123;...rest&#125; render=&#123;props =&gt; (</span><br><span class="line">      &lt;FadeIn&gt;</span><br><span class="line">        &lt;Component &#123;...props&#125;/&gt;</span><br><span class="line">      &lt;<span class="regexp">/FadeIn&gt;</span></span><br><span class="line"><span class="regexp">    )&#125;/</span>&gt;</span><br><span class="line">  )</span><br><span class="line">  </span><br><span class="line">  &lt;FadingRoute path=<span class="string">"/cool"</span> component=&#123;Something&#125;/&gt;<span class="string">"</span></span><br><span class="line"><span class="string">  - render props: path、children／render／component、</span></span><br><span class="line"><span class="string">  - render state：match</span></span><br><span class="line"><span class="string">  - component props(route所render): history、location、match</span></span><br><span class="line"><span class="string">    "</span>不论是哪种方式render，都会拿到这三个props<span class="string">"</span></span><br><span class="line"><span class="string">  - 因此，eg2中render:func方式，直接将props作为function component的参数传入</span></span><br><span class="line"><span class="string">    "</span>render=&#123; props =&gt; (</span><br><span class="line">        &lt;FadeIn&gt;</span><br><span class="line">          &lt;Component &#123;...props&#125;/&gt;</span><br><span class="line">        &lt;<span class="regexp">/FadeIn&gt;</span></span><br><span class="line"><span class="regexp">      )&#125;"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// eg1: </span></span><br><span class="line">  &lt;Route path=<span class="string">"/home"</span> render=&#123;() =&gt; <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>Home<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>&#125;/&gt;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// eg2: wrapping/composing</span></span><br><span class="line">  <span class="keyword">const</span> FadingRoute = <span class="function">(<span class="params">&#123; component: Component, ...rest &#125;</span>) =&gt;</span> (</span><br><span class="line">    &lt;Route &#123;...rest&#125; render=&#123;props =&gt; (</span><br><span class="line">      &lt;FadeIn&gt;</span><br><span class="line">        &lt;Component &#123;...props&#125;/&gt;</span><br><span class="line">      &lt;<span class="regexp">/FadeIn&gt;</span></span><br><span class="line"><span class="regexp">    )&#125;/</span>&gt;</span><br><span class="line">  )</span><br><span class="line">  </span><br><span class="line">  &lt;FadingRoute path=<span class="string">"/cool"</span> component=&#123;Something&#125;/&gt;<span class="string">"</span></span><br><span class="line"><span class="string">  - render props: path、children／render／component、</span></span><br><span class="line"><span class="string">  - render state：match</span></span><br><span class="line"><span class="string">  - component props(route所render): history、location、match</span></span><br><span class="line"><span class="string">    "</span>不论是哪种方式render，都会拿到这三个props<span class="string">"</span></span><br><span class="line"><span class="string">  - 因此，eg2中render:func方式，直接将props作为function component的参数传入</span></span><br><span class="line"><span class="string">    "</span>render=&#123; props =&gt; (</span><br><span class="line">        &lt;FadeIn&gt;</span><br><span class="line">          &lt;Component &#123;...props&#125;/&gt;</span><br><span class="line">        &lt;<span class="regexp">/FadeIn&gt;</span></span><br><span class="line"><span class="regexp">      )&#125;"</span></span><br></pre></td></tr></table></figure>
 <h3 id="IV-Route-vs-Component如何关联"><a href="#IV-Route-vs-Component如何关联" class="headerlink" title="IV. Route vs Component如何关联"></a>IV. Route vs Component如何关联</h3><ul>
 <li>Router 将路径 match上之后，会调用相应的 Route， 由Route 将相关的参数：match、location、history等传入到 Component中</li>
 <li>Route 的 state: match、location 传入到 Component的 props: match、location</li>
@@ -2068,464 +2570,6 @@
 <h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ul>
 <li>Official API: <a href="https://reacttraining.com/react-router/web/guides/philosophy" target="_blank" rel="noopener">https://reacttraining.com/react-router/web/guides/philosophy</a></li>
 <li>中文版API：<a href="https://www.jianshu.com/p/e3adc9b5f75c" target="_blank" rel="noopener">https://www.jianshu.com/p/e3adc9b5f75c</a></li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/14/Node-MySQL/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/14/Node-MySQL/" itemprop="url">Node+MySQL</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-14T21:30:13-07:00">2018-05-14</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/05/14/Node-MySQL/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/05/14/Node-MySQL/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h3><p>This is a Node.js module, install:<br><code>npm install mysql --save</code></p>
-<h3 id="Connect"><a href="#Connect" class="headerlink" title="Connect"></a>Connect</h3><p>Before connecting to databases, make sure MySQL database is turned on.</p>
-<p>【注意】：</p>
-<ul>
-<li>先执行 <code>connect()</code>,让connection object与数据库建立连接。</li>
-<li>然后，在对该connection执行<code>.query(MySQL_Command, callback_func)</code></li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> mysql      = <span class="built_in">require</span>(<span class="string">'mysql'</span>);</span><br><span class="line"><span class="keyword">var</span> connection = mysql.createConnection(&#123;</span><br><span class="line">  host     : <span class="string">'example.org'</span>,</span><br><span class="line">  user     : <span class="string">'bob'</span>,</span><br><span class="line">  password : <span class="string">'secret'</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">connection.query(<span class="string">'SELECT 1'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">error, results, fields</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (error) <span class="keyword">throw</span> error;</span><br><span class="line">  <span class="comment">// connected!</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="Disconnect"><a href="#Disconnect" class="headerlink" title="Disconnect"></a>Disconnect</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">connection.end(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// Callback function</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="Escaping-query-values"><a href="#Escaping-query-values" class="headerlink" title="Escaping query values"></a>Escaping query values</h3><p>Three ways to avoid <strong>SQL injection</strong></p>
-<ul>
-<li>mysql.escape()</li>
-<li>connection.escape() </li>
-<li>pool.escape()</li>
-<li><code>?</code>placeholder</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1 -connection.escape()</span></span><br><span class="line"><span class="keyword">var</span> userId = <span class="string">'some user provided value'</span>;</span><br><span class="line"><span class="keyword">var</span> sql    = <span class="string">'SELECT * FROM users WHERE id = '</span> + connection.escape(userId);</span><br><span class="line">connection.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">error, results, fields</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (error) <span class="keyword">throw</span> error;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2 - ? placeholder</span></span><br><span class="line"><span class="keyword">var</span> adr = <span class="string">'Mountain 21'</span>;</span><br><span class="line"><span class="keyword">var</span> sql = <span class="string">'SELECT * FROM customers WHERE address = ?'</span>;</span><br><span class="line">con.query(sql, [adr], <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">  <span class="built_in">console</span>.log(result);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="Creating-a-Database"><a href="#Creating-a-Database" class="headerlink" title="Creating a Database"></a>Creating a Database</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">connection.query(<span class="string">"CREATE DATABASE mydb"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Database created"</span>);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="Creating-a-Table"><a href="#Creating-a-Table" class="headerlink" title="Creating a Table"></a>Creating a Table</h3><p>Two ways:</p>
-<ul>
-<li>create database and table simultenously</li>
-<li>first create database, and connect it; then create table with the connection</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// approach 1</span></span><br><span class="line"></span><br><span class="line">connection.query(<span class="string">"CREATE DATABASE db"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">error, rows, fields</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (error) <span class="keyword">throw</span> error;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">connection.query(<span class="string">"USE db"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">error, rows, fields</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (error) <span class="keyword">throw</span> error;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">connection.query(<span class="string">"CREATE TABLE tb(id INT, name VARCHAR(50))"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">error, rows, fields</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (error) <span class="keyword">throw</span> error;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//-----------------------</span></span><br><span class="line"><span class="comment">// approach 2</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> con = mysql.createConnection(&#123;</span><br><span class="line">  host: <span class="string">"localhost"</span>,</span><br><span class="line">  user: <span class="string">"yourusername"</span>,</span><br><span class="line">  password: <span class="string">"yourpassword"</span>,</span><br><span class="line">  database: <span class="string">"mydb"</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">con.connect(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> sql = <span class="string">"CREATE TABLE customers (name VARCHAR(255), address VARCHAR(255))"</span>;</span><br><span class="line"></span><br><span class="line">con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line"><span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Table created"</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="Selecting-From-a-Table"><a href="#Selecting-From-a-Table" class="headerlink" title="Selecting From a Table"></a>Selecting From a Table</h3><p>To select data from a table in MySQL, use the <code>SELECT</code> statement.</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"SELECT * FROM customers WHERE address = 'Park Lane 38'"</span>;</span><br><span class="line"></span><br><span class="line">con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="built_in">console</span>.log(result);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p><strong>Wildcard Characters</strong><code>%</code>: represent zero, one or multiple characters:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"SELECT * FROM customers WHERE address LIKE 'S%'"</span></span><br></pre></td></tr></table></figure>
-<h3 id="Insert-Into-Table"><a href="#Insert-Into-Table" class="headerlink" title="Insert Into Table"></a>Insert Into Table</h3><p>To fill a table in MySQL, use the <code>INSERT INTO</code> statement.</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"INSERT INTO customers (name, address) VALUES ('Company Inc', 'Highway 37')"</span>;</span><br><span class="line"></span><br><span class="line">con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line"><span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"1 record inserted"</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="Update-Table"><a href="#Update-Table" class="headerlink" title="Update Table"></a>Update Table</h3><p>You can update existing records in a table by using the <code>UPDATE</code> statement:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"UPDATE customers SET address = 'Canyon 123' WHERE address = 'Valley 345'"</span>;</span><br><span class="line"></span><br><span class="line">  con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="built_in">console</span>.log(result.affectedRows + <span class="string">" record(s) updated"</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="Sort-the-Result"><a href="#Sort-the-Result" class="headerlink" title="Sort the Result"></a>Sort the Result</h3><p>Use the <code>ORDER BY</code> statement to sort the result in ascending or descending order.</p>
-<p>The <code>ORDER BY</code> keyword sorts the result ascending by default. To sort the result in descending order, use the <code>DESC</code> keyword.</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"SELECT * FROM customers ORDER BY name DESC"</span>;</span><br><span class="line"></span><br><span class="line">con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="built_in">console</span>.log(result);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="Delete-Record"><a href="#Delete-Record" class="headerlink" title="Delete Record"></a>Delete Record</h3><p>You can delete records from an existing table by using the <code>DELETE FROM</code> statement:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"DELETE FROM customers WHERE address = 'Mountain 21'"</span>;</span><br><span class="line"></span><br><span class="line">con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Number of records deleted: "</span> + result.affectedRows);</span><br></pre></td></tr></table></figure>
-<h3 id="Limit-the-Result"><a href="#Limit-the-Result" class="headerlink" title="Limit the Result"></a>Limit the Result</h3><p>You can limit the number of records returned from the query, by using the <code>LIMIT</code> statement:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"SELECT * FROM customers LIMIT 5"</span>;</span><br><span class="line"></span><br><span class="line">con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line"><span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line"><span class="built_in">console</span>.log(result);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="Join-Two-or-More-Tables"><a href="#Join-Two-or-More-Tables" class="headerlink" title="Join Two or More Tables"></a>Join Two or More Tables</h3><p>Combine rows from two or more tables, based on a related column between them, by using a <code>JOIN</code> statement.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//users</span><br><span class="line"></span><br><span class="line">[</span><br><span class="line">  &#123; id: 1, name: &apos;John&apos;, favorite_product: 154&#125;,</span><br><span class="line">  &#123; id: 2, name: &apos;Peter&apos;, favorite_product: 154&#125;,</span><br><span class="line">  &#123; id: 3, name: &apos;Amy&apos;, favorite_product: 155&#125;,</span><br><span class="line">  &#123; id: 4, name: &apos;Hannah&apos;, favorite_product:&#125;,</span><br><span class="line">  &#123; id: 5, name: &apos;Michael&apos;, favorite_product:&#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// products</span><br><span class="line">[</span><br><span class="line">  &#123; id: 154, name: &apos;Chocolate Heaven&apos; &#125;,</span><br><span class="line">  &#123; id: 155, name: &apos;Tasty Lemons&apos; &#125;,</span><br><span class="line">  &#123; id: 156, name: &apos;Vanilla Dreams&apos; &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-<p><strong>1. Inner join</strong></p>
-<p>These two tables can be combined by using users’ favorite_product field and products’ id field.</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"SELECT users.name AS user, products.name AS favorite FROM users JOIN products ON users.favorite_product = products.id"</span>;</span><br><span class="line">    </span><br><span class="line">con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line"><span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line"><span class="built_in">console</span>.log(result);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p><strong>2. Left Join</strong><br>If you want to return all users, no matter if they have a favorite product or not, use the LEFT JOIN statement:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT users.name AS user,</span><br><span class="line">products.name AS favorite</span><br><span class="line">FROM users</span><br><span class="line">LEFT JOIN products ON users.favorite_product = products.id</span><br></pre></td></tr></table></figure>
-<p><strong>3. Right Join</strong><br>If you want to return <strong>all products</strong>, and the users who have them as their favorite, even if no user have them as their favorite, use the RIGHT JOIN statement:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT users.name AS user,</span><br><span class="line">products.name AS favorite</span><br><span class="line">FROM users</span><br><span class="line">RIGHT JOIN products ON users.favorite_product = products.id</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/23/React-Expense-Tracking-app/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/23/React-Expense-Tracking-app/" itemprop="url">React: Expense Tracking app</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-23T11:47:10-07:00">2018-04-23</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Portfolios/" itemprop="url" rel="index"><span itemprop="name">Portfolios</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/23/React-Expense-Tracking-app/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/23/React-Expense-Tracking-app/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="I-About"><a href="#I-About" class="headerlink" title="I. About"></a>I. About</h2><ul>
-<li>An expense tracking application proving CRUD using React.</li>
-<li>Github: <ul>
-<li><a href="https://github.com/caomingkai/Expense-Tracking.git" target="_blank" rel="noopener">https://github.com/caomingkai/Expense-Tracking.git</a></li>
-</ul>
-</li>
-<li><p><strong>Chart1: Create</strong></p>
-  <img src="/2018/04/23/React-Expense-Tracking-app/create.gif">
-</li>
-<li><p>**Chart2: Update</p>
-  <img src="/2018/04/23/React-Expense-Tracking-app/update.gif">
-</li>
-<li><p><strong>Chart3: Delete</strong></p>
-  <img src="/2018/04/23/React-Expense-Tracking-app/delete.gif">
-</li>
-</ul>
-<h2 id="II-Structure"><a href="#II-Structure" class="headerlink" title="II. Structure"></a>II. Structure</h2><h3 id="1-Components-Structure"><a href="#1-Components-Structure" class="headerlink" title="1. Components Structure"></a>1. Components Structure</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">App</span><br><span class="line"> |___ Summary</span><br><span class="line"> |___ Form _ _ _ _ RecordsAPI</span><br><span class="line"> |                    |</span><br><span class="line"> |___ Table           |</span><br><span class="line">         |_______ TableRow</span><br><span class="line">                      |____ TableDisplay</span><br><span class="line">                      |____ TableEdit</span><br></pre></td></tr></table></figure>
-<ul>
-<li><strong>App Component:</strong> is the data hub<ul>
-<li>state: <code>records</code> for entries in Table component</li>
-<li>state: <code>isLoaded</code> show loading info, before showing Table</li>
-<li>state: <code>error</code> </li>
-<li>method: <code>componentDidMount()</code> get data from database</li>
-<li>method: <code>addRecord()</code> passed to Form</li>
-<li>method: <code>deleteRecord()</code> passed to Table and TableRow</li>
-<li>method: <code>updateRecord()</code> passed to Table and TableRow</li>
-<li>method: <code>credits()</code> passed to Summary</li>
-<li>method: <code>debits()</code> passed to Summary</li>
-<li>method: <code>balance()</code> passed to Summary</li>
-</ul>
-</li>
-<li><strong>Summary Component:</strong> displays negative/ positive summation for the <code>records</code></li>
-<li><strong>Form Component:</strong> add <code>record</code> into <code>records</code>, updating Table</li>
-<li><strong>Table Component:</strong> just pass <code>records</code> to <strong>TableRow</strong></li>
-<li><strong>TableRow Component:</strong> display each <code>record</code> in <code>records</code></li>
-<li><strong>RecordsAPI:</strong> utility providing interface to make RESTful API call</li>
-</ul>
-<h3 id="2-File-Structure"><a href="#2-File-Structure" class="headerlink" title="2. File Structure"></a>2. File Structure</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">|__node_modules</span><br><span class="line">|</span><br><span class="line">|__public  </span><br><span class="line">|    |___ index.html</span><br><span class="line">|</span><br><span class="line">|__ src</span><br><span class="line">     |___ utils: RecordsAPI.js</span><br><span class="line">     |</span><br><span class="line">     |___ components:</span><br><span class="line">              |___ App.js</span><br><span class="line">              |___ Form.js</span><br><span class="line">              |___ Summary.js</span><br><span class="line">              |___ Table.js</span><br><span class="line">              |___ TableRow.js</span><br></pre></td></tr></table></figure>
-<h2 id="III-Ajax-request"><a href="#III-Ajax-request" class="headerlink" title="III. Ajax request"></a>III. Ajax request</h2><h3 id="Several-Ways"><a href="#Several-Ways" class="headerlink" title="Several Ways:"></a>Several Ways:</h3><ol>
-<li>Ajax Libraries<ul>
-<li>Axios<ul>
-<li>axios.get(url[, config])</li>
-<li>axios.delete(url[, config])</li>
-<li>axios.head(url[, config])</li>
-<li>axios.options(url[, config])</li>
-<li>axios.post(url[, data[, config]])</li>
-<li>axios.put(url[, data[, config]])</li>
-</ul>
-</li>
-<li>jQuery AJAX</li>
-</ul>
-</li>
-<li><p>Browser built-in <code>window.fetch</code></p>
-<p> No need to prepend “window” before <code>fetch()</code>: default obj</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">## No need to prepend "window" before fetch, this is the default obj</span><br><span class="line"></span><br><span class="line">  fetch(<span class="string">'http://example.com/movies.json'</span>)</span><br><span class="line">    .then(<span class="function"><span class="keyword">function</span>(<span class="params">response</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> response.json();</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function"><span class="keyword">function</span>(<span class="params">myJson</span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(myJson);</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="When-and-where-to-initiate-Ajax-call"><a href="#When-and-where-to-initiate-Ajax-call" class="headerlink" title="When and where to initiate Ajax call?"></a>When and where to initiate Ajax call?</h3><p>Do it in <code>componentDidMount</code> lifecycle method. So you can use setState to update your component when the data is retrieved.</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">componentDidMount() &#123;</span><br><span class="line">  fetch(<span class="string">"https://api.example.com/items"</span>)</span><br><span class="line">    .then(<span class="function"><span class="params">res</span> =&gt;</span> res.json())</span><br><span class="line">    .then(</span><br><span class="line">      (result) =&gt; &#123;</span><br><span class="line">        <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">          isLoaded: <span class="literal">true</span>,</span><br><span class="line">          items: result.items</span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="comment">// Note: it's important to handle errors here</span></span><br><span class="line">      <span class="comment">// instead of a catch() block so that we don't swallow</span></span><br><span class="line">      <span class="comment">// exceptions from actual bugs in components.</span></span><br><span class="line">      (error) =&gt; &#123;</span><br><span class="line">        <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">          isLoaded: <span class="literal">true</span>,</span><br><span class="line">          error</span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="IV-Concept"><a href="#IV-Concept" class="headerlink" title="IV. Concept"></a>IV. Concept</h2><h3 id="1-组件数据流-Model-gt-View"><a href="#1-组件数据流-Model-gt-View" class="headerlink" title="1. 组件数据流: Model -&gt; View"></a>1. 组件数据流: Model -&gt; View</h3><ul>
-<li><p>父组件M -&gt; 子组件V</p>
-<ul>
-<li>父组件prop 之间传给 子组件 prop</li>
-</ul>
-</li>
-<li><p>子组件M -&gt; 父组件V</p>
-<ul>
-<li>回调函数<ul>
-<li>父组件向子组件传递回调函数</li>
-<li>JS中，function是一等公民，因此传入的值会作为自身field保存起来；与C／Java不同。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>sibling 组件间传值 M-&gt;V<ul>
-<li>必须依靠二者共同父组件来传递<ul>
-<li>但等组件之间的关系越来越复杂时候，这种依靠父组件作为中间人传值方式 would be a mess！</li>
-<li>Redux comes into picture</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="2-双向绑定-Model-View"><a href="#2-双向绑定-Model-View" class="headerlink" title="2. 双向绑定: Model  View"></a>2. 双向绑定: Model <-> View</-></h3><ul>
-<li>通过绑定<code>&lt;input&gt;</code>的 <code>onChange()</code> 监视 View的变换</li>
-<li>在 onChange Handler中更新组件的值，完成 View =&gt; Model 的数据流。</li>
-</ul>
-<h3 id="3-React-生命周期"><a href="#3-React-生命周期" class="headerlink" title="3. React 生命周期"></a>3. React 生命周期</h3><ul>
-<li><strong>Mount</strong><ul>
-<li>constructor()</li>
-<li>componentWillMount()</li>
-<li>render()</li>
-<li>componentDidMount()</li>
-</ul>
-</li>
-<li><strong>Update</strong><ul>
-<li>componentWillReceiveProps(): 将接收新的props</li>
-<li>shouldComponentUpdate(): 是否应该被更新？</li>
-<li>componentWillUpdate(): 组件即将更新</li>
-<li>render(): 组件被渲染</li>
-<li>componentDidUpdate(): 组件完成更新</li>
-</ul>
-</li>
-<li><strong>Unmount</strong><ul>
-<li>componentWillUnmount(): 组件被卸载前做一些数据清除</li>
-</ul>
-</li>
 </ul>
 
           
@@ -2616,7 +2660,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">44</span>
+                    <span class="site-state-item-count">46</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2760,7 +2804,23 @@
                     
                       
                     
-                    <span class="site-state-item-count">54</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">62</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

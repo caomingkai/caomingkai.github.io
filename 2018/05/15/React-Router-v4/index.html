@@ -497,7 +497,7 @@
 <li>location</li>
 </ul>
 <p>比如render:func( )方式render conponent</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// eg1: </span></span><br><span class="line">  &lt;Route path=<span class="string">"/home"</span> render=&#123;() =&gt; &lt;div&gt;Home&lt;/div&gt;&#125;/&gt;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// eg2: wrapping/composing</span></span><br><span class="line">  <span class="keyword">const</span> FadingRoute = <span class="function">(<span class="params">&#123; component: Component, ...rest &#125;</span>) =&gt;</span> (</span><br><span class="line">    &lt;Route &#123;...rest&#125; render=&#123;props =&gt; (</span><br><span class="line">      &lt;FadeIn&gt;</span><br><span class="line">        &lt;Component &#123;...props&#125;/&gt;</span><br><span class="line">      &lt;<span class="regexp">/FadeIn&gt;</span></span><br><span class="line"><span class="regexp">    )&#125;/</span>&gt;</span><br><span class="line">  )</span><br><span class="line">  </span><br><span class="line">  &lt;FadingRoute path=<span class="string">"/cool"</span> component=&#123;Something&#125;/&gt;<span class="string">"</span></span><br><span class="line"><span class="string">  - render props: path、children／render／component、</span></span><br><span class="line"><span class="string">  - render state：match</span></span><br><span class="line"><span class="string">  - component props(route所render): history、location、match</span></span><br><span class="line"><span class="string">    "</span>不论是哪种方式render，都会拿到这三个props<span class="string">"</span></span><br><span class="line"><span class="string">  - 因此，eg2中render:func方式，直接将props作为function component的参数传入</span></span><br><span class="line"><span class="string">    "</span>render=&#123; props =&gt; (</span><br><span class="line">        &lt;FadeIn&gt;</span><br><span class="line">          &lt;Component &#123;...props&#125;/&gt;</span><br><span class="line">        &lt;<span class="regexp">/FadeIn&gt;</span></span><br><span class="line"><span class="regexp">      )&#125;"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// eg1: </span></span><br><span class="line">  &lt;Route path=<span class="string">"/home"</span> render=&#123;() =&gt; <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>Home<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>&#125;/&gt;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// eg2: wrapping/composing</span></span><br><span class="line">  <span class="keyword">const</span> FadingRoute = <span class="function">(<span class="params">&#123; component: Component, ...rest &#125;</span>) =&gt;</span> (</span><br><span class="line">    &lt;Route &#123;...rest&#125; render=&#123;props =&gt; (</span><br><span class="line">      &lt;FadeIn&gt;</span><br><span class="line">        &lt;Component &#123;...props&#125;/&gt;</span><br><span class="line">      &lt;<span class="regexp">/FadeIn&gt;</span></span><br><span class="line"><span class="regexp">    )&#125;/</span>&gt;</span><br><span class="line">  )</span><br><span class="line">  </span><br><span class="line">  &lt;FadingRoute path=<span class="string">"/cool"</span> component=&#123;Something&#125;/&gt;<span class="string">"</span></span><br><span class="line"><span class="string">  - render props: path、children／render／component、</span></span><br><span class="line"><span class="string">  - render state：match</span></span><br><span class="line"><span class="string">  - component props(route所render): history、location、match</span></span><br><span class="line"><span class="string">    "</span>不论是哪种方式render，都会拿到这三个props<span class="string">"</span></span><br><span class="line"><span class="string">  - 因此，eg2中render:func方式，直接将props作为function component的参数传入</span></span><br><span class="line"><span class="string">    "</span>render=&#123; props =&gt; (</span><br><span class="line">        &lt;FadeIn&gt;</span><br><span class="line">          &lt;Component &#123;...props&#125;/&gt;</span><br><span class="line">        &lt;<span class="regexp">/FadeIn&gt;</span></span><br><span class="line"><span class="regexp">      )&#125;"</span></span><br></pre></td></tr></table></figure>
 <h3 id="IV-Route-vs-Component如何关联"><a href="#IV-Route-vs-Component如何关联" class="headerlink" title="IV. Route vs Component如何关联"></a>IV. Route vs Component如何关联</h3><ul>
 <li>Router 将路径 match上之后，会调用相应的 Route， 由Route 将相关的参数：match、location、history等传入到 Component中</li>
 <li>Route 的 state: match、location 传入到 Component的 props: match、location</li>
@@ -669,7 +669,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">44</span>
+                    <span class="site-state-item-count">46</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -813,7 +813,23 @@
                     
                       
                     
-                    <span class="site-state-item-count">54</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">62</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

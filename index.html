@@ -332,6 +332,170 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/10/Trie-Tree-Implementation-using-JS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/10/Trie-Tree-Implementation-using-JS/" itemprop="url">Trie Tree Implementation using JS</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-10T16:20:29-07:00">2018-10-10</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/10/Trie-Tree-Implementation-using-JS/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/10/Trie-Tree-Implementation-using-JS/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="I-What-is-Trie"><a href="#I-What-is-Trie" class="headerlink" title="I. What is Trie"></a>I. What is Trie</h2><p>Trie is an efficient information <u><strong>reTrieval</strong></u> data structure. </p>
+<ol>
+<li><strong><u>search complexities</u></strong> can be brought to optimal limit (key length).</li>
+<li>If we store keys in BST, a well balanced BST will need time proportional to <code>O(M*log N)</code>, where <code>M</code> is maximum string length, and <code>N</code> is number of keys in tree</li>
+<li>Using Trie, we can search the key in <code>O(M)</code> time.</li>
+</ol>
+<h2 id="II-Use-case"><a href="#II-Use-case" class="headerlink" title="II. Use case"></a>II. Use case</h2><ol>
+<li>Prefix matching</li>
+<li>Check if a word exists in a dictionary</li>
+<li>Word frequency in dictionary</li>
+<li>Sort Words in dictionary</li>
+</ol>
+<h2 id="III-Implementation"><a href="#III-Implementation" class="headerlink" title="III. Implementation"></a>III. Implementation</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 				*</span></span><br><span class="line"><span class="comment">			 /  |  \</span></span><br><span class="line"><span class="comment">            a   c   o</span></span><br><span class="line"><span class="comment">          / |   |   |</span></span><br><span class="line"><span class="comment">         c  t   a   f</span></span><br><span class="line"><span class="comment">		/       | \</span></span><br><span class="line"><span class="comment">       e		t  b</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    For a word of length K, we need (K+1) nodes to store</span></span><br><span class="line"><span class="comment">	- `add`: [1] *.children.a  </span></span><br><span class="line"><span class="comment">			 [2] a.children.c </span></span><br><span class="line"><span class="comment">			 [3] c.children.d  </span></span><br><span class="line"><span class="comment">			 [4] e.children.isEnd = true</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TrieNode</span></span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>()&#123;</span><br><span class="line">        <span class="keyword">this</span>.isEnd = <span class="literal">false</span></span><br><span class="line">        <span class="keyword">this</span>.freq = <span class="number">0</span></span><br><span class="line">        <span class="keyword">this</span>.children = &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Trie</span></span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>()&#123;</span><br><span class="line">        <span class="keyword">this</span>.root = <span class="keyword">new</span> TrieNode()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    insert(word)&#123;</span><br><span class="line">        <span class="keyword">if</span>( word.length === <span class="number">0</span> ) <span class="keyword">return</span> 	<span class="comment">// forbid empty string</span></span><br><span class="line">        <span class="keyword">let</span> letter, curNode = <span class="keyword">this</span>.root</span><br><span class="line">        <span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">0</span>; i &lt; word.length; i++ )&#123;</span><br><span class="line">            letter = word[i]</span><br><span class="line">            <span class="keyword">if</span>( !curNode.children.hasOwnProperty(letter) )&#123;</span><br><span class="line">                curNode.children[letter] = <span class="keyword">new</span> TrieNode()</span><br><span class="line">            &#125;</span><br><span class="line">            curNode = curNode.children[letter]</span><br><span class="line">        &#125;</span><br><span class="line">        curNode.isEnd = <span class="literal">true</span></span><br><span class="line">        curNode.freq = curNode.freq + <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    getNodeForPrefix(str)&#123;</span><br><span class="line">        <span class="keyword">let</span> letter, curNode = <span class="keyword">this</span>.root</span><br><span class="line">        <span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">0</span>; i &lt; str.length; i++ )&#123;</span><br><span class="line">            letter = str[i]</span><br><span class="line">            <span class="keyword">if</span>( !curNode.children.hasOwnProperty(letter) ) </span><br><span class="line">                <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">            curNode = curNode.children[letter]</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> curNode</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    isWord(word)&#123;</span><br><span class="line">        <span class="keyword">if</span>( <span class="keyword">this</span>.getNodeForPrefix(word) === <span class="literal">null</span> ) <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.getNodeForPrefix(word).isEnd</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    getWordFreq(word)&#123;</span><br><span class="line">        <span class="keyword">if</span>( <span class="keyword">this</span>.getNodeForPrefix(word) === <span class="literal">null</span> ) <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.getNodeForPrefix(word).freq</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/* -------------------- Testing --------------------*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> ace = <span class="string">"ace"</span></span><br><span class="line"><span class="keyword">let</span> at = <span class="string">"at"</span></span><br><span class="line"><span class="keyword">let</span> cat = <span class="string">"cat"</span></span><br><span class="line"><span class="keyword">let</span> cab = <span class="string">"cab"</span></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">of</span> = <span class="string">"of"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> t = <span class="keyword">new</span> Trie()</span><br><span class="line">t.insert(ace)</span><br><span class="line"><span class="built_in">console</span>.log(t.isWord(ace))	  <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line">t.insert(ace)	</span><br><span class="line"><span class="built_in">console</span>.log(t.isWord(ace))     <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(t.getWordFreq(ace))<span class="comment">// 2</span></span><br><span class="line"></span><br><span class="line">t.insert(at)	</span><br><span class="line"><span class="built_in">console</span>.log(t.isWord(at))      <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(t.getWordFreq(at)) <span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line">t.insert(cat)</span><br><span class="line">t.insert(cat)	</span><br><span class="line"><span class="built_in">console</span>.log(t.isWord(cat))     <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(t.getWordFreq(cat))<span class="comment">// 2</span></span><br><span class="line">t.insert(cat)	</span><br><span class="line"><span class="built_in">console</span>.log(t.getWordFreq(cat))<span class="comment">// 3</span></span><br><span class="line"></span><br><span class="line">t.insert(cab)	</span><br><span class="line"><span class="built_in">console</span>.log(t.isWord(cab))     <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(t.getWordFreq(cab))<span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line">t.insert(<span class="keyword">of</span>)	</span><br><span class="line"><span class="built_in">console</span>.log(t.isWord(<span class="keyword">of</span>))     <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(t.getWordFreq(<span class="keyword">of</span>))<span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// check the internal representation of the Trie</span></span><br><span class="line"><span class="built_in">console</span>.log(t.root)</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/08/Stack-Queue-Implementation-using-JS/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -384,7 +548,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
 
                 
                 
@@ -957,12 +1121,35 @@
 </li>
 <li><p>Common semantic tags</p>
 <ul>
-<li></li>
+<li><strong><u>Layout:</u></strong> <code>header</code> <code>footer</code>  <code>nav</code> <code>main</code> <code>section</code> <code>article</code> <code>aside</code><ul>
+<li><code>&lt;header role=&quot;banner&quot;&gt;</code></li>
+<li><code>&lt;section role=&quot;search&quot;&gt;</code></li>
 </ul>
 </li>
-<li><p>native keyboard accessibility</p>
-<ul>
-<li></li>
+<li><strong><u>Form:</u></strong> <code>label</code> <code>input</code> <code>button</code><ul>
+<li><code>&lt;label for=&quot;search&quot;&gt;</code></li>
+<li><code>&lt;input type=&quot;text&quot; &gt;</code> </li>
+<li><code>&lt;input type=&quot;submit&quot; /&gt;</code></li>
+</ul>
+</li>
+<li><strong><u>Table:</u></strong> <code>&lt;caption&gt;</code> <code>&lt;table summury=&quot;caption&quot;&gt;</code> <code>th</code> </li>
+<li><strong><u>Image:</u></strong> <ul>
+<li><code>&lt;img alt=&quot;img.png&quot; title=&quot;This is a beautiful girl&quot; &gt;</code></li>
+<li><code>aria-labelledby</code></li>
+<li>empty <code>alt</code>: necessary if the image is only for decoration use</li>
+</ul>
+</li>
+<li><strong><u>text:</u></strong><ul>
+<li><code>&lt;em&gt;</code> vs <code>&lt;i&gt;</code></li>
+<li><code>&lt;strong&gt;</code> vs <code>&lt;b&gt;</code></li>
+<li><code>&lt;abbr title=&quot;Hypertext Markup Language&quot;&gt; HTML &lt;abbr&gt;</code></li>
+</ul>
+</li>
+<li><strong><u>position:</u></strong><ul>
+<li><code>absolution position</code>  is better than <code>display: none</code> or <code>visibility: hidden</code>: to overlap all div with different <code>z-index</code></li>
+<li>since <code>display: none</code> or <code>visibility: hidden</code> will hide content from screenreader</li>
+</ul>
+</li>
 </ul>
 </li>
 <li><p>How to improve accessibility?</p>
@@ -970,6 +1157,36 @@
 <li><p>use <code>:focus</code> &amp; <code>:hover</code> pseudo-class to highlight the chosen tag</p>
 <ul>
 <li><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:hover</span>, <span class="selector-tag">input</span><span class="selector-pseudo">:hover</span>, <span class="selector-tag">button</span><span class="selector-pseudo">:hover</span>, <span class="selector-tag">select</span><span class="selector-pseudo">:hover</span>,</span><br><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:focus</span>, <span class="selector-tag">input</span><span class="selector-pseudo">:focus</span>, <span class="selector-tag">button</span><span class="selector-pseudo">:focus</span>, <span class="selector-tag">select</span><span class="selector-pseudo">:focus</span> &#123;</span><br><span class="line">  <span class="attribute">font-weight</span>: bold;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>JavaScript in accessibility</p>
+<ol>
+<li>provide client-side form validating, rather than server-side</li>
+<li><code>&lt;video&gt;</code> has control button for keyboard</li>
+<li><code>mouseover</code> == <code>onfocus</code> &amp;   <code>mouseout</code> == <code>onblur</code></li>
+</ol>
+</li>
+<li><p>mobile accessibility</p>
+<ul>
+<li><p><strong><u>touch</u></strong>: <code>onmousedown</code> == <code>ontouchstart</code> &amp;&amp; <code>onmouseup</code> == <code>ontouchstop</code></p>
+</li>
+<li><p><strong><u>side menu</u></strong></p>
+</li>
+<li><p><code>@media</code> </p>
+<ul>
+<li><p><u>logical operator</u>: <code>and</code>, <code>not</code>, <code>only</code>, <code>,(like &#39;or&#39;)</code></p>
+</li>
+<li><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 1. media in &lt;link&gt;  --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">"mobile.css"</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">media</span>=<span class="string">"screen and (max-width: 600px)"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 2. media in &lt;style&gt;  --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">media</span>=<span class="string">"all and (max-width: 500px)"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">    p &#123;</span></span><br><span class="line"><span class="undefined">      color: blue;</span></span><br><span class="line"><span class="undefined">      background-color: yellow;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"> </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span> </span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 3. media in &lt;script&gt;  --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">if</span> (<span class="built_in">window</span>.matchMedia(<span class="string">"(min-width: 400px)"</span>).matches) &#123;</span></span><br><span class="line"><span class="javascript">      <span class="comment">// the viewport is at least 400 pixels wide</span></span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="javascript">      <span class="comment">// the viewport is less than 400 pixels wide</span></span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 4. media inside style  --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">    @<span class="keyword">media</span> screen and (min-width: <span class="number">30em</span>) and (max-width: <span class="number">992px</span>) &#123;</span></span><br><span class="line"><span class="css">      <span class="selector-tag">body</span> &#123; <span class="attribute">background-color</span>: blue; &#125;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    </span></span><br><span class="line"><span class="css">    @<span class="keyword">media</span> (min-height: <span class="number">680px</span>), screen and (orientation: portrait)&#123;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">body</span> &#123; <span class="attribute">background-color</span>: blue; &#125;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>@import</code></p>
+<ul>
+<li><p>syntax: </p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">import</span> <span class="string">'custom.css'</span>;</span><br><span class="line">@<span class="keyword">import</span> url(<span class="string">'landscape.css'</span>) screen and (orientation:landscape);</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
@@ -995,7 +1212,41 @@
 </li>
 </ol>
 <h2 id="React-Lifecyle"><a href="#React-Lifecyle" class="headerlink" title="React Lifecyle"></a>React Lifecyle</h2><ol>
-<li><h2 id="How-to-implement-infinite-scroll-loading"><a href="#How-to-implement-infinite-scroll-loading" class="headerlink" title="How to implement infinite scroll loading"></a>How to implement infinite scroll loading</h2></li>
+<li><p>Mounting phase</p>
+<ul>
+<li><code>constructor()</code></li>
+<li><code>getDerivedStateFromProps()</code></li>
+<li><code>render()</code></li>
+<li><code>componentDidMount()</code></li>
+</ul>
+</li>
+<li><p>Updating phase</p>
+<ul>
+<li><code>getDerivedStateFromProps()</code></li>
+<li><code>shouldComponentUpdate()</code></li>
+<li><code>render()</code>: after either new <code>props</code> or new <code>state</code></li>
+<li><code>componentDidUpdate()</code></li>
+</ul>
+</li>
+<li><p>Unmounting phase</p>
+<ul>
+<li><code>componentWillUnmount()</code></li>
+</ul>
+</li>
+<li><p>Other API: <code>setState()</code> &amp; <code>forceUpdate()</code></p>
+<ol>
+<li><p><code>setState()</code>: can take both <u>object</u> and <strong><u>callback function</u></strong> as parameter</p>
+</li>
+<li><p><code>setState( (prevState, props) =&gt; updatedState )</code> </p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// BAD: updated state will only take one increment</span></span><br><span class="line"><span class="comment">// i.e. in the end, counter=1</span></span><br><span class="line">componentDidMount()&#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;<span class="attr">counter</span>: <span class="keyword">this</span>.state.counter+<span class="number">1</span>&#125;)</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;<span class="attr">counter</span>: <span class="keyword">this</span>.state.counter+<span class="number">1</span>&#125;)</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;<span class="attr">counter</span>: <span class="keyword">this</span>.state.counter+<span class="number">1</span>&#125;)</span><br><span class="line">&#125;)</span><br><span class="line">   </span><br><span class="line"><span class="comment">// GOOD: updated state will take all increment</span></span><br><span class="line"><span class="comment">// i.e. in the end, counter=3</span></span><br><span class="line">componentDidMount()&#123;</span><br><span class="line">    <span class="keyword">this</span>.setState( <span class="function"><span class="params">counter</span>=&gt;</span>&#123;<span class="attr">counter</span>: state.counter + <span class="number">1</span>&#125; )</span><br><span class="line">    <span class="keyword">this</span>.setState( <span class="function"><span class="params">counter</span>=&gt;</span>&#123;<span class="attr">counter</span>: state.counter + <span class="number">1</span>&#125; )</span><br><span class="line">    <span class="keyword">this</span>.setState( <span class="function"><span class="params">counter</span>=&gt;</span>&#123;<span class="attr">counter</span>: state.counter + <span class="number">1</span>&#125; )</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="How-to-implement-infinite-scroll-loading"><a href="#How-to-implement-infinite-scroll-loading" class="headerlink" title="How to implement infinite scroll loading"></a>How to implement infinite scroll loading</h2><ol>
 <li><p>Credit to: <a href="https://segmentfault.com/a/1190000004974824" target="_blank" rel="noopener">https://segmentfault.com/a/1190000004974824</a></p>
 </li>
 <li><p>Which event do we use?</p>
@@ -1017,20 +1268,15 @@
 </li>
 </ol>
 <h2 id="The-rendering-order-CSS-JS-HTML"><a href="#The-rendering-order-CSS-JS-HTML" class="headerlink" title="The rendering order: CSS, JS, HTML"></a>The rendering order: CSS, JS, HTML</h2><ol>
-<li><p>credit to:</p>
-<ul>
+<li>credit to:<ul>
 <li><a href="https://bitsofco.de/async-vs-defer/" target="_blank" rel="noopener">https://bitsofco.de/async-vs-defer/</a></li>
 <li><a href="https://www.cnblogs.com/yingsong/p/6170780.html" target="_blank" rel="noopener">https://www.cnblogs.com/yingsong/p/6170780.html</a></li>
 </ul>
 </li>
-<li><p>General order</p>
-<ol>
-<li><p>JS in <code>&lt;head&gt;</code> will block downloading of following resource</p>
-</li>
-<li><p>Browser downloads and parses HTML to DOM</p>
-</li>
-<li><p>when encounter <code>&lt;script&gt;</code>, </p>
-<ul>
+<li>General order<ol>
+<li>JS in <code>&lt;head&gt;</code> will block downloading of following resource</li>
+<li>Browser downloads and parses HTML to DOM</li>
+<li>when encounter <code>&lt;script&gt;</code>, <ul>
 <li>if not external, <strong><u>render engine</u></strong> hand control power to <strong><u>js engine</u></strong></li>
 <li>if is external, render engine <u>keep rendering</u>, while downloads external</li>
 </ul>
@@ -1038,21 +1284,124 @@
 </ol>
 </li>
 </ol>
-<h2 id="CSS-lt-img-src-quot-quot-gt-will-download"><a href="#CSS-lt-img-src-quot-quot-gt-will-download" class="headerlink" title="CSS: &lt;img src=&quot;&quot; /&gt; will download?"></a>CSS: <code>&lt;img src=&quot;&quot; /&gt;</code> will download?</h2><h2 id="CSS-profile-amp-edit-image-link"><a href="#CSS-profile-amp-edit-image-link" class="headerlink" title="CSS: profile &amp; edit image link"></a>CSS: profile &amp; edit image link</h2><ol>
-<li>Implement the requirement</li>
-<li>consider accessibility<ul>
-<li></li>
-</ul>
+<h2 id="CSS-profile-amp-edit-image-link"><a href="#CSS-profile-amp-edit-image-link" class="headerlink" title="CSS: profile &amp; edit image link"></a>CSS: profile &amp; edit image link</h2><ol>
+<li><p>Implement the requirement</p>
+</li>
+<li><p>consider accessibility</p>
 </li>
 </ol>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">// 1. Mouse is not over the picture</span><br><span class="line">+-------------+</span><br><span class="line">|             |</span><br><span class="line">|             |</span><br><span class="line">|   picture   |</span><br><span class="line">|             |</span><br><span class="line">|             |</span><br><span class="line">+-------------+</span><br><span class="line"></span><br><span class="line">// 2. Mouse is anywhere over picture</span><br><span class="line">+--------+----+</span><br><span class="line">|        |edit| <span class="tag">&lt;<span class="name">---</span> <span class="attr">links</span> <span class="attr">to</span> /<span class="attr">edit.php</span></span></span><br><span class="line"><span class="tag">|        +<span class="attr">----</span>+      <span class="attr">icon</span> <span class="attr">url:</span> /<span class="attr">edit_icon.png</span></span></span><br><span class="line"><span class="tag">|   <span class="attr">picture</span>   |</span></span><br><span class="line">|             | &lt;--- links to /profile.php</span><br><span class="line">|             |      picture url: /profile_pic.png 来源一亩.三分地论坛. </span><br><span class="line">+-------------+</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">      <span class="selector-class">.imgWrapper</span>&#123;</span></span><br><span class="line"><span class="undefined">        width: 100px;</span></span><br><span class="line"><span class="undefined">        height: 100px;</span></span><br><span class="line"><span class="undefined">        border: 1px solid red;</span></span><br><span class="line"><span class="undefined">        position: relative;</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="css">      <span class="selector-id">#image1</span>&#123;</span></span><br><span class="line"><span class="undefined">        width: 100%;</span></span><br><span class="line"><span class="undefined">        height: 100%;</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="css">      <span class="selector-id">#image2</span>&#123;</span></span><br><span class="line"><span class="undefined">        position: absolute;</span></span><br><span class="line"><span class="undefined">        top: 0;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">right</span><span class="selector-pseudo">:0</span>;</span></span><br><span class="line"><span class="undefined">        width: 50px;</span></span><br><span class="line"><span class="undefined">        height: 50px;</span></span><br><span class="line"><span class="undefined">        display: none;</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="css">      <span class="selector-class">.imgWrapper</span><span class="selector-pseudo">:hover</span> <span class="selector-id">#image2</span>&#123;</span></span><br><span class="line"><span class="undefined">        display: block;</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"imgWrapper"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://stackoverflow.com/questions/1827965/is-putting-a-div-inside-an-anchor-ever-correct"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">"image1"</span> <span class="attr">src</span>=<span class="string">"https://www.w3schools.com/html/pic_trulli.jpg"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">        </span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://developer.mozilla.org/en-US/docs/Learn/Accessibility"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">"image2"</span> <span class="attr">src</span>=<span class="string">"https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/UniversalEditButton3.png/220px-UniversalEditButton3.png"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="Flex-Layout"><a href="#Flex-Layout" class="headerlink" title="Flex Layout"></a>Flex Layout</h2><ol>
+<li><p>flex container:</p>
+<ol>
+<li><p><strong><u>NOTE：</u></strong> <code>float</code> <code>clear</code> <code>vertical-align</code> for the items inside flex boxwill become <em>invalid</em></p>
+</li>
+<li><p><code>display: inline-flex</code> vs <code>display: flex</code>:</p>
+<ul>
+<li>only apply to flex container, to make it display as <code>inline</code> or <code>block</code></li>
+<li>won’t affect flex items inside</li>
+</ul>
+</li>
+<li><p><code>flex-direction</code></p>
+</li>
+<li><p><code>flex-wrap</code>: break new line or not when exceeding it container</p>
+</li>
+<li><p><code>flex-flow</code> is combinatin of first 2 items: </p>
+<ol>
+<li><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">flex-direction</span>: <span class="selector-tag">row</span>;</span><br><span class="line"><span class="selector-tag">flex-wrap</span>: <span class="selector-tag">wrap</span>;</span><br><span class="line">&lt;==&gt;</span><br><span class="line"><span class="selector-tag">flex-flow</span>: <span class="selector-tag">row</span> <span class="selector-tag">wrap</span>;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p><code>align-items: center;</code>:  where flex items sit on the <strong>cross axis</strong></p>
+</li>
+<li><p><code>justify-content: space-around;</code>: where the flex items sit on the <strong>main axis</strong></p>
+</li>
+</ol>
+</li>
+<li><p>flex items:</p>
+<ol>
+<li><code>flex: 1 1 20px</code>:  three attributes: <code>flex-grow</code>   <code>flex-shrink</code>    <code>flex-basis</code></li>
+<li><code>order: 3</code>: like the smaller will be put in front</li>
+<li><code>align-self</code>: override its container’s <code>align-items</code> layout, update position of itself</li>
+</ol>
+</li>
+</ol>
+<h2 id="Grid-Layout"><a href="#Grid-Layout" class="headerlink" title="Grid Layout"></a>Grid Layout</h2><ol>
+<li><p>Grid Container</p>
+<ul>
+<li><strong><u>display</u></strong>: <code>display: grid</code> vs <code>display: inline-grid</code>: only apply on grid container</li>
+<li><strong><u>gap</u></strong>: <code>grid-row-gap</code> <code>grid-column-gap</code> <code>grid-gap</code>: set the gap between items</li>
+<li><strong><u>col num/width</u></strong>: <code>grid-template-columns</code>: define num of columns and their width</li>
+<li><strong><u>row num/width:</u></strong><code>grid-template-rows</code>: define num of rows and their width</li>
+<li><strong><u>horizontally align:</u></strong> <code>justify-content</code>: center, start, end, space-evenly, space-around, space-between</li>
+<li><strong><u>vertically align:</u></strong> <code>align-content</code>: center, start, end, space-evenly, space-around, space-between</li>
+<li></li>
+</ul>
+</li>
+<li><p>Grid Items </p>
+<ol>
+<li><p><u><strong>line</strong></u>: <code>grid-row-start</code> <code>grid-column-end</code>: specify the start &amp; end of span it covers </p>
+</li>
+<li><p><strong><u>line shorthand 1</u></strong> : <code>grid-row</code> <code>grid-column</code></p>
+<ul>
+<li><code>grid-row:1 / 3</code>:  <code>range: [line1  line3]</code></li>
+<li><code>grid-column: 1/span 3</code>:  from line1, take 3 units,  <code>range: [line1  line4]</code></li>
+</ul>
+</li>
+<li><p><strong><u>line shorthand 2</u></strong> : <code>grid-area</code> = <code>grid-row-start</code>+ <code>grid-column-start</code> + <code>grid-row-end</code> + <code>grid-column-end</code> </p>
+<ul>
+<li><p><code>grid-area: 1 / 2 / 5 / 6</code>:  start on row-line 1 and column-line 2, and end on row-line 5 and column line 6:</p>
+</li>
+<li><p><code>grid-area: 2 / 1 / span 2 / span 3</code>: </p>
+</li>
+<li><p><strong><u>NOTE:</u></strong> <strong>can assign names to grid items</strong>, cooperate with <code>grid-template-areas</code>. Used to assign space to the named item</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">https://www.w3schools.com/css/tryit.asp?filename=trycss_grid_grid-area_named1</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.item1</span> &#123; <span class="attribute">grid-area</span>: header; &#125;</span><br><span class="line"><span class="selector-class">.item2</span> &#123; <span class="attribute">grid-area</span>: menu; &#125;</span><br><span class="line"><span class="selector-class">.item3</span> &#123; <span class="attribute">grid-area</span>: main; &#125;</span><br><span class="line"><span class="selector-class">.item4</span> &#123; <span class="attribute">grid-area</span>: right; &#125;</span><br><span class="line"><span class="selector-class">.item5</span> &#123; <span class="attribute">grid-area</span>: footer; &#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.grid-container</span> &#123;</span><br><span class="line">  <span class="attribute">grid-template-areas</span>:</span><br><span class="line">    <span class="string">'header header header header header header'</span></span><br><span class="line">    <span class="string">'menu main main main right right'</span></span><br><span class="line">    <span class="string">'menu footer footer footer footer footer'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>order: specified by <code>starting line#</code> and <code>ending line#</code></p>
+</li>
+<li><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.item1</span> &#123; <span class="attribute">grid-area</span>: <span class="number">1</span> / <span class="number">3</span> / <span class="number">2</span> / <span class="number">4</span>; &#125;</span><br><span class="line"><span class="selector-class">.item2</span> &#123; <span class="attribute">grid-area</span>: <span class="number">2</span> / <span class="number">3</span> / <span class="number">3</span> / <span class="number">4</span>; &#125;</span><br><span class="line"><span class="selector-class">.item3</span> &#123; <span class="attribute">grid-area</span>: <span class="number">1</span> / <span class="number">1</span> / <span class="number">2</span> / <span class="number">2</span>; &#125;</span><br><span class="line"><span class="selector-class">.item4</span> &#123; <span class="attribute">grid-area</span>: <span class="number">1</span> / <span class="number">2</span> / <span class="number">2</span> / <span class="number">3</span>; &#125;</span><br><span class="line"><span class="selector-class">.item5</span> &#123; <span class="attribute">grid-area</span>: <span class="number">2</span> / <span class="number">1</span> / <span class="number">3</span> / <span class="number">2</span>; &#125;</span><br><span class="line"><span class="selector-class">.item6</span> &#123; <span class="attribute">grid-area</span>: <span class="number">2</span> / <span class="number">2</span> / <span class="number">3</span> / <span class="number">3</span>; &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
 <h2 id="CSS"><a href="#CSS" class="headerlink" title="CSS:"></a>CSS:</h2><ol>
-<li><code>float</code> &amp;  <code>position</code> &amp; <code>box model</code></li>
-<li><p><code>cursor: pointer</code></p>
+<li><code>float</code> &amp;  <code>position</code> &amp; <code>box model</code><ul>
+<li><code>float</code><ul>
+<li>when container box has no height, and  need to cover all it floating children: <code>clear: both</code> &amp; <code>overflow: hidden</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>box-sizing</code>=&gt;<code>content-box</code> / <code>border-box</code><ul>
+<li><code>box-sizing: content-box;</code> actual width= <code>width</code> + <code>padding</code> + <code>border</code><br> The <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/width" target="_blank" rel="noopener"><code>width</code></a>and <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/height" target="_blank" rel="noopener"><code>height</code></a> properties include the content, but does not include the padding, border, or margin.</li>
+<li><code>box-sizing: border-box;</code>  actual width = <code>width</code> = <code>content</code> + <code>padding</code> + <code>border</code><br>The <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/width" target="_blank" rel="noopener"><code>width</code></a> and <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/height" target="_blank" rel="noopener"><code>height</code></a> properties include the content, padding, and border, but do not include the margin</li>
+</ul>
+</li>
+<li><p><code>cursor: pointer</code> cursor acts like <code>&lt;a&gt;</code> when hover</p>
 </li>
 <li><p><code>px</code> vs <code>rem</code> vs <code>em</code></p>
 </li>
 <li><p><code>block</code> vs <code>inline</code> vs <code>inline-block</code></p>
+<ol>
+<li><a href="https://stackoverflow.com/questions/9189810/css-display-inline-vs-inline-block" target="_blank" rel="noopener">https://stackoverflow.com/questions/9189810/css-display-inline-vs-inline-block</a></li>
+<li><code>block</code>: <ul>
+<li>has width, height, margin, padding</li>
+<li>force a new line <strong>after the block</strong></li>
+</ul>
+</li>
+<li><code>inline</code>: <ul>
+<li>no width, no height; only respect left/right margin, left/right padding </li>
+<li>allow other elements to <strong>sit on the same line</strong></li>
+</ul>
+</li>
+<li><code>inline-block</code>: <ul>
+<li>has width, height, margin, padding</li>
+<li>allow other elements to <strong>sit on the same line</strong></li>
+</ul>
+</li>
+</ol>
 </li>
 <li><p><code>width</code> &amp; <code>height</code></p>
 <ul>
@@ -1070,6 +1419,28 @@
 </li>
 </ul>
 </li>
+<li><p><code>white-space:</code> <code>nowrap</code>, <code>pre</code>, <code>normal</code></p>
+<ul>
+<li>how to handle <strong><u>text’s space</u></strong> inside a block to be displayed</li>
+<li><code>nowrap</code>: ignore all white-space in one line, like in <code>&lt;span&gt;</code></li>
+<li><code>normal</code>: make text content displayed against the block, change line based on space</li>
+<li><code>pre</code>: take in all kind of space (include new line) displayed as they specified in html tag</li>
+</ul>
+</li>
+<li><p><code>overflow</code>: deal with inner box exceeding outer box: <code>hidden</code> or <code>scroll</code></p>
+</li>
+<li><p><code>text-overflow:</code>  deal with too many words inside box, <strong><u>clip</u></strong> or <strong><u>ellipsis</u></strong></p>
+<ul>
+<li><code>clip(default)</code></li>
+<li><code>ellipsis(省略号)</code></li>
+</ul>
+</li>
+<li><p><code>word-break:</code> deal with long word, which may exceeds width of its container</p>
+<ol>
+<li><code>normal</code></li>
+<li><code>break-word;</code>: the best clipping way to show the word</li>
+</ol>
+</li>
 <li><p><code>max-width</code> vs <code>width</code></p>
 <ul>
 <li><p><code>width</code>: set the tentative value`</p>
@@ -1085,9 +1456,34 @@
 </ul>
 </li>
 </ol>
-<h2 id="CSS-how-to-vertically-center-an-element"><a href="#CSS-how-to-vertically-center-an-element" class="headerlink" title="CSS: how to vertically center an element?"></a>CSS: how to vertically center an element?</h2><ol>
-<li>parent without <code>height</code> &amp; <code>width</code></li>
-<li>parent with <code>height</code> &amp; <code>width</code></li>
+<h2 id="CSS-how-to-center-an-element"><a href="#CSS-how-to-center-an-element" class="headerlink" title="CSS: how to center an element?"></a>CSS: how to center an element?</h2><ol>
+<li><a href="https://css-tricks.com/centering-css-complete-guide/" target="_blank" rel="noopener">https://css-tricks.com/centering-css-complete-guide/</a></li>
+<li>Horizontally<ul>
+<li><code>text-align: center</code>: center <strong>inline element</strong> inside <strong>block element</strong></li>
+<li><code>margin: 0 auto</code>: center <strong>block element</strong> inside another <strong>block element</strong></li>
+<li><code>display: inline-block</code>: to center <strong>multiple block element in a row</strong> inside another <strong>block element</strong></li>
+<li><code>display: flex</code>: to center <strong>multiple block element in a row</strong> inside another <strong>block element</strong></li>
+</ul>
+</li>
+<li>Vertically for <u>inline elements</u><ul>
+<li><code>height</code>==<code>line-height</code>  or <code>padding-top == padding-bottom</code>: for <strong><u>single inline element</u></strong></li>
+<li><code>display: table</code>&amp; <code>display: table-cell</code>+ <code>vertial-align: middle</code> : <strong><u>multiple inline elements</u></strong></li>
+<li><code>display: flex</code> &amp; <code>align-items: center</code> for <strong><u>multiple inline elements</u></strong></li>
+</ul>
+</li>
+<li>Vertically for <u>block elements</u><ul>
+<li>if <code>height</code> of inner block is known: use <code>position: abosulute</code> &amp; <code>top</code> &amp; <code>margin:0.5*height</code></li>
+<li>if <code>height</code> of inner block is not known: use <code>position: abosulute</code> <code>top</code> &amp; <code>transform: translateY(-50%)</code> </li>
+<li>Again: <code>display: flex</code></li>
+</ul>
+</li>
+<li>Both Horizontally &amp; Vertically<ul>
+<li>if <code>height</code> of inner block is known: use <code>position: abosulute</code> &amp; <code>top</code> &amp; <code>margin:0.5*height</code></li>
+<li>if <code>height</code> of inner block is not known: use <code>position: abosulute</code> <code>top</code> &amp; <code>transform: translateY(-50%)</code> </li>
+<li>Again: <code>display: flex</code></li>
+<li><code>display: grid</code></li>
+</ul>
+</li>
 </ol>
 <h2 id="DOM-structure"><a href="#DOM-structure" class="headerlink" title="DOM structure"></a>DOM structure</h2><ol>
 <li><p>difference between <code>HTMLCollection</code> &amp; <code>NodeList</code></p>
@@ -1228,8 +1624,6 @@
 <li><strong>previousSibling: </strong> returns the previous sibling node as an element node, a text node or a comment node</li>
 <li><strong>previousElementSibling: </strong> returns the previous sibling node as an element node (ignores text and comment nodes).</li>
 </ul>
-</li>
-<li><p>sdf</p>
 </li>
 </ol>
 <h2 id="DOM-events"><a href="#DOM-events" class="headerlink" title="DOM events"></a>DOM events</h2><ol>
@@ -1380,7 +1774,7 @@
 </ol>
 </li>
 </ol>
-<h2 id="Generator"><a href="#Generator" class="headerlink" title="Generator"></a>Generator</h2><h2 id="RxJS-Observable"><a href="#RxJS-Observable" class="headerlink" title="RxJS - Observable"></a>RxJS - Observable</h2><ol>
+<h2 id="RxJS-Observable"><a href="#RxJS-Observable" class="headerlink" title="RxJS - Observable"></a>RxJS - Observable</h2><ol>
 <li><p><strong>Observer pattern</strong>: subject (publisher) &amp; observer (subscriber)</p>
 <ul>
 <li><p>use case: <u>add event to DOM</u> </p>
@@ -1426,7 +1820,7 @@
 <li><p><strong>Observable</strong></p>
 </li>
 </ol>
-
+<h2 id="Generator"><a href="#Generator" class="headerlink" title="Generator"></a>Generator</h2>
           
         
       
@@ -3187,180 +3581,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/02/Memory-Game/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/02/Memory-Game/" itemprop="url">Memory Game</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-02T09:47:18-07:00">2018-10-02</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Portfolios/" itemprop="url" rel="index"><span itemprop="name">Portfolios</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/10/02/Memory-Game/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/02/Memory-Game/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Memory-Game"><a href="#Memory-Game" class="headerlink" title="Memory-Game"></a>Memory-Game</h1><h2 id="What"><a href="#What" class="headerlink" title="What?"></a>What?</h2><p>This is a memory game, developed using React, Ant Design, webpack, and CSS grid, etc.</p>
-<p><img width="600" alt="memory_game.png" src="https://github.com/caomingkai/Memory-Game/raw/master/memory_game.png"></p>
-<h2 id="How-to-run"><a href="#How-to-run" class="headerlink" title="How to run?"></a>How to run?</h2><ol>
-<li>git clone</li>
-<li>npm install</li>
-<li>npm start</li>
-</ol>
-<h2 id="Features"><a href="#Features" class="headerlink" title="Features"></a>Features</h2><ul>
-<li>Notify the user if they win or lose</li>
-<li>Hints assistance</li>
-<li>Allow the user to reset at any time</li>
-<li>Randomize the ‘cards’ layout every game</li>
-<li>Multi Player mode</li>
-<li>Tracking Scores</li>
-<li>Tracking Best Score</li>
-<li>Tracking time</li>
-<li>Adjustable number of cards in the game (difficulty levels)</li>
-</ul>
-<h2 id="To-do"><a href="#To-do" class="headerlink" title="To-do"></a>To-do</h2><ul>
-<li>Options &amp; Start UI substitute the game board UI at the beginning</li>
-<li>Hint feature: add keyboard press event</li>
-</ul>
-<h2 id="Layout-amp-Logic"><a href="#Layout-amp-Logic" class="headerlink" title="Layout &amp; Logic"></a>Layout &amp; Logic</h2><p><img width="600" alt="workflow.png" src="https://github.com/caomingkai/Memory-Game/raw/master/IMG_4519.JPG"></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3412,7 +3632,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">46</span>
+                    <span class="site-state-item-count">47</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -3572,7 +3792,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">62</span>
+                      
+                    
+                    <span class="site-state-item-count">63</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

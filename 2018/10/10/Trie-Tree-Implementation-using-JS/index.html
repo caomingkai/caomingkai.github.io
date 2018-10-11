@@ -99,24 +99,24 @@
 
 
 
-  <meta name="description" content="I. set() You can use the express instance to store and retrieve variables. In this case, you can set the title to be “My Site” and retrieve it later with something like var title = app.get(&amp;#39;title&amp;">
-<meta name="keywords" content="Express,Node.js">
+  <meta name="description" content="I. What is TrieTrie is an efficient information reTrieval data structure.   search complexities can be brought to optimal limit (key length). If we store keys in BST, a well balanced BST will need tim">
+<meta name="keywords" content="ES6 Class,Data Structure,Algorithm,Trie">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Express Framework">
-<meta property="og:url" content="http://yoursite.com/2018/06/01/Express-Framework/index.html">
+<meta property="og:title" content="Trie Tree Implementation using JS">
+<meta property="og:url" content="http://yoursite.com/2018/10/10/Trie-Tree-Implementation-using-JS/index.html">
 <meta property="og:site_name" content="CMK">
-<meta property="og:description" content="I. set() You can use the express instance to store and retrieve variables. In this case, you can set the title to be “My Site” and retrieve it later with something like var title = app.get(&amp;#39;title&amp;">
-<meta property="og:updated_time" content="2018-06-01T21:46:29.000Z">
+<meta property="og:description" content="I. What is TrieTrie is an efficient information reTrieval data structure.   search complexities can be brought to optimal limit (key length). If we store keys in BST, a well balanced BST will need tim">
+<meta property="og:updated_time" content="2018-10-11T02:43:40.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Express Framework">
-<meta name="twitter:description" content="I. set() You can use the express instance to store and retrieve variables. In this case, you can set the title to be “My Site” and retrieve it later with something like var title = app.get(&amp;#39;title&amp;">
+<meta name="twitter:title" content="Trie Tree Implementation using JS">
+<meta name="twitter:description" content="I. What is TrieTrie is an efficient information reTrieval data structure.   search complexities can be brought to optimal limit (key length). If we store keys in BST, a well balanced BST will need tim">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/06/01/Express-Framework/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/10/10/Trie-Tree-Implementation-using-JS/"/>
 
 
 
@@ -126,7 +126,7 @@
   };
 </script>
 
-  <title>Express Framework | CMK</title>
+  <title>Trie Tree Implementation using JS | CMK</title>
   
 
 
@@ -333,7 +333,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/01/Express-Framework/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/10/Trie-Tree-Implementation-using-JS/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Mingkai Cao">
@@ -350,7 +350,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Express Framework</h1>
+          <h1 class="post-title" itemprop="name headline">Trie Tree Implementation using JS</h1>
         
 
         <div class="post-meta">
@@ -362,7 +362,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-01T14:44:43-07:00">2018-06-01</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-10T16:20:29-07:00">2018-10-10</time>
             
 
             
@@ -383,7 +383,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
 
                 
                 
@@ -398,8 +398,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/06/01/Express-Framework/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/06/01/Express-Framework/" itemprop="commentCount"></span>
+                <a href="/2018/10/10/Trie-Tree-Implementation-using-JS/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/10/Trie-Tree-Implementation-using-JS/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -435,20 +435,20 @@
       
 
       
-        <h2 id="I-set"><a href="#I-set" class="headerlink" title="I. set()"></a>I. <code>set()</code></h2><blockquote>
-<p>You can use the express instance to store and retrieve variables. In this case, you can set the title to be “My Site” and retrieve it later with something like <code>var title = app.get(&#39;title&#39;);</code><strong>without the need to declare and keep a global variable messing around</strong></p>
-</blockquote>
-<p>即相当于在 Express的scope中设置全局变量</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">app.set(<span class="string">'title'</span>,<span class="string">'My Website'</span>);  <span class="comment">// set()</span></span><br><span class="line"><span class="keyword">var</span> title = app.get(<span class="string">'title'</span>);   <span class="comment">// get()</span></span><br><span class="line"></span><br><span class="line">等价于</span><br><span class="line"></span><br><span class="line">title = <span class="string">'My Website'</span></span><br></pre></td></tr></table></figure>
-<h2 id="II-bodyParser"><a href="#II-bodyParser" class="headerlink" title="II. bodyParser"></a>II. <code>bodyParser</code></h2><ol>
-<li><p>用来识别像<code>form</code>的<code>submit</code>默认提交的<code>urlencoded</code>格式数据，并将其放在<code>res.body</code>中</p>
- <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.use(bodyParser.urlencoded(&#123; <span class="attr">extended</span>: <span class="literal">false</span> &#125;));</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>用来识别使用<code>fetch()</code>或<code>axios</code>提交的的<code>json</code>格式数据，并将其放在<code>res.body</code>中</p>
- <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.use(bodyParser.json());</span><br></pre></td></tr></table></figure>
-</li>
+        <h2 id="I-What-is-Trie"><a href="#I-What-is-Trie" class="headerlink" title="I. What is Trie"></a>I. What is Trie</h2><p>Trie is an efficient information <u><strong>reTrieval</strong></u> data structure. </p>
+<ol>
+<li><strong><u>search complexities</u></strong> can be brought to optimal limit (key length).</li>
+<li>If we store keys in BST, a well balanced BST will need time proportional to <code>O(M*log N)</code>, where <code>M</code> is maximum string length, and <code>N</code> is number of keys in tree</li>
+<li>Using Trie, we can search the key in <code>O(M)</code> time.</li>
 </ol>
-<h2 id="III-to-be-continued"><a href="#III-to-be-continued" class="headerlink" title="III. to be continued"></a>III. to be continued</h2>
+<h2 id="II-Use-case"><a href="#II-Use-case" class="headerlink" title="II. Use case"></a>II. Use case</h2><ol>
+<li>Prefix matching</li>
+<li>Check if a word exists in a dictionary</li>
+<li>Word frequency in dictionary</li>
+<li>Sort Words in dictionary</li>
+</ol>
+<h2 id="III-Implementation"><a href="#III-Implementation" class="headerlink" title="III. Implementation"></a>III. Implementation</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 				*</span></span><br><span class="line"><span class="comment">			 /  |  \</span></span><br><span class="line"><span class="comment">            a   c   o</span></span><br><span class="line"><span class="comment">          / |   |   |</span></span><br><span class="line"><span class="comment">         c  t   a   f</span></span><br><span class="line"><span class="comment">		/       | \</span></span><br><span class="line"><span class="comment">       e		t  b</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    For a word of length K, we need (K+1) nodes to store</span></span><br><span class="line"><span class="comment">	- `add`: [1] *.children.a  </span></span><br><span class="line"><span class="comment">			 [2] a.children.c </span></span><br><span class="line"><span class="comment">			 [3] c.children.d  </span></span><br><span class="line"><span class="comment">			 [4] e.children.isEnd = true</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TrieNode</span></span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>()&#123;</span><br><span class="line">        <span class="keyword">this</span>.isEnd = <span class="literal">false</span></span><br><span class="line">        <span class="keyword">this</span>.freq = <span class="number">0</span></span><br><span class="line">        <span class="keyword">this</span>.children = &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Trie</span></span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>()&#123;</span><br><span class="line">        <span class="keyword">this</span>.root = <span class="keyword">new</span> TrieNode()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    insert(word)&#123;</span><br><span class="line">        <span class="keyword">if</span>( word.length === <span class="number">0</span> ) <span class="keyword">return</span> 	<span class="comment">// forbid empty string</span></span><br><span class="line">        <span class="keyword">let</span> letter, curNode = <span class="keyword">this</span>.root</span><br><span class="line">        <span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">0</span>; i &lt; word.length; i++ )&#123;</span><br><span class="line">            letter = word[i]</span><br><span class="line">            <span class="keyword">if</span>( !curNode.children.hasOwnProperty(letter) )&#123;</span><br><span class="line">                curNode.children[letter] = <span class="keyword">new</span> TrieNode()</span><br><span class="line">            &#125;</span><br><span class="line">            curNode = curNode.children[letter]</span><br><span class="line">        &#125;</span><br><span class="line">        curNode.isEnd = <span class="literal">true</span></span><br><span class="line">        curNode.freq = curNode.freq + <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    getNodeForPrefix(str)&#123;</span><br><span class="line">        <span class="keyword">let</span> letter, curNode = <span class="keyword">this</span>.root</span><br><span class="line">        <span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">0</span>; i &lt; str.length; i++ )&#123;</span><br><span class="line">            letter = str[i]</span><br><span class="line">            <span class="keyword">if</span>( !curNode.children.hasOwnProperty(letter) ) </span><br><span class="line">                <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">            curNode = curNode.children[letter]</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> curNode</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    isWord(word)&#123;</span><br><span class="line">        <span class="keyword">if</span>( <span class="keyword">this</span>.getNodeForPrefix(word) === <span class="literal">null</span> ) <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.getNodeForPrefix(word).isEnd</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    getWordFreq(word)&#123;</span><br><span class="line">        <span class="keyword">if</span>( <span class="keyword">this</span>.getNodeForPrefix(word) === <span class="literal">null</span> ) <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.getNodeForPrefix(word).freq</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/* -------------------- Testing --------------------*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> ace = <span class="string">"ace"</span></span><br><span class="line"><span class="keyword">let</span> at = <span class="string">"at"</span></span><br><span class="line"><span class="keyword">let</span> cat = <span class="string">"cat"</span></span><br><span class="line"><span class="keyword">let</span> cab = <span class="string">"cab"</span></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">of</span> = <span class="string">"of"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> t = <span class="keyword">new</span> Trie()</span><br><span class="line">t.insert(ace)</span><br><span class="line"><span class="built_in">console</span>.log(t.isWord(ace))	  <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line">t.insert(ace)	</span><br><span class="line"><span class="built_in">console</span>.log(t.isWord(ace))     <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(t.getWordFreq(ace))<span class="comment">// 2</span></span><br><span class="line"></span><br><span class="line">t.insert(at)	</span><br><span class="line"><span class="built_in">console</span>.log(t.isWord(at))      <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(t.getWordFreq(at)) <span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line">t.insert(cat)</span><br><span class="line">t.insert(cat)	</span><br><span class="line"><span class="built_in">console</span>.log(t.isWord(cat))     <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(t.getWordFreq(cat))<span class="comment">// 2</span></span><br><span class="line">t.insert(cat)	</span><br><span class="line"><span class="built_in">console</span>.log(t.getWordFreq(cat))<span class="comment">// 3</span></span><br><span class="line"></span><br><span class="line">t.insert(cab)	</span><br><span class="line"><span class="built_in">console</span>.log(t.isWord(cab))     <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(t.getWordFreq(cab))<span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line">t.insert(<span class="keyword">of</span>)	</span><br><span class="line"><span class="built_in">console</span>.log(t.isWord(<span class="keyword">of</span>))     <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(t.getWordFreq(<span class="keyword">of</span>))<span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// check the internal representation of the Trie</span></span><br><span class="line"><span class="built_in">console</span>.log(t.root)</span><br></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -468,9 +468,13 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Express/" rel="tag"># Express</a>
+            <a href="/tags/ES6-Class/" rel="tag"># ES6 Class</a>
           
-            <a href="/tags/Node-js/" rel="tag"># Node.js</a>
+            <a href="/tags/Data-Structure/" rel="tag"># Data Structure</a>
+          
+            <a href="/tags/Algorithm/" rel="tag"># Algorithm</a>
+          
+            <a href="/tags/Trie/" rel="tag"># Trie</a>
           
         </div>
       
@@ -483,8 +487,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/29/MERN-Stack-Online-Exam-System/" rel="next" title="MERN Stack: Online Exam System">
-                <i class="fa fa-chevron-left"></i> MERN Stack: Online Exam System
+              <a href="/2018/10/08/Stack-Queue-Implementation-using-JS/" rel="next" title="Stack & Queue Implementation using JS">
+                <i class="fa fa-chevron-left"></i> Stack & Queue Implementation using JS
               </a>
             
           </div>
@@ -492,10 +496,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/06/01/Node-js/" rel="prev" title="Node.js">
-                Node.js <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -788,7 +788,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#I-set"><span class="nav-number">1.</span> <span class="nav-text">I. set()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#II-bodyParser"><span class="nav-number">2.</span> <span class="nav-text">II. bodyParser</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#III-to-be-continued"><span class="nav-number">3.</span> <span class="nav-text">III. to be continued</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#I-What-is-Trie"><span class="nav-number">1.</span> <span class="nav-text">I. What is Trie</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#II-Use-case"><span class="nav-number">2.</span> <span class="nav-text">II. Use case</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#III-Implementation"><span class="nav-number">3.</span> <span class="nav-text">III. Implementation</span></a></li></ol></div>
             
 
           </div>

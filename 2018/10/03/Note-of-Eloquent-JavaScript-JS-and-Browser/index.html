@@ -102,13 +102,13 @@
   <meta name="description" content="I. DOM what: document object model  who&amp;amp;why:   the browser build the DOM used to draw the page on screen provide interface to JS to dynamically manipulate elements on the page    How to access it:">
 <meta name="keywords" content="ES6,debounce,DOM,throttle,Event Handler">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Note of Eloquent JavaScript - Browser">
+<meta property="og:title" content="Note of Eloquent JavaScript - [Browser]">
 <meta property="og:url" content="http://yoursite.com/2018/10/03/Note-of-Eloquent-JavaScript-JS-and-Browser/index.html">
 <meta property="og:site_name" content="CMK">
 <meta property="og:description" content="I. DOM what: document object model  who&amp;amp;why:   the browser build the DOM used to draw the page on screen provide interface to JS to dynamically manipulate elements on the page    How to access it:">
-<meta property="og:updated_time" content="2018-10-04T07:54:41.000Z">
+<meta property="og:updated_time" content="2018-10-12T05:45:57.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Note of Eloquent JavaScript - Browser">
+<meta name="twitter:title" content="Note of Eloquent JavaScript - [Browser]">
 <meta name="twitter:description" content="I. DOM what: document object model  who&amp;amp;why:   the browser build the DOM used to draw the page on screen provide interface to JS to dynamically manipulate elements on the page    How to access it:">
 
 
@@ -126,7 +126,7 @@
   };
 </script>
 
-  <title>Note of Eloquent JavaScript - Browser | CMK</title>
+  <title>Note of Eloquent JavaScript - [Browser] | CMK</title>
   
 
 
@@ -350,7 +350,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Note of Eloquent JavaScript - Browser</h1>
+          <h1 class="post-title" itemprop="name headline">Note of Eloquent JavaScript - [Browser]</h1>
         
 
         <div class="post-meta">
@@ -736,6 +736,25 @@
 </li>
 </ol>
 </li>
+<li><p><strong><u>Debouncify a function</u></strong></p>
+<ul>
+<li><p>Given a function and a delay period, we want return a <strong><em>debouncified function</em></strong>:</p>
+<ul>
+<li>whenever called, will only be executed  after the specified delay. </li>
+<li>Ignore calls in the middle of the delay, and reschedule the starting time of delay</li>
+<li>must receive variant number of arguments</li>
+</ul>
+</li>
+<li><p>code implementation</p>
+<ul>
+<li><p>‘<strong><u>closure</u></strong>‘  is used here: the returned function have access to its outer function var: <code>timeout_handler</code>, and modify it by the returned functions</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Each time the returned function is called,</span></span><br><span class="line"><span class="comment"> * First clear the previous scheduled 'func' call</span></span><br><span class="line"><span class="comment"> * Then, reschedule a new one</span></span><br><span class="line"><span class="comment"> * &lt;NOTE&gt; we used 'closure' here: the returned function have</span></span><br><span class="line"><span class="comment"> * access to its outer function var: timeout_handler, and modify  </span></span><br><span class="line"><span class="comment"> * it</span></span><br><span class="line"><span class="comment"> */</span> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">debouncify</span>(<span class="params"> func, delay </span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> timeout_handler   </span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;       <span class="comment">// Closure is used here</span></span><br><span class="line">        clearTimeout(timeout_handler)</span><br><span class="line">        timeout_handler = setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params">arguments</span>)</span>&#123;</span><br><span class="line">            func(<span class="built_in">arguments</span>)</span><br><span class="line">        &#125;, delay)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// test</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">printTime</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">new</span> <span class="built_in">Date</span>().toLocaleTimeString());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> printTimeAfterFiveSecs = debouncify(printTime, <span class="number">5000</span>)</span><br><span class="line"><span class="comment">// need to call </span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">new</span> <span class="built_in">Date</span>().toLocaleTimeString()) <span class="comment">// get the start time</span></span><br><span class="line">printTimeAfterFiveSecs()</span><br><span class="line">printTimeAfterFiveSecs()</span><br><span class="line">printTimeAfterFiveSecs()</span><br><span class="line">printTimeAfterFiveSecs()</span><br><span class="line">printTimeAfterFiveSecs()</span><br><span class="line">printTimeAfterFiveSecs()</span><br><span class="line">printTimeAfterFiveSecs()   <span class="comment">// should be 5sec after the start time</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ol>
 
       
@@ -871,7 +890,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">47</span>
+                    <span class="site-state-item-count">49</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -1033,7 +1052,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">63</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">65</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

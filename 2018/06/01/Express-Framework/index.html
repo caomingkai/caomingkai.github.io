@@ -99,17 +99,17 @@
 
 
 
-  <meta name="description" content="I. set() You can use the express instance to store and retrieve variables. In this case, you can set the title to be “My Site” and retrieve it later with something like var title = app.get(&amp;#39;title&amp;">
+  <meta name="description" content="express() let express = require(&amp;#39;express&amp;#39;): Creates an Express application  express.static(root, [options]): serves static files and is based on serve-static.  here we can set etag lastModifie">
 <meta name="keywords" content="Express,Node.js">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Express Framework">
 <meta property="og:url" content="http://yoursite.com/2018/06/01/Express-Framework/index.html">
 <meta property="og:site_name" content="CMK">
-<meta property="og:description" content="I. set() You can use the express instance to store and retrieve variables. In this case, you can set the title to be “My Site” and retrieve it later with something like var title = app.get(&amp;#39;title&amp;">
-<meta property="og:updated_time" content="2018-10-14T04:54:38.000Z">
+<meta property="og:description" content="express() let express = require(&amp;#39;express&amp;#39;): Creates an Express application  express.static(root, [options]): serves static files and is based on serve-static.  here we can set etag lastModifie">
+<meta property="og:updated_time" content="2018-10-14T21:40:31.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Express Framework">
-<meta name="twitter:description" content="I. set() You can use the express instance to store and retrieve variables. In this case, you can set the title to be “My Site” and retrieve it later with something like var title = app.get(&amp;#39;title&amp;">
+<meta name="twitter:description" content="express() let express = require(&amp;#39;express&amp;#39;): Creates an Express application  express.static(root, [options]): serves static files and is based on serve-static.  here we can set etag lastModifie">
 
 
 
@@ -435,20 +435,283 @@
       
 
       
-        <h2 id="I-set"><a href="#I-set" class="headerlink" title="I. set()"></a>I. <code>set()</code></h2><blockquote>
-<p>You can use the express instance to store and retrieve variables. In this case, you can set the title to be “My Site” and retrieve it later with something like <code>var title = app.get(&#39;title&#39;);</code><strong>without the need to declare and keep a global variable messing around</strong></p>
-</blockquote>
-<p>即相当于在 Express的scope中设置全局变量</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">app.set(<span class="string">'title'</span>,<span class="string">'My Website'</span>);  <span class="comment">// set()</span></span><br><span class="line"><span class="keyword">var</span> title = app.get(<span class="string">'title'</span>);   <span class="comment">// get()</span></span><br><span class="line"></span><br><span class="line">等价于</span><br><span class="line"></span><br><span class="line">title = <span class="string">'My Website'</span></span><br></pre></td></tr></table></figure>
-<h2 id="II-bodyParser"><a href="#II-bodyParser" class="headerlink" title="II. bodyParser"></a>II. <code>bodyParser</code></h2><ol>
-<li><p>用来识别像<code>form</code>的<code>submit</code>默认提交的<code>urlencoded</code>格式数据，并将其放在<code>res.body</code>中</p>
+        <h2 id="express"><a href="#express" class="headerlink" title="express()"></a><code>express()</code></h2><ol>
+<li><p><code>let express = require(&#39;express&#39;)</code>: Creates an Express application</p>
+</li>
+<li><p><code>express.static(root, [options])</code>: serves <u><strong>static files</strong></u> and is based on <a href="https://expressjs.com/en/resources/middleware/serve-static.html" target="_blank" rel="noopener">serve-static</a>.</p>
+<ul>
+<li><p>here we can set <code>etag</code> <code>lastModified</code> <code>maxAge</code> etc.</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> options = &#123;</span><br><span class="line">  dotfiles: <span class="string">'ignore'</span>,</span><br><span class="line">  etag: <span class="literal">false</span>,</span><br><span class="line">  extensions: [<span class="string">'htm'</span>, <span class="string">'html'</span>],</span><br><span class="line">  index: <span class="literal">false</span>,</span><br><span class="line">  maxAge: <span class="string">'1d'</span>,</span><br><span class="line">  redirect: <span class="literal">false</span>,</span><br><span class="line">  setHeaders: <span class="function"><span class="keyword">function</span> (<span class="params">res, path, stat</span>) </span>&#123;</span><br><span class="line">    res.set(<span class="string">'x-timestamp'</span>, <span class="built_in">Date</span>.now())</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">app.use(express.static(<span class="string">'public'</span>, options))</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>express.Router([options])</code>: Creates a new <a href="https://expressjs.com/en/4x/api.html#router" target="_blank" rel="noopener">router</a> object. Refer to <strong>Routing</strong> section below</p>
+</li>
+</ol>
+<h2 id="App"><a href="#App" class="headerlink" title="App"></a>App</h2><ol>
+<li><p>The <code>app</code> object denotes the Express application</p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">var</span> app = express();</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>)</span>&#123;</span><br><span class="line">  res.send(<span class="string">'hello world'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p><strong><u>sub-app :</u></strong></p>
+<ol>
+<li><p><code>app.mountpath</code></p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> app = express(); <span class="comment">// the main app</span></span><br><span class="line"><span class="keyword">var</span> admin = express(); <span class="comment">// the sub app</span></span><br><span class="line"></span><br><span class="line">admin.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(admin.mountpath); <span class="comment">// /admin</span></span><br><span class="line">  res.send(<span class="string">'Admin Homepage'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.use(<span class="string">'/admin'</span>, admin); <span class="comment">// mount the sub app</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p><code>app.on(&#39;mount&#39;, callback(parent))</code></p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> admin = express();</span><br><span class="line"></span><br><span class="line">admin.on(<span class="string">'mount'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">parent</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Admin Mounted'</span>);</span><br><span class="line">  <span class="built_in">console</span>.log(parent); <span class="comment">// refers to the parent app</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">admin.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  res.send(<span class="string">'Admin Homepage'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.use(<span class="string">'/admin'</span>, admin);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p><code>app.METHOD(path, callback [, callback ...])</code></p>
+<ul>
+<li>METHOD is the HTTP method of the request, such as GET, PUT, POST, and so on, <strong><u>in lowercase</u></strong>. </li>
+<li><code>callback</code> can be: <ul>
+<li>A middleware function.</li>
+<li>A series of middleware functions (separated by commas).</li>
+<li>An array of middleware functions.</li>
+<li>A combination of all of the above.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>app.listen([port[, host[, backlog]]][, callback])</code> : Starts a UNIX <strong><u>socket</u></strong> , binds and listens for connections on the specified host and port.</p>
+</li>
+<li><p><code>app.param([name], callback)</code>: Add callback triggers to <a href="https://expressjs.com/en/guide/routing.html#route-parameters" target="_blank" rel="noopener">route parameters</a>, where <code>name</code> is the name of the parameter or an array of them, and <code>callback</code> is the callback function. </p>
+</li>
+<li><p><code>app.path()</code>: returns the canonical path of the app, a string.</p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> app = express()</span><br><span class="line">  , blog = express()</span><br><span class="line">  , blogAdmin = express();</span><br><span class="line"></span><br><span class="line">app.use(<span class="string">'/blog'</span>, blog);</span><br><span class="line">blog.use(<span class="string">'/admin'</span>, blogAdmin);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(app.path()); <span class="comment">// ''</span></span><br><span class="line"><span class="built_in">console</span>.log(blog.path()); <span class="comment">// '/blog'</span></span><br><span class="line"><span class="built_in">console</span>.log(blogAdmin.path()); <span class="comment">// '/blog/admin'</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p><code>app.route(path)</code>: <strong><u>Returns an instance of a single route</u></strong></p>
+<ol>
+<li><p>Use <code>app.route()</code> to avoid duplicate route names</p>
+</li>
+<li><p>e.g. </p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> app = express();</span><br><span class="line"></span><br><span class="line">app.route(<span class="string">'/events'</span>)</span><br><span class="line">.all(<span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// runs for all HTTP verbs first</span></span><br><span class="line">  <span class="comment">// think of it as route specific middleware!</span></span><br><span class="line">&#125;)</span><br><span class="line">.get(<span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  res.json(...);</span><br><span class="line">&#125;)</span><br><span class="line">.post(<span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// maybe add a new event...</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p><code>app.use([path,] callback [, callback...])</code>: mount specified middleware at the specified path</p>
+</li>
+</ol>
+<h2 id="Routing"><a href="#Routing" class="headerlink" title="Routing"></a>Routing</h2><ol>
+<li><p><code>app.get( url, handler )</code>    </p>
+</li>
+<li><p><code>app.post( url, handler )</code></p>
+</li>
+<li><p><code>app.put( url, handler )</code></p>
+</li>
+<li><p><code>app.delete( url, handler )</code></p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>)</span><br><span class="line"><span class="keyword">let</span> app = express()</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>)</span>&#123;</span><br><span class="line">    res.send(<span class="string">"Hello world"</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>app.all( url, handler )</code>: special route method to load all headlers for GET, POST, PUT, DELETE, etc,</p>
+</li>
+<li><p><strong>route parameters</strong></p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">app.get(<span class="string">'/users/:userId/books/:bookId'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  res.send(req.params)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// If Request URL: http://localhost:3000/users/34/books/8989</span></span><br><span class="line"><span class="comment">// Then req.params: &#123; "userId": "34", "bookId": "8989" &#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p><strong>route handlers</strong>: </p>
+<ul>
+<li><p><u>Multiple route handlers</u> can be put inside a route as <em>function array</em></p>
+</li>
+<li><p>use <code>next()</code> to invoke the next handler to handle route</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">app.get(<span class="string">'/example/d'</span>, [cb0, cb1], <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'the response will be sent by the next function ...'</span>)</span><br><span class="line">  next()</span><br><span class="line">&#125;, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  res.send(<span class="string">'Hello from D!'</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>app.route()</code></p>
+<ul>
+<li><p>create chainable route handlers for a route path by using <code>app.route()</code></p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">app.route(<span class="string">'/book'</span>)</span><br><span class="line">  .get(<span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    res.send(<span class="string">'Get a random book'</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .post(<span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    res.send(<span class="string">'Add a book'</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .put(<span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    res.send(<span class="string">'Update the book'</span>)</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>express.Router()</code>: achieve <u><em>relative</em></u> &amp; <u><em>modular</em></u> route handling</p>
+<ul>
+<li><p>using <code>express.Router()</code> to create a modular route, which can handle relative route as a single module/ file</p>
+</li>
+<li><p>then pass it to the <u><em>abosolute route handling module</em></u></p>
+</li>
+<li><p><strong><u>[e.g. ]:</u></strong> The app will now be able to handle requests to <code>/birds</code> and <code>/birds/about</code>, as well as call the <code>timeLog</code> middleware function that is specific to the route.</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*--- bird.js : modular route handler ---*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>)</span><br><span class="line"><span class="keyword">var</span> router = express.Router()</span><br><span class="line"></span><br><span class="line"><span class="comment">// middleware that is specific to this router</span></span><br><span class="line">router.use(<span class="function"><span class="keyword">function</span> <span class="title">timeLog</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Time: '</span>, <span class="built_in">Date</span>.now())</span><br><span class="line">  next()</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// define the home page route</span></span><br><span class="line">router.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  res.send(<span class="string">'Birds home page'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// define the about route</span></span><br><span class="line">router.get(<span class="string">'/about'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  res.send(<span class="string">'About birds'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = router</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*--- app.js: include bird route handler ---*/</span></span><br><span class="line"><span class="keyword">var</span> birds = <span class="built_in">require</span>(<span class="string">'./birds'</span>)</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">app.use(<span class="string">'/birds'</span>, birds)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="Middleware"><a href="#Middleware" class="headerlink" title="Middleware"></a>Middleware</h2><ol>
+<li><p>Credit to: <a href="https://segmentfault.com/a/1190000010877994" target="_blank" rel="noopener">https://segmentfault.com/a/1190000010877994</a></p>
+</li>
+<li><p>different levels of middleware</p>
+<ul>
+<li><p><a href="https://expressjs.com/en/guide/using-middleware.html#middleware.application" target="_blank" rel="noopener">Application-level middleware</a>: <code>app.use()</code></p>
+</li>
+<li><p><a href="https://expressjs.com/en/guide/using-middleware.html#middleware.router" target="_blank" rel="noopener">Router-level middleware</a> <code>router.use()</code></p>
+</li>
+<li><p><a href="https://expressjs.com/en/guide/using-middleware.html#middleware.built-in" target="_blank" rel="noopener">Built-in middleware</a>  <code>express.static()</code></p>
+</li>
+<li><p><a href="https://expressjs.com/en/guide/using-middleware.html#middleware.third-party" target="_blank" rel="noopener">Third-party middleware</a> <code>app.use(cookieParser())</code></p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>)</span><br><span class="line"><span class="keyword">var</span> app = express()</span><br><span class="line"><span class="keyword">var</span> cookieParser = <span class="built_in">require</span>(<span class="string">'cookie-parser'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// load the cookie-parsing middleware</span></span><br><span class="line">app.use(cookieParser())</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>write our own middleware!</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. create our own middleware</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!(<span class="keyword">this</span> <span class="keyword">instanceof</span> App))</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> App();</span><br><span class="line">    <span class="keyword">this</span>.init();</span><br><span class="line">&#125;</span><br><span class="line">App.prototype = &#123;</span><br><span class="line">    <span class="keyword">constructor</span>: App,</span><br><span class="line">    init: function() &#123;</span><br><span class="line">        <span class="keyword">this</span>.request = &#123; <span class="comment">//模拟的request</span></span><br><span class="line">            requestLine: <span class="string">'POST /iven_ HTTP/1.1'</span>,</span><br><span class="line">            headers: <span class="string">'Host:www.baidu.com\r\nCookie:BAIDUID=E063E9B2690116090FE24E01ACDDF4AD:FG=1;BD_HOME=0'</span>,</span><br><span class="line">            requestBody: <span class="string">'key1=value1&amp;key2=value2&amp;key3=value3'</span>,</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">this</span>.response = &#123;&#125;; <span class="comment">//模拟的response</span></span><br><span class="line">        <span class="keyword">this</span>.chain = []; <span class="comment">//存放中间件的一个数组</span></span><br><span class="line">        <span class="keyword">this</span>.index = <span class="number">0</span>; <span class="comment">//当前执行的中间件在chain中的位置</span></span><br><span class="line">    &#125;,</span><br><span class="line">    use: <span class="function"><span class="keyword">function</span>(<span class="params">handle</span>) </span>&#123; <span class="comment">//这里默认 handle 是函数，并且这里不做判断</span></span><br><span class="line">        <span class="keyword">this</span>.chain.push(handle);</span><br><span class="line">    &#125;,</span><br><span class="line">    next: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="comment">//当调用next时执行index所指向的中间件</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.index &gt;= <span class="keyword">this</span>.chain.length)</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">let</span> middleware = <span class="keyword">this</span>.chain[<span class="keyword">this</span>.index];</span><br><span class="line">        <span class="keyword">this</span>.index++;</span><br><span class="line">        middleware(<span class="keyword">this</span>.request, <span class="keyword">this</span>.response, <span class="keyword">this</span>.next.bind(<span class="keyword">this</span>));</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2.  use it</span></span><br><span class="line"> <span class="function"><span class="keyword">function</span> <span class="title">lineParser</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> items = req.requestLine.split(<span class="string">' '</span>);</span><br><span class="line">        req.methond = items[<span class="number">0</span>];</span><br><span class="line">        req.url = items[<span class="number">1</span>];</span><br><span class="line">        req.version = items[<span class="number">2</span>];</span><br><span class="line">        next(); <span class="comment">//执行下一个中间件</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">headersParser</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> items = req.headers.split(<span class="string">'\r\n'</span>);</span><br><span class="line">    <span class="keyword">let</span> header = &#123;&#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i <span class="keyword">in</span> items) &#123;</span><br><span class="line">        <span class="keyword">let</span> item = items[i].split(<span class="string">':'</span>);</span><br><span class="line">        <span class="keyword">let</span> key = item[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">let</span> value = item[<span class="number">1</span>];</span><br><span class="line">        header[key] = value;</span><br><span class="line">    &#125;</span><br><span class="line">    req.header = header;</span><br><span class="line">    next(); <span class="comment">//执行下一个中间件</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> app = App();</span><br><span class="line">app.use(lineParser);</span><br><span class="line">app.use(headersParser);</span><br><span class="line">app.next();</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="request"><a href="#request" class="headerlink" title="request"></a>request</h2><p>The <code>req</code> object represents the HTTP request and has properties for the <em>request query string</em>, <em>parameters</em>, <em>body</em>, <em>HTTP headers</em>, and so on</p>
+<ol>
+<li><p><code>req.baseUrl</code>: </p>
+<ul>
+<li><p>The URL path on which a router instance was mounted; </p>
+</li>
+<li><p>similar to the <a href="https://expressjs.com/en/4x/api.html#app.mountpath" target="_blank" rel="noopener">mountpath</a> property of the <code>app</code> object, except <code>app.mountpath</code> returns the matched path pattern(s).</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> greet = express.Router();</span><br><span class="line"></span><br><span class="line">greet.get(<span class="string">'/jp'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(req.baseUrl); <span class="comment">// /greet</span></span><br><span class="line">  res.send(<span class="string">'Konichiwa!'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.use(<span class="string">'/greet'</span>, greet); <span class="comment">// load the router on '/greet'</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>req.body</code>:  key-value pairs of data submitted in the request body; Need <code>body-parser()</code></p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> app = <span class="built_in">require</span>(<span class="string">'express'</span>)();</span><br><span class="line"><span class="keyword">var</span> bodyParser = <span class="built_in">require</span>(<span class="string">'body-parser'</span>);</span><br><span class="line"></span><br><span class="line">app.use(bodyParser.json()); <span class="comment">// for parsing application/json</span></span><br><span class="line">app.use(bodyParser.urlencoded(&#123; <span class="attr">extended</span>: <span class="literal">true</span> &#125;)); <span class="comment">// for parsing application/x-www-form-urlencoded</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Now all JSON &amp; Raw text are parsed, and ready to use as `req.body`</span></span><br><span class="line">app.post(<span class="string">'/profile'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(req.body);</span><br><span class="line">  res.json(req.body);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p><code>req.cookies</code>:   using <code>cookie-parse</code> to set cookies onto request</p>
+</li>
+<li><p><code>req.hostname</code> : hostname of the <code>Host</code> HTTP header.</p>
+</li>
+<li><p><code>req.ip</code>:  remote IP address of the request.</p>
+</li>
+<li><p><code>req.method</code>: method of request: <code>GET</code>, <code>POST</code>, <code>PUT</code>, and so on.</p>
+</li>
+<li><p><code>req.originalUrl</code> vs <code>req.baseUrl</code> vs <code>req.path</code>: </p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">app.use(<span class="string">'/admin'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;  <span class="comment">// GET 'http://www.example.com/admin/new'</span></span><br><span class="line">  <span class="built_in">console</span>.log(req.originalUrl); <span class="comment">// '/admin/new'</span></span><br><span class="line">  <span class="built_in">console</span>.log(req.baseUrl); <span class="comment">// '/admin'</span></span><br><span class="line">  <span class="built_in">console</span>.log(req.path); <span class="comment">// '/new'</span></span><br><span class="line">  next();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p><code>req.query</code>: object containing a property for each query string parameter in the route</p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// GET /search?q=tobi+ferret</span></span><br><span class="line">req.query.q</span><br><span class="line"><span class="comment">// =&gt; "tobi ferret"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// GET /shoes?order=desc&amp;shoe[color]=blue&amp;shoe[type]=converse</span></span><br><span class="line">req.query.order</span><br><span class="line"><span class="comment">// =&gt; "desc"</span></span><br><span class="line"></span><br><span class="line">req.query.shoe.color</span><br><span class="line"><span class="comment">// =&gt; "blue"</span></span><br><span class="line"></span><br><span class="line">req.query.shoe.type</span><br><span class="line"><span class="comment">// =&gt; "converse"</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p><code>req.route</code>: currently-matched route, a string. </p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">app.get(<span class="string">'/user/:id?'</span>, <span class="function"><span class="keyword">function</span> <span class="title">userIdHanler</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(req.route);</span><br><span class="line">  res.send(<span class="string">'GET'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">==&gt;</span><br><span class="line">&#123; <span class="attr">path</span>: <span class="string">'/user/:id?'</span>,</span><br><span class="line">  stack:</span><br><span class="line">   [ &#123; <span class="attr">handle</span>: [<span class="built_in">Function</span>: userIdHandler],</span><br><span class="line">       name: <span class="string">'userIdHandler'</span>,</span><br><span class="line">       params: <span class="literal">undefined</span>,</span><br><span class="line">       path: <span class="literal">undefined</span>,</span><br><span class="line">       keys: [],</span><br><span class="line">       regexp: <span class="regexp">/^\/?$/i</span>,</span><br><span class="line">       method: <span class="string">'get'</span> &#125; ],</span><br><span class="line">  methods: &#123; <span class="attr">get</span>: <span class="literal">true</span> &#125; &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="response"><a href="#response" class="headerlink" title="response"></a>response</h2><p>represents the HTTP response that an Express app sends when it gets an HTTP request.</p>
+<ol>
+<li><p><code>res.app</code> === <code>req.app</code>: a reference to the instance of the Express application that is using the middleware.</p>
+</li>
+<li><p><code>res.headersSent</code>:  indicates if the app sent HTTP headers for the response.</p>
+</li>
+<li><p><code>res.append(field [, value])</code>: Appends the specified <code>value</code> to the HTTP response header <code>field</code></p>
+</li>
+<li><p><code>res.cookie(name, value [, options])</code>: Sets cookie <code>name</code> to <code>value</code></p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">res.cookie(<span class="string">'name'</span>, <span class="string">'tobi'</span>, &#123; <span class="attr">domain</span>: <span class="string">'.example.com'</span>, <span class="attr">path</span>: <span class="string">'/admin'</span>, <span class="attr">secure</span>: <span class="literal">true</span> &#125;);</span><br><span class="line">res.cookie(<span class="string">'rememberme'</span>, <span class="string">'1'</span>, &#123; <span class="attr">expires</span>: <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="built_in">Date</span>.now() + <span class="number">900000</span>), <span class="attr">httpOnly</span>: <span class="literal">true</span> &#125;);</span><br><span class="line"><span class="comment">//Default encoding</span></span><br><span class="line">res.cookie(<span class="string">'some_cross_domain_cookie'</span>, <span class="string">'http://mysubdomain.example.com'</span>,&#123;<span class="attr">domain</span>:<span class="string">'example.com'</span>&#125;);</span><br><span class="line"><span class="comment">// Result: 'some_cross_domain_cookie=http%3A%2F%2Fmysubdomain.example.com; Domain=example.com; Path=/'</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p><code>res.clearCookie(name [, options])</code>: Clears the cookie specified by <code>name</code>.</p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">res.cookie(<span class="string">'name'</span>, <span class="string">'tobi'</span>, &#123; <span class="attr">path</span>: <span class="string">'/admin'</span> &#125;);</span><br><span class="line">res.clearCookie(<span class="string">'name'</span>, &#123; <span class="attr">path</span>: <span class="string">'/admin'</span> &#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p><code>res.download(path [, filename] [, options] [, fn])</code>: Transfers the file at <code>path</code> as an “<em>attachment</em>”. Typically, browsers will prompt the user for download. </p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">res.download(<span class="string">'/report-12345.pdf'</span>, <span class="string">'report.pdf'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (err) &#123;</span><br><span class="line">    <span class="comment">// Handle error, but keep in mind the response may be partially-sent</span></span><br><span class="line">    <span class="comment">// so check res.headersSent</span></span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// decrement a download credit, etc.</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p><code>res.end([data] [, encoding])</code>: Ends the response process</p>
+<ol>
+<li>If you need to respond with data, instead use methods such as <a href="https://expressjs.com/en/4x/api.html#res.send" target="_blank" rel="noopener">res.send()</a>and <a href="https://expressjs.com/en/4x/api.html#res.json" target="_blank" rel="noopener">res.json()</a>.</li>
+</ol>
+</li>
+<li><p><code>res.format(object)</code>: when present. It uses <a href="https://expressjs.com/en/4x/api.html#req.accepts" target="_blank" rel="noopener">req.accepts()</a> to select a handler for the request</p>
+<ol>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">``res.format(&#123;</span><br><span class="line">  &apos;text/plain&apos;: function()&#123;</span><br><span class="line">    res.send(&apos;hey&apos;);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  &apos;text/html&apos;: function()&#123;</span><br><span class="line">    res.send(&apos;&lt;p&gt;hey&lt;/p&gt;&apos;);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  &apos;application/json&apos;: function()&#123;</span><br><span class="line">    res.send(&#123; message: &apos;hey&apos; &#125;);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  &apos;default&apos;: function() &#123;</span><br><span class="line">    // log the request and respond with 406</span><br><span class="line">    res.status(406).send(&apos;Not Acceptable&apos;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p><code>res.set(field, vale)</code>: set response header</p>
+</li>
+<li><p><code>res.get(field)</code>: get HTTP response header specified by <code>field</code></p>
+</li>
+<li><p><code>res.json([body])</code>: Sends a JSON response.</p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">res.json(&#123; <span class="attr">user</span>: <span class="string">'tobi'</span> &#125;);</span><br><span class="line">res.status(<span class="number">500</span>).json(&#123; <span class="attr">error</span>: <span class="string">'message'</span> &#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p><code>res.redirect([status,] path)</code>: Redirects to the URL derived from the specified <code>path</code>, with specified <code>status</code></p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">res.redirect(<span class="number">301</span>, <span class="string">'http://example.com'</span>);</span><br><span class="line">res.redirect(<span class="string">'../login'</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p><code>res.send([body])</code>: Sends the HTTP response.</p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">res.send(<span class="keyword">new</span> Buffer(<span class="string">'whoop'</span>));</span><br><span class="line">res.send(&#123; <span class="attr">some</span>: <span class="string">'json'</span> &#125;);</span><br><span class="line">res.send(<span class="string">'&lt;p&gt;some html&lt;/p&gt;'</span>);</span><br><span class="line">res.status(<span class="number">404</span>).send(<span class="string">'Sorry, we cannot find that!'</span>);</span><br><span class="line">res.status(<span class="number">500</span>).send(&#123; <span class="attr">error</span>: <span class="string">'something blew up'</span> &#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p><code>res.sendFile(path [, options] [, fn])</code>: Transfers the file at the given <code>path</code>.</p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">app.get(<span class="string">'/file/:name'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> options = &#123;</span><br><span class="line">    root: __dirname + <span class="string">'/public/'</span>,</span><br><span class="line">    dotfiles: <span class="string">'deny'</span>,</span><br><span class="line">    headers: &#123;</span><br><span class="line">        <span class="string">'x-timestamp'</span>: <span class="built_in">Date</span>.now(),</span><br><span class="line">        <span class="string">'x-sent'</span>: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> fileName = req.params.name;</span><br><span class="line">  res.sendFile(fileName, options, <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">      next(err);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'Sent:'</span>, fileName);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p><code>res.sendStatus(statusCode)</code>:  Sets the response HTTP status code to <code>statusCode</code> and send its string representation as the response body.</p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">res.sendStatus(<span class="number">200</span>); <span class="comment">// equivalent to res.status(200).send('OK')</span></span><br><span class="line">res.sendStatus(<span class="number">403</span>); <span class="comment">// equivalent to res.status(403).send('Forbidden')</span></span><br><span class="line">res.sendStatus(<span class="number">404</span>); <span class="comment">// equivalent to res.status(404).send('Not Found')</span></span><br><span class="line">res.sendStatus(<span class="number">500</span>); <span class="comment">// equivalent to res.status(500).send('Internal Server Error')</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="bodyParser"><a href="#bodyParser" class="headerlink" title="bodyParser"></a><code>bodyParser</code></h2><ol>
+<li><p><code>urlencoded</code> format data submitted from <code>&lt;form&gt;</code>，can be parsed into<code>res.body</code></p>
  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.use(bodyParser.urlencoded(&#123; <span class="attr">extended</span>: <span class="literal">false</span> &#125;));</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>用来识别使用<code>fetch()</code>或<code>axios</code>提交的的<code>json</code>格式数据，并将其放在<code>res.body</code>中</p>
+<li><p><code>json</code> format data transferred using API, can be parsed into <code>res.body</code></p>
  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.use(bodyParser.json());</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<h2 id="III-to-be-continued"><a href="#III-to-be-continued" class="headerlink" title="III. to be continued"></a>III. to be continued</h2>
+<h2 id="set-set-globle-variable-in-Express"><a href="#set-set-globle-variable-in-Express" class="headerlink" title="set(): set globle variable in Express"></a><code>set()</code>: set globle variable in Express</h2><blockquote>
+<p>You can use the express instance to store and retrieve variables. In this case, you can set the title to be “My Site” and retrieve it later with something like <code>var title = app.get(&#39;title&#39;);</code><strong>without the need to declare and keep a global variable messing around</strong></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">app.set(&apos;title&apos;,&apos;My Website&apos;);  // set()</span><br><span class="line">var title = app.get(&apos;title&apos;);   // get()</span><br><span class="line"></span><br><span class="line">&lt;=&gt;</span><br><span class="line"></span><br><span class="line">title = &apos;My Website&apos;</span><br></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -794,7 +1057,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#I-set"><span class="nav-number">1.</span> <span class="nav-text">I. set()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#II-bodyParser"><span class="nav-number">2.</span> <span class="nav-text">II. bodyParser</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#III-to-be-continued"><span class="nav-number">3.</span> <span class="nav-text">III. to be continued</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#express"><span class="nav-number">1.</span> <span class="nav-text">express()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#App"><span class="nav-number">2.</span> <span class="nav-text">App</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Routing"><span class="nav-number">3.</span> <span class="nav-text">Routing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Middleware"><span class="nav-number">4.</span> <span class="nav-text">Middleware</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#request"><span class="nav-number">5.</span> <span class="nav-text">request</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#response"><span class="nav-number">6.</span> <span class="nav-text">response</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bodyParser"><span class="nav-number">7.</span> <span class="nav-text">bodyParser</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#set-set-globle-variable-in-Express"><span class="nav-number">8.</span> <span class="nav-text">set(): set globle variable in Express</span></a></li></ol></div>
             
 
           </div>

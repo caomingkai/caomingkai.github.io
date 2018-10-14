@@ -1662,6 +1662,11 @@
 </ul>
 </li>
 <li>does not have: array methods such as <code>push</code>, <code>forEach</code> and <code>indexOf</code>; <strong>have to <u>borrow</u> these methods</strong></li>
+<li><strong><u>NOTE:</u></strong><ul>
+<li><code>NodeList</code> has the <code>forEach</code> attribute</li>
+<li><code>HTMLCollection</code> doesn’t have <code>forEach</code> attribute</li>
+</ul>
+</li>
 <li><u><strong>“borrow” : </strong></u> that why we use:<ul>
 <li><code>[].slice(array-like)</code> </li>
 <li><code>[].indexOf(array-like)</code></li>
@@ -1679,17 +1684,21 @@
 </li>
 </ul>
 </li>
-<li>Array methods, however, have to be borrowed. You can do that, because most of those methods are </li>
-</ol>
-<p>generic</p>
-<p>​    </p>
-<h2 id="What-can-be-put-inside-lt-head-gt"><a href="#What-can-be-put-inside-lt-head-gt" class="headerlink" title="What can be put inside &lt;head&gt;?"></a>What can be put inside <code>&lt;head&gt;</code>?</h2><p> Three ways to convert Array-like objects to Array.</p>
+<li><p>Array methods, however, have to be borrowed. You can do that, because most of those methods are generic</p>
+</li>
+<li><p><u><strong>Three ways</strong></u> to convert Array-like objects to Array.</p>
 <ol>
-<li>Array.prototype.slice.call(arguments)`</li>
-<li><code>Array.from(arguments)</code></li>
-<li>use <code>bind</code> to create a <strong>new function</strong> <code>slice()</code> function on array-like object, so we <strong><u>can reuse it</u></strong></li>
+<li><p>Array.prototype.slice.call(arguments)`</p>
+</li>
+<li><p><code>Array.from(arguments)</code></p>
+</li>
+<li><p>use <code>bind</code> to create a <strong>new function</strong> <code>slice()</code> function on array-like object, so we <strong><u>can reuse it</u></strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> = getIndexOfA = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; </span><br><span class="line">  <span class="keyword">let</span> myIndexOf = [].indexOf.bind(<span class="built_in">arguments</span>); </span><br><span class="line">  <span class="keyword">return</span> myIndexOf(<span class="string">"a"</span>) <span class="comment">// <span class="doctag">NOTE:</span> mustn't use arguments.myIndexOf()</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(  getIndexOfA(<span class="string">"d"</span>, <span class="string">"d"</span>, <span class="string">"a"</span>,<span class="string">"d"</span>)  ) <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+</li>
 </ol>
-<p><a href="https://github.com/xiaoyu2er/HEAD" target="_blank" rel="noopener">https://github.com/xiaoyu2er/HEAD</a></p>
+</li>
+</ol>
+<h2 id="What-can-be-put-inside-lt-head-gt"><a href="#What-can-be-put-inside-lt-head-gt" class="headerlink" title="What can be put inside &lt;head&gt;?"></a>What can be put inside <code>&lt;head&gt;</code>?</h2><p><a href="https://github.com/xiaoyu2er/HEAD" target="_blank" rel="noopener">https://github.com/xiaoyu2er/HEAD</a></p>
 <h2 id="JS-coding-mutate-array-according-new-indices"><a href="#JS-coding-mutate-array-according-new-indices" class="headerlink" title="JS coding: mutate array according new indices"></a>JS coding: mutate array according new indices</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">Given an input array and another array that describes a <span class="keyword">new</span> index <span class="keyword">for</span> each element, mutate the input array so that each element ends up <span class="keyword">in</span> their <span class="keyword">new</span> index. </span><br><span class="line"></span><br><span class="line"><span class="comment">// ---------------- in-place mutate array ------------</span></span><br><span class="line"><span class="keyword">var</span> arr =    [<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>,<span class="string">"d"</span>,<span class="string">"e"</span>,<span class="string">"f"</span>];</span><br><span class="line"><span class="keyword">var</span> indices = [<span class="number">2</span>,  <span class="number">3</span>,  <span class="number">4</span>,  <span class="number">0</span>,  <span class="number">5</span>, <span class="number">1</span>];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Solution1: real in-place solution!</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">inPlaceChange</span>(<span class="params"> arr, indices</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>( arr.length &lt;= <span class="number">1</span> ) <span class="keyword">return</span> arr</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">let</span> toPut = arr[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">let</span> index = indices[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">while</span>( i &lt; arr.length )&#123;</span><br><span class="line">        <span class="keyword">let</span> swap = arr[index]</span><br><span class="line">        arr[index] = toPut</span><br><span class="line">        toPut = swap</span><br><span class="line">        index = indices[index]</span><br><span class="line">        i++</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">inPlaceChange(arr, indices)</span><br><span class="line"><span class="built_in">console</span>.log(arr)</span><br><span class="line"></span><br><span class="line"><span class="comment">//---------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> arr =    [<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>,<span class="string">"d"</span>,<span class="string">"e"</span>,<span class="string">"f"</span>];</span><br><span class="line"><span class="keyword">var</span> indices = [<span class="number">2</span>,  <span class="number">3</span>,  <span class="number">4</span>,  <span class="number">0</span>,  <span class="number">5</span>, <span class="number">1</span>];</span><br><span class="line"><span class="comment">// Solution 2: not real in-place, cause map() use extra space</span></span><br><span class="line"><span class="keyword">let</span> arr = indices.map( <span class="function">(<span class="params">id, index</span>)=&gt;</span>arr[indices.indexOf(index)] )</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"updated arr: "</span>, arr)</span><br></pre></td></tr></table></figure>
 <h2 id="lt-script-async-gt-amp-lt-script-defer-gt"><a href="#lt-script-async-gt-amp-lt-script-defer-gt" class="headerlink" title="&lt;script async&gt; &amp; &lt;script defer&gt;"></a><code>&lt;script async&gt;</code> &amp; <code>&lt;script defer&gt;</code></h2><ol>
 <li>normal <code>&lt;script src=&quot;script.js&quot; &gt;</code><ul>
@@ -3818,7 +3827,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">65</span>
+                      
+                    
+                    <span class="site-state-item-count">66</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

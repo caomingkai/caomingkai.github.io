@@ -99,17 +99,17 @@
 
 
 
-  <meta name="description" content="I. Event-driven &amp;amp; asynchrous I/OCommon code snippet we always find: 1234567var http = require(&quot;http&quot;);http.createServer(function(request, response) &amp;#123;  response.writeHead(200, &amp;#123;&quot;Content-T">
+  <meta name="description" content="Event-driven &amp;amp; asynchrous IO &amp;amp; Event Emitter NOTE :  Node.js is an application [a process]  in OS; but has multiple threads Only one JS thread, all others are worker threads in thread pool use">
 <meta name="keywords" content="Node.js">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Node.js">
 <meta property="og:url" content="http://yoursite.com/2018/06/01/Node-js/index.html">
 <meta property="og:site_name" content="CMK">
-<meta property="og:description" content="I. Event-driven &amp;amp; asynchrous I/OCommon code snippet we always find: 1234567var http = require(&quot;http&quot;);http.createServer(function(request, response) &amp;#123;  response.writeHead(200, &amp;#123;&quot;Content-T">
-<meta property="og:updated_time" content="2018-10-04T07:39:33.000Z">
+<meta property="og:description" content="Event-driven &amp;amp; asynchrous IO &amp;amp; Event Emitter NOTE :  Node.js is an application [a process]  in OS; but has multiple threads Only one JS thread, all others are worker threads in thread pool use">
+<meta property="og:updated_time" content="2018-10-14T04:48:53.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Node.js">
-<meta name="twitter:description" content="I. Event-driven &amp;amp; asynchrous I/OCommon code snippet we always find: 1234567var http = require(&quot;http&quot;);http.createServer(function(request, response) &amp;#123;  response.writeHead(200, &amp;#123;&quot;Content-T">
+<meta name="twitter:description" content="Event-driven &amp;amp; asynchrous IO &amp;amp; Event Emitter NOTE :  Node.js is an application [a process]  in OS; but has multiple threads Only one JS thread, all others are worker threads in thread pool use">
 
 
 
@@ -435,31 +435,295 @@
       
 
       
-        <h2 id="I-Event-driven-amp-asynchrous-I-O"><a href="#I-Event-driven-amp-asynchrous-I-O" class="headerlink" title="I. Event-driven &amp; asynchrous I/O"></a>I. Event-driven &amp; asynchrous I/O</h2><p>Common code snippet we always find:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">"http"</span>);</span><br><span class="line"></span><br><span class="line">http.createServer(<span class="function"><span class="keyword">function</span>(<span class="params">request, response</span>) </span>&#123;</span><br><span class="line">  response.writeHead(<span class="number">200</span>, &#123;<span class="string">"Content-Type"</span>: <span class="string">"text/plain"</span>&#125;);</span><br><span class="line">  response.write(<span class="string">"Hello World"</span>);</span><br><span class="line">  response.end();</span><br><span class="line">&#125;).listen(<span class="number">8888</span>);</span><br></pre></td></tr></table></figure>
-<p>The code above in fact has same effect as following. The difference is:</p>
+        <h2 id="Event-driven-amp-asynchrous-IO-amp-Event-Emitter"><a href="#Event-driven-amp-asynchrous-IO-amp-Event-Emitter" class="headerlink" title="Event-driven &amp; asynchrous IO &amp; Event Emitter"></a>Event-driven &amp; asynchrous IO &amp; <code>Event Emitter</code></h2><ol>
+<li><p><strong><u>NOTE :</u></strong></p>
 <ul>
-<li>Callback function in code above is anonomous function</li>
-<li>Callback function in code below has a name: <code>onRequest</code></li>
+<li>Node.js is an application [<u><strong>a process</strong></u>]  in OS; but has <u><strong>multiple threads</strong></u></li>
+<li><strong><u>Only one JS thread</u></strong>, all others are <strong><u>worker threads</u></strong> in thread pool used by OS</li>
+<li>they share data via <strong><u>message queue</u></strong></li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">"http"</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">onRequest</span>(<span class="params">request, response</span>) </span>&#123;</span><br><span class="line">  response.writeHead(<span class="number">200</span>, &#123;<span class="string">"Content-Type"</span>: <span class="string">"text/plain"</span>&#125;);</span><br><span class="line">  response.write(<span class="string">"Hello World"</span>);</span><br><span class="line">  response.end();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">http.createServer(onRequest).listen(<span class="number">8888</span>);</span><br></pre></td></tr></table></figure>
-<p>From the second code snippet, we know several importance thing:</p>
+</li>
+<li><p><strong>Asynchrous I/O</strong></p>
 <ul>
-<li><strong>It creates a server on port:8888</strong></li>
-<li><strong>After creation, it won’t wait there (‘it’ means ‘thread’)</strong></li>
-<li><strong>Instead, it register a callback function; and leave for other tasks</strong></li>
+<li>Each I/O operation is assigned a <code>worker thread</code> in Node.js <u>run time env</u>; </li>
+<li>But only one <code>master thread</code> (<u>js engine</u>) deal with computation</li>
 </ul>
-<p>Now, magic things could happen:</p>
+</li>
+<li><p><strong>Even Loop</strong></p>
 <ul>
-<li><strong>The thread could handle other tasks, like reading data from database</strong></li>
-<li><strong>When a request comes, the thread will be recalled to execute the callback function</strong></li>
-<li><strong>This way, a single thread can work to its full postential without unnecessary waiting</strong></li>
+<li><p><strong>Node.js</strong> —  <strong>V8</strong> — <strong>libuv</strong> — <strong>OS</strong></p>
+</li>
+<li><p><strong>libuv [cross platform Asynchronous I/O]</strong>: handles utilize other threads to complete asynchronous I/O</p>
+</li>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">   ┌───────────────────────────┐</span><br><span class="line">┌─&gt;│           timers          │</span><br><span class="line">│  └─────────────┬─────────────┘</span><br><span class="line">│  ┌─────────────┴─────────────┐</span><br><span class="line">│  │     pending callbacks     │</span><br><span class="line">│  └─────────────┬─────────────┘</span><br><span class="line">│  ┌─────────────┴─────────────┐</span><br><span class="line">│  │       idle, prepare       │</span><br><span class="line">│  └─────────────┬─────────────┘      ┌───────────────┐</span><br><span class="line">│  ┌─────────────┴─────────────┐      │   incoming:   │</span><br><span class="line">│  │           poll            │&lt;─────┤  connections, │</span><br><span class="line">│  └─────────────┬─────────────┘      │   data, etc.  │</span><br><span class="line">│  ┌─────────────┴─────────────┐      └───────────────┘</span><br><span class="line">│  │           check           │</span><br><span class="line">│  └─────────────┬─────────────┘</span><br><span class="line">│  ┌─────────────┴─────────────┐</span><br><span class="line">└──┤      close callbacks      │</span><br><span class="line">   └───────────────────────────┘</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
-<h2 id="II-Global-variables"><a href="#II-Global-variables" class="headerlink" title="II. Global variables"></a>II. Global variables</h2><ol>
-<li><code>console</code> =&gt; <code>console.log(&#39;11&#39;)</code></li>
-<li><code>process</code> =&gt; <code>process.exit(0)</code></li>
+</li>
 </ol>
-<h2 id="III-Versions"><a href="#III-Versions" class="headerlink" title="III. Versions"></a>III. Versions</h2><ol>
+<h2 id="Node-js-use-cases"><a href="#Node-js-use-cases" class="headerlink" title="Node.js use cases"></a>Node.js use cases</h2><ol>
+<li><strong>I/O-bound application</strong><ul>
+<li>Except the only one JS processing thread, all other threads deal with I/O operation, so that I/O processing can happend simultaneously =&gt; <strong>save time</strong></li>
+<li>JS processing thread has no CPU-bound computation, only stay in <strong><u>event loop</u></strong>, and keep staring at the top of <strong><u>message queue</u></strong>; When some event done, handle its callbacks</li>
+</ul>
+</li>
+</ol>
+<h2 id="process-nextTick-vs-setImmediate"><a href="#process-nextTick-vs-setImmediate" class="headerlink" title="process.nextTick() vs. setImmediate()"></a><code>process.nextTick()</code> vs. <code>setImmediate()</code></h2><ol>
+<li><strong><u>tick:</u></strong> each iteration of an Event Loop is called a <em>tick.</em></li>
+<li><code>process.nextTick()</code> : will execute <strong><u>all callbacks</u></strong> set by it previousely in next tick</li>
+<li><code>setImmediate()</code>: will execute <strong><u>only one callback</u></strong> in next tick, even set multiple callbacks</li>
+</ol>
+<h2 id="CommonJS-require-amp-exports"><a href="#CommonJS-require-amp-exports" class="headerlink" title="CommonJS: require &amp; exports"></a>CommonJS: <code>require</code> &amp; <code>exports</code></h2><ol>
+<li><p><strong><u>Sad History</u></strong>: Before CommonJS, JavaScript doesn’t have module importing feature, so it is limited to small script, cannot be used to develop large project</p>
+</li>
+<li><p><strong><u>Current state :</u></strong> Many modules like <code>buffer</code>  <code>File</code>  <code>Http</code> <code>Socket</code> can be imported using <strong><em>CommonJS</em></strong></p>
+</li>
+<li><p><strong>Implementation:</strong></p>
+<ul>
+<li><p><code>module</code> is is <u><em>glolal object</em></u> in Node.js, have property <code>exports</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span> = &#123; <span class="attr">exports</span>: &#123;&#125; &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Before we step into the details, let’s see before CommonJS, how to use import function. The public functions are exposed while the private properties and methods are encapsulated</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> revealingModule = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> privateVar = <span class="string">"Ben Thomas"</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">setNameFn</span>(<span class="params"> strName </span>) </span>&#123;</span><br><span class="line">        privateVar = strName;</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="keyword">return</span> &#123; <span class="attr">setName</span>: setNameFn, &#125;;</span><br><span class="line">&#125;)();</span><br><span class="line">revealingModule.setName( <span class="string">"Paul Adams"</span> );</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>When a module is exported, inside Node.js it will be wrapped as <code>IIFE</code> (Immediately Invoked Function Expression)</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. original code</span></span><br><span class="line"><span class="keyword">var</span> greet = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log(<span class="string">'Hello World'</span>); &#125;;</span><br><span class="line"><span class="built_in">module</span>.exports = greet;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. Parsed code by Node.js</span></span><br><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params">exports, require, module, __filename, __dirname</span>) </span>&#123; <span class="comment">//add by node.js</span></span><br><span class="line">      <span class="keyword">var</span> greet = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log(<span class="string">'Hello World'</span>); &#125;;</span><br><span class="line">      <span class="built_in">module</span>.exports = greet;</span><br><span class="line">&#125;).apply();                                        <span class="comment">//add by node.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> <span class="built_in">module</span>.exports;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><strong><u>How to use:</u></strong></p>
+<ul>
+<li><p>define module: <code>module.exports</code> or <code>exports</code> [<code>module.exports</code> === <code>exports</code>]</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* --- circle.js --- */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 1st way</span></span><br><span class="line">exports.area = <span class="function">(<span class="params">radius</span>) =&gt;</span> <span class="built_in">Math</span>.pow(radius, <span class="number">2</span>) * <span class="number">3.14</span>;</span><br><span class="line">exports.circunference = <span class="function">(<span class="params">radius</span>) =&gt;</span> <span class="number">2</span> * radius * <span class="number">3.14</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2nd way</span></span><br><span class="line"><span class="keyword">const</span> area = <span class="function">(<span class="params">radius</span>) =&gt;</span> <span class="built_in">Math</span>.pow(radius, <span class="number">2</span>) * <span class="number">3.14</span>;</span><br><span class="line"><span class="keyword">const</span> circunference = <span class="function">(<span class="params">radius</span>) =&gt;</span> <span class="number">2</span> * radius * <span class="number">3.14</span>;</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;<span class="attr">area</span>: area, <span class="attr">circumference</span>: circunference&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3rd way</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    area: <span class="function">(<span class="params">radius</span>) =&gt;</span> <span class="built_in">Math</span>.pow(radius, <span class="number">2</span>) * <span class="number">3.14</span>;</span><br><span class="line">    circunference: <span class="function">(<span class="params">radius</span>) =&gt;</span> <span class="number">2</span> * radius * <span class="number">3.14</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>use module everywhere:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> circle = <span class="built_in">require</span>(<span class="string">'./circle'</span>);</span><br><span class="line">circle.area(<span class="number">3</span>)</span><br><span class="line">circle.circunference(<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="AMD-Asynchronous-Module-Definition"><a href="#AMD-Asynchronous-Module-Definition" class="headerlink" title="AMD: (Asynchronous Module Definition)"></a>AMD: (Asynchronous Module Definition)</h2><ol>
+<li><p>Why need AMD?**</p>
+<ul>
+<li>Since Node.js are always running locally inside server, the <code>require</code> are instantly completed, i.e. <strong>synchronously</strong></li>
+<li>Browser need to download js files from server <strong>asynchorously</strong>. While one file want <code>require</code> another, the other one might still not downloaded =&gt; <u>ERROR</u>!</li>
+<li>Thus, we need another mechnism able to <strong><u>import modules asynchronously :</u></strong> AMD comes in!</li>
+</ul>
+</li>
+<li><p><strong>How to use it in browser?</strong></p>
+<ul>
+<li><p><strong><u>[Good Article]</u></strong>: <a href="https://www.sitepoint.com/understanding-requirejs-for-effective-javascript-module-loading/" target="_blank" rel="noopener">https://www.sitepoint.com/understanding-requirejs-for-effective-javascript-module-loading/</a></p>
+</li>
+<li><p>use <code>define()</code> to declare the module dependency for each file</p>
+</li>
+<li><p>download <code>require.js</code> &amp; <code>main.js</code> in same project folder as other js files</p>
+</li>
+<li><p>only add one <code>&lt;script&gt;</code> tag to HTML is OK, as follows</p>
+<ul>
+<li><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">data-main</span>=<span class="string">"scripts/main"</span> <span class="attr">src</span>=<span class="string">"scripts/require.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><ol>
+<li><p><strong>Request Method</strong></p>
+<ul>
+<li><p><code>request.method</code>: GET, POST, PUT, DELETE</p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123; </span><br><span class="line">    <span class="keyword">switch</span> (req.method) </span><br><span class="line">        <span class="keyword">case</span> <span class="string">'POST'</span>:</span><br><span class="line">   			update(req, res);</span><br><span class="line">    		<span class="keyword">break</span>;</span><br><span class="line">  		<span class="keyword">case</span> <span class="string">'DELETE'</span>:</span><br><span class="line">    		remove(req, res);</span><br><span class="line">    		<span class="keyword">break</span>;</span><br><span class="line">  		<span class="keyword">case</span> <span class="string">'PUT'</span>:</span><br><span class="line">    		create(req, res);</span><br><span class="line">   		 	<span class="keyword">break</span>;</span><br><span class="line">  		<span class="keyword">case</span> <span class="string">'GET'</span>:</span><br><span class="line">  		<span class="keyword">default</span>:</span><br><span class="line">			get(req, res); </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Request URL</strong></p>
+<ul>
+<li><p>complete URL like the following: (<u>Hash part will be discarded</u>)</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://user:pass@host.com:8080/p/a/t/h?query=string#hash</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>pathname</code> =  <code>url.parse(req.url).pathname</code></p>
+</li>
+<li><p><strong><u>routers in Node.js:</u></strong></p>
+<ul>
+<li><p>url: <code>/[controller]/[action]/a/b/c</code></p>
+</li>
+<li><p>handlers for different <u>controllers</u> &amp; <u>actions</u></p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// routes different urls to their related handlers</span></span><br><span class="line"><span class="keyword">var</span> url = <span class="built_in">require</span>(<span class="string">'url'</span>)</span><br><span class="line"><span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> pathname = url.parse(req.url).pathname;</span><br><span class="line">	<span class="keyword">var</span> paths = pathname.split(<span class="string">'/'</span>);</span><br><span class="line">	<span class="keyword">var</span> controller = paths[<span class="number">1</span>] || <span class="string">'index'</span>;</span><br><span class="line">	<span class="keyword">var</span> action = paths[<span class="number">2</span>] || <span class="string">'index'</span>;</span><br><span class="line">	<span class="keyword">var</span> args = paths.slice(<span class="number">3</span>);</span><br><span class="line">	<span class="keyword">if</span> (handles[controller] &amp;&amp; handles[controller][action]) &#123;</span><br><span class="line">		handles[controller][action].apply(<span class="literal">null</span>, [req, res].concat(args)); </span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		res.writeHead(<span class="number">500</span>);</span><br><span class="line">		res.end(<span class="string">'找不到响应控制器'</span>); &#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// handlers object</span></span><br><span class="line">handles.index = &#123;&#125;;</span><br><span class="line">handles.index.index = <span class="function"><span class="keyword">function</span> (<span class="params">req, res, foo, bar</span>) </span>&#123;</span><br><span class="line">	res.writeHead(<span class="number">200</span>);</span><br><span class="line">	res.end(foo); </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Request Query String</strong></p>
+<ul>
+<li><p><code>query</code> =  <code>url.parse(req.url).query</code></p>
+</li>
+<li><p>url: <code>/domainname/path?foo=bar&amp;baz=val</code></p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//eg1.  '/domainname/path?foo=bar&amp;baz=val' </span></span><br><span class="line">&#123;</span><br><span class="line">	foo: <span class="string">'bar'</span>,</span><br><span class="line">	baz: <span class="string">'val'</span> </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//eg2.  '/domainname/path?foo=bar&amp;foo=val' </span></span><br><span class="line">&#123;</span><br><span class="line">	foo: [<span class="string">'bar'</span>, <span class="string">'val'</span>],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Cookie</strong></p>
+<ul>
+<li><p>workflow: [ key point: browser sends cookie for each request]</p>
+<ul>
+<li>server sends cookie to browser</li>
+<li>browser stores it in localstorage</li>
+<li>browser sends cookie <u>every time making request</u></li>
+</ul>
+</li>
+<li><p><strong>[For browser:]</strong>  string: <code>Cookie: foo=bar; baz=val</code>  =&gt; <code>req.header.cookie</code> </p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// browser parse cookie</span></span><br><span class="line"><span class="keyword">var</span> parseCookie = <span class="function"><span class="keyword">function</span> (<span class="params">cookie</span>) </span>&#123; </span><br><span class="line">    <span class="keyword">var</span> cookies = &#123;&#125;;</span><br><span class="line">	<span class="keyword">if</span> (!cookie) &#123; <span class="keyword">return</span> cookies; &#125;</span><br><span class="line">	<span class="keyword">var</span> list = cookie.split(<span class="string">';'</span>);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; list.length; i++) &#123;</span><br><span class="line">		<span class="keyword">var</span> pair = list[i].split(<span class="string">'='</span>);</span><br><span class="line">		cookies[pair[<span class="number">0</span>].trim()] = pair[<span class="number">1</span>]; </span><br><span class="line">    &#125;</span><br><span class="line">	<span class="keyword">return</span> cookies; </span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// browser adds cookie to `req` object</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">	req.cookies = parseCookie(req.headers.cookie); </span><br><span class="line">    hande(req, res);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><strong>[For server:]</strong>  </p>
+<ul>
+<li><p>Format:</p>
+<ul>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-Cookie: name=value; Path=/ ; Expires = Sun, 01/21/1987 09:01:01 GMT; Domain = .domain.com;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>arguments: </p>
+<ul>
+<li><code>name&amp;value</code>: the useful stuff</li>
+<li><code>domain</code>: cookie only sent to the domain</li>
+<li><code>path</code>: cookie only sent when this domain/path</li>
+<li><code>expire</code> / <code>maxAge</code>: when or how long expires</li>
+<li><code>HttpOnly</code>: will make this cookie cannot be access by <code>document.cookie</code></li>
+<li><code>secure</code>: only sent when HTTPS; not sent when HTTP</li>
+</ul>
+</li>
+<li><p><strong>Serialize Cookie [Server] : </strong>convert cookie to string</p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> serialize = <span class="function"><span class="keyword">function</span> (<span class="params">name, val, opt</span>) </span>&#123; </span><br><span class="line">    <span class="keyword">var</span> pairs = [name + <span class="string">'='</span> + encode(val)]; opt = opt || &#123;&#125;;</span><br><span class="line">    <span class="keyword">if</span> (opt.maxAge) pairs.push(<span class="string">'Max-Age='</span> + opt.maxAge);</span><br><span class="line">    <span class="keyword">if</span> (opt.domain) pairs.push(<span class="string">'Domain='</span> + opt.domain);</span><br><span class="line">	<span class="keyword">if</span> (opt.path) pairs.push(<span class="string">'Path='</span> + opt.path);</span><br><span class="line">    <span class="keyword">if</span> (opt.expires) pairs.push(<span class="string">'Expires='</span> + opt.expires.toUTCString()); </span><br><span class="line">    <span class="keyword">if</span> (opt.httpOnly) pairs.push(<span class="string">'HttpOnly'</span>);</span><br><span class="line">    <span class="keyword">if</span> (opt.secure) pairs.push(<span class="string">'Secure'</span>);</span><br><span class="line">    <span class="keyword">return</span> pairs.join(<span class="string">'; '</span>); </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Session</strong></p>
+<ul>
+<li><p><u><strong>why need it</strong></u>: <em>cookie with too much data</em> will make delay in network transmission </p>
+</li>
+<li><p><strong><u>Solution:</u></strong> </p>
+<ul>
+<li>store data on server side, give a key (sessionID) to cookie to refer its data</li>
+<li>set <code>expire</code> to its corresponding  cookie</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Cache</strong> <strong><em><u>response file</u></em></strong> [ <u>has nothing to do with cookie</u> ]</p>
+<ul>
+<li>Client: <code>If-Modified-Since</code>,  Server:  <code>Last-Modified</code></li>
+<li>Client: <code>If-None-Match</code>,  Server:  <code>ETag</code><ul>
+<li>solve problem: even if file modified, but content didn’t modified</li>
+<li>compare the digest of target file</li>
+</ul>
+</li>
+<li>Server:  <code>Expires</code> / <code>Cache-Control</code><ul>
+<li>the first 2 ways still need to send request, and wait for response =&gt; waste time!</li>
+<li>This approach doesn’t need to send request if doesn’t <code>expires</code></li>
+<li>But there is a problem: the time are not the same on two sides, <code>max-age</code> of <code>cache-control</code>comes in</li>
+</ul>
+</li>
+<li>how to update cache when server file updated within expired period?<ul>
+<li><strong><u>Problem</u></strong>: browser will use stale file, since it not expire</li>
+<li>We also update the URL, since <em>Cache pairs with URL</em></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Authentication / Authorization</strong> </p>
+<ul>
+<li><u>basic authentication</u><ul>
+<li>request with : <code>useranme</code> &amp; <code>password</code></li>
+</ul>
+</li>
+<li><u>OAuth2.0</u><ul>
+<li>request with <code>access_token</code></li>
+</ul>
+</li>
+<li><u>Bearer token: JWT</u><ul>
+<li>request with <code>Json Web Token</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Form Data</strong></p>
+<ul>
+<li>content-type: <code>application/x-www-form-urlencoded</code> (“foo=bar&amp;baz=val”)</li>
+<li>content-type: <code>application/json;</code></li>
+<li>content-type: <code>application/xml;</code></li>
+</ul>
+</li>
+<li><p><strong>Simulate a Client(browser) &amp; a Server</strong></p>
+<ol>
+<li><p>server implementation [send response as a server]</p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>)</span><br><span class="line"><span class="keyword">let</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)</span><br><span class="line"><span class="keyword">let</span> url = <span class="built_in">require</span>(<span class="string">'url'</span>)</span><br><span class="line"></span><br><span class="line">http.creatServer( <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> pathname = url.parse(req.url).pathname</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"request for "</span> + pathname + <span class="string">"received."</span>)</span><br><span class="line">    </span><br><span class="line">    fs.readFile(pathname.substr(<span class="number">1</span>), <span class="function"><span class="keyword">function</span>(<span class="params">err, data</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(err)&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(err)</span><br><span class="line">            res.writeHead(<span class="number">404</span>, &#123;<span class="string">'Content-Type'</span>: <span class="string">'text/html'</span>&#125;)</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            res.writeHead(<span class="number">200</span>, &#123;<span class="string">'Content-Type'</span>: <span class="string">'text/html'</span>&#125;)</span><br><span class="line">            res.write(data.toString())</span><br><span class="line">        &#125;</span><br><span class="line">        res.end()</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;).listen(<span class="number">8080</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Server running at http://127.0.0.1:8080/"</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p>client implementation [send request as a browser]</p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> options =&#123;</span><br><span class="line">    host: <span class="string">'localhost'</span>,</span><br><span class="line">    port: <span class="string">'8080'</span>,</span><br><span class="line">    path: <span class="string">'/index.html'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> callback = <span class="function"><span class="keyword">function</span>(<span class="params">res</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> body = <span class="string">''</span></span><br><span class="line">    res.on( <span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">        body += data</span><br><span class="line">    &#125;)</span><br><span class="line">    </span><br><span class="line">    res.on( <span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(body)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> req = http.request(options, callback)</span><br><span class="line">req.end()</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="XSS-CSRF"><a href="#XSS-CSRF" class="headerlink" title="XSS / CSRF"></a>XSS / CSRF</h2><ol>
+<li>XSS: cross site script<ul>
+<li>inject script from unsafe input, and runs it to get cookie, ie sessionID</li>
+<li><strong><u>[Solution]</u></strong>: convert to <u>HTML entities</u>: <code>&amp;</code> will be <code>&amp;amp;</code></li>
+</ul>
+</li>
+<li>CSRF: <ul>
+<li>don’t bother to get sessionID</li>
+<li>lure customer to another website, while he is in middle of session of some weak-protection Bank website</li>
+<li>the other website will submit a form to Bank website indicating transfer money</li>
+<li>Bank website server cannot tell from whom that request is. It still believe that is from its customer since he is in the middle of the session</li>
+<li><strong><u>[Solution]</u></strong>: <ul>
+<li>the Bank form add another random hidden input field</li>
+<li>each time receive request, check if the random value equal to sent one</li>
+<li>This way the form cannot be duplicate</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="Global-variables"><a href="#Global-variables" class="headerlink" title="Global variables"></a>Global variables</h2><ol>
+<li><code>console</code> <ul>
+<li><code>console.log(&#39;11&#39;)</code></li>
+</ul>
+</li>
+<li><code>process</code> <ul>
+<li><code>process.exit(0)</code></li>
+<li><code>process.nextTick(callback)</code></li>
+</ul>
+</li>
+<li><code>__filename</code>: <strong><u>absolute path + name</u></strong> for the current script being executed</li>
+<li><code>__dirname</code>: <strong><u>absolute path</u></strong> for the current script being executed</li>
+</ol>
+<h2 id="Util-Objects"><a href="#Util-Objects" class="headerlink" title="Util Objects"></a>Util Objects</h2><ol>
+<li><code>util</code>: make one object inherit from the other one<ol>
+<li><code>util.inherits(constructor, superConstructor)</code></li>
+</ol>
+</li>
+</ol>
+<h2 id="Versions"><a href="#Versions" class="headerlink" title="Versions"></a>Versions</h2><ol>
 <li><strong>semantic versioning</strong> <ul>
 <li>consists of three numbers, separated by periods, such as 2.3.0</li>
 <li>the middle number has to be incremented, when new functionality is added</li>
@@ -472,7 +736,7 @@
 </ul>
 </li>
 </ol>
-<h2 id="IV-File-System"><a href="#IV-File-System" class="headerlink" title="IV. File System"></a>IV. File System</h2>
+
       
     </div>
 
@@ -764,7 +1028,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">65</span>
+                      
+                    
+                    <span class="site-state-item-count">66</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -814,7 +1080,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#I-Event-driven-amp-asynchrous-I-O"><span class="nav-number">1.</span> <span class="nav-text">I. Event-driven &amp; asynchrous I/O</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#II-Global-variables"><span class="nav-number">2.</span> <span class="nav-text">II. Global variables</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#III-Versions"><span class="nav-number">3.</span> <span class="nav-text">III. Versions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IV-File-System"><span class="nav-number">4.</span> <span class="nav-text">IV. File System</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Event-driven-amp-asynchrous-IO-amp-Event-Emitter"><span class="nav-number">1.</span> <span class="nav-text">Event-driven &amp; asynchrous IO &amp; Event Emitter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Node-js-use-cases"><span class="nav-number">2.</span> <span class="nav-text">Node.js use cases</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#process-nextTick-vs-setImmediate"><span class="nav-number">3.</span> <span class="nav-text">process.nextTick() vs. setImmediate()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CommonJS-require-amp-exports"><span class="nav-number">4.</span> <span class="nav-text">CommonJS: require &amp; exports</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AMD-Asynchronous-Module-Definition"><span class="nav-number">5.</span> <span class="nav-text">AMD: (Asynchronous Module Definition)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Web"><span class="nav-number">6.</span> <span class="nav-text">Web</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XSS-CSRF"><span class="nav-number">7.</span> <span class="nav-text">XSS / CSRF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Global-variables"><span class="nav-number">8.</span> <span class="nav-text">Global variables</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Util-Objects"><span class="nav-number">9.</span> <span class="nav-text">Util Objects</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Versions"><span class="nav-number">10.</span> <span class="nav-text">Versions</span></a></li></ol></div>
             
 
           </div>

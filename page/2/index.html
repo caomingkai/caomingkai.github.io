@@ -1104,52 +1104,6 @@
 </ol>
 </li>
 </ol>
-<h2 id="RxJS-Observable"><a href="#RxJS-Observable" class="headerlink" title="RxJS - Observable"></a>RxJS - Observable</h2><ol>
-<li><p><strong>Observer pattern</strong>: subject (publisher) &amp; observer (subscriber)</p>
-<ul>
-<li><p>use case: <u>add event to DOM</u> </p>
-</li>
-<li><p>implementation</p>
-<ul>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. Subject</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Subject</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">constructor</span>() &#123;</span><br><span class="line">        <span class="keyword">this</span>.observerCollection = [];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    registerObserver(observer) &#123;</span><br><span class="line">        <span class="keyword">this</span>.observerCollection.push(observer);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    unregisterObserver(observer) &#123;</span><br><span class="line">        <span class="keyword">let</span> index = <span class="keyword">this</span>.observerCollection.indexOf(observer);</span><br><span class="line">        <span class="keyword">if</span>(index &gt;= <span class="number">0</span>) <span class="keyword">this</span>.observerCollection.splice(index, <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    notifyObservers() &#123;</span><br><span class="line">        <span class="keyword">this</span>.observerCollection.forEach(<span class="function">(<span class="params">observer</span>)=&gt;</span>observer.notify());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. Observer</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Observer</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">constructor</span>(name) &#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    notify() &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;<span class="keyword">this</span>.name&#125;</span> has been notified.`</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// use case</span></span><br><span class="line"><span class="keyword">let</span> subject = <span class="keyword">new</span> Subject(); <span class="comment">// 创建主题对象</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> observer1 = <span class="keyword">new</span> Observer(<span class="string">'semlinker'</span>); <span class="comment">// 创建观察者A - 'semlinker'</span></span><br><span class="line"><span class="keyword">let</span> observer2 = <span class="keyword">new</span> Observer(<span class="string">'lolo'</span>); <span class="comment">// 创建观察者B - 'lolo'</span></span><br><span class="line"></span><br><span class="line">subject.registerObserver(observer1); <span class="comment">// 注册观察者A</span></span><br><span class="line">subject.registerObserver(observer2); <span class="comment">// 注册观察者B</span></span><br><span class="line"> </span><br><span class="line">subject.notifyObservers(); <span class="comment">// 通知观察者</span></span><br><span class="line"></span><br><span class="line">subject.unregisterObserver(observer1); <span class="comment">// 移除观察者A</span></span><br><span class="line"></span><br><span class="line">subject.notifyObservers(); <span class="comment">// 验证是否成功移除</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>Iterator pattern</strong></p>
-<ul>
-<li><p><u>Why use it</u>:  offer a way to visit interal elements <u>without exposing internal implementing details </u></p>
-</li>
-<li><p>drawback: one-way &amp; irreversible</p>
-</li>
-<li><p>data structure of the return value: <code>next()</code> </p>
-<ul>
-<li>=&gt; <code>{ done: false, value: elementValue }</code></li>
-<li>=&gt; <code>{ done: true, value: undefined }</code></li>
-</ul>
-</li>
-<li><p>Implementation of Array Iterator</p>
-<ul>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Array Iterator using closure</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">makeIterator</span>(<span class="params">array</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> nextIndex = <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">       next: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">           <span class="keyword">return</span> nextIndex &lt; array.length ?</span><br><span class="line">               &#123;<span class="attr">value</span>: array[nextIndex++], <span class="attr">done</span>: <span class="literal">false</span>&#125; :</span><br><span class="line">               &#123;<span class="attr">done</span>: <span class="literal">true</span>&#125;;</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// use case</span></span><br><span class="line"><span class="keyword">var</span> it = makeIterator([<span class="string">'yo'</span>, <span class="string">'ya'</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(it.next().value); <span class="comment">// 'yo'</span></span><br><span class="line"><span class="built_in">console</span>.log(it.next().value); <span class="comment">// 'ya'</span></span><br><span class="line"><span class="built_in">console</span>.log(it.next().done);  <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><strong>ES6 Iterator: </strong> <code>Symbol.iterator</code> can create iterator for an iterable object</p>
-<ul>
-<li><p>How to use?</p>
-</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>];</span><br><span class="line"><span class="keyword">let</span> iter = arr[<span class="built_in">Symbol</span>.iterator]();</span><br><span class="line"></span><br><span class="line">&gt; iter.next()</span><br><span class="line">&#123; <span class="attr">value</span>: <span class="string">'a'</span>, <span class="attr">done</span>: <span class="literal">false</span> &#125;</span><br><span class="line">&gt; iter.next()</span><br><span class="line">&#123; <span class="attr">value</span>: <span class="string">'b'</span>, <span class="attr">done</span>: <span class="literal">false</span> &#125;</span><br><span class="line">&gt; iter.next()</span><br><span class="line">&#123; <span class="attr">value</span>: <span class="string">'c'</span>, <span class="attr">done</span>: <span class="literal">false</span> &#125;</span><br><span class="line">&gt; iter.next()</span><br><span class="line">&#123; <span class="attr">value</span>: <span class="literal">undefined</span>, <span class="attr">done</span>: <span class="literal">true</span> &#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>iterable object: <strong>Arrays, Strings, Maps, Sets, DOM</strong></p>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>Observable</strong></p>
-</li>
-</ol>
 <h2 id="Check-if-undeclared-undefined-or-null"><a href="#Check-if-undeclared-undefined-or-null" class="headerlink" title="Check if undeclared, undefined or null"></a>Check if <code>undeclared</code>, <code>undefined</code> or <code>null</code></h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. `undeclared` check</span></span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">  undeclaredVar</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span>(e) &#123;</span><br><span class="line">  <span class="keyword">if</span>(e.name === <span class="string">'ReferenceError'</span>) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'var is undeclared'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. `undefined` check</span></span><br><span class="line"><span class="keyword">var</span> undefinedVar</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> undefinedVar === <span class="string">'undefined'</span>) &#123;</span><br><span class="line">   <span class="built_in">console</span>.log(<span class="string">'var is undefined'</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. `null` check</span></span><br><span class="line"><span class="keyword">var</span> nullVar = <span class="literal">null</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (nullVar === <span class="literal">null</span>) &#123;</span><br><span class="line">   <span class="built_in">console</span>.log(<span class="string">'var is null'</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
           
@@ -3995,7 +3949,23 @@
                     
                       
                     
-                    <span class="site-state-item-count">74</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">82</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

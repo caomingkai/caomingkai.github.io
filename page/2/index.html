@@ -332,6 +332,350 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/07/Design-Pattern-JS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/07/Design-Pattern-JS/" itemprop="url">Design Pattern - JS</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-07T14:53:37-07:00">2018-10-07</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/07/Design-Pattern-JS/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/07/Design-Pattern-JS/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong><u>All Credit to:</u></strong> <a href="https://addyosmani.com/resources/essentialjsdesignpatterns/book/" target="_blank" rel="noopener">Learning JavaScript Design Patterns</a></p>
+<h2 id="Constructor-Pattern"><a href="#Constructor-Pattern" class="headerlink" title="Constructor Pattern"></a>Constructor Pattern</h2><ol>
+<li><p><u><strong>What</strong></u>: a constructor is a special method used to initialize a newly created object once memory has been allocated for it</p>
+</li>
+<li><p><strong><u>Why need it</u></strong></p>
+<ul>
+<li><p>e.g.: create different student with: <code>name</code>, <code>age</code>, <code>eat</code> method</p>
+</li>
+<li><p><u>without constructor :</u> each time we create a new student again and again</p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> alice =&#123;<span class="attr">name</span>: <span class="string">"alice"</span>, <span class="attr">age</span>: <span class="number">12</span>, <span class="attr">eat</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; ... &#125; &#125;</span><br><span class="line"><span class="keyword">let</span> bob  = &#123;<span class="attr">name</span>: <span class="string">"bob"</span>,   <span class="attr">age</span>: <span class="number">15</span>, <span class="attr">eat</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; ... &#125; &#125;</span><br><span class="line"><span class="keyword">let</span> carol =&#123;<span class="attr">name</span>: <span class="string">"carol"</span>, <span class="attr">age</span>: <span class="number">11</span>, <span class="attr">eat</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; ... &#125; &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><u>with constructor <strong>[BAD]</strong> :</u> each time we create a new student trivially </p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> BAD: each object will take a copy of `eat()` from memory, </span></span><br><span class="line"><span class="comment">      which is in fact not necessary</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Student</span>(<span class="params"> name, age </span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> student = &#123;&#125;</span><br><span class="line">    student.name = name</span><br><span class="line">    student.age = age</span><br><span class="line">    student.eat = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; <span class="built_in">console</span>.log(name, <span class="string">" is eating"</span>)&#125;</span><br><span class="line">    <span class="keyword">return</span> student</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> alice = <span class="keyword">new</span> Student(<span class="string">"alice"</span>, <span class="number">12</span>)</span><br><span class="line"><span class="keyword">let</span> bob   = <span class="keyword">new</span> Student(<span class="string">"bob"</span>,   <span class="number">15</span>)</span><br><span class="line"><span class="keyword">let</span> carol = <span class="keyword">new</span> Student(<span class="string">"carol"</span>, <span class="number">11</span>)</span><br><span class="line">alice.eat()</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><u>with constructor <strong>[GOOD]</strong> :</u> see next section <strong><u>Prototype pattern</u></strong></p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"> </span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="Prototype-Pattern"><a href="#Prototype-Pattern" class="headerlink" title="Prototype Pattern"></a>Prototype Pattern</h2><ol>
+<li><p><strong><u>what:</u> </strong> view prototype pattern as being based on prototypal inheritance where we create objects which act as prototypes for other objects. </p>
+</li>
+<li><p>improvement of <code>Student</code> class, using <code>prototype.eat()</code></p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> GOOD: each object will share `eat()` of Student prototype</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Student</span>(<span class="params"> name, age </span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name</span><br><span class="line">    <span class="keyword">this</span>.age = age</span><br><span class="line">&#125;</span><br><span class="line">Student.prototype.eat = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="built_in">console</span>.log(<span class="keyword">this</span>.name, <span class="string">" is eating"</span>)&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> alice = <span class="keyword">new</span> Student(<span class="string">"alice"</span>, <span class="number">12</span>)</span><br><span class="line"><span class="keyword">let</span> bob   = <span class="keyword">new</span> Student(<span class="string">"bob"</span>,   <span class="number">15</span>)</span><br><span class="line"><span class="keyword">let</span> carol = <span class="keyword">new</span> Student(<span class="string">"carol"</span>, <span class="number">11</span>)</span><br><span class="line">alice.eat()</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="Factory-Pattern"><a href="#Factory-Pattern" class="headerlink" title="Factory Pattern"></a>Factory Pattern</h2><ol>
+<li><p><strong><u>what :</u></strong> combine similar classes together into a factory, to make code more compact</p>
+</li>
+<li><p><strong><u>Implement one!</u></strong></p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Types.js - Constructors used behind the scenes</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// A constructor for defining new cars</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Car</span>(<span class="params"> options </span>) </span>&#123;</span><br><span class="line"> </span><br><span class="line">  <span class="comment">// some defaults</span></span><br><span class="line">  <span class="keyword">this</span>.doors = options.doors || <span class="number">4</span>;</span><br><span class="line">  <span class="keyword">this</span>.state = options.state || <span class="string">"brand new"</span>;</span><br><span class="line">  <span class="keyword">this</span>.color = options.color || <span class="string">"silver"</span>;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// A constructor for defining new trucks</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Truck</span>(<span class="params"> options</span>)</span>&#123;</span><br><span class="line"> </span><br><span class="line">  <span class="keyword">this</span>.state = options.state || <span class="string">"used"</span>;</span><br><span class="line">  <span class="keyword">this</span>.wheelSize = options.wheelSize || <span class="string">"large"</span>;</span><br><span class="line">  <span class="keyword">this</span>.color = options.color || <span class="string">"blue"</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment">// FactoryExample.js</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// Define a skeleton vehicle factory</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">VehicleFactory</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// Define the prototypes and utilities for this factory</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// Our default vehicleClass is Car</span></span><br><span class="line">VehicleFactory.prototype.vehicleClass = Car;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// Our Factory method for creating new Vehicle instances</span></span><br><span class="line">VehicleFactory.prototype.createVehicle = <span class="function"><span class="keyword">function</span> (<span class="params"> options </span>) </span>&#123;</span><br><span class="line"> </span><br><span class="line">  <span class="keyword">switch</span>(options.vehicleType)&#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">"car"</span>:</span><br><span class="line">      <span class="keyword">this</span>.vehicleClass = Car;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">"truck"</span>:</span><br><span class="line">      <span class="keyword">this</span>.vehicleClass = Truck;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="comment">//defaults to VehicleFactory.prototype.vehicleClass (Car)</span></span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">this</span>.vehicleClass( options );</span><br><span class="line"> </span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// Create an instance of our factory that makes cars</span></span><br><span class="line"><span class="keyword">var</span> carFactory = <span class="keyword">new</span> VehicleFactory();</span><br><span class="line"><span class="keyword">var</span> car = carFactory.createVehicle( &#123;</span><br><span class="line">            vehicleType: <span class="string">"car"</span>,</span><br><span class="line">            color: <span class="string">"yellow"</span>,</span><br><span class="line">            doors: <span class="number">6</span> &#125; );</span><br><span class="line"> </span><br><span class="line"><span class="comment">// Test to confirm our car was created using the vehicleClass/prototype Car</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// Outputs: true</span></span><br><span class="line"><span class="built_in">console</span>.log( car <span class="keyword">instanceof</span> Car );</span><br><span class="line"> </span><br><span class="line"><span class="comment">// Outputs: Car object of color "yellow", doors: 6 in a "brand new" state</span></span><br><span class="line"><span class="built_in">console</span>.log( car );</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="Singleton-Pattern"><a href="#Singleton-Pattern" class="headerlink" title="Singleton Pattern"></a>Singleton Pattern</h2><ol>
+<li><p><strong><u>What :</u></strong> It restricts instantiation of a class to a single object. Across the whole app, there is only one object of it exists.</p>
+</li>
+<li><p><strong><u>Why :</u></strong>  </p>
+<ol>
+<li>can be used for <u><strong>data source of truth</strong></u></li>
+<li>anyone can call its methods to update the data</li>
+</ol>
+</li>
+<li><p><strong><u>Trick :</u></strong> we can store private variable as <code>closure</code>, as singleton used here</p>
+<ol>
+<li><p>the singleton is <code>instance</code>, its private property &amp; methods are: <code>privateMethod</code>, <code>privateVariable</code>, <code>privateRandomNumber</code></p>
+</li>
+<li><p>but return <code>privateRandomNumber</code> as public varible can keep it alive</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">init</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// private methods and fileds</span></span><br><span class="line">    <span class="keyword">let</span> privateVariable = <span class="string">"I am a private var"</span>;</span><br><span class="line">    <span class="keyword">let</span> privateRandomNumber = <span class="built_in">Math</span>.random();</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">privateMethod</span>(<span class="params"></span>)</span>&#123;<span class="built_in">console</span>.log(<span class="string">"I am private method"</span> )&#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      <span class="comment">// Public methods and fields</span></span><br><span class="line">      publicMethod: privateMethod,</span><br><span class="line">      getPrivateVar: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; <span class="keyword">return</span> privateVariable &#125;,</span><br><span class="line">      getRandomNumber: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; <span class="keyword">return</span> privateRandomNumber &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p><strong><u>Implementation</u></strong></p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> mySingleton = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> instance; <span class="comment">// Instance stores a reference to the Singleton</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">init</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// Singleton</span></span><br><span class="line">    <span class="keyword">var</span> privateRandomNumber = <span class="built_in">Math</span>.random();</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      <span class="comment">// Public methods and variables</span></span><br><span class="line">      getRandomNumber: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> privateRandomNumber;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;;</span><br><span class="line"> </span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="comment">// Get the Singleton instance if one exists</span></span><br><span class="line">    <span class="comment">// or create one if it doesn't</span></span><br><span class="line">    getInstance: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> ( !instance ) &#123; instance = init(); &#125;</span><br><span class="line">      <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;)();</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> myBadSingleton = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// Instance stores a reference to the Singleton</span></span><br><span class="line">  <span class="keyword">var</span> instance;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">init</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// Singleton</span></span><br><span class="line">    <span class="keyword">var</span> privateRandomNumber = <span class="built_in">Math</span>.random();</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      getRandomNumber: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> privateRandomNumber;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;;</span><br><span class="line"> </span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="comment">// Always create a new Singleton instance</span></span><br><span class="line">    getInstance: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      instance = init();</span><br><span class="line">      <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line"> </span><br><span class="line">&#125;)();</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment">// Usage:</span></span><br><span class="line"><span class="keyword">var</span> singleA = mySingleton.getInstance();</span><br><span class="line"><span class="keyword">var</span> singleB = mySingleton.getInstance();</span><br><span class="line"><span class="built_in">console</span>.log( singleA.getRandomNumber() === singleB.getRandomNumber() ); <span class="comment">// true</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">var</span> badSingleA = myBadSingleton.getInstance();</span><br><span class="line"><span class="keyword">var</span> badSingleB = myBadSingleton.getInstance();</span><br><span class="line"><span class="built_in">console</span>.log( badSingleA.getRandomNumber() !== badSingleB.getRandomNumber() ); <span class="comment">// true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// Note: as we are working with random numbers, there is a</span></span><br><span class="line"><span class="comment">// mathematical possibility both numbers will be the same,</span></span><br><span class="line"><span class="comment">// however unlikely. The above example should otherwise still</span></span><br><span class="line"><span class="comment">// be valid.</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="Observer-Pattern"><a href="#Observer-Pattern" class="headerlink" title="Observer Pattern"></a>Observer Pattern</h2><ol>
+<li><p><strong><u>Subject :</u></strong> an object maintains a list of objects depending on it (observers), automatically notifying them of any changes to state.</p>
+</li>
+<li><p><strong><u>Observers :</u></strong> objects who are interesting in the messages from the subject</p>
+</li>
+<li><p>Compared to <strong><u>Observable</u></strong></p>
+<ol>
+<li><u><strong>Observer Pattern</strong></u>: <u><em>actively</em></u> notify all observers when events happen</li>
+<li><strong><u>observable Pattern</u></strong>: <u><em>passively / lazily</em></u>  start the events watching process</li>
+</ol>
+</li>
+<li><p><u>advantage</u>: focus on observers, not their actions/methods</p>
+</li>
+<li><p><u>disadvantage</u>: cannot flexible on the observers’ methods, must be the same</p>
+</li>
+<li><p>Implementation</p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Util class: ObserverList, used by `Subject`</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ObserverList</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.observerList = [];</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">ObserverList.prototype.add = <span class="function"><span class="keyword">function</span>(<span class="params"> obj </span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.observerList.push( obj );</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line">ObserverList.prototype.count = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.observerList.length;</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line">ObserverList.prototype.get = <span class="function"><span class="keyword">function</span>(<span class="params"> index </span>)</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>( index &gt; <span class="number">-1</span> &amp;&amp; index &lt; <span class="keyword">this</span>.observerList.length )&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.observerList[ index ];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line">ObserverList.prototype.indexOf = <span class="function"><span class="keyword">function</span>(<span class="params"> obj, startIndex </span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> i = startIndex;</span><br><span class="line"> </span><br><span class="line">  <span class="keyword">while</span>( i &lt; <span class="keyword">this</span>.observerList.length )&#123;</span><br><span class="line">    <span class="keyword">if</span>( <span class="keyword">this</span>.observerList[i] === obj )&#123;</span><br><span class="line">      <span class="keyword">return</span> i;</span><br><span class="line">    &#125;</span><br><span class="line">    i++;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line">ObserverList.prototype.removeAt = <span class="function"><span class="keyword">function</span>(<span class="params"> index </span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.observerList.splice( index, <span class="number">1</span> );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// -----1----- Subject</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Subject</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.observers = <span class="keyword">new</span> ObserverList();</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">Subject.prototype.addObserver = <span class="function"><span class="keyword">function</span>(<span class="params"> observer </span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.observers.add( observer );</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line">Subject.prototype.removeObserver = <span class="function"><span class="keyword">function</span>(<span class="params"> observer </span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.observers.removeAt( <span class="keyword">this</span>.observers.indexOf( observer, <span class="number">0</span> ) );</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line">Subject.prototype.notify = <span class="function"><span class="keyword">function</span>(<span class="params"> context </span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> observerCount = <span class="keyword">this</span>.observers.count();</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>; i &lt; observerCount; i++)&#123;</span><br><span class="line">    <span class="keyword">this</span>.observers.get(i).update( context );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// -----2----- Observer</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Observer</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.update = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="RxJS-Observable"><a href="#RxJS-Observable" class="headerlink" title="RxJS - Observable"></a>RxJS - Observable</h2><ol>
+<li><p><strong>Observer pattern</strong>: subject (publisher) &amp; observer (subscriber)</p>
+<ul>
+<li><p>use case: <u>add event to DOM</u> </p>
+</li>
+<li><p>implementation</p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. Subject</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Subject</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">constructor</span>() &#123;</span><br><span class="line">        <span class="keyword">this</span>.observerCollection = [];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    registerObserver(observer) &#123;</span><br><span class="line">        <span class="keyword">this</span>.observerCollection.push(observer);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    unregisterObserver(observer) &#123;</span><br><span class="line">        <span class="keyword">let</span> index = <span class="keyword">this</span>.observerCollection.indexOf(observer);</span><br><span class="line">        <span class="keyword">if</span>(index &gt;= <span class="number">0</span>) <span class="keyword">this</span>.observerCollection.splice(index, <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    notifyObservers() &#123;</span><br><span class="line">        <span class="keyword">this</span>.observerCollection.forEach(<span class="function">(<span class="params">observer</span>)=&gt;</span>observer.notify());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. Observer</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Observer</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">constructor</span>(name) &#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    notify() &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;<span class="keyword">this</span>.name&#125;</span> has been notified.`</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// use case</span></span><br><span class="line"><span class="keyword">let</span> subject = <span class="keyword">new</span> Subject(); <span class="comment">// 创建主题对象</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> observer1 = <span class="keyword">new</span> Observer(<span class="string">'semlinker'</span>); <span class="comment">// 创建观察者A - 'semlinker'</span></span><br><span class="line"><span class="keyword">let</span> observer2 = <span class="keyword">new</span> Observer(<span class="string">'lolo'</span>); <span class="comment">// 创建观察者B - 'lolo'</span></span><br><span class="line"></span><br><span class="line">subject.registerObserver(observer1); <span class="comment">// 注册观察者A</span></span><br><span class="line">subject.registerObserver(observer2); <span class="comment">// 注册观察者B</span></span><br><span class="line"> </span><br><span class="line">subject.notifyObservers(); <span class="comment">// 通知观察者</span></span><br><span class="line"></span><br><span class="line">subject.unregisterObserver(observer1); <span class="comment">// 移除观察者A</span></span><br><span class="line"></span><br><span class="line">subject.notifyObservers(); <span class="comment">// 验证是否成功移除</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Iterator pattern</strong></p>
+<ul>
+<li><p><u>Why use it</u>:  offer a way to visit interal elements <u>without exposing internal implementing details </u></p>
+</li>
+<li><p>drawback: one-way &amp; irreversible</p>
+</li>
+<li><p>data structure of the return value: <code>next()</code> </p>
+<ul>
+<li>=&gt; <code>{ done: false, value: elementValue }</code></li>
+<li>=&gt; <code>{ done: true, value: undefined }</code></li>
+</ul>
+</li>
+<li><p>Implementation of Array Iterator</p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Array Iterator using closure</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">makeIterator</span>(<span class="params">array</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> nextIndex = <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">       next: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">           <span class="keyword">return</span> nextIndex &lt; array.length ?</span><br><span class="line">               &#123;<span class="attr">value</span>: array[nextIndex++], <span class="attr">done</span>: <span class="literal">false</span>&#125; :</span><br><span class="line">               &#123;<span class="attr">done</span>: <span class="literal">true</span>&#125;;</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// use case</span></span><br><span class="line"><span class="keyword">var</span> it = makeIterator([<span class="string">'yo'</span>, <span class="string">'ya'</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(it.next().value); <span class="comment">// 'yo'</span></span><br><span class="line"><span class="built_in">console</span>.log(it.next().value); <span class="comment">// 'ya'</span></span><br><span class="line"><span class="built_in">console</span>.log(it.next().done);  <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><strong>ES6 Iterator: </strong> <code>Symbol.iterator</code> can create iterator for an iterable object</p>
+<ul>
+<li><p>How to use?</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>];</span><br><span class="line"><span class="keyword">let</span> iter = arr[<span class="built_in">Symbol</span>.iterator]();</span><br><span class="line"></span><br><span class="line">&gt; iter.next()</span><br><span class="line">&#123; <span class="attr">value</span>: <span class="string">'a'</span>, <span class="attr">done</span>: <span class="literal">false</span> &#125;</span><br><span class="line">&gt; iter.next()</span><br><span class="line">&#123; <span class="attr">value</span>: <span class="string">'b'</span>, <span class="attr">done</span>: <span class="literal">false</span> &#125;</span><br><span class="line">&gt; iter.next()</span><br><span class="line">&#123; <span class="attr">value</span>: <span class="string">'c'</span>, <span class="attr">done</span>: <span class="literal">false</span> &#125;</span><br><span class="line">&gt; iter.next()</span><br><span class="line">&#123; <span class="attr">value</span>: <span class="literal">undefined</span>, <span class="attr">done</span>: <span class="literal">true</span> &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>iterable object: <strong>Arrays, Strings, Maps, Sets, DOM</strong></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Observable</strong> in RxJS</p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> observable = Rx.Observable.create(<span class="function"><span class="keyword">function</span> (<span class="params">observer</span>) </span>&#123;</span><br><span class="line">  observer.next(<span class="number">1</span>);</span><br><span class="line">  observer.next(<span class="number">2</span>);</span><br><span class="line">  observer.next(<span class="number">3</span>);</span><br><span class="line">  setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    observer.next(<span class="number">4</span>);</span><br><span class="line">    observer.complete();</span><br><span class="line">  &#125;, <span class="number">1000</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'just before subscribe'</span>);</span><br><span class="line">observable.subscribe(&#123;</span><br><span class="line">  next: <span class="function"><span class="params">x</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="string">'got value '</span> + x),</span><br><span class="line">  error: <span class="function"><span class="params">err</span> =&gt;</span> <span class="built_in">console</span>.error(<span class="string">'something wrong occurred: '</span> + err),</span><br><span class="line">  complete: <span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="string">'done'</span>),</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'just after subscribe'</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p><strong>Characters</strong></p>
+<ul>
+<li><p>observable will not automatically run, only triggered by <code>subscribe()</code>; which is opposed to promise.</p>
+</li>
+<li><p><u>observable is a function</u>, which can be observed by observer</p>
+</li>
+<li><p><u>observer is a object,</u> which has three callback: next, error, complete</p>
+</li>
+<li><p>how to subscribe the observable? observable.subsribe(observer)</p>
+</li>
+<li><p>how to manage the relationships between observable and observer? – subscription var subscription1 = observable.subscribe(observer1);</p>
+</li>
+<li><p>how to unsubscribe? — subscription1.unsubscribe();</p>
+</li>
+<li><p>Subscribing to an Observable is analogous to calling a Function.</p>
+</li>
+<li><p><u>two Observable subscribes trigger two separate side effects. As opposed to EventEmitters which share the side effects and have eager execution regardless of the existence of subscribers, Observables have no shared execution and are lazy.</u></p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="Command-Pattern"><a href="#Command-Pattern" class="headerlink" title="Command Pattern"></a>Command Pattern</h2><ol>
+<li><p><strong><u>What :</u></strong> commonly exists in many tool <code>config.json</code> file: <code>run(&quot;fun&quot;, &quot;arg1&quot;, arg2)</code></p>
+</li>
+<li><p><strong><u>How to Implement :</u></strong></p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">var</span> carManager = &#123;</span><br><span class="line">    <span class="comment">// request information</span></span><br><span class="line">    requestInfo: <span class="function"><span class="keyword">function</span>(<span class="params"> model, id </span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"The information for "</span> + model + <span class="string">" with ID "</span> + id + <span class="string">" is foobar"</span>;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// purchase the car</span></span><br><span class="line">    buyVehicle: <span class="function"><span class="keyword">function</span>(<span class="params"> model, id </span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"You have successfully purchased Item "</span> + id + <span class="string">", a "</span> + model;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// arrange a viewing</span></span><br><span class="line">    arrangeViewing: <span class="function"><span class="keyword">function</span>(<span class="params"> model, id </span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"You have successfully booked a viewing of "</span> + model + <span class="string">" ( "</span> + id + <span class="string">" ) "</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">carManager.execute = <span class="function"><span class="keyword">function</span> (<span class="params"> name </span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> carManager[name] &amp;&amp; carManager[name].apply( carManager, [].slice.call(<span class="built_in">arguments</span>, <span class="number">1</span>) );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Use case</span></span><br><span class="line">carManager.execute( <span class="string">"arrangeViewing"</span>, <span class="string">"Ferrari"</span>, <span class="string">"14523"</span> );</span><br><span class="line">carManager.execute( <span class="string">"requestInfo"</span>, <span class="string">"Ford Mondeo"</span>, <span class="string">"54323"</span> );</span><br><span class="line">carManager.execute( <span class="string">"requestInfo"</span>, <span class="string">"Ford Escort"</span>, <span class="string">"34232"</span> );</span><br><span class="line">carManager.execute( <span class="string">"buyVehicle"</span>, <span class="string">"Ford Escort"</span>, <span class="string">"34232"</span> );</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="Mixin-Pattern-extend"><a href="#Mixin-Pattern-extend" class="headerlink" title="Mixin Pattern: _.extend()"></a>Mixin Pattern: <code>_.extend()</code></h2><ol>
+<li><p><strong><u>what:</u></strong> Mixins allow objects to borrow (or inherit) functionality from them with a minimal amount of complexity</p>
+</li>
+<li><p><strong><u>How to use:</u></strong>  using <code>_.extend()</code> from <code>Underscore.js</code></p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myMixins = &#123;</span><br><span class="line">  moveUp: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; <span class="built_in">console</span>.log( <span class="string">"move up"</span> ); &#125;,</span><br><span class="line">  moveDown: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; <span class="built_in">console</span>.log( <span class="string">"move down"</span> ); &#125;,</span><br><span class="line">  stop: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; <span class="built_in">console</span>.log( <span class="string">"stop! in the name of love!"</span> );&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// A skeleton carAnimator constructor</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">CarAnimator</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.moveLeft = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log( <span class="string">"move left"</span> );</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// A skeleton personAnimator constructor</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">PersonAnimator</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.moveRandomly = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; <span class="comment">/*..*/</span> &#125;;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// Extend both constructors with our Mixin</span></span><br><span class="line">_.extend( CarAnimator.prototype, myMixins );</span><br><span class="line">_.extend( PersonAnimator.prototype, myMixins );</span><br><span class="line"> </span><br><span class="line"><span class="comment">// Create a new instance of carAnimator</span></span><br><span class="line"><span class="keyword">var</span> myAnimator = <span class="keyword">new</span> CarAnimator();</span><br><span class="line">myAnimator.moveLeft();</span><br><span class="line">myAnimator.moveDown();</span><br><span class="line">myAnimator.stop();</span><br><span class="line"> </span><br><span class="line"><span class="comment">// Outputs:</span></span><br><span class="line"><span class="comment">// move left</span></span><br><span class="line"><span class="comment">// move down</span></span><br><span class="line"><span class="comment">// stop! in the name of love!</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p>Write ourselves:  <code>_.extend()</code> &lt;=&gt; <code>augument()</code></p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Define a simple Car constructor</span></span><br><span class="line"><span class="keyword">var</span> Car = <span class="function"><span class="keyword">function</span> (<span class="params"> settings </span>) </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">this</span>.model = settings.model || <span class="string">"no model provided"</span>;</span><br><span class="line">    <span class="keyword">this</span>.color = settings.color || <span class="string">"no colour provided"</span>;</span><br><span class="line"> </span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// Mixin</span></span><br><span class="line"><span class="keyword">var</span> Mixin = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line"> </span><br><span class="line">Mixin.prototype = &#123;</span><br><span class="line"> </span><br><span class="line">    driveForward: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log( <span class="string">"drive forward"</span> );</span><br><span class="line">    &#125;,</span><br><span class="line"> </span><br><span class="line">    driveBackward: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log( <span class="string">"drive backward"</span> );</span><br><span class="line">    &#125;,</span><br><span class="line"> </span><br><span class="line">    driveSideways: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log( <span class="string">"drive sideways"</span> );</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment">// Extend an existing object with a method from another</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">augment</span>(<span class="params"> receivingClass, givingClass </span>) </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// only provide certain methods</span></span><br><span class="line">    <span class="keyword">if</span> ( <span class="built_in">arguments</span>[<span class="number">2</span>] ) &#123;</span><br><span class="line">        <span class="keyword">for</span> ( <span class="keyword">var</span> i = <span class="number">2</span>, len = <span class="built_in">arguments</span>.length; i &lt; len; i++ ) &#123;</span><br><span class="line">            receivingClass.prototype[<span class="built_in">arguments</span>[i]] = givingClass.prototype[<span class="built_in">arguments</span>[i]];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// provide all methods</span></span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> ( <span class="keyword">var</span> methodName <span class="keyword">in</span> givingClass.prototype ) &#123;</span><br><span class="line"> </span><br><span class="line">            <span class="comment">// check to make sure the receiving class doesn't</span></span><br><span class="line">            <span class="comment">// have a method of the same name as the one currently</span></span><br><span class="line">            <span class="comment">// being processed</span></span><br><span class="line">            <span class="keyword">if</span> ( !<span class="built_in">Object</span>.hasOwnProperty.call(receivingClass.prototype, methodName) ) &#123;</span><br><span class="line">                receivingClass.prototype[methodName] = givingClass.prototype[methodName];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment">// Augment the Car constructor to include "driveForward" and "driveBackward"</span></span><br><span class="line">augment( Car, Mixin, <span class="string">"driveForward"</span>, <span class="string">"driveBackward"</span> );</span><br><span class="line"> </span><br><span class="line"><span class="comment">// Create a new Car</span></span><br><span class="line"><span class="keyword">var</span> myCar = <span class="keyword">new</span> Car(&#123;</span><br><span class="line">    model: <span class="string">"Ford Escort"</span>,</span><br><span class="line">    color: <span class="string">"blue"</span></span><br><span class="line">&#125;);</span><br><span class="line"> </span><br><span class="line"><span class="comment">// Test to make sure we now have access to the methods</span></span><br><span class="line">myCar.driveForward();</span><br><span class="line">myCar.driveBackward();</span><br><span class="line"> </span><br><span class="line"><span class="comment">// Outputs:</span></span><br><span class="line"><span class="comment">// drive forward</span></span><br><span class="line"><span class="comment">// drive backward</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// We can also augment Car to include all functions from our mixin</span></span><br><span class="line"><span class="comment">// by not explicitly listing a selection of them</span></span><br><span class="line">augment( Car, Mixin );</span><br><span class="line"> </span><br><span class="line"><span class="keyword">var</span> mySportsCar = <span class="keyword">new</span> Car(&#123;</span><br><span class="line">    model: <span class="string">"Porsche"</span>,</span><br><span class="line">    color: <span class="string">"red"</span></span><br><span class="line">&#125;);</span><br><span class="line"> </span><br><span class="line">mySportsCar.driveSideways();</span><br><span class="line"> </span><br><span class="line"><span class="comment">// Outputs:</span></span><br><span class="line"><span class="comment">// drive sideways</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/06/Facebook-Interview-Preparation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -3404,316 +3748,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/05/this-arrow-function/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/05/this-arrow-function/" itemprop="url">'this' & arrow function</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-05T21:51:55-07:00">2018-09-05</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/09/05/this-arrow-function/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/09/05/this-arrow-function/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="I-this-in-function"><a href="#I-this-in-function" class="headerlink" title="I. this in function"></a>I. <code>this</code> in function</h2><ol>
-<li><p><strong>what is <code>this</code> ?</strong></p>
-<ul>
-<li>all <strong><u>regular</u></strong> functions have <code>this</code> keyword</li>
-<li><code>this</code> determines how a function is called <strong><u>on whom</u></strong>!</li>
-</ul>
-</li>
-<li><p><strong><code>this</code> in global context</strong></p>
-<ul>
-<li><p><code>this</code> refers  gloabl object, no matter in strict mode or not</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// In web browsers, the window object is also the global object:</span><br><span class="line">console.log(this === window); // true</span><br><span class="line"></span><br><span class="line">a = 37;</span><br><span class="line">console.log(window.a); // 37</span><br><span class="line"></span><br><span class="line">this.b = &quot;MDN&quot;;</span><br><span class="line">console.log(window.b)  // &quot;MDN&quot;</span><br><span class="line">console.log(b)         // &quot;MDN&quot;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><u><strong><code>this</code> in function context [important]</strong></u></p>
-<p>There are 7 cases that different function context results in different <code>this</code> reference;</p>
-<blockquote>
-<p><u>The value of <code>this</code></u> depend on how the function is called</p>
-</blockquote>
-<ol>
-<li><p><code>this</code> in <strong><u>simple call</u></strong></p>
-<ul>
-<li><p>non-strict mode</p>
-<p>if <code>this</code> is not set explicitly, it default to global object</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> <span class="keyword">this</span>; &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// In a browser:</span></span><br><span class="line">f1() === <span class="built_in">window</span>; <span class="comment">// true </span></span><br><span class="line"></span><br><span class="line"><span class="comment">// In Node:</span></span><br><span class="line">f1() === global; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>strict mode</p>
-<p>if <code>this</code> is not set explicitly, the value of <code>this</code> remains <code>undefined</code></p>
-</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f2</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"><span class="meta">  'use strict'</span>; <span class="comment">// see strict mode</span></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">f2() === <span class="literal">undefined</span>; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>change the value of <code>this</code>, using <code>apply()</code> or <code>call()</code></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// An object can be passed as the first argument to call or apply and this will be bound to it.</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123;<span class="attr">a</span>: <span class="string">'Custom'</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// This property is set on the global object</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="string">'Global'</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">whatsThis</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.a;  <span class="comment">// The value of this is dependent on how the function is called</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">whatsThis();          <span class="comment">// 'Global'</span></span><br><span class="line">whatsThis.call(obj);  <span class="comment">// 'Custom'</span></span><br><span class="line">whatsThis.apply(obj); <span class="comment">// 'Custom'</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><code>this</code> in <strong><u><code>bind()</code> method</u></strong></p>
-<ul>
-<li><p>NOTE: <code>bind()</code> doesn’t change the orignal function, instead it return a <strong><u>new function</u></strong> with updated value of <code>this</code></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> <span class="keyword">this</span>.a; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> g = f.bind(&#123;<span class="attr">a</span>: <span class="string">'azerty'</span>&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(g()); <span class="comment">// azerty</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> h = g.bind(&#123;<span class="attr">a</span>: <span class="string">'yoo'</span>&#125;); <span class="comment">// bind only works once!</span></span><br><span class="line"><span class="built_in">console</span>.log(h()); <span class="comment">// azerty</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> o = &#123;<span class="attr">a</span>: <span class="number">37</span>, <span class="attr">f</span>: f, <span class="attr">g</span>: g, <span class="attr">h</span>: h&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(o.a, o.f(), o.g(), o.h()); <span class="comment">// 37,37, azerty, azerty</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><code>this</code> in <u><strong>arrow function</strong></u></p>
-<ul>
-<li><p><code>this</code> cannot be changed, it default to the value of the <strong><u>enclosing lexical context</u></strong>‘s <code>this</code></p>
-</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> globalObject = <span class="keyword">this</span>;</span><br><span class="line"><span class="keyword">var</span> foo = <span class="function">(<span class="params">(</span>) =&gt;</span> <span class="keyword">this</span>);</span><br><span class="line"><span class="built_in">console</span>.log(foo() === globalObject); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>About <code>call()</code> &amp; <code>apply()</code></p>
-<ul>
-<li><p>if <code>this</code> arg is passed to call, bind, or apply on invocation of an arrow function it will be <strong><u>ignored</u></strong>.</p>
-</li>
-<li><p>the <code>thisArg</code> still works</p>
-</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Call as a method of an object</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123;<span class="attr">func</span>: foo&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(obj.func() === globalObject); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Attempt to set this using call</span></span><br><span class="line"><span class="built_in">console</span>.log(foo.call(obj) === globalObject); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Attempt to set this using bind</span></span><br><span class="line">foo = foo.bind(obj);</span><br><span class="line"><span class="built_in">console</span>.log(foo() === globalObject); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-<p><strong><u>another example:</u></strong>  <code>this</code> of arrow function, directly depends on its enclosing context </p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Create obj with a method bar that returns a function that</span></span><br><span class="line"><span class="comment">// returns its this. The returned function is created as </span></span><br><span class="line"><span class="comment">// an arrow function, so its this is permanently bound to the</span></span><br><span class="line"><span class="comment">// this of its enclosing function. The value of bar can be set</span></span><br><span class="line"><span class="comment">// in the call, which in turn sets the value of the </span></span><br><span class="line"><span class="comment">// returned function.</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123;<span class="attr">bar</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">                    <span class="keyword">var</span> x = <span class="function">(<span class="params">(</span>) =&gt;</span> <span class="keyword">this</span>);</span><br><span class="line">                    <span class="keyword">return</span> x;</span><br><span class="line">                  &#125;</span><br><span class="line">          &#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Call bar as a method of obj, setting its this to obj</span></span><br><span class="line"><span class="comment">// Assign a reference to the returned function to fn</span></span><br><span class="line"><span class="keyword">var</span> fn = obj.bar();</span><br><span class="line"></span><br><span class="line"><span class="comment">// Call fn without setting this, would normally default</span></span><br><span class="line"><span class="comment">// to the global object or undefined in strict mode</span></span><br><span class="line"><span class="built_in">console</span>.log(fn() === obj); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// But caution if you reference the method of obj without calling it</span></span><br><span class="line"><span class="keyword">var</span> fn2 = obj.bar;</span><br><span class="line"><span class="comment">// Then calling the arrow function this is equals to window because it follows the this from bar.</span></span><br><span class="line"><span class="built_in">console</span>.log(fn2()() == <span class="built_in">window</span>); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><code>this</code> in <u><strong>object method</strong></u></p>
-<ul>
-<li><p>When a function is called as a method of an object, its <code>this</code> is set to <strong><u>the object</u></strong> the method is called on.</p>
-</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> o = &#123;</span><br><span class="line">  prop: <span class="number">37</span>,</span><br><span class="line">  f: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.prop;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(o.f()); <span class="comment">// 37</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>this</code> on the object’s prototype chain</p>
-<p>If the method is on an object’s prototype chain, <code>this</code> refers to the object the method was called on, as if the method were on the object.</p>
-</li>
-</ul>
-</li>
-<li><p><code>this</code> in <u><strong>constructor</strong></u></p>
-<ul>
-<li><p><code>this</code> is bound to the <strong><u>new object being constructed</u></strong></p>
-</li>
-<li><p><strong>#A#</strong>  if <code>constructor</code> doesn’t return: result of <code>new</code> will be the object bound to <code>this</code></p>
-</li>
-<li><p><strong>#B#</strong>  if <code>constructor</code> return an object: result of <code>new</code> will be the return value</p>
-</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">C</span>(<span class="params"></span>) </span>&#123; <span class="keyword">this</span>.a = <span class="number">37</span>; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> o = <span class="keyword">new</span> C();</span><br><span class="line"><span class="built_in">console</span>.log(o.a); <span class="comment">// 37</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">C2</span>(<span class="params"></span>) </span>&#123;   </span><br><span class="line">  <span class="keyword">this</span>.a = <span class="number">37</span>;</span><br><span class="line">  <span class="keyword">return</span> &#123;<span class="attr">a</span>: <span class="number">38</span>&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// if an object was returned during construction, then the new object that this was bound to simply gets discarded.</span></span><br><span class="line"></span><br><span class="line">o = <span class="keyword">new</span> C2();</span><br><span class="line"><span class="built_in">console</span>.log(o.a); <span class="comment">// 38</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><code>this</code> in <u><strong>DOM event handler</strong></u></p>
-<ul>
-<li><p><code>this</code> is set to the <strong><u>target element</u></strong> the event fired from</p>
-</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// When called as a listener, turns the related element blue</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bluify</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// Always true</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span> === e.currentTarget); </span><br><span class="line">  <span class="comment">// true when currentTarget and target are the same object</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span> === e.target);</span><br><span class="line">  <span class="keyword">this</span>.style.backgroundColor = <span class="string">'#A5D9F3'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Get a list of every element in the document</span></span><br><span class="line"><span class="keyword">var</span> elements = <span class="built_in">document</span>.getElementsByTagName(<span class="string">'*'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Add bluify as a click listener so when the</span></span><br><span class="line"><span class="comment">// element is clicked on, it turns blue</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; elements.length; i++) &#123;</span><br><span class="line">  elements[i].addEventListener(<span class="string">'click'</span>, bluify, <span class="literal">false</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><code>this</code> in <u><strong>inline event handler</strong></u></p>
-<ul>
-<li><p><code>this</code> is set to the DOM element <strong><u>where the listener is placed</u></strong></p>
-</li>
-<li><p>however, only the outer code has its <code>this</code> set this way</p>
-</li>
-<li><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 1. this will refer to 'button' --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">"alert(this.tagName.toLowerCase());"</span>&gt;</span></span><br><span class="line">  Show this</span><br><span class="line"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 2. 'this' will refer to 'window' --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">"alert((function() &#123; return this; &#125;)());"</span>&gt;</span></span><br><span class="line">  Show inner this</span><br><span class="line"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ol>
-</li>
-</ol>
-<h2 id="II-arrow-function"><a href="#II-arrow-function" class="headerlink" title="II. arrow function"></a>II. arrow function</h2><ol>
-<li><p>Best suited for <strong><u>non-method</u></strong> functions, ie. not related to method in <em>object</em></p>
-</li>
-<li><p>No separate <code>this</code> of its own, <em>using others’</em></p>
-<ul>
-<li><p>An arrow function does not have its own <code>this</code></p>
-</li>
-<li><p><code>this</code> value of the enclosing lexical context is used </p>
-</li>
-<li><p>how to find <code>this</code> of enclosing lexical context:</p>
-<ul>
-<li><p>check if <code>this</code>  is present in current scope;</p>
-</li>
-<li><p>check <code>this</code> is present in its enclosing scope;</p>
-</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//---------- version1: works -----------------</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.age = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  setInterval(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.age++; <span class="comment">// |this| properly refers to the Person object</span></span><br><span class="line">  &#125;, <span class="number">1000</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> Person();</span><br><span class="line"></span><br><span class="line"><span class="comment">//---------- version2: doesn't work ----------</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// The Person() constructor defines `this` as an instance of itself.</span></span><br><span class="line">  <span class="keyword">this</span>.age = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  setInterval(<span class="function"><span class="keyword">function</span> <span class="title">growUp</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// In non-strict mode, the growUp() function defines `this` </span></span><br><span class="line">    <span class="comment">// as the global object (because it's where growUp() is executed.), </span></span><br><span class="line">    <span class="comment">// which is different from the `this`</span></span><br><span class="line">    <span class="comment">// defined by the Person() constructor. </span></span><br><span class="line">    <span class="keyword">this</span>.age++;</span><br><span class="line">  &#125;, <span class="number">1000</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> Person();</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>No binding of <code>arguments</code></p>
-<ul>
-<li><p>Arrow functions do not have their own <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments" target="_blank" rel="noopener"><code>arguments</code> object</a>.</p>
-</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="built_in">arguments</span> = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">var</span> arr = <span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">arguments</span>[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">arr(); <span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> f = <span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">arguments</span>[<span class="number">0</span>] + n; <span class="comment">// foo's implicit arguments binding. arguments[0] is n</span></span><br><span class="line">  <span class="keyword">return</span> f();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo(<span class="number">3</span>); <span class="comment">// 6</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>using <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters" target="_blank" rel="noopener">rest parameters</a> is a good alternative to using an <code>arguments</code> object</p>
-</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">n</span>) </span>&#123; </span><br><span class="line">  <span class="keyword">var</span> f = <span class="function">(<span class="params">...args</span>) =&gt;</span> args[<span class="number">0</span>] + n; </span><br><span class="line">  <span class="keyword">return</span> f(<span class="number">10</span>); </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo(<span class="number">1</span>); <span class="comment">// 11</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><u><strong>When not use arrow function?  ==&gt;  when need <code>this</code> explicitly</strong> </u></p>
-<ol>
-<li><p>don’t use as <u>methods of object</u>: </p>
-<ul>
-<li><p>because we need <code>this</code>, but arrow function doesn’t have its own <code>this</code></p>
-</li>
-<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&apos;use strict&apos;;</span><br><span class="line"></span><br><span class="line">var obj = &#123;</span><br><span class="line">  i: 10,</span><br><span class="line">  b: () =&gt; console.log(this.i, this),</span><br><span class="line">  c: function() &#123;</span><br><span class="line">    console.log(this.i, this);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">obj.b(); // prints undefined, Window &#123;...&#125; (or the global object)</span><br><span class="line">obj.c(); // prints 10, Object &#123;...&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>don’t use as <u>function constructor</u>:  because we will use <code>new</code> to construct , which need <code>this</code></p>
-</li>
-<li><p>don’t add <code>prototype</code> to it:  because it doesn’t have <code>this</code></p>
-</li>
-<li><p>don’t use in <code>yeild</code> or <code>generators</code>: </p>
-</li>
-</ol>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3765,7 +3799,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-count">56</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -3965,7 +3999,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">82</span>
+                      
+                    
+                    <span class="site-state-item-count">83</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

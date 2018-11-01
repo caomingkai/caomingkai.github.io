@@ -332,6 +332,972 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/01/VFS-system-call/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/01/VFS-system-call/" itemprop="url">FS - VFS system call</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-01T00:38:52-07:00">2018-04-01</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Courses/" itemprop="url" rel="index"><span itemprop="name">Courses</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/01/VFS-system-call/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/01/VFS-system-call/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="VFS-system-call"><a href="#VFS-system-call" class="headerlink" title="VFS system call"></a>VFS system call</h3><ol>
+<li>Interfaces for specific File Systems, like ramfs, s5fs. </li>
+<li>在Linux中，文件名字没有缀；“file”与“directory”无区别</li>
+<li>所有涉及“绝对路径”最后一级拆分的，会先将trailing “/” 去掉</li>
+<li>lookup()这个函数作用巨大:<ul>
+<li><strong>在dir_inode中，找名字是“name”的entry，并把该entry变为vnode放到result中</strong></li>
+<li><strong>ramfs_lookup =&gt; entry =&gt; vget(entry) =&gt; ramfs_read_vnode(vnode) =&gt; 完整vnode</strong></li>
+<li><strong>VFS-AFS-VFS: “虚、实连接的小能手”</strong></li>
+<li><strong>递归进行name resolution</strong><ul>
+<li>问 parent inode：你是否包含名字为“name”的entry？</li>
+<li>if Yes，把该entry以 child inode的形式返回</li>
+<li>递归进行lookup，直至找到目标name的inode</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>以vn_mode来区别inode的类型** </p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">S_IFDIR  directory   </span><br><span class="line">S_IFREG  regular   </span><br><span class="line">S_IFLNK  symlink  </span><br><span class="line">S_IFCHR  character special  </span><br><span class="line">S_IFBLK  block special</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>为什么 dir_namev() 与 lookup() 一起使用？直接使用open_namev()可以么？？</p>
+</li>
+</ol>
+<h3 id="1-open"><a href="#1-open" class="headerlink" title="1. open"></a>1. open</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">int do_open(const char *filename, int oflags)</span><br><span class="line"></span><br><span class="line">输入：</span><br><span class="line">    user process 传入的 filename</span><br><span class="line">    user process 传入的 oflags: READ | WRITE | APPEND</span><br><span class="line">输出： fd（ 可以是 file／directory ）</span><br><span class="line"></span><br><span class="line">0. 设置 f_mode 有点麻烦：</span><br><span class="line">    - f_mode 由传入的 oflags 的位信息组合而成三种结果：</span><br><span class="line">        + FMODE_READ    1</span><br><span class="line">        + FMODE_WRITE   2</span><br><span class="line">        + FMODE_APPEND  4</span><br><span class="line">    - oflags 有以下必须有以下前三者中一个；</span><br><span class="line">       额外有creat bit、以及status bit</span><br><span class="line">      (只需考虑O_CREAT，O_TRUNC跟随O_CREAT)：</span><br><span class="line">        + O_RDONLY   0</span><br><span class="line">        + O_WRONLY   1</span><br><span class="line">        + O_RDWR     2</span><br><span class="line">        + O_CREAT    0x100 /* Create if non-exist */</span><br><span class="line">        + O_TRUNC    0x200 /* Truncate to 0-length */</span><br><span class="line">        + O_APPEND   0x400   /* Append to file. *／</span><br><span class="line">    - 注意：O_CREAT 不必写到 f_mode 中去；这里的O_CREAT是</span><br><span class="line">           告知 kernel：如没有此文件，帮我创建一个；而新建</span><br><span class="line">           是由 open_namev() 根据 oflags=O_CREAT 执行的</span><br><span class="line">    - 设置 f_mode 流程：</span><br><span class="line">        + 首先，通过“与运算&amp;”，取得oflags 低位的位信息；</span><br><span class="line">        + 若不是 RD/WR/RDWR中的任一个，返回-EINVAL</span><br><span class="line">        + 若合法，则使用 if-else 将后三位确定；</span><br><span class="line">        + 然后，获得高位的位信息，取得creat/status bit</span><br><span class="line">        + 若是 O_APPEND,当前f_mode“或运算|”上O_APPEND位</span><br><span class="line">        + 不必考虑是否为 O_CREAT，open_namev()会检查</span><br><span class="line">        + 如果不是其中任何一个，高位置 “0”</span><br><span class="line">        + 使用 if-else 设置高位信息</span><br><span class="line">1. 获得可用的 fd</span><br><span class="line">2. 获得新的 open_file_conn(kernel全局唯一的open file table)</span><br><span class="line">3. 更新 curproc-&gt;p_file[fd] = open_file_conn</span><br><span class="line">4. 检查 file mode， based on oflags</span><br><span class="line">5. 调用 open_namev(filename, oflags, &amp;vno, NULL)</span><br><span class="line">    - open_namev()调用 path_namev()</span><br><span class="line">    - open_namev()调用 lookup() 通用接口</span><br><span class="line">    - lookup() 通用接口调用 specific FS ramfs_lookup()</span><br><span class="line">    - specific FS ramfs_lookup() 在当前 vnode 下，查找名字是“name”的 vnode，将结果存到result中</span><br><span class="line">    - specific FS ramfs_lookup()找到了该“name”的entry，根据&quot;name:vnode_num&quot; pair，再次调用 vget(vnode_num)</span><br><span class="line">    - vget中会调用ramfs_read_vnode(vnode_t *vn)该vnode的加载完成</span><br><span class="line">    - vget( ) 内部创建一个“半成品”vnode，传入 ramfs_read_vnode( )</span><br><span class="line">    - ramfs_read_vnode( ) 根据具体的file system将该vnode中的所有成员函数、成员变量补充完成</span><br><span class="line">6. 至此，open_namev() 得到的vnode是“活的”、完整的</span><br><span class="line">7. 最后，do_open中将open_conn的vnode指针指向刚刚创建的vnode</span><br><span class="line">     f-&gt;f_vnode = vnode;</span><br></pre></td></tr></table></figure>
+<h3 id="2-read"><a href="#2-read" class="headerlink" title="2. read"></a>2. read</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">int do_read(int fd, void *buf, size_t nbytes)</span><br><span class="line"></span><br><span class="line">输入：</span><br><span class="line">    user process 传入的 fd</span><br><span class="line">    user process 传入的 buf，用以接受从 file 读取的内容</span><br><span class="line">    user process 传入的 nbytes，指明需要读的字节数</span><br><span class="line">输出： 实际读入字节数、or 错误信息</span><br><span class="line"></span><br><span class="line">0. 检查传入参数是否正确</span><br><span class="line">1. 调用 fget(fd) 获得由OS维护的全局唯一的open_conn_table中对应的 file_conn</span><br><span class="line">    - fget()会自动对该file_conn执行refcount++</span><br><span class="line">2. 检查获得的file_conn，是否valid</span><br><span class="line">    - 检查该file是否“可读”：return -EBADF;</span><br><span class="line">    - 检查该file是否是“dir”，而非“data”：return -EISDIR;</span><br><span class="line">3. 通过 file_conn-&gt;f_vnode，获得 vnode_table中的 vnode entry,</span><br><span class="line">4. 调用获得的vnode的 vn_ops(函数指针) 中的对应的 read()</span><br><span class="line">    - 虽然这里的 read() 为抽象的接口，</span><br><span class="line">    - 但是在do_open()的时候specific FS 的read()已实现了该接口</span><br><span class="line">5. 读操作完成后，需要移动 open_conn中的f_pos指针</span><br><span class="line">6. 最后，调用fput()，更新 f_refcount；返回读操作的字节数</span><br></pre></td></tr></table></figure>
+<h3 id="3-write"><a href="#3-write" class="headerlink" title="3. write"></a>3. write</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">int do_write(int fd, const void *buf, size_t nbytes)</span><br><span class="line"></span><br><span class="line">输入： </span><br><span class="line">    user process 传入的 fd</span><br><span class="line">    user process 传入的 buf，用从buf向 file 写数据</span><br><span class="line">    user process 传入的 nbytes，指明需要写的字节数</span><br><span class="line">输出： 实际写字节数、or 错误信息</span><br><span class="line"></span><br><span class="line">0. 检查传入参数是否正确</span><br><span class="line">1. 调用 fget(fd) 获得由OS维护的全局唯一的open_conn_table中对应的 file_conn</span><br><span class="line">    - fget()会自动对该file_conn执行refcount++</span><br><span class="line">2. 检查获得的file_conn，是否valid</span><br><span class="line">    - 检查该file是否“可写”：return -EBADF;</span><br><span class="line">    - 检查该file是否是“dir”，而非“data”：return -EISDIR;</span><br><span class="line">    - 同时应该检查是否为APPEND模式，需要调用do_lseek()重置cursor</span><br><span class="line">3. 通过 file_conn-&gt;f_vnode，获得 vnode_table中的 vnode entry</span><br><span class="line">4. 调用获得的vnode的 vn_ops(函数指针) 中的对应的 write()</span><br><span class="line">    - 虽然这里的 read() 为抽象的接口，</span><br><span class="line">    - 但是在do_open()的时候specific FS 的read()已实现了该接口</span><br><span class="line">5. 写操作完成后，需要移动 open_conn中的f_pos指针</span><br><span class="line">6. 最后，调用fput()，更新 f_refcount； 返回写操作的字节数</span><br></pre></td></tr></table></figure>
+<h3 id="4-close"><a href="#4-close" class="headerlink" title="4. close"></a>4. close</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">输入：user process 传入的 fd</span><br><span class="line">输出： 0-成功；(-EBADF)-失败</span><br><span class="line"></span><br><span class="line">1. 检查传入参数正确性</span><br><span class="line">2. 更新 fd 对应的 open_conn 的信息</span><br><span class="line">    - fput( curproc-&gt;p_files[fd] )</span><br><span class="line">        + f-&gt;f_refcount--;</span><br><span class="line">        + if(f-&gt;f_refcount==0) vput(curproc-&gt;p_files[fd]-&gt;f_vnode)</span><br><span class="line">3. 将该process的fd table中该fd 置为 NULL</span><br><span class="line">4. 返回 0 ：成功</span><br></pre></td></tr></table></figure>
+<h3 id="5-duplicate-a-file-descriptor"><a href="#5-duplicate-a-file-descriptor" class="headerlink" title="5. duplicate a file_descriptor"></a>5. duplicate a file_descriptor</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">int do_dup(int fd)</span><br><span class="line"></span><br><span class="line">输入：user process 传入的 fd</span><br><span class="line">输出： fd   OR  (-EBADF)-失败 </span><br><span class="line"></span><br><span class="line">1. 检查传入参数正确性</span><br><span class="line">2. 获得该 fd 对应的 open_conn</span><br><span class="line">    - file_t *file = fget(fd);</span><br><span class="line">3. 获得下一个可用的 fd</span><br><span class="line">    - availFd = get_empty_fd(curproc);</span><br><span class="line">4. 更新该 process 的 fd table 中 fd 对应的 open_conn</span><br><span class="line">    - curproc-&gt;p_files[availFd] = file;</span><br><span class="line">5. 返回 availFd</span><br></pre></td></tr></table></figure>
+<h3 id="6-duplicate-with-a-designated-file-descriptor"><a href="#6-duplicate-with-a-designated-file-descriptor" class="headerlink" title="6. duplicate with a designated file_descriptor"></a>6. duplicate with a designated file_descriptor</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">int do_dup2(int ofd, int nfd)</span><br><span class="line"></span><br><span class="line">输入：user process 传入的 fd</span><br><span class="line">输出： nfd   OR  (-EBADF)-失败 </span><br><span class="line"></span><br><span class="line">1. 检查传入参数正确性</span><br><span class="line">2. 获得该 fd 对应的 open_conn</span><br><span class="line">    - file_t *file = fget(fd);</span><br><span class="line">3. 检查 nfd</span><br><span class="line">    - 如果 ofd==nfd， 需要fput(file)，因为之前fget()了，  </span><br><span class="line">      导致open_conn的refcount增加了；这里是同一个fd，要再变回去</span><br><span class="line">    - 如果 nfd 在使用中：curproc-&gt;p_files[nfd] != NULL</span><br><span class="line">      那么需要先将nfd原来对应的 open_conn 关了</span><br><span class="line">        + do_close(nfd);</span><br><span class="line">4. curproc-&gt;p_files[nfd] = file;</span><br><span class="line">5. 返回 nfd</span><br></pre></td></tr></table></figure>
+<h3 id="7-mknode"><a href="#7-mknode" class="headerlink" title="7. mknode"></a>7. mknode</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">int do_mknod(const char *path, int mode, unsigned devid)</span><br><span class="line"></span><br><span class="line">输入：path(node的绝对路径) | mode(S_IFCHR／S_IFBLK) |  devid(device identifier 对应该 node)</span><br><span class="line">输出： 0:成功  负数：失败</span><br><span class="line"></span><br><span class="line">1. 检查输入参数的正确性</span><br><span class="line">    - 检查mode，必须只能在 S_IFCHR／S_IFBLK 两者之中取值</span><br><span class="line">    - 检查path，不能超过 path_name 的最大长度</span><br><span class="line">2. 获得该path对应的vnode，通过调用 dir_namev()</span><br><span class="line">    - retval = dir_namev(path,&amp;nameLen,&amp;name,NULL,&amp;dir);</span><br><span class="line">    - 该dir路径不是我们想要驻足操作的地方，只是“瞟一眼”</span><br><span class="line">        + vput(dir)：因为dir_namev()会将dir的refcount++</span><br><span class="line">    - 检查该 path 是否合法；不合法的话提前return</span><br><span class="line">3. 检查最后一级目录(dir)下是否已经有名字为name的目录</span><br><span class="line">    - value_lookup = lookup(dir,name,nameLen,&amp;result);</span><br><span class="line">4. 如果有的话，value_lookup==0，表明最后一级路径不合法</span><br><span class="line">    - vput(result)：因为lookup()会讲result的refcount++</span><br><span class="line">5. 如果没有的话：value_lookup==-ENOENT，这是我们期望的情况：</span><br><span class="line">    - 在当前result directory下调用 specific FS 的 mknod()创建相应node；</span><br><span class="line">    - 返回</span><br><span class="line">6. 【注意】熊的版本</span><br><span class="line">    - vput() 不必写那么麻烦，写在最外层即可</span><br></pre></td></tr></table></figure>
+<h3 id="8-make-directory"><a href="#8-make-directory" class="headerlink" title="8. make directory"></a>8. make directory</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">int do_mkdir(const char *path)</span><br><span class="line"></span><br><span class="line">输入：user process 传入的path(创建的node放在哪)</span><br><span class="line">输出： specific FS的返回值</span><br><span class="line"></span><br><span class="line">1. Use dir_namev() to find the vnode of the dir we want to make the new directory in.  </span><br><span class="line"></span><br><span class="line">2. Then use lookup() to make sure it doesn&apos;t already exist.</span><br><span class="line"></span><br><span class="line">3. Finally call the dir&apos;s mkdir vn_ops. Return what it returns.</span><br></pre></td></tr></table></figure>
+<h3 id="9-remove-directory"><a href="#9-remove-directory" class="headerlink" title="9. remove directory"></a>9. remove directory</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">int do_rmdir(const char *path)</span><br><span class="line"></span><br><span class="line">输入：user process 传入的path(最后一级是要将被删除的)</span><br><span class="line">输出：specific FS的返回值</span><br><span class="line"></span><br><span class="line">0. 删除 directory ( 下一条就是 删除 file )</span><br><span class="line">    - 删除dir的操作是： target dir 的 parent dir 根据 target dir&apos;s name 执行删除操作</span><br><span class="line">    - 不需考虑 target dir是否存在，parent dir的rmdir会handle（如下边的do_unlink()不一样）</span><br><span class="line">1. 调用 dir_namev() 获得path最后一级vnode的parent directory</span><br><span class="line">    - Use dir_namev() to find the vnode of the directory containing the dir to be removed.</span><br><span class="line">2. 检查 dir_namev()的返回值，根据情况处理Error</span><br><span class="line">3. 根据返回的vnode，调用specific FS 的rmdir()</span><br><span class="line">    - call the containing dir&apos;s rmdir() v_op</span><br><span class="line">    - 注意 name 不能是 &quot;.&quot; or &quot;..&quot;</span><br><span class="line">    - 调用 value_remove = dir-&gt;vn_ops-&gt;rmdir(dir, name, namelen);</span><br><span class="line">4. 最后 处理 dir的 refcount</span><br><span class="line">    - vput(dir);</span><br></pre></td></tr></table></figure>
+<h3 id="10-unlink"><a href="#10-unlink" class="headerlink" title="10. unlink"></a>10. unlink</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">int do_unlink(const char *path)</span><br><span class="line"></span><br><span class="line">输入：user process 传入的path(最后的file是要将被删除的)</span><br><span class="line">输出：specific FS的返回值</span><br><span class="line"></span><br><span class="line">0. 删除 file ( 上一条就是 删除 directory )</span><br><span class="line">    - 删除file的操作是： target dir 的 parent dir 根据 target file&apos;s name 执行删除操作</span><br><span class="line">    - 需要考虑 target file是否存在，在调用parent dir的unlink()（如下边的do_rmdir()不一样）</span><br><span class="line">1. 调用 dir = dir_namev() 获得目标 file 的dir；</span><br><span class="line">    - 如果有错误，提前返回</span><br><span class="line">    - 没有错误，vput(dir);</span><br><span class="line">2. 调用 lookup(dir,name,&amp;result)检查 目标file是否存在于该dir下</span><br><span class="line">    - 不存在的话，提前返回</span><br><span class="line">    - 如果该file是一个directory的话，vput(file)，提前返回</span><br><span class="line">3. 根据返回的dir vnode，调用specific FS 的unlink()</span><br><span class="line">    - call the containing dir&apos;s unlink() v_op</span><br><span class="line">4. 最后 处理 dir的 refcount</span><br><span class="line">    - vput(result);</span><br></pre></td></tr></table></figure>
+<h3 id="11-link"><a href="#11-link" class="headerlink" title="11. link"></a>11. link</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">int do_link(const char *from, const char *to)</span><br><span class="line"></span><br><span class="line">【注意1】这里的link是hard link，就是源文件如果删除了，  </span><br><span class="line">那么被hard link的file不会一同消失，复制的文件靠hard link</span><br><span class="line">(即vnode中也存了一个指向硬盘中对应data block的inode的指针)</span><br><span class="line">与硬盘中的inode建立了联系</span><br><span class="line">【注意2】hard link的源文件只能是 file，不能是dir</span><br><span class="line">输入：源文件绝对路径from、目标路径to</span><br><span class="line">输出：0:成功； 负数：失败</span><br><span class="line"></span><br><span class="line">1. 调用open_namev(from)，获得源文件file的 vnode</span><br><span class="line">    - 检查源文件的 vnode，确保是file，不是dir</span><br><span class="line">2. 调用dir_namev(to)，获得目标路径dir，以及银的文件名name</span><br><span class="line">    - value_tolink = dir_namev(to, &amp;namelen, &amp;name, NULL, &amp;to_dir)</span><br><span class="line"></span><br><span class="line">3. 调用 lookup()，检查目标dir下，是否已经存在 名字是name的inode</span><br><span class="line">    - 如果已经存在，提前返回</span><br><span class="line">    - 如果不存在，执行下一步</span><br><span class="line">4. 调用 specific FS 的 link() 操作</span><br><span class="line">    - to_dir -&gt; vn_ops -&gt; link(from_vnode, to_dir, name, namelen)</span><br><span class="line">5. 注意 from_vnode、to_dir 的refcount值</span><br></pre></td></tr></table></figure>
+<h3 id="12-rename"><a href="#12-rename" class="headerlink" title="12. rename"></a>12. rename</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">int do_rename(const char *oldname, const char *newname)</span><br><span class="line"></span><br><span class="line">【注意】这里不是改名字！！而是修改“硬盘文件”在file system中的绝对路径</span><br><span class="line"></span><br><span class="line">输入：旧文件绝对路径oldname、旧文件绝对路径newname</span><br><span class="line">输出：unlink()的返回值</span><br><span class="line"></span><br><span class="line">1. 调用 do_link()，对旧文件建立一个hardlink到新文件</span><br><span class="line">    - 检查hardlink是否创建成功</span><br><span class="line">2. 调用 do_unlink()，将旧文件删除</span><br><span class="line">3. 返回 do_unlink() 的返回值</span><br></pre></td></tr></table></figure>
+<h3 id="13-change-dir"><a href="#13-change-dir" class="headerlink" title="13. change dir"></a>13. change dir</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">int do_chdir(const char *path)</span><br><span class="line"></span><br><span class="line">输入：当前process的新cwd的绝对路径</span><br><span class="line">输出： 0:成功  负值：失败</span><br><span class="line"></span><br><span class="line">【注意】改变current working directory，</span><br><span class="line">       实际上是改变 process中vnode的指针</span><br><span class="line"></span><br><span class="line">1. 调用open_namev()获得新cwd的vnode</span><br><span class="line">    - 检查返回值是否valid</span><br><span class="line">    - 检查该vnode，确保其实dir，非file</span><br><span class="line">2. 更新之前的cwd的refcount</span><br><span class="line">    - vput(curproc-&gt;p_cwd);</span><br><span class="line">3. 更新process 的cwd</span><br><span class="line">    - curproc-&gt;p_cwd = vno;</span><br></pre></td></tr></table></figure>
+<h3 id="14-get-dir-entry"><a href="#14-get-dir-entry" class="headerlink" title="14. get dir entry"></a>14. get dir entry</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">int do_getdent(int fd, struct dirent *dirp)</span><br><span class="line"></span><br><span class="line">- 操作目录：给定文件，依次读取目录到 dirp 中</span><br><span class="line">- 与之前的 read、write直接对文件操作不同，这是对“directory entry”的操作</span><br><span class="line">- 使用场景：搜索第8个目标子目录，对该目录依次调用8次该函数</span><br><span class="line"></span><br><span class="line">输入：fd、dirp（下面的三个信息作为成员变量存在dirp中）</span><br><span class="line">输出：returns the amount that offset should be increased by to obtain the next directory entry with a subsequent call to readdir</span><br><span class="line">【注意0】每个FS的 dir_inode 实际上维护着一个entry array，</span><br><span class="line">        但是总数有上限：RAMFS_MAX_DIRENT；</span><br><span class="line">        因此只要一直调用do_getdent()，有可能读到 NULL值</span><br><span class="line">        即：“没有entry了怎么办？管他呢！一直读。。。”</span><br><span class="line">        [====Oh my god！不是很确定。。。]</span><br><span class="line">        </span><br><span class="line">【注意1】从fd所代表的directory依次读取它里边的entry；</span><br><span class="line">        开始时从头读取entry，信息放到dirp结构体中；</span><br><span class="line">        之后entry的读取起始位置offset，</span><br><span class="line">        会由上一次该函数的调用自动更新f_pos += ent_size;，</span><br><span class="line">        从而实现顺序读取entry的目的</span><br><span class="line">【注意2】这个函数比较叼～</span><br><span class="line">       - 读取到fd对应的inode下的entry的 name（ 不论 file／dir ）</span><br><span class="line">       - 读取到了这个file在硬盘中对应的 entry inode number</span><br><span class="line">       - 读取到该目录下一个 entry的起始offset</span><br><span class="line"></span><br><span class="line">1. 调用fget()获得 open_conn</span><br><span class="line">2. 由open_conn进而获得 vnode</span><br><span class="line">3. 由vnode进而调用 specific FB的 readdir()，获得第一个 entry，存到dirp</span><br></pre></td></tr></table></figure>
+<h3 id="15-lseek"><a href="#15-lseek" class="headerlink" title="15. lseek"></a>15. lseek</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">int do_lseek(int fd, int offset, int whence)</span><br><span class="line"></span><br><span class="line">输入：fd、偏移量offset、从哪里计算偏移whence</span><br><span class="line">输出： 0:成功</span><br><span class="line"></span><br><span class="line">1. 调用 fget() 获得 open_conn</span><br><span class="line">2. 直接对相应的 open_conn进行操作，不需要往下深入到vnode</span><br><span class="line">3. 根据 whence 情况，设定 new_cursor</span><br><span class="line">    - whence==SEEK_SET， new_pos = offset;</span><br><span class="line">    - whence==SEEK_CUR，new_pos = file-&gt;f_pos + offset; </span><br><span class="line">    - whence==SEEK_END，new_pos = file-&gt;f_vnode-&gt;vn_len + offset;</span><br><span class="line">    - else，出错了。fput()</span><br><span class="line">4. 更新open_conn的f_pos、以及refcount</span><br><span class="line">    - file-&gt;f_pos = new_pos;</span><br><span class="line">    - fput(file);</span><br></pre></td></tr></table></figure>
+<h3 id="16-statistic"><a href="#16-statistic" class="headerlink" title="16. statistic"></a>16. statistic</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">int do_stat(const char *path, struct stat *buf)</span><br><span class="line"></span><br><span class="line">输入：需要统计的绝对路径path、用于存储统计信息的stat</span><br><span class="line">输出：specific FS 的stat()返回值</span><br><span class="line"></span><br><span class="line">1. 调用open_namev()，获得该path的vnode</span><br><span class="line">    - open_namev(path, 0,&amp;res_vnode,NULL);</span><br><span class="line">    - 检查返回值</span><br><span class="line">2. 由拿到的 vnode，调用specific FS的stat()</span><br><span class="line">    -  res_vnode-&gt;vn_ops-&gt;stat(res_vnode, buf);</span><br><span class="line">3. 更新res_vnode的refcount</span><br><span class="line">    -  vput(res_vnode);</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/30/Tasks-assignment-Kernel-Virtual-File-System/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/30/Tasks-assignment-Kernel-Virtual-File-System/" itemprop="url">Tasks assignment: Kernel Virtual File System</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-30T01:16:38-07:00">2018-03-30</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Courses/" itemprop="url" rel="index"><span itemprop="name">Courses</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/30/Tasks-assignment-Kernel-Virtual-File-System/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/03/30/Tasks-assignment-Kernel-Virtual-File-System/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Knowledge-frame"><a href="#Knowledge-frame" class="headerlink" title="Knowledge frame"></a>Knowledge frame</h2><p><a href="https://workflowy.com/s/HdnT.WkLWxpmsKu" target="_blank" rel="noopener">Useful Link 1 on <strong><em>Workflowy</em></strong></a> </p>
+<p><a href="https://www.usna.edu/Users/cs/wcbrown/courses/IC221/classes/L09/Class.html" target="_blank" rel="noopener">Useful Link 2 on <strong><em>USNA</em></strong></a>   </p>
+<img src="/2018/03/30/Tasks-assignment-Kernel-Virtual-File-System/file_system_big_pic.png">
+<img src="/2018/03/30/Tasks-assignment-Kernel-Virtual-File-System/3_tables.jpg">
+<img src="/2018/03/30/Tasks-assignment-Kernel-Virtual-File-System/OFT.jpg">
+<h2 id="Tasks-allocation"><a href="#Tasks-allocation" class="headerlink" title="Tasks allocation"></a>Tasks allocation</h2><h4 id="1-vnode-c"><a href="#1-vnode-c" class="headerlink" title="1. vnode.c"></a>1. vnode.c</h4><pre><code>A: special_file_read()
+A: special_file_write()
+</code></pre><h4 id="2-name-c"><a href="#2-name-c" class="headerlink" title="2. name.c"></a>2. name.c</h4><pre><code>A: lookup()
+A: dir_namev()
+A: open_namev()
+</code></pre><h4 id="3-open-c"><a href="#3-open-c" class="headerlink" title="3. open.c"></a>3. open.c</h4><pre><code>A: do_open()
+</code></pre><h4 id="4-vfs-syscall-c"><a href="#4-vfs-syscall-c" class="headerlink" title="4. vfs_syscall.c"></a>4. vfs_syscall.c</h4><pre><code>A: do_close()
+
+B: do_read()
+B: do_write()
+B: do_dup()
+B: do_dup2()
+
+C: do_mknod()
+C: do_mkdir()
+C: do_rmdir()
+C: do_unlink()
+C: do_link()
+
+D: do_rename()
+D: do_chdir()
+D: do_getdent()
+D: do_lseek()
+D: do_stat()
+</code></pre><h4 id="5-main-c"><a href="#5-main-c" class="headerlink" title="5. main.c"></a>5. main.c</h4><pre><code>idleproc_run() ：2 
+</code></pre><h4 id="6-proc-c"><a href="#6-proc-c" class="headerlink" title="6. proc.c"></a>6. proc.c</h4><pre><code>proc_create()
+</code></pre>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/28/Tiny-URL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/28/Tiny-URL/" itemprop="url">Tiny URL</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-28T11:14:49-07:00">2018-03-28</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Portfolios/" itemprop="url" rel="index"><span itemprop="name">Portfolios</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/28/Tiny-URL/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/03/28/Tiny-URL/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="I-Introduction"><a href="#I-Introduction" class="headerlink" title="I. Introduction"></a>I. Introduction</h2><p>A MEAN stack Single Page Application, providing:</p>
+<ol>
+<li>URL shortening service</li>
+<li>Traffic statistics collecting service</li>
+</ol>
+<p>Tech stacks: <strong>AngularJS, Node.js, Express, MongoDB, Redis, Nginx, Docker</strong></p>
+<p>Github: <a href="https://github.com/caomingkai/URL-shortening-service" target="_blank" rel="noopener">https://github.com/caomingkai/URL-shortening-service</a></p>
+<p><a href="https://tinyurl-199300.appspot.com/#/" target="_blank" rel="noopener"><br>    <img src="/2018/03/28/Tiny-URL/tinyURL.png" title="This is an image"><br></a></p>
+<h2 id="II-Work-flow"><a href="#II-Work-flow" class="headerlink" title="II. Work flow"></a>II. Work flow</h2><h4 id="1-Users-come-to-the-app-webpage"><a href="#1-Users-come-to-the-app-webpage" class="headerlink" title="1. Users come to the app webpage"></a>1. Users come to the app webpage</h4><ul>
+<li>Browser send GET request with original URL to server</li>
+<li>Server sends index.html to clients</li>
+<li>Browser get the index.html with script in the head tag.<br><code>&lt;script src=&#39;angularJS library &#39;&gt; &lt;script src=&#39;app.js&#39;&gt; &lt;script src=&#39;/public/js/controllers/homeController.js&#39;&gt;</code></li>
+<li>Browser again sends request for angularJS library/ js controller files to different servers</li>
+<li>when browser encounter ‘ng-view’, it automatically turn to ‘ng-router’, ask for its view and controller; Again, sends corresponding GET request to fetch sub-view files</li>
+<li>while browser parse the controller js file, it might do AJAX request to fetch information from server.</li>
+</ul>
+<h4 id="2-Users-use-the-shortening-service"><a href="#2-Users-use-the-shortening-service" class="headerlink" title="2. Users use the shortening service"></a>2. Users use the shortening service</h4><ul>
+<li>Input longURL in the input box, and click ‘submit’</li>
+<li>‘submit’ fires the onclick funcion to do 2 things:<ul>
+<li>send the longURL to specified URL, ie. POST  to localhost/api/v1/urls<br><code>NOTICE: This url is specifically used for rendering short/long URL</code></li>
+<li>send the longURL to specified URL, ie. POST  to localhost/api/v1/urls<br><code>NOTICE: this step is executed after app server responds the POST request in the first step with the calculated shortURL</code></li>
+</ul>
+</li>
+<li>App server first receive the POST request with longURL, do 2 things: call the urlService to calculate the shortURL, store long/short URL pair in MongoDB;send back the shortURL to the app webpage.<br><code>NOTICE: the shortURL should consist different prefix compared with the current app URL. Because it is create for outside users. So the shortURL should not prefix with /api/v1/.., but with just &#39;/:shortUrl&#39;</code></li>
+<li>After the app webpage getting shortURL, it renders new subview using url.html; Meanwhile, it needs to know the its original longURL for display.</li>
+<li>Again, in the url.html subview, it sends GET request to the app server to get the longURL<br>Notice: This step could be simplified by just passing the longURL from the first subview to the second subview creating a service or using the $rootScop</li>
+<li>Now, in the new subview, the longURL and shortURL pair can be displayed</li>
+</ul>
+<h4 id="3-Visitors-browse-the-shortURL"><a href="#3-Visitors-browse-the-shortURL" class="headerlink" title="3. Visitors browse the shortURL"></a>3. Visitors browse the shortURL</h4><ul>
+<li>the shortURL is just clicked from various browsers/ machines/ from different IP/ countries, at different time</li>
+<li>when shortURL is clicked, it sends GET request ‘localhost/:shortUrl’ to the app server.</li>
+<li>the app sever call the urlService to get the longURL from the shortURL, and redirect users to the original long URL</li>
+</ul>
+<h4 id="4-Traffic-statistics-Info"><a href="#4-Traffic-statistics-Info" class="headerlink" title="4. Traffic statistics Info"></a>4. Traffic statistics Info</h4><ul>
+<li>We want to record the total number of clicks / their browsers/ machine brands/ their IP/ countries/ timestamp. And display them in the app webpage.</li>
+<li>So first we need add more elements in the url.html subview in the frontend; And update those information in the backend.<ul>
+<li>updating the info each time the shortURL is clicked. And then store them in the MongoDB</li>
+<li>when app webpage is clicked, make AJAX call to the app server, let it get the info from MongoDB, and then send back to frontend</li>
+</ul>
+</li>
+<li>Since all these clicks directly send GET request to ‘localhost/:shortURL’, which is handled by redirect.js. Thus, we here need a statistic service to update these info.</li>
+<li>Here we need the one of Express modules: Express-useragent to extract the information from the request</li>
+<li>In the statistic service, we use the express-useragent to get the info, and then store them in the MongoDB database with a new schema.</li>
+</ul>
+<h2 id="III-Nginx"><a href="#III-Nginx" class="headerlink" title="III. Nginx"></a>III. Nginx</h2><h4 id="Reverse-Proxy"><a href="#Reverse-Proxy" class="headerlink" title="Reverse Proxy"></a>Reverse Proxy</h4><ul>
+<li>(正向)代理forward proxy: 在client与internet之间，替client访问internet的计算机<ul>
+<li>路由器就是一个forward proxy，外网看不到路由器之后的计算机，但是计算机可以看到外边</li>
+<li>翻墙服务器</li>
+</ul>
+</li>
+<li>(反向)代理:在server与internet之间，替server接受internet访问的计算机</li>
+</ul>
+<h4 id="Features"><a href="#Features" class="headerlink" title="Features"></a>Features</h4><ul>
+<li>Hide Original server<br>“安全”</li>
+<li>application firewall</li>
+<li>SSL termination: “加密不需要server进行，反向代理可以代为计算以减轻server压力”</li>
+<li>Load balance<ol>
+<li>round robin<br>“optionally weighted”</li>
+<li>least connected<br>“optionally weighted”</li>
+<li>IP hash<br>“1~200: server a; 201~400: server b”</li>
+<li>Generic Hash<br>“based on devices/ client locations”</li>
+<li>Least time (nginx plux)<br>“optionally weighted”</li>
+</ol>
+</li>
+<li>Cache<ul>
+<li>GET 都可以cache</li>
+<li>即便是动态列表也进行cache，因为实际生活的改变不会比nginx的处理快 “1s <---> 100000 request/s”</---></li>
+<li>POST不能cache</li>
+</ul>
+</li>
+<li>Compression(gzip)<br>“减小网络传输量: 用reverse proxy/ browser 的CPU为代价”</li>
+<li>不宕机进行配置改变／升级</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/27/News-Recommendation-using-Wed-Mining/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/27/News-Recommendation-using-Wed-Mining/" itemprop="url">News Recommendation using Wed Mining</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-27T15:02:08-07:00">2018-03-27</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Portfolios/" itemprop="url" rel="index"><span itemprop="name">Portfolios</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/27/News-Recommendation-using-Wed-Mining/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/03/27/News-Recommendation-using-Wed-Mining/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="I-Introduction"><a href="#I-Introduction" class="headerlink" title="I. Introduction"></a>I. Introduction</h2><p>An internet-based news aggregator, providing hot news scraping on popular news sources, with recommendation feature based on users’ preference with the help of Machine Learning.</p>
+<p><strong>#Github</strong>: <a href="https://github.com/caomingkai/News_Recommendation_System" target="_blank" rel="noopener">https://github.com/caomingkai/News_Recommendation_System</a>  </p>
+<p><strong>Pull it and run it with Shell script!</strong></p>
+<ul>
+<li><strong>Firstly, run <code>./launcher.sh</code>:</strong><ul>
+<li>run redis</li>
+<li>run mongoDB locally</li>
+<li>start recommendation service(python)</li>
+<li>start backend service(phython)</li>
+<li>start web-server service(Node.js + ReactJS)</li>
+</ul>
+</li>
+<li><strong>Secondly, run <code>./news_pipeline_launcher.sh</code>:</strong><ul>
+<li>run redis</li>
+<li>run mongoDB locally</li>
+<li>install python requirements</li>
+<li>start news_topic_modeling_service (python Machine Learning)</li>
+<li>start news collecting service(data pipeline + web scraping)</li>
+</ul>
+</li>
+</ul>
+<h2 id="II-Tech-stack"><a href="#II-Tech-stack" class="headerlink" title="II. Tech stack:"></a>II. Tech stack:</h2><ul>
+<li><strong>Front end:  React, Express, Node.js, OAuth</strong><ul>
+<li>Built a responsive single-page web application for users to browse news (React, Node.js, RPC, SOA, JWT)</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><strong>Back end: Python RPC, MongoDB, Redis, RabbitMQ</strong><ul>
+<li>Service Oriented, multiple backends serving via JSON RPC</li>
+<li>Implemented a data pipeline which monitors, scrapes and deduplicates news</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><strong>News recommendation system: Tensorflow, DNN, NLP</strong><ul>
+<li>Designed and built an offline training pipeline for news topic modeling</li>
+<li>Deployed an online classifying service for news topic modeling using trained model</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><strong>News topic classifying system: TF-IDF, NLP, RabbitMQ</strong><ul>
+<li>Implemented a click event log processor which collects users’ click logs, updated a news model for each user</li>
+</ul>
+</li>
+</ul>
+<p><strong>Chart1: Login Page with Authentication</strong><br><img src="/2018/03/27/News-Recommendation-using-Wed-Mining/loginPage.png" title="This is an image"></p>
+<p><strong>Chart2: News feed page</strong><br><img src="/2018/03/27/News-Recommendation-using-Wed-Mining/newsPage.png" title="This is an image"></p>
+<h2 id="III-System-structure"><a href="#III-System-structure" class="headerlink" title="III. System structure:"></a>III. System structure:</h2><ol>
+<li><strong>Front end tier</strong>: React &amp; Node.js</li>
+<li><strong>Back end tier</strong>: providing RPC API for communication among different tiers</li>
+<li><strong>News recommendation system</strong>: time decay algorithm</li>
+<li><strong>News topic classifying system</strong>: Tensorflow with 2-layer CNN model for classification</li>
+<li><strong>data pipeline</strong>: get news sources<ul>
+<li>News monitor: gets news from News.API</li>
+<li>News scraper: web scraper</li>
+<li>News deduper: news TF-IDF deduplication</li>
+</ul>
+</li>
+</ol>
+<p><strong>Chart 3: System with Machine Learning module</strong><br><img src="https://github.com/caomingkai/News_Recommendation_System/raw/master/with%20ML%20topic%20classification1.png" alt="chart"></p>
+<p><strong>Chart 4: System with Recommendation module</strong><br><img src="https://github.com/caomingkai/News_Recommendation_System/raw/master/with%20Recommendation%20module.png" alt="chart"></p>
+<p><strong>Chart 5: Service dependency</strong><br><img src="https://github.com/caomingkai/News_Recommendation_System/raw/master/chart.jpg" alt="chart"></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/27/Facebook-Custom-Search/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/27/Facebook-Custom-Search/" itemprop="url">Facebook Custom Search</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-27T12:32:37-07:00">2018-03-27</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Portfolios/" itemprop="url" rel="index"><span itemprop="name">Portfolios</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/27/Facebook-Custom-Search/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/03/27/Facebook-Custom-Search/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="I-Introduction"><a href="#I-Introduction" class="headerlink" title="I. Introduction"></a>I. Introduction</h2><p>An application for both web-version and IOS-version, supported by PHP-based server on AWS EC2, allows searching, displaying and posting information on Facebook.</p>
+<p>Tech stacks: <strong>AngularJS, Bootstrp, PHP, AWS EC2, Swift, Cocoa</strong></p>
+<p><strong>Github web</strong>: <a href="https://github.com/caomingkai/FaceBook-custom-Search-Web-App" target="_blank" rel="noopener">https://github.com/caomingkai/FaceBook-custom-Search-Web-App</a></p>
+<p><strong>Github IOS</strong>: <a href="https://github.com/caomingkai/FaceBook-custom-Search-Web-App" target="_blank" rel="noopener">https://github.com/caomingkai/FaceBook-custom-Search-Web-App</a></p>
+<p><a href="http://default-environment.twp33krzmp.us-west-1.elasticbeanstalk.com/index.html" target="_blank" rel="noopener"><br>    <img src="/2018/03/27/Facebook-Custom-Search/FB.png" title="This is an image"><br></a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/27/eCommerce-Website-Design/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1231,7 +2197,7 @@ mid = (left + right + 1) &gt;&gt;1
 <li>使用let声明的变量，其作用域为该语句所在的代码块内，不存在变量提升；</li>
 <li>使用const声明的是常量，在后面出现的代码中不能再修改该常量的值。但是其作用域为该语句所在的代码块内，因此不同的blcok可以继续定义同一个名字的const</li>
 </ul>
-<p><strong>var变量的局部作用域是函数级别的：使用区域上至函数头、下至函数尾</strong></p>
+<p><strong>1. var变量的局部作用域是函数级别的：使用区域上至函数头、下至函数尾</strong></p>
 <ul>
 <li>不同于 C 语言，在 C 中，作用域是块级别的。 JavaScript 中var变量没有块级作用域。</li>
 <li>let变量作用域是块级的</li>
@@ -1240,7 +2206,22 @@ mid = (left + right + 1) &gt;&gt;1
   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">		<span class="keyword">var</span> value = <span class="string">"hello world"</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">console</span>.log(i); <span class="comment">//输出10</span></span><br><span class="line">	<span class="built_in">console</span>.log(value);<span class="comment">//输出hello world</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo();</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h2 id="IV-闭包：closure"><a href="#IV-闭包：closure" class="headerlink" title="IV 闭包：closure"></a>IV 闭包：closure</h2><ul>
+<p><strong>2. For Loop: <code>var</code> vs <code>let</code></strong></p>
+<ul>
+<li><p><code>var</code> declaring a variable in the head of a for loop creates a single binding (storage space) for that variable:</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">    arr.push(<span class="function"><span class="params">()</span> =&gt;</span> i);</span><br><span class="line">&#125;</span><br><span class="line">arr.map(<span class="function"><span class="params">x</span> =&gt;</span> x()); <span class="comment">// [3,3,3]</span></span><br></pre></td></tr></table></figure>
+<p>  Every <code>i</code> in the bodies of the three arrow functions refers to the same binding, which is why they all return the same value.</p>
+</li>
+<li><p>If you <code>let</code> declare a variable, <strong><u>a new binding is created for each loop iteration</u></strong>:</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i=<span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">    arr.push(<span class="function"><span class="params">()</span> =&gt;</span> i);</span><br><span class="line">&#125;</span><br><span class="line">arr.map(<span class="function"><span class="params">x</span> =&gt;</span> x()); <span class="comment">// [0,1,2]</span></span><br></pre></td></tr></table></figure>
+<p>  This time, each <code>i</code> refers to the binding of one specific iteration and preserves the value that was current at that time. Therefore, each arrow function returns a different value.</p>
+</li>
+<li><p>const works like var, but you can’t change the initial value of a const-declared variable:</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// TypeError: Assignment to constant variable</span></span><br><span class="line"><span class="comment">// (due to i++)</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> i=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<pre><code>Getting a fresh binding for each iteration may seem strange at first, but it is very useful whenever you use loops to create functions that refer to loop variables, as explained in a later section.
+</code></pre><h2 id="IV-闭包：closure"><a href="#IV-闭包：closure" class="headerlink" title="IV 闭包：closure"></a>IV 闭包：closure</h2><ul>
 <li>使内部函数可以访问定义在外部函数中的变量（常见于函数式编程）</li>
 <li>假如我们要实现一系列的函数：add10，add20，它们的定义是 int add10(int n)。</li>
 <li><p>为此我们构造了一个名为 adder 的构造器，如下：</p>
@@ -1505,503 +2486,11 @@ mid = (left + right + 1) &gt;&gt;1
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/23/React-Learning/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/23/React-Learning/" itemprop="url">React Learning</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-23T12:23:00-08:00">2017-12-23</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/12/23/React-Learning/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2017/12/23/React-Learning/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="0-组件数据流-Model-gt-View"><a href="#0-组件数据流-Model-gt-View" class="headerlink" title="0. 组件数据流: Model -&gt; View"></a>0. 组件数据流: Model -&gt; View</h2><ul>
-<li><p>父组件M -&gt; 子组件V</p>
-<ul>
-<li>父组件prop 之间传给 子组件 prop</li>
-</ul>
-</li>
-<li><p>子组件M -&gt; 父组件V</p>
-<ul>
-<li>回调函数<ul>
-<li>父组件向子组件传递回调函数</li>
-<li>JS中，function是一等公民，因此传入的值会作为自身field保存起来；与C／Java不同。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>sibling 组件间传值 M-&gt;V<ul>
-<li>必须依靠二者共同父组件来传递<ul>
-<li>但等组件之间的关系越来越复杂时候，这种依靠父组件作为中间人传值方式 would be a mess！</li>
-<li>Redux comes into picture</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="1-双向绑定-Model-View"><a href="#1-双向绑定-Model-View" class="headerlink" title="1. 双向绑定: Model  View"></a>1. 双向绑定: Model <-> View</-></h2><ul>
-<li>通过绑定<code>&lt;input&gt;</code>的 <code>onChange()</code> 监视 View的变换</li>
-<li>在 onChange Handler中更新组件的值，完成 View =&gt; Model 的数据流。</li>
-</ul>
-<h2 id="2-React-生命周期"><a href="#2-React-生命周期" class="headerlink" title="2. React 生命周期"></a>2. React 生命周期</h2><ul>
-<li>Mount<ul>
-<li>constructor()</li>
-<li>componentWillMount()</li>
-<li>render()</li>
-<li>componentDidMount()</li>
-</ul>
-</li>
-<li>Update<ul>
-<li>componentWillReceiveProps(): 将接收新的props</li>
-<li>shouldComponentUpdate(): 是否应该被更新？</li>
-<li>componentWillUpdate(): 组件即将更新</li>
-<li>render(): 组件被渲染</li>
-<li>componentDidUpdate(): 组件完成更新</li>
-</ul>
-</li>
-<li>Unmount<ul>
-<li>componentWillUnmount(): 组件被卸载前做一些数据清楚哦给你做</li>
-</ul>
-</li>
-</ul>
-<h2 id="3-Depedency"><a href="#3-Depedency" class="headerlink" title="3. Depedency"></a>3. Depedency</h2><ul>
-<li>In <code>&lt;head&gt;</code>, we needs three <code>&lt;script&gt;</code> in order to use React, that is, “react.js”,”react-dom.js”,”browser.min.js”</li>
-<li><p>In <code>&lt;body&gt;</code> where we manipulate JSX, we use a special <code>&lt;script type=&quot;text/babel&quot; &gt;</code>, whose typel is “text/babel”</p>
-</li>
-<li><p>In order to make faster rendering at client-side, use “ $ babel src –out-dir build “, parsing all JSX file at directory ‘src’ into javascript files at directory ‘build’, where browser could recognize.</p>
-</li>
-</ul>
-<h2 id="4-ReactDOM-render"><a href="#4-ReactDOM-render" class="headerlink" title="4. ReactDOM.render();"></a>4. ReactDOM.render();</h2><ul>
-<li>what? :It is a basic method used everywhere</li>
-<li>converting JSX into HTML;</li>
-<li>inserting HTML at specified DOM point</li>
-</ul>
-<h2 id="5-JSX"><a href="#5-JSX" class="headerlink" title="5. JSX"></a>5. JSX</h2><ul>
-<li><p>what?<br>JavaScript XML </p>
-</li>
-<li><p>“logic” + “view”</p>
-<ul>
-<li>not spring (no quotes “” )</li>
-<li>not HTML ( more of XML )</li>
-<li>support “tag + expression”</li>
-</ul>
-</li>
-<li><p>How to parse?</p>
-<ul>
-<li>for tags (begin with “&lt;”), parse as HTML</li>
-<li>for code block(begin with “{“), parse as JavaScript</li>
-</ul>
-</li>
-</ul>
-<h2 id="6-JSX-can-contain-tag-array"><a href="#6-JSX-can-contain-tag-array" class="headerlink" title="6. JSX can contain tag array"></a>6. JSX can contain tag array</h2><p>JSX can unfold all tag in a array</p>
-<h2 id="7-Component"><a href="#7-Component" class="headerlink" title="7. Component"></a>7. Component</h2><ul>
-<li>what? A component is function,</li>
-<li>accepting “input”(props), </li>
-<li><p>returnnig “view”(HTML tag)</p>
-</li>
-<li><p>How to create a component?</p>
-<ol>
-<li><p>functional component</p>
- <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 因为不是class概念，只是方程式，因此直接使用props，不使用this前缀</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Welcome</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, &#123;props.name&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> element = <span class="xml"><span class="tag">&lt;<span class="name">Welcome</span> <span class="attr">name</span>=<span class="string">"Sara"</span> /&gt;</span>;</span></span><br><span class="line"><span class="xml">ReactDOM.render(</span></span><br><span class="line"><span class="xml">    element,</span></span><br><span class="line"><span class="xml">    document.getElementById('root')</span></span><br><span class="line"><span class="xml">);</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>class component</p>
- <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 注意：必须加前缀：this；这样才能取到绑定在Welcome上的props</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Welcome</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, &#123;this.props.name&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> element = <span class="xml"><span class="tag">&lt;<span class="name">Welcome</span> <span class="attr">name</span>=<span class="string">"Sara"</span> /&gt;</span>;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-</ul>
-<ul>
-<li><p>Notice</p>
-<ul>
-<li>If a group of tags don’t need its own props or states, just declare it as <em>const</em>, rather than component. [ see demo14 &amp; demo14-2]</li>
-<li>Component should have no more than one top tag</li>
-</ul>
-</li>
-</ul>
-<h2 id="8-this-props-children"><a href="#8-this-props-children" class="headerlink" title="8. this.props.children"></a>8. this.props.children</h2><ul>
-<li><p>what?</p>
-<p> All the properties of a Component belongs to its correspoinding HTML element, except “props.children”, which represent components’ children</p>
-</li>
-<li><p>possible types for children</p>
-<ul>
-<li>undefined, if no child at all;</li>
-<li>object, if only have one child;</li>
-<li>array, if have multiple children;</li>
-</ul>
-</li>
-<li><p>How to traverse properly without error?</p>
-<p>  use React.Children to ensure validity</p>
-</li>
-</ul>
-<h2 id="9-Composing-Components"><a href="#9-Composing-Components" class="headerlink" title="9. Composing Components"></a>9. Composing Components</h2><ul>
-<li><p>What?</p>
-<ul>
-<li>A button, a form, a dialog, a screen: in React apps, all those are commonly expressed as components.</li>
-<li>On the other hand, we typically have an ‘App’ component at the top level</li>
-<li><em>Best Practice:</em> start from bottom-up, work along to the top level</li>
-</ul>
-</li>
-<li><p>How?</p>
-<p>  Reuse components just like “li” in “ul”</p>
-</li>
-</ul>
-<h2 id="10-Extracting-Components"><a href="#10-Extracting-Components" class="headerlink" title="10. Extracting Components"></a>10. Extracting Components</h2><ul>
-<li>What?<br>  Split components into smaller components, to achieve more flexibility and reusability.</li>
-<li>How?<ul>
-<li>Split by functionality</li>
-<li>One component can contain multiple sub-components</li>
-</ul>
-</li>
-</ul>
-<h2 id="11-State-like-‘props’"><a href="#11-State-like-‘props’" class="headerlink" title="11. State (like ‘props’)"></a>11. State (like ‘props’)</h2><ul>
-<li>Purpose? <ul>
-<li>A non-static component, has its own “state”</li>
-</ul>
-</li>
-<li>What?<ul>
-<li>Actually it’s like pros, but “state” is private to component class, compared to “props”</li>
-</ul>
-</li>
-<li>How?<ul>
-<li>Use “state” in render(), when state changed, React will can render again.</li>
-<li>Must use a <strong>Class Component</strong>, rather than <strong>function component</strong>.</li>
-</ul>
-</li>
-<li>Diff<ul>
-<li>this.props(<em>public:passed-in</em>) 表示那些一旦定义，就不再改变的特性</li>
-<li>this.state(<em>private:built-in</em>)是会随着用户互动而产生变化的特性。</li>
-<li>both are belongs to <strong>this</strong>.</li>
-</ul>
-</li>
-<li>Constructor of component class<ul>
-<li>First, always call <strong>super(props):</strong></li>
-<li>Second, set <strong>this.state=…;</strong></li>
-</ul>
-</li>
-</ul>
-<h2 id="12-Adding-Lifecycle-Methods-to-a-Class"><a href="#12-Adding-Lifecycle-Methods-to-a-Class" class="headerlink" title="12. Adding Lifecycle Methods to a Class"></a>12. Adding Lifecycle Methods to a Class</h2><ul>
-<li>purpose: In order to save CPU and memory</li>
-<li><p>what involved?</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">componentDidMount()</span><br><span class="line">componentWillUnmount()</span><br><span class="line">setState()</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>About setState()?</p>
-<p>  Do Not Modify State Directly=&gt;instead using <strong>setState()</strong><br>  State Updates May Be Asynchronous=&gt; instead,again using setState() with its another form: use a function accepting ‘provState’ as it passed-in parameter to set the state</p>
-</li>
-<li><p>How?: work flow</p>
-<ol>
-<li>When <clock> is passed to ReactDOM.render(), React calls the constructor of the Clock component. Since Clock needs to display the current time, it initializes this.state with an object including the current time. We will later update this state.</clock></li>
-<li>React then calls the Clock component’s render() method. This is how React learns what should be displayed on the screen. React then updates the DOM to match the Clock’s render output.</li>
-<li>When the Clock output is inserted in the DOM, React calls the componentDidMount() lifecycle hook. Inside it, the Clock component asks the browser to set up a timer to call the component’s tick() method once a second.</li>
-<li>Every second the browser calls the tick() method. Inside it, the Clock component schedules a UI update by calling setState() with an object containing the current time. Thanks to the setState() call, React knows the state has changed, and calls the render() method again to learn what should be on the screen. This time, this.state.date in the render() method will be different, and so the render output will include the updated time. React updates the DOM accordingly.</li>
-<li>If the Clock component is ever removed from the DOM, React calls the componentWillUnmount() lifecycle hook so the timer is stopped.</li>
-</ol>
-</li>
-<li><p>state: parent &amp; children ?</p>
-<ol start="0">
-<li>state is isolated among components </li>
-<li>Parent and Child shall not know if the other is stateful of stateless.</li>
-<li>But there is a way for parent to pass down its own state to its children, by using <strong>‘props’</strong></li>
-</ol>
-</li>
-</ul>
-<h2 id="13-Events"><a href="#13-Events" class="headerlink" title="13. Events"></a>13. Events</h2><ul>
-<li><p>What?<br>Substitute addEventListener(): to add listeners to a DOM element after it is created.</p>
-</li>
-<li><p>Diff ( virtual DOM vs. real DOM)</p>
-<ul>
-<li>React events are named using camelCase, rather than lowercase.</li>
-<li>With JSX you pass a function as the event handler, rather than a string. 统一采用expression表达方法，写在’{}’中<ul>
-<li>button onClick={activateLasers}</li>
-<li>button onclick=”activateLasers()”</li>
-</ul>
-</li>
-<li><p>Cannot return false to prevent default behavior in React. You must call preventDefault explicitly</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ActionLink</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">handleClick</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    e.preventDefault();</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'The link was clicked.'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;a href=<span class="string">"#"</span> onClick=&#123;handleClick&#125;&gt;</span><br><span class="line">      Click me</span><br><span class="line">    &lt;<span class="regexp">/a&gt;</span></span><br><span class="line"><span class="regexp">  );</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>be carefull with ‘e’ &amp; ‘this’</p>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="14-Conditional-Rendering"><a href="#14-Conditional-Rendering" class="headerlink" title="14. Conditional Rendering"></a>14. Conditional Rendering</h2><ul>
-<li><p>what?</p>
-<p>  display optionally between several components, based on a <em>state variable</em></p>
-</li>
-<li><p>How?</p>
-<p> Have two <em>button components</em> as child_component of a parent component, toggling state of parent component, then resulting in another <em>display component</em> shows up or hide away. [see demo14]</p>
-</li>
-</ul>
-<h2 id="15-List-and-keys"><a href="#15-List-and-keys" class="headerlink" title="15. List and keys"></a>15. List and keys</h2><ul>
-<li><p>What?</p>
-<ul>
-<li>Array can produce a list of ‘li’, by using <em>map()</em> function.</li>
-<li>‘Keys’ help React identify which items have changed, are added, or are removed. Keys should be given to the elements inside the array, in order to give the elements a stable identity</li>
-</ul>
-</li>
-<li><p>Where to put ‘keys’?</p>
-<p>  A good rule of thumb is that elements inside the map() call need keys.</p>
-</li>
-</ul>
-<h2 id="16-Forms-gt-controlled-component"><a href="#16-Forms-gt-controlled-component" class="headerlink" title="16. Forms -&gt; controlled component"></a>16. Forms -&gt; controlled component</h2><ul>
-<li><p>What ?</p>
-<ul>
-<li>Let React <strong>“state”</strong> be the “single source of truth”。<br>用React的state来保存form的用户输入</li>
-<li><p>With a controlled component, every state mutation will have an associated handler function. This makes it straightforward to modify or validate user input. </p>
-  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">handleChange(event) &#123;</span><br><span class="line">	<span class="keyword">this</span>.setState(&#123;<span class="attr">value</span>: event.target.value.toUpperCase()&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>Which ?</p>
-<ol>
-<li><p>input element <---> state &amp; state_handler</---></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=&quot;text&quot; value=&#123;this.state.value&#125; onChange=&#123;this.handleChange&#125; /&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>textarea <---> state &amp; state_handler</---></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;textarea value=&#123;this.state.value&#125; onChange=&#123;this.handleChange&#125; /&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>select <---> state &amp; state_handler[similar to above ones: has its own “value” props]</---></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;select value=&#123;this.state.value&#125; onChange=&#123;this.handleChange&#125;&gt;</span><br><span class="line">// notice: &apos;value&apos; in &lt;select&gt; is not &apos;value&apos; in &lt;option&gt;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-<li><p>Handling Multiple Inputs</p>
-<p> add a name attribute to each element and let the handler function choose what to do based on the value of event.target.name.</p>
-</li>
-</ul>
-<h2 id="17-Lifting-State-Up-share-state-among-components-in-their-parent-component"><a href="#17-Lifting-State-Up-share-state-among-components-in-their-parent-component" class="headerlink" title="17. Lifting State Up ( share state among components in their parent component )"></a>17. Lifting State Up ( <strong>share state</strong> among components in their parent component )</h2><p>Sharing state is accomplished by moving it up to the closest common ancestor of the components that need it. This is called <strong>“lifting state up”</strong>. </p>
-<ul>
-<li><p>How</p>
-<ol>
-<li>parent component maintains several <strong>state variables</strong></li>
-<li>child componnets receive parent’s <strong>state &amp;&amp; functions</strong> as their own <strong>props</strong> ( function can be passed to children component )</li>
-<li>when children get updated, it will call parent’s function, and modify parent’s state, thus leading to re-rendering all its children components</li>
-</ol>
-</li>
-<li><p>Work flow<br>Let’s recap what happens when you edit an input:</p>
-<ol>
-<li><p>React calls the function specified as onChange on the DOM <input>. In our case, this is the handleChange method in TemperatureInput component</p>
-</li>
-<li><p>The handleChange method in the TemperatureInput component calls this.props.onTemperatureChange() with the new desired value. Its props, including onTemperatureChange, were provided by its parent component, the Calculator</p>
-</li>
-<li><p>When it previously rendered, the Calculator has specified that onTemperatureChange of the Celsius TemperatureInput is the Calculator’s handleCelsiusChange method, and onTemperatureChange of the Fahrenheit TemperatureInput is the Calculator’s handleFahrenheitChange method. So either of these two Calculator methods gets called depending on which input we edited</p>
-</li>
-<li><p>Inside these methods, the Calculator component asks React to re-render itself by calling this.setState() with the new input value and the current scale of the input we just edited.</p>
-</li>
-<li><p>React calls the Calculator component’s render method to learn what the UI should look like. The values of both inputs are recomputed based on the current temperature and the active scale. The temperature conversion is performed here</p>
-</li>
-<li><p>React calls the render methods of the individual TemperatureInput components with their new props specified by the Calculator. It learns what their UI should look like</p>
-</li>
-<li><p>React DOM updates the DOM to match the desired input values. The input we just edited receives its current value, and the other input is updated to the temperature after conversion.</p>
-</li>
-</ol>
-</li>
-</ul>
-<h2 id="18-Composition-vs-Inheritance"><a href="#18-Composition-vs-Inheritance" class="headerlink" title="18. Composition vs Inheritance"></a>18. Composition vs Inheritance</h2><ul>
-<li><p>What?</p>
-<p>  React prefer composition model, instead of inheritance, to reuse code between components.</p>
-</li>
-<li><p>How?</p>
-<p>  Pass <strong>components</strong> to props just like <strong>data</strong>.</p>
-</li>
-<li><p>Inheritance via “Composition”?</p>
-<p>  For example, we might say that a WelcomeDialog is a special case of Dialog.<br>  This can be achieved by composition, where a more “specific” component renders a more “generic” one and configures it with props:</p>
-  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Dialog</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;FancyBorder color=<span class="string">"blue"</span>&gt;</span><br><span class="line">      &lt;h1 className=<span class="string">"Dialog-title"</span>&gt;</span><br><span class="line">        &#123;props.title&#125;</span><br><span class="line">      &lt;<span class="regexp">/h1&gt;</span></span><br><span class="line"><span class="regexp">      &lt;p className="Dialog-message"&gt;</span></span><br><span class="line"><span class="regexp">        &#123;props.message&#125;</span></span><br><span class="line"><span class="regexp">      &lt;/</span>p&gt;</span><br><span class="line">    &lt;<span class="regexp">/FancyBorder&gt;</span></span><br><span class="line"><span class="regexp">  );</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp">function WelcomeDialog() &#123;</span></span><br><span class="line"><span class="regexp">  return (</span></span><br><span class="line"><span class="regexp">    &lt;Dialog</span></span><br><span class="line"><span class="regexp">      title="Welcome"</span></span><br><span class="line"><span class="regexp">      message="Thank you for visiting our spacecraft!" /</span>&gt;</span><br><span class="line"></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="19-Summary"><a href="#19-Summary" class="headerlink" title="19. Summary"></a>19. Summary</h2><h4 id="Steps-to-build-a-React-App"><a href="#Steps-to-build-a-React-App" class="headerlink" title="Steps to build a React App"></a>Steps to build a React App</h4><ul>
-<li><p>Step 1: Break The UI Into A Component Hierarchy</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- FilterableProductTable</span><br><span class="line">	- SearchBar</span><br><span class="line">	- ProductTable</span><br><span class="line">		+ ProductCategoryRow</span><br><span class="line">		+ ProductRow</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Step 2: Build A Static Version in React (more typing, less thinking)</p>
-<ul>
-<li>build components that reuse other components and pass data using props.</li>
-<li>don’t use state at all to build this static version</li>
-</ul>
-</li>
-<li><p>Step 3: Identify The Minimal (but complete) Representation Of UI State</p>
-<ul>
-<li>To make your UI interactive, you need to be able to trigger changes to your underlying data model. React makes this easy with <strong>state</strong>.</li>
-<li>Determine if a data is state by asking three questions:<ul>
-<li>Is it passed in from a parent via props? If so, it probably isn’t state.</li>
-<li>Does it remain unchanged over time? If so, it probably isn’t state.</li>
-<li>Can you compute it based on any other state or props in your component? If so, it isn’t state.</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Step 4: Identify Where Your State Should Live(more thinking, less typing)</p>
-<ul>
-<li>Identify every component that renders something based on that state. </li>
-<li>Find a common owner component (a single component above all the components that need the state in the hierarchy).</li>
-<li>Either the common owner or another component higher up in the hierarchy should own the state.</li>
-<li>If you can’t find a component where it makes sense to own the state, create a new component simply for holding the state and add it somewhere in the hierarchy above the common owner component.As for the example:<ul>
-<li>ProductTable needs to filter the product list based on state and + SearchBar needs to display the search text and checked state.</li>
-<li>The common owner component is FilterableProductTable.</li>
-<li>It conceptually makes sense for the filter text and checked value to live in FilterableProductTable</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Step 5: Add Inverse Data Flow</p>
-<ul>
-<li>What?<ul>
-<li>逻辑流：从上到下（ child components depends on <strong>state</strong> of parent component ）</li>
-<li>数据流：从下到上（ <strong>state</strong> of parent component, get value from child component ）</li>
-</ul>
-</li>
-<li>Example<ul>
-<li>support data flowing the other way: the form components deep in the hierarchy need to update the state in FilterableProductTable.</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span>
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -2048,7 +2537,7 @@ mid = (left + right + 1) &gt;&gt;1
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">56</span>
+                    <span class="site-state-item-count">61</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2250,7 +2739,37 @@ mid = (left + right + 1) &gt;&gt;1
                     
                       
                     
-                    <span class="site-state-item-count">83</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">98</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

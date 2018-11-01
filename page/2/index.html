@@ -332,6 +332,520 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/08/Stack-Queue-Implementation-using-JS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/08/Stack-Queue-Implementation-using-JS/" itemprop="url">Stack & Queue Implementation using JS</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-08T22:08:58-07:00">2018-10-08</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/08/Stack-Queue-Implementation-using-JS/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/08/Stack-Queue-Implementation-using-JS/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Stack"><a href="#Stack" class="headerlink" title="Stack"></a>Stack</h2><ol>
+<li><p>interfaces:</p>
+<ul>
+<li><code>stack.size</code></li>
+<li><code>stack.peek()</code></li>
+<li><code>stack.push</code></li>
+<li><code>stack.pop()</code></li>
+<li><code>stack.isEmpty()</code></li>
+<li><code>stack.clear()</code></li>
+</ul>
+</li>
+<li><p>implementation: </p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * Note: this version use `null` as Error symbol,</span></span><br><span class="line"><span class="comment"> *		 so you cannot push null into the stack</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Stack</span></span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>()&#123; <span class="keyword">this</span>.data = [] &#125;</span><br><span class="line">    </span><br><span class="line">    get size()&#123; <span class="keyword">return</span> <span class="keyword">this</span>.data.length &#125;</span><br><span class="line">    </span><br><span class="line">    isEmpty()&#123;  <span class="keyword">return</span> <span class="keyword">this</span>.data.length === <span class="number">0</span> &#125;</span><br><span class="line">    </span><br><span class="line">    peek()&#123; <span class="keyword">return</span> <span class="keyword">this</span>.data[<span class="keyword">this</span>.data.length<span class="number">-1</span>] &#125;</span><br><span class="line">    </span><br><span class="line">    push(item)&#123;</span><br><span class="line">        <span class="keyword">if</span>( <span class="keyword">typeof</span> item ===<span class="string">"undefined"</span> || item === <span class="literal">null</span> ) <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        <span class="keyword">this</span>.data.push(item)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    pop(item)&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>.data.length === <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.data.pop();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    clear()&#123; <span class="keyword">this</span>.data = [] &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* ---- Testing  ---- */</span></span><br><span class="line"><span class="keyword">let</span> s = <span class="keyword">new</span> Stack()</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>,s.size)  		<span class="comment">// 0</span></span><br><span class="line"><span class="built_in">console</span>.log(s.pop())  		<span class="comment">// null</span></span><br><span class="line"><span class="built_in">console</span>.log(s.push())  		<span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(s.push(<span class="literal">null</span>))  	<span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(s.push(<span class="number">1</span>))  	<span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(s.push(<span class="number">1</span>))  	<span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>,s.size)  		<span class="comment">// 2</span></span><br><span class="line"><span class="built_in">console</span>.log(s.push(<span class="number">2</span>))  	<span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>,s.size)  		<span class="comment">// 3</span></span><br><span class="line"><span class="built_in">console</span>.log(s.pop())  		<span class="comment">// 2</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>, s.size)  		<span class="comment">// 2</span></span><br><span class="line"><span class="built_in">console</span>.log(s.pop())  		<span class="comment">// 1</span></span><br><span class="line"><span class="built_in">console</span>.log(s.pop())  		<span class="comment">// 1</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>, s.size)  		<span class="comment">// 0</span></span><br><span class="line"><span class="built_in">console</span>.log(s.pop())  		<span class="comment">// null</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>, s.size)  		<span class="comment">// 0</span></span><br><span class="line"><span class="built_in">console</span>.log(s.isEmpty())   <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="Queue"><a href="#Queue" class="headerlink" title="Queue"></a>Queue</h2><ol>
+<li><p>interfaces:</p>
+<ul>
+<li><code>queue.size</code></li>
+<li><code>queue.peek()</code></li>
+<li><code>queue.push</code></li>
+<li><code>queue.pop()</code></li>
+<li><code>queue.isEmpty()</code></li>
+<li><code>queue.clear()</code></li>
+</ul>
+</li>
+<li><p>implementation:</p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * Note: this version can add any object into Queue</span></span><br><span class="line"><span class="comment"> *		 But need to call `isEmpty()` when necessary</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Queue</span></span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>()&#123; <span class="keyword">this</span>.items = []  &#125;</span><br><span class="line">    </span><br><span class="line">    get size()&#123; <span class="keyword">return</span> <span class="keyword">this</span>.items.length; &#125;</span><br><span class="line">    </span><br><span class="line">    isEmpty()&#123; <span class="keyword">return</span> <span class="keyword">this</span>.items.length === <span class="number">0</span> &#125;</span><br><span class="line">    </span><br><span class="line">    offer(item)&#123; <span class="keyword">this</span>.items.push(item) &#125;</span><br><span class="line">    </span><br><span class="line">    poll()&#123; <span class="keyword">return</span> <span class="keyword">this</span>.items.shift() &#125;</span><br><span class="line">    </span><br><span class="line">    peek()&#123; <span class="keyword">return</span> <span class="keyword">this</span>.items[<span class="number">0</span>] &#125;</span><br><span class="line">    </span><br><span class="line">    clear()&#123; <span class="keyword">this</span>.items = [] &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* ---- Testing  ---- */</span></span><br><span class="line"><span class="keyword">let</span> q = <span class="keyword">new</span> Queue()</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>, q.size)<span class="comment">// 0</span></span><br><span class="line"><span class="built_in">console</span>.log(q.offer(<span class="literal">null</span>))  </span><br><span class="line"><span class="built_in">console</span>.log(q.offer(<span class="literal">null</span>))  </span><br><span class="line"><span class="built_in">console</span>.log(q.items)	  			<span class="comment">// [null, null]</span></span><br><span class="line"><span class="built_in">console</span>.log(q.offer(<span class="number">1</span>))  </span><br><span class="line"><span class="built_in">console</span>.log(q.items)	  			<span class="comment">// [null, null, 1]</span></span><br><span class="line"><span class="built_in">console</span>.log(q.poll())  		<span class="comment">// null</span></span><br><span class="line"><span class="built_in">console</span>.log(q.offer(<span class="number">2</span>))  	<span class="comment">// [null, 1, 2]</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>,q.size)<span class="comment">// 3</span></span><br><span class="line"><span class="built_in">console</span>.log(q.poll())  	</span><br><span class="line"><span class="built_in">console</span>.log(q.items)	  			<span class="comment">// [1, 2]</span></span><br><span class="line"><span class="built_in">console</span>.log(q.poll())  		<span class="comment">// 1</span></span><br><span class="line"><span class="built_in">console</span>.log(q.items)	  			<span class="comment">// [2]</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>, q.size)<span class="comment">// 1</span></span><br><span class="line"><span class="built_in">console</span>.log(q.poll())  		 <span class="comment">// 2</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>, q.size)<span class="comment">// 0</span></span><br><span class="line"><span class="built_in">console</span>.log(q.isEmpty())     <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/08/How-to-implement-auto-complete/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/08/How-to-implement-auto-complete/" itemprop="url">How to implement auto-complete?</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-08T20:13:10-07:00">2018-10-08</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/08/How-to-implement-auto-complete/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/08/How-to-implement-auto-complete/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="I-Logic"><a href="#I-Logic" class="headerlink" title="I. Logic"></a>I. Logic</h2><ol>
+<li>For each <code>input</code>, wait 500ms to make API call, to load 40 items</li>
+<li><code>scroll</code> down close to bottom ( less than 20px left ), make API call to load another 40 items</li>
+<li>could add local <code>cache</code>, to speed up response</li>
+</ol>
+<h2 id="II-code"><a href="#II-code" class="headerlink" title="II. code"></a>II. code</h2><ol>
+<li><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css"><span class="selector-id">#wrapper</span> &#123;</span></span><br><span class="line"><span class="undefined">    margin-top: 10px;</span></span><br><span class="line"><span class="undefined">    overflow: auto;</span></span><br><span class="line"><span class="undefined">    width: 250px;</span></span><br><span class="line"><span class="undefined">    display: inline-block;</span></span><br><span class="line"><span class="undefined">    border: 1px solid red;</span></span><br><span class="line"><span class="undefined">    overflow: hidden;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="css"><span class="selector-class">.listWrapper</span>&#123;</span></span><br><span class="line"><span class="undefined">	border: 1px solid blue;</span></span><br><span class="line"><span class="undefined">    height: 200px;</span></span><br><span class="line"><span class="undefined">    width: 140px;</span></span><br><span class="line"><span class="undefined">    overflow: auto;</span></span><br><span class="line"><span class="undefined">    scroll: auto;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"wrapper"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">"inputText"</span> /&gt;</span> </span><br><span class="line">      <span class="tag">&lt;<span class="name">button</span>&gt;</span>submit<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">	</span></span><br><span class="line"><span class="javascript">    <span class="keyword">let</span> body = <span class="built_in">document</span>.getElementsByTagName(<span class="string">"BODY"</span>)[<span class="number">0</span>]</span></span><br><span class="line"><span class="javascript">    <span class="keyword">let</span> data = <span class="built_in">Array</span>.from(&#123;<span class="attr">length</span>: <span class="number">40</span>&#125;, () =&gt; <span class="string">"recommdation"</span>+<span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * <span class="number">40</span>));</span></span><br><span class="line"><span class="undefined">    </span></span><br><span class="line"><span class="javascript">	<span class="keyword">const</span> API = <span class="string">"https://www.demo.com/potentialList"</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">let</span> isFetching = <span class="literal">false</span>  <span class="comment">// used for scroll</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">let</span> isEnd = <span class="literal">false</span>		<span class="comment">// used for scroll</span></span></span><br><span class="line"><span class="undefined">    </span></span><br><span class="line"><span class="undefined">    </span></span><br><span class="line"><span class="javascript">    <span class="comment">// create new element below &lt;input&gt; inside div wrapper. For both 'input' &amp; 'scroll'</span></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">appendList</span>(<span class="params">elementCollection, wrapper, isScroll</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">if</span>(isScroll)&#123;</span></span><br><span class="line"><span class="javascript">        	<span class="keyword">let</span> listWrapper = <span class="built_in">document</span>.getElementsByClassName(<span class="string">"listWrapper"</span>)[<span class="number">0</span>]</span></span><br><span class="line"><span class="javascript">            data.forEach( <span class="function"><span class="params">ele</span>=&gt;</span>&#123;</span></span><br><span class="line"><span class="javascript">                <span class="keyword">let</span> itemNode = <span class="built_in">document</span>.createElement(<span class="string">"DIV"</span>)</span></span><br><span class="line"><span class="javascript">                <span class="keyword">let</span> textNode = <span class="built_in">document</span>.createTextNode(ele)</span></span><br><span class="line"><span class="undefined">                itemNode.appendChild(textNode)</span></span><br><span class="line"><span class="undefined">                listWrapper.appendChild(itemNode)</span></span><br><span class="line"><span class="undefined">            &#125;)</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span></span></span><br><span class="line"><span class="undefined">    	&#125;</span></span><br><span class="line"><span class="undefined">        </span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> oldlistWrapper = <span class="built_in">document</span>.getElementsByClassName(<span class="string">"listWrapper"</span>)</span></span><br><span class="line"><span class="javascript">        <span class="keyword">if</span>(oldlistWrapper.length &gt; <span class="number">0</span>)&#123;</span></span><br><span class="line"><span class="undefined">          wrapper.removeChild(oldlistWrapper[0])</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="javascript">    	<span class="keyword">let</span> listWrapper = <span class="built_in">document</span>.createElement(<span class="string">"DIV"</span>)</span></span><br><span class="line"><span class="javascript">    	listWrapper.setAttribute(<span class="string">"class"</span>, <span class="string">"listWrapper"</span>)</span></span><br><span class="line"><span class="javascript">    	<span class="keyword">let</span> list = <span class="built_in">Array</span>.prototype.slice.call(elementCollection)</span></span><br><span class="line"><span class="javascript">        data.forEach( <span class="function"><span class="params">ele</span>=&gt;</span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">let</span> itemNode = <span class="built_in">document</span>.createElement(<span class="string">"DIV"</span>)</span></span><br><span class="line"><span class="javascript">            <span class="keyword">let</span> textNode = <span class="built_in">document</span>.createTextNode(ele)</span></span><br><span class="line"><span class="undefined">            itemNode.appendChild(textNode)</span></span><br><span class="line"><span class="undefined">            listWrapper.appendChild(itemNode)</span></span><br><span class="line"><span class="undefined">        &#125;)</span></span><br><span class="line"><span class="javascript">        listWrapper.addEventListener(<span class="string">"click"</span>, putToInput)</span></span><br><span class="line"><span class="javascript">        listWrapper.addEventListener(<span class="string">"scroll"</span>, scrollHandler)</span></span><br><span class="line"><span class="undefined">        wrapper.appendChild(listWrapper)</span></span><br><span class="line"><span class="undefined">        </span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    </span></span><br><span class="line"><span class="undefined">    </span></span><br><span class="line"><span class="javascript">    <span class="comment">// onclick callback for items provided</span></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">putToInput</span>(<span class="params">e</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">    	<span class="keyword">let</span> input = <span class="built_in">document</span>.getElementById(<span class="string">"inputText"</span>)</span></span><br><span class="line"><span class="javascript">    	<span class="keyword">let</span> wrapper = <span class="built_in">document</span>.getElementById(<span class="string">"wrapper"</span>)</span></span><br><span class="line"><span class="javascript">    	<span class="keyword">let</span> listWrapper = <span class="built_in">document</span>.getElementsByClassName(<span class="string">"listWrapper"</span>)[<span class="number">0</span>]</span></span><br><span class="line"><span class="undefined">        input.value = e.target.innerHTML</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(e.target)</span></span><br><span class="line"><span class="undefined">        wrapper.removeChild(listWrapper)</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    </span></span><br><span class="line"><span class="undefined">    </span></span><br><span class="line"><span class="javascript">    <span class="comment">// make API call</span></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">makeAPICall</span>(<span class="params">API, val, isScroll</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">      <span class="built_in">console</span>.log(<span class="string">"val: "</span>, val)</span></span><br><span class="line"><span class="javascript">      <span class="comment">// 1. first check local cache</span></span></span><br><span class="line"><span class="undefined">        </span></span><br><span class="line"><span class="javascript">      <span class="comment">// 2. hit fail, call API</span></span></span><br><span class="line"><span class="javascript">      <span class="keyword">let</span> ajax = <span class="keyword">new</span> XMLHttpRequest()</span></span><br><span class="line"><span class="javascript">      ajax.open(<span class="string">"GET"</span>, <span class="string">"https://www.w3schools.com/js/ajax_info.txt"</span>, <span class="literal">true</span>)</span></span><br><span class="line"><span class="javascript">      ajax.onreadystatechange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">if</span>(<span class="keyword">this</span>.readyState === <span class="number">4</span> &amp;&amp; <span class="keyword">this</span>.status === <span class="number">200</span> )&#123;</span></span><br><span class="line"><span class="javascript">          <span class="built_in">console</span>.log(<span class="keyword">this</span>.responseText)</span></span><br><span class="line"><span class="javascript">          <span class="keyword">let</span> parser = <span class="keyword">new</span> DOMParser()</span></span><br><span class="line"><span class="javascript">          <span class="keyword">let</span> a = parser.parseFromString(<span class="keyword">this</span>.responseText, <span class="string">"text/html"</span>)</span></span><br><span class="line"><span class="javascript">          <span class="built_in">console</span>.log(a)</span></span><br><span class="line"><span class="javascript">          <span class="keyword">let</span> body = a.getElementsByTagName(<span class="string">"BODY"</span>)[<span class="number">0</span>]</span></span><br><span class="line"><span class="javascript">          <span class="keyword">let</span> wrapper = <span class="built_in">document</span>.getElementById(<span class="string">"wrapper"</span>)</span></span><br><span class="line"><span class="javascript">          <span class="keyword">if</span>(val.localeCompare(<span class="string">"scroll made request"</span>)===<span class="number">0</span>)&#123;</span></span><br><span class="line"><span class="javascript">          	isFetching = <span class="literal">false</span></span></span><br><span class="line"><span class="undefined">          &#125;</span></span><br><span class="line"><span class="undefined">          appendList(data, wrapper, isScroll)</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">      ajax.send()</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    </span></span><br><span class="line"><span class="javascript">    <span class="comment">// scroll handler for listWrapper</span></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">scrollHandler</span>(<span class="params">e</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">    	<span class="keyword">let</span> listWrapper = e.target</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> boxHeight = listWrapper.clientHeight</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> scrollTop = listWrapper.scrollTop</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> scrollHeight = listWrapper.scrollHeight</span></span><br><span class="line"><span class="undefined">        </span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> remainder = scrollHeight - scrollTop</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> diff = remainder - boxHeight</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">"box height: "</span>, boxHeight)</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">"scrollTop: "</span>, scrollTop)</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">"scrollHeight: "</span>, scrollHeight)</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">"diff: "</span>, diff)</span></span><br><span class="line"><span class="undefined">        </span></span><br><span class="line"><span class="javascript">        <span class="keyword">if</span>( diff &lt; <span class="number">20</span> &amp;&amp; !isFetching &amp;&amp; !isEnd )&#123;</span></span><br><span class="line"><span class="javascript">        	isFetching = <span class="literal">true</span></span></span><br><span class="line"><span class="javascript">        	makeAPICall(API, <span class="string">"scroll made request"</span>, <span class="literal">true</span>)</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    </span></span><br><span class="line"><span class="javascript">	<span class="comment">// debounce 500ms to make API call</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">let</span> timeHandler = <span class="literal">null</span></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">inputHandler</span>(<span class="params">e</span>)</span>&#123;</span></span><br><span class="line"><span class="undefined">    	clearTimeout(timeHandler)</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> val = e.target.value</span></span><br><span class="line"><span class="javascript">    	timeHandler = setTimeout( <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;makeAPICall(API, <span class="string">"keypress made request"</span>, <span class="literal">false</span>)&#125; ,<span class="number">500</span> )</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    </span></span><br><span class="line"><span class="javascript">	<span class="keyword">let</span> input = <span class="built_in">document</span>.getElementById(<span class="string">"inputText"</span>)</span></span><br><span class="line"><span class="javascript">    addEventListener(<span class="string">"input"</span>, inputHandler)</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/07/Search-for-a-Symmetric-Node/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/07/Search-for-a-Symmetric-Node/" itemprop="url">Search for a Symmetric Node</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-07T20:34:30-07:00">2018-10-07</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/07/Search-for-a-Symmetric-Node/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/07/Search-for-a-Symmetric-Node/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h2><p>Given two DOM trees with the same structure, and one node in tree1, try to find its symmetric node in tree2</p>
+<h2 id="Solution-1"><a href="#Solution-1" class="headerlink" title="Solution 1"></a>Solution 1</h2><p>If we are not so familiar with DOM API, we might forget there is an attribute for each DOM element: <code>parentNode</code>. Then we might just traverse both trees at the same time, when we encounter the node in tree1, the node in tree2 is what we want.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getSymmetricNode</span>(<span class="params">target, root1, root2</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>( target === root1 ) <span class="keyword">return</span> root2</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">0</span>; i &lt; root1.childNodes.length; i++ )&#123;</span><br><span class="line">        <span class="keyword">let</span> node1 = root1.childNodes[i]     </span><br><span class="line">        <span class="keyword">let</span> node2 = root2.childNodes[i]</span><br><span class="line">        <span class="keyword">if</span>( node1 === target ) <span class="keyword">return</span> node2</span><br><span class="line">		getSymmetricNode(target, node1, node2 )</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>Time Complexity: <strong>O(b^d)  [d: depth, b: branches]</strong>, which is BAD!</li>
+</ol>
+<h2 id="Solution-2-Improved"><a href="#Solution-2-Improved" class="headerlink" title="Solution 2 [Improved ]"></a>Solution 2 [Improved ]</h2><p>Actually there is an convenient attribute we could utilize, that is <code>parentNode</code></p>
+<ol>
+<li>First, we could go up to find that <u><strong>path</strong> from root1 to target</u><ul>
+<li>The path is consist of indices of node on that path</li>
+</ul>
+</li>
+<li>Using that path of indices, we could go downwards from root2 to find the desired node</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> getSymmetricNode = <span class="function">(<span class="params">target, root1, root2</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> path = getIndexPath( target, root1 )</span><br><span class="line">    <span class="keyword">return</span> getNode( path, root2 )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> getIndexPath = <span class="function">(<span class="params">target, root1</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> path = []</span><br><span class="line">    <span class="keyword">let</span> curNode = target</span><br><span class="line">    <span class="keyword">while</span>( curNode &amp;&amp; curNode.parentNode )&#123;</span><br><span class="line">        <span class="keyword">let</span> index = curNode.parentNode.indexOf(curNode)</span><br><span class="line">        path.push(index)</span><br><span class="line">        curNode = curNode.parentNode</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> path</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> getNode =<span class="function">(<span class="params">path, root</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> node</span><br><span class="line">    <span class="keyword">while</span>( path.length &gt; <span class="number">0</span> )&#123;</span><br><span class="line">        node = root.childNodes[path.pop()]</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> node</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Testing"><a href="#Testing" class="headerlink" title="Testing"></a>Testing</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line">// Testing</span><br><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Hello World<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"root1"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"node1"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"root2"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"node2"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="javascript">      <span class="comment">// --------------- 1: O(b^d) --------------</span></span></span><br><span class="line"><span class="javascript">      <span class="function"><span class="keyword">function</span> <span class="title">getSymmetricNode1</span>(<span class="params">target, root1, root2</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">if</span>( target === root1 ) <span class="keyword">return</span> root2</span></span><br><span class="line"><span class="javascript">          <span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">0</span>; i &lt; root1.childNodes.length; i++ )&#123;</span></span><br><span class="line"><span class="javascript">              <span class="keyword">let</span> node1 = root1.childNodes[i]     </span></span><br><span class="line"><span class="javascript">              <span class="keyword">let</span> node2 = root2.childNodes[i]</span></span><br><span class="line"><span class="javascript">              <span class="keyword">let</span> res = getSymmetricNode1(target, node1, node2)</span></span><br><span class="line"><span class="javascript">              <span class="keyword">if</span>( <span class="literal">null</span> !== res ) <span class="keyword">return</span> res</span></span><br><span class="line"><span class="undefined">                </span></span><br><span class="line"><span class="undefined">          &#125;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">return</span> <span class="literal">null</span></span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="javascript">      <span class="comment">// -------------- 2: O(b*d) ---------------</span></span></span><br><span class="line"><span class="javascript">      <span class="function"><span class="keyword">function</span> <span class="title">getSymmetricNode</span>(<span class="params">target, root1, root2</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">let</span> path = getIndexPath( target, root1 )</span></span><br><span class="line"><span class="javascript">          <span class="keyword">return</span> getNode( path, root2 )</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">      <span class="function"><span class="keyword">function</span> <span class="title">getChildNodesArray</span>(<span class="params">node</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> <span class="built_in">Array</span>.prototype.slice.call(node.childNodes)</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="javascript">      <span class="function"><span class="keyword">function</span> <span class="title">getIndexPath</span>(<span class="params">target, root1</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">let</span> path = []</span></span><br><span class="line"><span class="javascript">          <span class="keyword">let</span> curNode = target</span></span><br><span class="line"><span class="javascript">          <span class="keyword">while</span>( curNode !==root1 &amp;&amp; curNode &amp;&amp; curNode.parentNode )&#123;</span></span><br><span class="line"><span class="javascript">              <span class="keyword">let</span> index = getChildNodesArray(curNode.parentNode).indexOf(curNode)</span></span><br><span class="line"><span class="undefined">              path.push(index)</span></span><br><span class="line"><span class="undefined">              curNode = curNode.parentNode</span></span><br><span class="line"><span class="undefined">          &#125;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">return</span> path</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="javascript">      <span class="function"><span class="keyword">function</span> <span class="title">getNode</span>(<span class="params">path, root</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">let</span> node = root</span></span><br><span class="line"><span class="javascript">          <span class="keyword">while</span>( path.length &gt; <span class="number">0</span> )&#123;</span></span><br><span class="line"><span class="undefined">              node = getChildNodesArray(node)[path.pop()]</span></span><br><span class="line"><span class="undefined">          &#125;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">return</span> node</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">      <span class="keyword">const</span> root1 = <span class="built_in">document</span>.getElementById(<span class="string">'root1'</span>);</span></span><br><span class="line"><span class="javascript">      <span class="keyword">const</span> root2 = <span class="built_in">document</span>.getElementById(<span class="string">'root2'</span>);</span></span><br><span class="line"><span class="javascript">      <span class="keyword">const</span> node1 = <span class="built_in">document</span>.getElementById(<span class="string">'node1'</span>);</span></span><br><span class="line"><span class="javascript">      <span class="keyword">const</span> node2 = <span class="built_in">document</span>.getElementById(<span class="string">'node2'</span>);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">      <span class="keyword">const</span> nodeX = getSymmetricNode(node1, root1, root2 );</span></span><br><span class="line"><span class="javascript">      <span class="built_in">console</span>.log(nodeX)</span></span><br><span class="line"><span class="javascript">      <span class="built_in">console</span>.log(nodeX === node2); <span class="comment">// true</span></span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/07/Design-Pattern-JS/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -956,7 +1470,7 @@
 <li><p>consider accessibility</p>
 </li>
 </ol>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">// 1. Mouse is not over the picture</span><br><span class="line">+-------------+</span><br><span class="line">|             |</span><br><span class="line">|             |</span><br><span class="line">|   picture   |</span><br><span class="line">|             |</span><br><span class="line">|             |</span><br><span class="line">+-------------+</span><br><span class="line"></span><br><span class="line">// 2. Mouse is anywhere over picture</span><br><span class="line">+--------+----+</span><br><span class="line">|        |edit| <span class="tag">&lt;<span class="name">---</span> <span class="attr">links</span> <span class="attr">to</span> /<span class="attr">edit.php</span></span></span><br><span class="line"><span class="tag">|        +<span class="attr">----</span>+      <span class="attr">icon</span> <span class="attr">url:</span> /<span class="attr">edit_icon.png</span></span></span><br><span class="line"><span class="tag">|   <span class="attr">picture</span>   |</span></span><br><span class="line">|             | &lt;--- links to /profile.php</span><br><span class="line">|             |      picture url: /profile_pic.png 来源一亩.三分地论坛. </span><br><span class="line">+-------------+</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">      <span class="selector-class">.imgWrapper</span>&#123;</span></span><br><span class="line"><span class="undefined">        width: 100px;</span></span><br><span class="line"><span class="undefined">        height: 100px;</span></span><br><span class="line"><span class="undefined">        border: 1px solid red;</span></span><br><span class="line"><span class="undefined">        position: relative;</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="css">      <span class="selector-id">#image1</span>&#123;</span></span><br><span class="line"><span class="undefined">        width: 100%;</span></span><br><span class="line"><span class="undefined">        height: 100%;</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="css">      <span class="selector-id">#image2</span>&#123;</span></span><br><span class="line"><span class="undefined">        position: absolute;</span></span><br><span class="line"><span class="undefined">        top: 0;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">right</span><span class="selector-pseudo">:0</span>;</span></span><br><span class="line"><span class="undefined">        width: 50px;</span></span><br><span class="line"><span class="undefined">        height: 50px;</span></span><br><span class="line"><span class="undefined">        display: none;</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="css">      <span class="selector-class">.imgWrapper</span><span class="selector-pseudo">:hover</span> <span class="selector-id">#image2</span>&#123;</span></span><br><span class="line"><span class="undefined">        display: block;</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"imgWrapper"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://stackoverflow.com/questions/1827965/is-putting-a-div-inside-an-anchor-ever-correct"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">"image1"</span> <span class="attr">src</span>=<span class="string">"https://www.w3schools.com/html/pic_trulli.jpg"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">        </span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://developer.mozilla.org/en-US/docs/Learn/Accessibility"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">"image2"</span> <span class="attr">src</span>=<span class="string">"https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/UniversalEditButton3.png/220px-UniversalEditButton3.png"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">// 1. Mouse is not over the picture</span><br><span class="line">+-------------+</span><br><span class="line">|             |</span><br><span class="line">|             |</span><br><span class="line">|   picture   |</span><br><span class="line">|             |</span><br><span class="line">|             |</span><br><span class="line">+-------------+</span><br><span class="line"></span><br><span class="line">// 2. Mouse is anywhere over picture</span><br><span class="line">+--------+----+</span><br><span class="line">|        |edit| <span class="tag">&lt;<span class="name">---</span> <span class="attr">links</span> <span class="attr">to</span> /<span class="attr">edit.php</span></span></span><br><span class="line"><span class="tag">|        +<span class="attr">----</span>+      <span class="attr">icon</span> <span class="attr">url:</span> /<span class="attr">edit_icon.png</span></span></span><br><span class="line"><span class="tag">|   <span class="attr">picture</span>   |</span></span><br><span class="line">|             | &lt;--- links to /profile.php</span><br><span class="line">|             |      picture url: /profile_pic.png </span><br><span class="line">+-------------+</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">      <span class="selector-class">.imgWrapper</span>&#123;</span></span><br><span class="line"><span class="undefined">        width: 100px;</span></span><br><span class="line"><span class="undefined">        height: 100px;</span></span><br><span class="line"><span class="undefined">        border: 1px solid red;</span></span><br><span class="line"><span class="undefined">        position: relative;</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="css">      <span class="selector-id">#image1</span>&#123;</span></span><br><span class="line"><span class="undefined">        width: 100%;</span></span><br><span class="line"><span class="undefined">        height: 100%;</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="css">      <span class="selector-id">#image2</span>&#123;</span></span><br><span class="line"><span class="undefined">        position: absolute;</span></span><br><span class="line"><span class="undefined">        top: 0;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">right</span><span class="selector-pseudo">:0</span>;</span></span><br><span class="line"><span class="undefined">        width: 50px;</span></span><br><span class="line"><span class="undefined">        height: 50px;</span></span><br><span class="line"><span class="undefined">        display: none;</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="css">      <span class="selector-class">.imgWrapper</span><span class="selector-pseudo">:hover</span> <span class="selector-id">#image2</span>&#123;</span></span><br><span class="line"><span class="undefined">        display: block;</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"imgWrapper"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://stackoverflow.com/questions/1827965/is-putting-a-div-inside-an-anchor-ever-correct"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">"image1"</span> <span class="attr">src</span>=<span class="string">"https://www.w3schools.com/html/pic_trulli.jpg"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">        </span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://developer.mozilla.org/en-US/docs/Learn/Accessibility"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">"image2"</span> <span class="attr">src</span>=<span class="string">"https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/UniversalEditButton3.png/220px-UniversalEditButton3.png"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <h2 id="Flex-Layout"><a href="#Flex-Layout" class="headerlink" title="Flex Layout"></a>Flex Layout</h2><ol>
 <li><p>flex container:</p>
 <ol>
@@ -1033,41 +1547,38 @@
 </li>
 </ol>
 <h2 id="CSS"><a href="#CSS" class="headerlink" title="CSS:"></a>CSS:</h2><ol>
-<li><code>float</code> &amp;  <code>position</code> &amp; <code>box model</code><ul>
+<li><p><code>float</code> &amp;  <code>position</code> &amp; <code>box model</code></p>
+<ul>
 <li><code>float</code><ul>
 <li>when container box has no height, and  need to cover all it floating children: <code>clear: both</code> &amp; <code>overflow: hidden</code></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><code>box-sizing</code>=&gt;<code>content-box</code> / <code>border-box</code><ul>
+<li><p><code>box-sizing</code>=&gt;<code>content-box</code> / <code>border-box</code></p>
+<ul>
 <li><code>box-sizing: content-box;</code> actual width= <code>width</code> + <code>padding</code> + <code>border</code><br> The <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/width" target="_blank" rel="noopener"><code>width</code></a>and <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/height" target="_blank" rel="noopener"><code>height</code></a> properties include the content, but does not include the padding, border, or margin.</li>
 <li><code>box-sizing: border-box;</code>  actual width = <code>width</code> = <code>content</code> + <code>padding</code> + <code>border</code><br>The <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/width" target="_blank" rel="noopener"><code>width</code></a> and <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/height" target="_blank" rel="noopener"><code>height</code></a> properties include the content, padding, and border, but do not include the margin</li>
 </ul>
 </li>
 <li><p><code>cursor: pointer</code> cursor acts like <code>&lt;a&gt;</code> when hover</p>
 </li>
-<li><p><code>px</code> vs <code>rem</code> vs <code>em</code></p>
-</li>
-<li><p><code>block</code> vs <code>inline</code> vs <code>inline-block</code></p>
-<ol>
-<li><a href="https://stackoverflow.com/questions/9189810/css-display-inline-vs-inline-block" target="_blank" rel="noopener">https://stackoverflow.com/questions/9189810/css-display-inline-vs-inline-block</a></li>
-<li><code>block</code>: <ul>
-<li>has width, height, margin, padding</li>
-<li>force a new line <strong>after the block</strong></li>
+<li><p><code>px</code> vs <code>pt</code> vs <code>rem</code> vs <code>em</code><br><a href="https://kyleschaeffer.com/development/css-font-size-em-vs-px-vs-pt-vs/" target="_blank" rel="noopener">https://kyleschaeffer.com/development/css-font-size-em-vs-px-vs-pt-vs/</a></p>
+<ul>
+<li><code>pt</code>: physical measurement, fixed when media once produced</li>
+<li><code>px</code>: calculated relative to <code>pt</code>; can be adjusted</li>
+<li><code>rem</code>: related to root font-size (default: 16px)</li>
+<li><code>em</code>: related to its parents font-size (default: 16px)</li>
 </ul>
 </li>
-<li><code>inline</code>: <ul>
-<li>no width, no height; only respect left/right margin, left/right padding </li>
-<li>allow other elements to <strong>sit on the same line</strong></li>
+<li><p><code>resize</code>: indicate how this block element can be resized</p>
+<ul>
+<li><u>horizontal</u>: can only resized horizontally</li>
+<li><u>vertical</u>: can only resized vertically</li>
+<li><u>both</u>: can be resized on both directions</li>
+<li><u>none</u>: none resizable</li>
+<li><u>initial</u>:  == none resizable</li>
 </ul>
-</li>
-<li><code>inline-block</code>: <ul>
-<li>has width, height, margin, padding</li>
-<li>allow other elements to <strong>sit on the same line</strong></li>
-</ul>
-</li>
-</ol>
 </li>
 <li><p><code>width</code> &amp; <code>height</code></p>
 <ul>
@@ -1122,19 +1633,88 @@
 </ul>
 </li>
 </ol>
+<h2 id="CSS-block-vs-inline-vs-inline-block"><a href="#CSS-block-vs-inline-vs-inline-block" class="headerlink" title="CSS: block vs inline vs inline-block"></a>CSS: <code>block</code> vs <code>inline</code> vs <code>inline-block</code></h2><p>credit to: <a href="http://dustwell.com/div-span-inline-block.html" target="_blank" rel="noopener">http://dustwell.com/div-span-inline-block.html</a></p>
+<ol>
+<li><code>&lt;div&gt;</code><ul>
+<li>A “block-level element”</li>
+<li>can contain <u>all</u> other elements!</li>
+<li>can only be inside other block-level elements</li>
+<li>defines a rectangular region on the page</li>
+<li><strong><u>tries to be as wide as possible</u></strong></li>
+<li>begins on a “new line”, and has an “carriage return” at the end, like a <code>&lt;p&gt;</code></li>
+</ul>
+</li>
+<li><code>&lt;span&gt;</code><ul>
+<li>An “inline element”</li>
+<li>cannot contain block-level elements!!</li>
+<li>can be inside <u>any</u> other element</li>
+<li><u><strong>tries to be as narrow as possible</strong></u></li>
+<li>defines a “snake” on the page</li>
+<li>doesn’t create any new lines.</li>
+</ul>
+</li>
+<li><code>block</code> vs <code>inline</code> vs <code>inline-block</code><ol>
+<li><code>block</code>: <ul>
+<li>has width, height, margin, padding</li>
+<li>force a new line <strong>after the block</strong></li>
+</ul>
+</li>
+<li><code>inline</code>: <ul>
+<li>no width, no height; only respect left/right margin, left/right padding </li>
+<li>allow other elements to <strong>sit on the same line</strong></li>
+</ul>
+</li>
+<li><code>inline-block</code>: <ul>
+<li>has width, height, margin, padding</li>
+<li>allow other elements to <strong>sit in a line</strong>, that’s why called <code>inline</code></li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
 <h2 id="CSS-how-to-center-an-element"><a href="#CSS-how-to-center-an-element" class="headerlink" title="CSS: how to center an element?"></a>CSS: how to center an element?</h2><ol>
 <li><a href="https://css-tricks.com/centering-css-complete-guide/" target="_blank" rel="noopener">https://css-tricks.com/centering-css-complete-guide/</a></li>
 <li>Horizontally<ul>
-<li><code>text-align: center</code>: center <strong>inline element</strong> inside <strong>block element</strong></li>
-<li><code>margin: 0 auto</code>: center <strong>block element</strong> inside another <strong>block element</strong></li>
-<li><code>display: inline-block</code>: to center <strong>multiple block element in a row</strong> inside another <strong>block element</strong></li>
-<li><code>display: flex</code>: to center <strong>multiple block element in a row</strong> inside another <strong>block element</strong></li>
+<li>center <strong>inline element</strong> inside <strong>block element</strong>:<ul>
+<li><code>text-align: center</code></li>
+</ul>
+</li>
+<li>center <strong>block element</strong> inside another <strong>block element</strong>:<ul>
+<li><u>outer block with specified width</u>: <code>margin: 0 auto</code></li>
+<li><u>outer block with no width</u>: inner width will spread its width to outer, so no need for <code>margin: 0 auto</code></li>
+</ul>
+</li>
+<li>center <strong>multiple block element in a row</strong> inside another <strong>block element</strong>:<ul>
+<li><code>display: inline-block</code></li>
+<li><code>display: flex</code></li>
+</ul>
+</li>
+<li>center <strong>multiple block element in different rows</strong> inside another <strong>block element</strong>:<ul>
+<li><code>margin: 0 auto</code></li>
+</ul>
+</li>
 </ul>
 </li>
 <li>Vertically for <u>inline elements</u><ul>
-<li><code>height</code>==<code>line-height</code>  or <code>padding-top == padding-bottom</code>: for <strong><u>single inline element</u></strong></li>
-<li><code>display: table</code>&amp; <code>display: table-cell</code>+ <code>vertial-align: middle</code> : <strong><u>multiple inline elements</u></strong></li>
-<li><code>display: flex</code> &amp; <code>align-items: center</code> for <strong><u>multiple inline elements</u></strong></li>
+<li>center <strong><u>single inline element</u></strong> inside <strong>block element</strong>:<ul>
+<li><code>height</code>==<code>line-height</code>  </li>
+<li><code>padding-top == padding-bottom</code></li>
+</ul>
+</li>
+<li>center <strong><u>multiple inline elements</u></strong> inside <strong>block element</strong>:<ul>
+<li><code>display: table</code>&amp; <code>display: table-cell</code>+ <code>vertial-align: middle</code> : </li>
+<li><code>display: flex</code> &amp; <code>align-items: center</code></li>
+<li>ghost element: <ul>
+<li>full-height pseudo element is placed inside the container and the text is vertically aligned with that (both are <code>inline-block</code>)</li>
+<li><strong><u>trick</u></strong>: contain multiple lines into a <code>inline-block</code> to be a whole inline element</li>
+<li>adjacent with another <code>inline-block</code> with <code>height=100%</code></li>
+<li><code>inline-block</code> elements will align on <u>baseline</u>, if <code>vertical-align</code> doesn’t specify any other value</li>
+<li>if <code>vertical-align</code> specify <code>middle</code>: browser will try to align all inline boxes in middle, rather than baseline</li>
+<li><u><strong><em>NOTE:</em></strong></u> <code>vertical-align</code>  <strong>specify how will itself to be aligned vertically</strong></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li>Vertically for <u>block elements</u><ul>
@@ -3229,530 +3809,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/02/Memory-Game/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/02/Memory-Game/" itemprop="url">Memory Game</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-02T09:47:18-07:00">2018-10-02</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Portfolios/" itemprop="url" rel="index"><span itemprop="name">Portfolios</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/10/02/Memory-Game/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/02/Memory-Game/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Memory-Game"><a href="#Memory-Game" class="headerlink" title="Memory-Game"></a>Memory-Game</h1><h2 id="What"><a href="#What" class="headerlink" title="What?"></a>What?</h2><p>This is a memory game, developed using React, Ant Design, webpack, and CSS grid, etc.</p>
-<p><img width="600" alt="memory_game.png" src="https://github.com/caomingkai/Memory-Game/raw/master/memory_game.png"></p>
-<h2 id="How-to-run"><a href="#How-to-run" class="headerlink" title="How to run?"></a>How to run?</h2><ol>
-<li>git clone</li>
-<li>npm install</li>
-<li>npm start</li>
-</ol>
-<h2 id="Features"><a href="#Features" class="headerlink" title="Features"></a>Features</h2><ul>
-<li>Notify the user if they win or lose</li>
-<li>Hints assistance</li>
-<li>Allow the user to reset at any time</li>
-<li>Randomize the ‘cards’ layout every game</li>
-<li>Multi Player mode</li>
-<li>Tracking Scores</li>
-<li>Tracking Best Score</li>
-<li>Tracking time</li>
-<li>Adjustable number of cards in the game (difficulty levels)</li>
-</ul>
-<h2 id="To-do"><a href="#To-do" class="headerlink" title="To-do"></a>To-do</h2><ul>
-<li>Options &amp; Start UI substitute the game board UI at the beginning</li>
-<li>Hint feature: add keyboard press event</li>
-</ul>
-<h2 id="Layout-amp-Logic"><a href="#Layout-amp-Logic" class="headerlink" title="Layout &amp; Logic"></a>Layout &amp; Logic</h2><p><img width="600" alt="workflow.png" src="https://github.com/caomingkai/Memory-Game/raw/master/IMG_4519.JPG"></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/01/Event-Emitter/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/01/Event-Emitter/" itemprop="url">Event Emitter</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-01T20:21:44-07:00">2018-10-01</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/10/01/Event-Emitter/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/01/Event-Emitter/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="I-What-is-an-Event-Emitter"><a href="#I-What-is-an-Event-Emitter" class="headerlink" title="I. What is an Event Emitter?"></a>I. What is an Event Emitter?</h4><p>An <code>event emitter</code> is a <strong>utility object</strong>, which can be used to emit event, which can be subscribed by as many functions as we can. </p>
-<ol>
-<li><p>It is an event manager, manages differents event and its subscribers.</p>
-</li>
-<li><p>Also, we can see it as the <code>Redux</code>, which also dispatches(emits) actions, and handled by its reducers.</p>
-</li>
-<li>It widely used at Node.js ( asynchronous event-driven architecture)<ul>
-<li>certain kind of objects call emitters periodically to emit events that cause listener objects to be called.</li>
-<li>when a request comes requesting some resource, Node.js will register the subscriber: <code>responseToThisRequest()</code> on event: <code>thisTypeDataDone</code>. When data is obtained, will call <code>emitter.emit( thisTypeDataDone )</code>, to call the <code>responseToThisRequest()</code> corresponding all the requests.</li>
-</ul>
-</li>
-</ol>
-<h4 id="II-Why-and-when-do-we-need-it"><a href="#II-Why-and-when-do-we-need-it" class="headerlink" title="II. Why and when do we need it?"></a>II. Why and when do we need it?</h4><blockquote>
-<p>Whenever it makes sense for code to SUBSCRIBE to something rather than get a callback from something</p>
-<p><a href="https://stackoverflow.com/questions/38881170/when-should-i-use-eventemitter" target="_blank" rel="noopener">https://stackoverflow.com/questions/38881170/when-should-i-use-eventemitter</a></p>
-</blockquote>
-<p>If when a certain event happens, we have to deal many type of manipulation for that event’s result, then it is better to use the event emitter pattern. </p>
-<p>Instead put all functions inside an event callback, we subscribe all the function to that event, when the event happens, we emit the event!</p>
-<h4 id="III-How-to-use-it"><a href="#III-How-to-use-it" class="headerlink" title="III. How to use it?"></a>III. How to use it?</h4><p><strong>[Good Link]:</strong> <a href="https://netbasal.com/javascript-the-magic-behind-event-emitter-cce3abcbcef9" target="_blank" rel="noopener">https://netbasal.com/javascript-the-magic-behind-event-emitter-cce3abcbcef9</a></p>
-<p><strong>[Note]:  when pass in the callback function, we use arrow function, which already bind ‘this’ to the function, so that when the function be called, it knows what value it will update</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">let</span> input = <span class="built_in">document</span>.querySelector(<span class="string">'input[type="text"]'</span>);</span><br><span class="line"><span class="keyword">let</span> button = <span class="built_in">document</span>.querySelector(<span class="string">'button'</span>);</span><br><span class="line"><span class="keyword">let</span> h1 = <span class="built_in">document</span>.querySelector(<span class="string">'h1'</span>);</span><br><span class="line"></span><br><span class="line">button.addEventListener(<span class="string">'click'</span>, () =&gt; &#123;</span><br><span class="line">  emitter.emit(<span class="string">'event:name-changed'</span>, &#123;<span class="attr">name</span>: input.value&#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> emitter = <span class="keyword">new</span> EventEmitter();</span><br><span class="line">emitter.subscribe(<span class="string">'event:name-changed'</span>, data =&gt; &#123;</span><br><span class="line">  h1.innerHTML = <span class="string">`Your name is: <span class="subst">$&#123;data.name&#125;</span>`</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<ol>
-<li><p>create an emitter util object</p>
-</li>
-<li><p>subscribe the desired callback function, using <code>emitter.subscribe(event, function.bind(this))</code></p>
-</li>
-<li><p>call <code>emitter.emit()</code> when the event happen</p>
-</li>
-</ol>
-<h4 id="IV-Write-one"><a href="#IV-Write-one" class="headerlink" title="IV. Write one!"></a>IV. Write one!</h4><ol>
-<li><strong><u>object:</u></strong> we need an object (utility object)</li>
-<li><u><strong>data structure:</strong></u> inside it, we need a data structure to store the <code>event</code> and its <code>subscribers</code>(callbacks)</li>
-<li><strong><u>methods:</u></strong>  all the methods<ul>
-<li><code>subscribe(event, callback)</code>: we need the return value to be an <code>unsubscribe()</code>, so we won’t result in the memory leak!</li>
-<li><code>emit()</code></li>
-</ul>
-</li>
-</ol>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">EventEmitter</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="keyword">this</span>.events = &#123;&#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  on(event, listener) &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span>.events[event] !== <span class="string">'object'</span>) &#123;</span><br><span class="line">          <span class="keyword">this</span>.events[event] = [];</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">this</span>.events[event].push(listener);</span><br><span class="line">      <span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">this</span>.removeListener(event, listener);</span><br><span class="line">  &#125;</span><br><span class="line">    </span><br><span class="line">  removeListener(event, listener) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span>.events[event] === <span class="string">'object'</span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> idx = <span class="keyword">this</span>.events[event].indexOf(listener);</span><br><span class="line">        <span class="keyword">if</span> (idx &gt; <span class="number">-1</span>) &#123;</span><br><span class="line">          <span class="keyword">this</span>.events[event].splice(idx, <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  emit(event, ...args) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span>.events[event] === <span class="string">'object'</span>) &#123;</span><br><span class="line">      <span class="keyword">this</span>.events[event].forEach(</span><br><span class="line">        listener =&gt; &#123;<span class="keyword">if</span>(<span class="keyword">typeof</span> listener === <span class="string">'function'</span>) listener.apply(<span class="literal">null</span>, args)&#125;</span><br><span class="line">      );</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// register a wrapper function containing the listener on this event,</span></span><br><span class="line">  <span class="comment">// when get executed, </span></span><br><span class="line">  <span class="comment">//   - first remove it on this event;</span></span><br><span class="line">  <span class="comment">//   - then execute real listener</span></span><br><span class="line">  once(event, listener) &#123;</span><br><span class="line">    <span class="keyword">const</span> remove = <span class="keyword">this</span>.on(event, (...args) =&gt; &#123;</span><br><span class="line">        remove();</span><br><span class="line">        listener.apply(<span class="literal">null</span>, args);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> emitter = <span class="keyword">new</span> EventEmitter()</span><br><span class="line"><span class="comment">// Test 1: invalid callback function</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Test 1: Nothing should be print out"</span>)</span><br><span class="line">emitter.on(<span class="string">"a"</span>, <span class="number">1</span>);</span><br><span class="line">emitter.emit(<span class="string">"a"</span>);</span><br><span class="line"><span class="built_in">console</span>.log()</span><br><span class="line"></span><br><span class="line"><span class="comment">// Test 2: add mutilple callback function to an event</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Test 2: callback 1, 2, 3"</span>)</span><br><span class="line">emitter.on(<span class="string">"b"</span>, ()=&gt;&#123;<span class="built_in">console</span>.log(<span class="string">"event b callback 1"</span>)&#125;);</span><br><span class="line">emitter.on(<span class="string">"b"</span>, ()=&gt;&#123;<span class="built_in">console</span>.log(<span class="string">"event b callback 2"</span>)&#125;);</span><br><span class="line"><span class="keyword">let</span> off1 = emitter.on(<span class="string">"b"</span>, ()=&gt;&#123;<span class="built_in">console</span>.log(<span class="string">"event b callback 3"</span>)&#125;);</span><br><span class="line">emitter.emit(<span class="string">"b"</span>);</span><br><span class="line"><span class="built_in">console</span>.log()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Test 3: unsubscribe one callback from an event queue</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Test 3: callback 1, 2"</span>)</span><br><span class="line">off1();</span><br><span class="line">emitter.emit(<span class="string">"b"</span>); </span><br><span class="line"><span class="built_in">console</span>.log()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Test 4: subscribe other event &amp; callbacks at the same time</span></span><br><span class="line"><span class="keyword">let</span> data = &#123;<span class="attr">digit</span>: <span class="number">1</span>&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Test 4:  digit should be 11 &amp; 14 "</span>)</span><br><span class="line">emitter.on(<span class="string">"c"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123; data.digit+=<span class="number">1</span> &#125;);</span><br><span class="line">emitter.on(<span class="string">"c"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123; data.digit+=<span class="number">2</span> &#125;);</span><br><span class="line">emitter.on(<span class="string">"d"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123; data.digit+=<span class="number">3</span> &#125;);;</span><br><span class="line"><span class="keyword">let</span> off2 = emitter.on(<span class="string">"d"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123; data.digit+=<span class="number">4</span> &#125;);</span><br><span class="line"></span><br><span class="line">emitter.emit(<span class="string">"c"</span>, data); </span><br><span class="line">emitter.emit(<span class="string">"d"</span>, data);  </span><br><span class="line"><span class="built_in">console</span>.log(data.digit)</span><br><span class="line">      </span><br><span class="line">off2()</span><br><span class="line">emitter.emit(<span class="string">"d"</span>, data);  </span><br><span class="line"><span class="built_in">console</span>.log(data.digit)</span><br><span class="line"><span class="built_in">console</span>.log()</span><br><span class="line">      </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Test 5: subscribe other event &amp; callbacks</span></span><br><span class="line"><span class="keyword">let</span> data2 = &#123;<span class="attr">digit</span>: <span class="number">5</span>&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Test 5: digit should be 11"</span>)</span><br><span class="line">emitter.emit(<span class="string">"d"</span>, data2 ); </span><br><span class="line">emitter.emit(<span class="string">"c"</span>, data2 ); </span><br><span class="line"><span class="built_in">console</span>.log(data2.digit)   </span><br><span class="line"><span class="built_in">console</span>.log()</span><br><span class="line"></span><br><span class="line"><span class="comment">// Test 6: test once</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Test 6: should only print once"</span>)</span><br><span class="line">emitter.once(<span class="string">"test 6"</span>, ()=&gt;&#123;<span class="built_in">console</span>.log(<span class="string">"should only print once"</span>)&#125; ); </span><br><span class="line">emitter.emit(<span class="string">"test 6"</span> ); </span><br><span class="line">emitter.emit(<span class="string">"test 6"</span> ); </span><br><span class="line">emitter.emit(<span class="string">"test 6"</span> ); </span><br><span class="line"><span class="built_in">console</span>.log()</span><br></pre></td></tr></table></figure>
-<p><strong><em>FaceBook interview version</em></strong><br><a href="https://gist.github.com/kutyel/7d8f204a347840a6ee7220743957e504" target="_blank" rel="noopener">https://gist.github.com/kutyel/7d8f204a347840a6ee7220743957e504</a></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Create an event emitter that goes like this</span></span><br><span class="line"><span class="comment"> * emitter = new Emitter();</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Allows you to subscribe to some event</span></span><br><span class="line"><span class="comment"> * sub1 = emitter.subscribe('function_name', callback1);</span></span><br><span class="line"><span class="comment"> * (you can have multiple callbacks to the same event)</span></span><br><span class="line"><span class="comment"> * sub2 = emitter.subscribe('function_name', callback2);</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * You can emit the event you want with this api</span></span><br><span class="line"><span class="comment"> * (you can receive 'n' number of arguments)</span></span><br><span class="line"><span class="comment"> * sub1.emit('function_name', foo, bar);</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * And allows you to release the subscription like this</span></span><br><span class="line"><span class="comment"> * (but you should be able to still emit from sub2)</span></span><br><span class="line"><span class="comment"> * sub1.release();</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// facebook.js</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Emitter</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(events = &#123;&#125;) &#123;</span><br><span class="line">    <span class="keyword">this</span>.events = events</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  subscribe(name, cb) &#123;</span><br><span class="line">    (<span class="keyword">this</span>.events[name] || (<span class="keyword">this</span>.events[name] = [])).push(cb)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      release: <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">this</span>.events[name] &amp;&amp;</span><br><span class="line">        <span class="keyword">this</span>.events[name].splice(<span class="keyword">this</span>.events[name].indexOf(cb) &gt;&gt;&gt; <span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  emit(name, ...args) &#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">this</span>.events[name] || []).map(<span class="function"><span class="params">fn</span> =&gt;</span> fn(...args))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> Emitter</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// test.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> expect = <span class="built_in">require</span>(<span class="string">'expect'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Emitter = <span class="built_in">require</span>(<span class="string">'./facebook'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Step 1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> test = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> emitter = <span class="keyword">new</span> Emitter()</span><br><span class="line"></span><br><span class="line">emitter.emit(<span class="string">'sum'</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">expect(test).toBe(<span class="number">0</span>) <span class="comment">// should trigger nothing</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> sub1 = emitter.subscribe(<span class="string">'sum'</span>, num =&gt; (test = test + num))</span><br><span class="line"></span><br><span class="line">emitter.emit(<span class="string">'sum'</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">expect(test).toBe(<span class="number">1</span>) <span class="comment">// should trigger 1 callback</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> sub2 = emitter.subscribe(<span class="string">'sum'</span>, num =&gt; (test = test * num))</span><br><span class="line"></span><br><span class="line">emitter.emit(<span class="string">'sum'</span>, <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">expect(test).toBe(<span class="number">6</span>) <span class="comment">// should trigger 2 callbacks</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Step 2</span></span><br><span class="line"></span><br><span class="line">sub1.release()</span><br><span class="line"></span><br><span class="line">emitter.emit(<span class="string">'sum'</span>, <span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">expect(test).toBe(<span class="number">18</span>) <span class="comment">// should trigger 1 callback</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Step 3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> myEvent1 = emitter.subscribe(<span class="string">'myEvent'</span>, () =&gt; <span class="number">1</span>)</span><br><span class="line"><span class="keyword">const</span> myEvent2 = emitter.subscribe(<span class="string">'myEvent'</span>, () =&gt; <span class="number">2</span>)</span><br><span class="line"><span class="keyword">const</span> myEvent3 = emitter.subscribe(<span class="string">'myEvent'</span>, () =&gt; <span class="literal">true</span>)</span><br><span class="line"><span class="keyword">const</span> result = emitter.emit(<span class="string">'myEvent'</span>)</span><br><span class="line"></span><br><span class="line">expect(result).toEqual([<span class="number">1</span>, <span class="number">2</span>, <span class="literal">true</span>])</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.info(<span class="string">'You passed the test!!! 👏🏼 👏🏼 👏🏼'</span>)</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/10/Coding-Problem-find-the-1st-Bad-Version/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/10/Coding-Problem-find-the-1st-Bad-Version/" itemprop="url">Coding Problem: Find 1st Bad Version</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-10T22:19:23-07:00">2018-09-10</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/09/10/Coding-Problem-find-the-1st-Bad-Version/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/09/10/Coding-Problem-find-the-1st-Bad-Version/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="I-problem"><a href="#I-problem" class="headerlink" title="I. problem"></a>I. problem</h2><p>given 500 revisions of programs,  write a program that will find and return the FIRST bad revision given a <code>isBad(revision i)</code> function.</p>
-<h2 id="II-Code"><a href="#II-Code" class="headerlink" title="II. Code"></a>II. Code</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isBad</span>(<span class="params"> version </span>)</span>&#123; <span class="keyword">return</span> version === <span class="number">0</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">firstBadVersion</span>(<span class="params"> versions </span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>( <span class="keyword">typeof</span> versions === <span class="string">'undefined'</span> || versions.length === <span class="number">0</span> ) </span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> left = <span class="number">0</span>, right = versions.length<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">while</span>( left &lt; right )&#123;</span><br><span class="line">        <span class="keyword">let</span> mid = (left + right) / <span class="number">2</span></span><br><span class="line">        <span class="keyword">if</span>( isBad(mid) )&#123;</span><br><span class="line">            right = mid</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            left = mid+<span class="number">1</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> versions[left]===<span class="number">0</span> ? left : <span class="number">-1</span></span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Testing		0 1 2 3 4 5 6  should return index: 4</span></span><br><span class="line"><span class="keyword">let</span> versions = [<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>]</span><br><span class="line"><span class="built_in">console</span>.log(firstBadVersion(versions))  <span class="comment">// 4</span></span><br><span class="line"></span><br><span class="line">versions = [<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>]</span><br><span class="line"><span class="built_in">console</span>.log(firstBadVersion(versions))  <span class="comment">// 6</span></span><br><span class="line"></span><br><span class="line">versions = [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]</span><br><span class="line"><span class="built_in">console</span>.log(firstBadVersion(versions))  <span class="comment">// 0</span></span><br><span class="line"></span><br><span class="line">versions = [<span class="number">0</span>]</span><br><span class="line"><span class="built_in">console</span>.log(firstBadVersion(versions))  <span class="comment">// 0</span></span><br><span class="line"></span><br><span class="line">versions = [<span class="number">1</span>]</span><br><span class="line"><span class="built_in">console</span>.log(firstBadVersion(versions))  <span class="comment">// -1</span></span><br><span class="line"></span><br><span class="line">versions = [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>]</span><br><span class="line"><span class="built_in">console</span>.log(firstBadVersion(versions))  <span class="comment">// -1</span></span><br><span class="line"></span><br><span class="line">versions = []</span><br><span class="line"><span class="built_in">console</span>.log(firstBadVersion(versions))  <span class="comment">// -1</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(firstBadVersion())  		<span class="comment">// -1</span></span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -3799,7 +3860,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">56</span>
+                    <span class="site-state-item-count">61</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -4001,7 +4062,37 @@
                     
                       
                     
-                    <span class="site-state-item-count">83</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">98</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

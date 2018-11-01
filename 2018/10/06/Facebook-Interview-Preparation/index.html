@@ -100,13 +100,13 @@
 
 
   <meta name="description" content="HTML Accessibility Tag To improve accessiblity, we are encouraged to use semantic tag of HTML5  MDS: https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Cross_browser_testing/Accessibilit">
-<meta name="keywords" content="ReactJS,DOM,CSS,HTML render,AJAX,Observable,Accessibility,Semantic tag,Array-like Object">
+<meta name="keywords" content="ReactJS,CSS,DOM,HTML render,AJAX,Observable,Accessibility,Semantic tag,Array-like Object">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Facebook Interview Preparation">
 <meta property="og:url" content="http://yoursite.com/2018/10/06/Facebook-Interview-Preparation/index.html">
 <meta property="og:site_name" content="CMK">
 <meta property="og:description" content="HTML Accessibility Tag To improve accessiblity, we are encouraged to use semantic tag of HTML5  MDS: https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Cross_browser_testing/Accessibilit">
-<meta property="og:updated_time" content="2018-10-16T06:04:32.000Z">
+<meta property="og:updated_time" content="2018-11-01T03:24:47.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Facebook Interview Preparation">
 <meta name="twitter:description" content="HTML Accessibility Tag To improve accessiblity, we are encouraged to use semantic tag of HTML5  MDS: https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Cross_browser_testing/Accessibilit">
@@ -617,7 +617,7 @@
 <li><p>consider accessibility</p>
 </li>
 </ol>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">// 1. Mouse is not over the picture</span><br><span class="line">+-------------+</span><br><span class="line">|             |</span><br><span class="line">|             |</span><br><span class="line">|   picture   |</span><br><span class="line">|             |</span><br><span class="line">|             |</span><br><span class="line">+-------------+</span><br><span class="line"></span><br><span class="line">// 2. Mouse is anywhere over picture</span><br><span class="line">+--------+----+</span><br><span class="line">|        |edit| <span class="tag">&lt;<span class="name">---</span> <span class="attr">links</span> <span class="attr">to</span> /<span class="attr">edit.php</span></span></span><br><span class="line"><span class="tag">|        +<span class="attr">----</span>+      <span class="attr">icon</span> <span class="attr">url:</span> /<span class="attr">edit_icon.png</span></span></span><br><span class="line"><span class="tag">|   <span class="attr">picture</span>   |</span></span><br><span class="line">|             | &lt;--- links to /profile.php</span><br><span class="line">|             |      picture url: /profile_pic.png 来源一亩.三分地论坛. </span><br><span class="line">+-------------+</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">      <span class="selector-class">.imgWrapper</span>&#123;</span></span><br><span class="line"><span class="undefined">        width: 100px;</span></span><br><span class="line"><span class="undefined">        height: 100px;</span></span><br><span class="line"><span class="undefined">        border: 1px solid red;</span></span><br><span class="line"><span class="undefined">        position: relative;</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="css">      <span class="selector-id">#image1</span>&#123;</span></span><br><span class="line"><span class="undefined">        width: 100%;</span></span><br><span class="line"><span class="undefined">        height: 100%;</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="css">      <span class="selector-id">#image2</span>&#123;</span></span><br><span class="line"><span class="undefined">        position: absolute;</span></span><br><span class="line"><span class="undefined">        top: 0;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">right</span><span class="selector-pseudo">:0</span>;</span></span><br><span class="line"><span class="undefined">        width: 50px;</span></span><br><span class="line"><span class="undefined">        height: 50px;</span></span><br><span class="line"><span class="undefined">        display: none;</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="css">      <span class="selector-class">.imgWrapper</span><span class="selector-pseudo">:hover</span> <span class="selector-id">#image2</span>&#123;</span></span><br><span class="line"><span class="undefined">        display: block;</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"imgWrapper"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://stackoverflow.com/questions/1827965/is-putting-a-div-inside-an-anchor-ever-correct"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">"image1"</span> <span class="attr">src</span>=<span class="string">"https://www.w3schools.com/html/pic_trulli.jpg"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">        </span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://developer.mozilla.org/en-US/docs/Learn/Accessibility"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">"image2"</span> <span class="attr">src</span>=<span class="string">"https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/UniversalEditButton3.png/220px-UniversalEditButton3.png"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">// 1. Mouse is not over the picture</span><br><span class="line">+-------------+</span><br><span class="line">|             |</span><br><span class="line">|             |</span><br><span class="line">|   picture   |</span><br><span class="line">|             |</span><br><span class="line">|             |</span><br><span class="line">+-------------+</span><br><span class="line"></span><br><span class="line">// 2. Mouse is anywhere over picture</span><br><span class="line">+--------+----+</span><br><span class="line">|        |edit| <span class="tag">&lt;<span class="name">---</span> <span class="attr">links</span> <span class="attr">to</span> /<span class="attr">edit.php</span></span></span><br><span class="line"><span class="tag">|        +<span class="attr">----</span>+      <span class="attr">icon</span> <span class="attr">url:</span> /<span class="attr">edit_icon.png</span></span></span><br><span class="line"><span class="tag">|   <span class="attr">picture</span>   |</span></span><br><span class="line">|             | &lt;--- links to /profile.php</span><br><span class="line">|             |      picture url: /profile_pic.png </span><br><span class="line">+-------------+</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">      <span class="selector-class">.imgWrapper</span>&#123;</span></span><br><span class="line"><span class="undefined">        width: 100px;</span></span><br><span class="line"><span class="undefined">        height: 100px;</span></span><br><span class="line"><span class="undefined">        border: 1px solid red;</span></span><br><span class="line"><span class="undefined">        position: relative;</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="css">      <span class="selector-id">#image1</span>&#123;</span></span><br><span class="line"><span class="undefined">        width: 100%;</span></span><br><span class="line"><span class="undefined">        height: 100%;</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="css">      <span class="selector-id">#image2</span>&#123;</span></span><br><span class="line"><span class="undefined">        position: absolute;</span></span><br><span class="line"><span class="undefined">        top: 0;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">right</span><span class="selector-pseudo">:0</span>;</span></span><br><span class="line"><span class="undefined">        width: 50px;</span></span><br><span class="line"><span class="undefined">        height: 50px;</span></span><br><span class="line"><span class="undefined">        display: none;</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="css">      <span class="selector-class">.imgWrapper</span><span class="selector-pseudo">:hover</span> <span class="selector-id">#image2</span>&#123;</span></span><br><span class="line"><span class="undefined">        display: block;</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"imgWrapper"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://stackoverflow.com/questions/1827965/is-putting-a-div-inside-an-anchor-ever-correct"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">"image1"</span> <span class="attr">src</span>=<span class="string">"https://www.w3schools.com/html/pic_trulli.jpg"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">        </span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://developer.mozilla.org/en-US/docs/Learn/Accessibility"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">"image2"</span> <span class="attr">src</span>=<span class="string">"https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/UniversalEditButton3.png/220px-UniversalEditButton3.png"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <h2 id="Flex-Layout"><a href="#Flex-Layout" class="headerlink" title="Flex Layout"></a>Flex Layout</h2><ol>
 <li><p>flex container:</p>
 <ol>
@@ -694,41 +694,38 @@
 </li>
 </ol>
 <h2 id="CSS"><a href="#CSS" class="headerlink" title="CSS:"></a>CSS:</h2><ol>
-<li><code>float</code> &amp;  <code>position</code> &amp; <code>box model</code><ul>
+<li><p><code>float</code> &amp;  <code>position</code> &amp; <code>box model</code></p>
+<ul>
 <li><code>float</code><ul>
 <li>when container box has no height, and  need to cover all it floating children: <code>clear: both</code> &amp; <code>overflow: hidden</code></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><code>box-sizing</code>=&gt;<code>content-box</code> / <code>border-box</code><ul>
+<li><p><code>box-sizing</code>=&gt;<code>content-box</code> / <code>border-box</code></p>
+<ul>
 <li><code>box-sizing: content-box;</code> actual width= <code>width</code> + <code>padding</code> + <code>border</code><br> The <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/width" target="_blank" rel="noopener"><code>width</code></a>and <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/height" target="_blank" rel="noopener"><code>height</code></a> properties include the content, but does not include the padding, border, or margin.</li>
 <li><code>box-sizing: border-box;</code>  actual width = <code>width</code> = <code>content</code> + <code>padding</code> + <code>border</code><br>The <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/width" target="_blank" rel="noopener"><code>width</code></a> and <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/height" target="_blank" rel="noopener"><code>height</code></a> properties include the content, padding, and border, but do not include the margin</li>
 </ul>
 </li>
 <li><p><code>cursor: pointer</code> cursor acts like <code>&lt;a&gt;</code> when hover</p>
 </li>
-<li><p><code>px</code> vs <code>rem</code> vs <code>em</code></p>
-</li>
-<li><p><code>block</code> vs <code>inline</code> vs <code>inline-block</code></p>
-<ol>
-<li><a href="https://stackoverflow.com/questions/9189810/css-display-inline-vs-inline-block" target="_blank" rel="noopener">https://stackoverflow.com/questions/9189810/css-display-inline-vs-inline-block</a></li>
-<li><code>block</code>: <ul>
-<li>has width, height, margin, padding</li>
-<li>force a new line <strong>after the block</strong></li>
+<li><p><code>px</code> vs <code>pt</code> vs <code>rem</code> vs <code>em</code><br><a href="https://kyleschaeffer.com/development/css-font-size-em-vs-px-vs-pt-vs/" target="_blank" rel="noopener">https://kyleschaeffer.com/development/css-font-size-em-vs-px-vs-pt-vs/</a></p>
+<ul>
+<li><code>pt</code>: physical measurement, fixed when media once produced</li>
+<li><code>px</code>: calculated relative to <code>pt</code>; can be adjusted</li>
+<li><code>rem</code>: related to root font-size (default: 16px)</li>
+<li><code>em</code>: related to its parents font-size (default: 16px)</li>
 </ul>
 </li>
-<li><code>inline</code>: <ul>
-<li>no width, no height; only respect left/right margin, left/right padding </li>
-<li>allow other elements to <strong>sit on the same line</strong></li>
+<li><p><code>resize</code>: indicate how this block element can be resized</p>
+<ul>
+<li><u>horizontal</u>: can only resized horizontally</li>
+<li><u>vertical</u>: can only resized vertically</li>
+<li><u>both</u>: can be resized on both directions</li>
+<li><u>none</u>: none resizable</li>
+<li><u>initial</u>:  == none resizable</li>
 </ul>
-</li>
-<li><code>inline-block</code>: <ul>
-<li>has width, height, margin, padding</li>
-<li>allow other elements to <strong>sit on the same line</strong></li>
-</ul>
-</li>
-</ol>
 </li>
 <li><p><code>width</code> &amp; <code>height</code></p>
 <ul>
@@ -783,19 +780,88 @@
 </ul>
 </li>
 </ol>
+<h2 id="CSS-block-vs-inline-vs-inline-block"><a href="#CSS-block-vs-inline-vs-inline-block" class="headerlink" title="CSS: block vs inline vs inline-block"></a>CSS: <code>block</code> vs <code>inline</code> vs <code>inline-block</code></h2><p>credit to: <a href="http://dustwell.com/div-span-inline-block.html" target="_blank" rel="noopener">http://dustwell.com/div-span-inline-block.html</a></p>
+<ol>
+<li><code>&lt;div&gt;</code><ul>
+<li>A “block-level element”</li>
+<li>can contain <u>all</u> other elements!</li>
+<li>can only be inside other block-level elements</li>
+<li>defines a rectangular region on the page</li>
+<li><strong><u>tries to be as wide as possible</u></strong></li>
+<li>begins on a “new line”, and has an “carriage return” at the end, like a <code>&lt;p&gt;</code></li>
+</ul>
+</li>
+<li><code>&lt;span&gt;</code><ul>
+<li>An “inline element”</li>
+<li>cannot contain block-level elements!!</li>
+<li>can be inside <u>any</u> other element</li>
+<li><u><strong>tries to be as narrow as possible</strong></u></li>
+<li>defines a “snake” on the page</li>
+<li>doesn’t create any new lines.</li>
+</ul>
+</li>
+<li><code>block</code> vs <code>inline</code> vs <code>inline-block</code><ol>
+<li><code>block</code>: <ul>
+<li>has width, height, margin, padding</li>
+<li>force a new line <strong>after the block</strong></li>
+</ul>
+</li>
+<li><code>inline</code>: <ul>
+<li>no width, no height; only respect left/right margin, left/right padding </li>
+<li>allow other elements to <strong>sit on the same line</strong></li>
+</ul>
+</li>
+<li><code>inline-block</code>: <ul>
+<li>has width, height, margin, padding</li>
+<li>allow other elements to <strong>sit in a line</strong>, that’s why called <code>inline</code></li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
 <h2 id="CSS-how-to-center-an-element"><a href="#CSS-how-to-center-an-element" class="headerlink" title="CSS: how to center an element?"></a>CSS: how to center an element?</h2><ol>
 <li><a href="https://css-tricks.com/centering-css-complete-guide/" target="_blank" rel="noopener">https://css-tricks.com/centering-css-complete-guide/</a></li>
 <li>Horizontally<ul>
-<li><code>text-align: center</code>: center <strong>inline element</strong> inside <strong>block element</strong></li>
-<li><code>margin: 0 auto</code>: center <strong>block element</strong> inside another <strong>block element</strong></li>
-<li><code>display: inline-block</code>: to center <strong>multiple block element in a row</strong> inside another <strong>block element</strong></li>
-<li><code>display: flex</code>: to center <strong>multiple block element in a row</strong> inside another <strong>block element</strong></li>
+<li>center <strong>inline element</strong> inside <strong>block element</strong>:<ul>
+<li><code>text-align: center</code></li>
+</ul>
+</li>
+<li>center <strong>block element</strong> inside another <strong>block element</strong>:<ul>
+<li><u>outer block with specified width</u>: <code>margin: 0 auto</code></li>
+<li><u>outer block with no width</u>: inner width will spread its width to outer, so no need for <code>margin: 0 auto</code></li>
+</ul>
+</li>
+<li>center <strong>multiple block element in a row</strong> inside another <strong>block element</strong>:<ul>
+<li><code>display: inline-block</code></li>
+<li><code>display: flex</code></li>
+</ul>
+</li>
+<li>center <strong>multiple block element in different rows</strong> inside another <strong>block element</strong>:<ul>
+<li><code>margin: 0 auto</code></li>
+</ul>
+</li>
 </ul>
 </li>
 <li>Vertically for <u>inline elements</u><ul>
-<li><code>height</code>==<code>line-height</code>  or <code>padding-top == padding-bottom</code>: for <strong><u>single inline element</u></strong></li>
-<li><code>display: table</code>&amp; <code>display: table-cell</code>+ <code>vertial-align: middle</code> : <strong><u>multiple inline elements</u></strong></li>
-<li><code>display: flex</code> &amp; <code>align-items: center</code> for <strong><u>multiple inline elements</u></strong></li>
+<li>center <strong><u>single inline element</u></strong> inside <strong>block element</strong>:<ul>
+<li><code>height</code>==<code>line-height</code>  </li>
+<li><code>padding-top == padding-bottom</code></li>
+</ul>
+</li>
+<li>center <strong><u>multiple inline elements</u></strong> inside <strong>block element</strong>:<ul>
+<li><code>display: table</code>&amp; <code>display: table-cell</code>+ <code>vertial-align: middle</code> : </li>
+<li><code>display: flex</code> &amp; <code>align-items: center</code></li>
+<li>ghost element: <ul>
+<li>full-height pseudo element is placed inside the container and the text is vertically aligned with that (both are <code>inline-block</code>)</li>
+<li><strong><u>trick</u></strong>: contain multiple lines into a <code>inline-block</code> to be a whole inline element</li>
+<li>adjacent with another <code>inline-block</code> with <code>height=100%</code></li>
+<li><code>inline-block</code> elements will align on <u>baseline</u>, if <code>vertical-align</code> doesn’t specify any other value</li>
+<li>if <code>vertical-align</code> specify <code>middle</code>: browser will try to align all inline boxes in middle, rather than baseline</li>
+<li><u><strong><em>NOTE:</em></strong></u> <code>vertical-align</code>  <strong>specify how will itself to be aligned vertically</strong></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li>Vertically for <u>block elements</u><ul>
@@ -1132,9 +1198,9 @@
           
             <a href="/tags/ReactJS/" rel="tag"># ReactJS</a>
           
-            <a href="/tags/DOM/" rel="tag"># DOM</a>
-          
             <a href="/tags/CSS/" rel="tag"># CSS</a>
+          
+            <a href="/tags/DOM/" rel="tag"># DOM</a>
           
             <a href="/tags/HTML-render/" rel="tag"># HTML render</a>
           
@@ -1252,7 +1318,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">56</span>
+                    <span class="site-state-item-count">61</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -1454,7 +1520,37 @@
                     
                       
                     
-                    <span class="site-state-item-count">83</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">98</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -1504,7 +1600,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#HTML-Accessibility-Tag"><span class="nav-number">1.</span> <span class="nav-text">HTML Accessibility Tag</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Why-use-React"><span class="nav-number">2.</span> <span class="nav-text">Why use React?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-Lifecyle"><span class="nav-number">3.</span> <span class="nav-text">React Lifecyle</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-implement-infinite-scroll-loading"><span class="nav-number">4.</span> <span class="nav-text">How to implement infinite scroll loading</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-rendering-order-CSS-JS-HTML"><span class="nav-number">5.</span> <span class="nav-text">The rendering order: CSS, JS, HTML</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS-profile-amp-edit-image-link"><span class="nav-number">6.</span> <span class="nav-text">CSS: profile &amp; edit image link</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Flex-Layout"><span class="nav-number">7.</span> <span class="nav-text">Flex Layout</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Grid-Layout"><span class="nav-number">8.</span> <span class="nav-text">Grid Layout</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS"><span class="nav-number">9.</span> <span class="nav-text">CSS:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS-how-to-center-an-element"><span class="nav-number">10.</span> <span class="nav-text">CSS: how to center an element?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DOM-structure"><span class="nav-number">11.</span> <span class="nav-text">DOM structure</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DOM-API"><span class="nav-number">12.</span> <span class="nav-text">DOM API:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DOM-events"><span class="nav-number">13.</span> <span class="nav-text">DOM events</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Array-like-object-under-the-hood"><span class="nav-number">14.</span> <span class="nav-text">Array-like object under the hood</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#What-can-be-put-inside-lt-head-gt"><span class="nav-number">15.</span> <span class="nav-text">What can be put inside &lt;head&gt;?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JS-coding-mutate-array-according-new-indices"><span class="nav-number">16.</span> <span class="nav-text">JS coding: mutate array according new indices</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lt-script-async-gt-amp-lt-script-defer-gt"><span class="nav-number">17.</span> <span class="nav-text">&lt;script async&gt; &amp; &lt;script defer&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-check-data-types-in-JS"><span class="nav-number">18.</span> <span class="nav-text">How to check data types in JS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#write-a-promise"><span class="nav-number">19.</span> <span class="nav-text">write a promise</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AJAX"><span class="nav-number">20.</span> <span class="nav-text">AJAX</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Check-if-undeclared-undefined-or-null"><span class="nav-number">21.</span> <span class="nav-text">Check if undeclared, undefined or null</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#HTML-Accessibility-Tag"><span class="nav-number">1.</span> <span class="nav-text">HTML Accessibility Tag</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Why-use-React"><span class="nav-number">2.</span> <span class="nav-text">Why use React?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-Lifecyle"><span class="nav-number">3.</span> <span class="nav-text">React Lifecyle</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-implement-infinite-scroll-loading"><span class="nav-number">4.</span> <span class="nav-text">How to implement infinite scroll loading</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-rendering-order-CSS-JS-HTML"><span class="nav-number">5.</span> <span class="nav-text">The rendering order: CSS, JS, HTML</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS-profile-amp-edit-image-link"><span class="nav-number">6.</span> <span class="nav-text">CSS: profile &amp; edit image link</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Flex-Layout"><span class="nav-number">7.</span> <span class="nav-text">Flex Layout</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Grid-Layout"><span class="nav-number">8.</span> <span class="nav-text">Grid Layout</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS"><span class="nav-number">9.</span> <span class="nav-text">CSS:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS-block-vs-inline-vs-inline-block"><span class="nav-number">10.</span> <span class="nav-text">CSS: block vs inline vs inline-block</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS-how-to-center-an-element"><span class="nav-number">11.</span> <span class="nav-text">CSS: how to center an element?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DOM-structure"><span class="nav-number">12.</span> <span class="nav-text">DOM structure</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DOM-API"><span class="nav-number">13.</span> <span class="nav-text">DOM API:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DOM-events"><span class="nav-number">14.</span> <span class="nav-text">DOM events</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Array-like-object-under-the-hood"><span class="nav-number">15.</span> <span class="nav-text">Array-like object under the hood</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#What-can-be-put-inside-lt-head-gt"><span class="nav-number">16.</span> <span class="nav-text">What can be put inside &lt;head&gt;?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JS-coding-mutate-array-according-new-indices"><span class="nav-number">17.</span> <span class="nav-text">JS coding: mutate array according new indices</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lt-script-async-gt-amp-lt-script-defer-gt"><span class="nav-number">18.</span> <span class="nav-text">&lt;script async&gt; &amp; &lt;script defer&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-check-data-types-in-JS"><span class="nav-number">19.</span> <span class="nav-text">How to check data types in JS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#write-a-promise"><span class="nav-number">20.</span> <span class="nav-text">write a promise</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AJAX"><span class="nav-number">21.</span> <span class="nav-text">AJAX</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Check-if-undeclared-undefined-or-null"><span class="nav-number">22.</span> <span class="nav-text">Check if undeclared, undefined or null</span></a></li></ol></div>
             
 
           </div>

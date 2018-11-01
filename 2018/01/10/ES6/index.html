@@ -106,7 +106,7 @@
 <meta property="og:url" content="http://yoursite.com/2018/01/10/ES6/index.html">
 <meta property="og:site_name" content="CMK">
 <meta property="og:description" content="I. JavaScript is OOP JS的始末、与Java的区别：https://juejin.im/entry/5975e76af265da6c2a74bc45  JavaScript 是一种基于原型实现的面向对象的语言， 根本没有类的概念，全是 object ！  通过 “prototype” 以及 “proto“ 来实现：类的继承 “prototype” 以及 “proto“ 重要性：">
-<meta property="og:updated_time" content="2018-06-01T21:50:05.000Z">
+<meta property="og:updated_time" content="2018-10-20T17:40:03.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ES6">
 <meta name="twitter:description" content="I. JavaScript is OOP JS的始末、与Java的区别：https://juejin.im/entry/5975e76af265da6c2a74bc45  JavaScript 是一种基于原型实现的面向对象的语言， 根本没有类的概念，全是 object ！  通过 “prototype” 以及 “proto“ 来实现：类的继承 “prototype” 以及 “proto“ 重要性：">
@@ -487,7 +487,7 @@
 <li>使用let声明的变量，其作用域为该语句所在的代码块内，不存在变量提升；</li>
 <li>使用const声明的是常量，在后面出现的代码中不能再修改该常量的值。但是其作用域为该语句所在的代码块内，因此不同的blcok可以继续定义同一个名字的const</li>
 </ul>
-<p><strong>var变量的局部作用域是函数级别的：使用区域上至函数头、下至函数尾</strong></p>
+<p><strong>1. var变量的局部作用域是函数级别的：使用区域上至函数头、下至函数尾</strong></p>
 <ul>
 <li>不同于 C 语言，在 C 中，作用域是块级别的。 JavaScript 中var变量没有块级作用域。</li>
 <li>let变量作用域是块级的</li>
@@ -496,7 +496,22 @@
   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">		<span class="keyword">var</span> value = <span class="string">"hello world"</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">console</span>.log(i); <span class="comment">//输出10</span></span><br><span class="line">	<span class="built_in">console</span>.log(value);<span class="comment">//输出hello world</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo();</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h2 id="IV-闭包：closure"><a href="#IV-闭包：closure" class="headerlink" title="IV 闭包：closure"></a>IV 闭包：closure</h2><ul>
+<p><strong>2. For Loop: <code>var</code> vs <code>let</code></strong></p>
+<ul>
+<li><p><code>var</code> declaring a variable in the head of a for loop creates a single binding (storage space) for that variable:</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">    arr.push(<span class="function"><span class="params">()</span> =&gt;</span> i);</span><br><span class="line">&#125;</span><br><span class="line">arr.map(<span class="function"><span class="params">x</span> =&gt;</span> x()); <span class="comment">// [3,3,3]</span></span><br></pre></td></tr></table></figure>
+<p>  Every <code>i</code> in the bodies of the three arrow functions refers to the same binding, which is why they all return the same value.</p>
+</li>
+<li><p>If you <code>let</code> declare a variable, <strong><u>a new binding is created for each loop iteration</u></strong>:</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i=<span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">    arr.push(<span class="function"><span class="params">()</span> =&gt;</span> i);</span><br><span class="line">&#125;</span><br><span class="line">arr.map(<span class="function"><span class="params">x</span> =&gt;</span> x()); <span class="comment">// [0,1,2]</span></span><br></pre></td></tr></table></figure>
+<p>  This time, each <code>i</code> refers to the binding of one specific iteration and preserves the value that was current at that time. Therefore, each arrow function returns a different value.</p>
+</li>
+<li><p>const works like var, but you can’t change the initial value of a const-declared variable:</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// TypeError: Assignment to constant variable</span></span><br><span class="line"><span class="comment">// (due to i++)</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> i=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<pre><code>Getting a fresh binding for each iteration may seem strange at first, but it is very useful whenever you use loops to create functions that refer to loop variables, as explained in a later section.
+</code></pre><h2 id="IV-闭包：closure"><a href="#IV-闭包：closure" class="headerlink" title="IV 闭包：closure"></a>IV 闭包：closure</h2><ul>
 <li>使内部函数可以访问定义在外部函数中的变量（常见于函数式编程）</li>
 <li>假如我们要实现一系列的函数：add10，add20，它们的定义是 int add10(int n)。</li>
 <li><p>为此我们构造了一个名为 adder 的构造器，如下：</p>
@@ -849,7 +864,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">56</span>
+                    <span class="site-state-item-count">61</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -1051,7 +1066,37 @@
                     
                       
                     
-                    <span class="site-state-item-count">83</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">98</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

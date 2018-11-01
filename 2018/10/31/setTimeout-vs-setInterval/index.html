@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.6" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.6">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.6" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.6',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="0. Credits to:http://www.laruence.com/2009/09/23/1089.html https://www.jeffjade.com/2015/08/03/2015-08-03-javascript-this/ https://www.youtube.com/watch?v=8aGhZQkoFbQ https://www.zhihu.com/question/55">
+<meta name="keywords" content="Vanilla JS,setTimeout,setInterval,Event Loop">
+<meta property="og:type" content="article">
+<meta property="og:title" content="setTimeout vs setInterval">
+<meta property="og:url" content="http://yoursite.com/2018/10/31/setTimeout-vs-setInterval/index.html">
+<meta property="og:site_name" content="CMK">
+<meta property="og:description" content="0. Credits to:http://www.laruence.com/2009/09/23/1089.html https://www.jeffjade.com/2015/08/03/2015-08-03-javascript-this/ https://www.youtube.com/watch?v=8aGhZQkoFbQ https://www.zhihu.com/question/55">
+<meta property="og:updated_time" content="2018-11-01T06:24:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="setTimeout vs setInterval">
+<meta name="twitter:description" content="0. Credits to:http://www.laruence.com/2009/09/23/1089.html https://www.jeffjade.com/2015/08/03/2015-08-03-javascript-this/ https://www.youtube.com/watch?v=8aGhZQkoFbQ https://www.zhihu.com/question/55">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/10/31/setTimeout-vs-setInterval/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>setTimeout vs setInterval | CMK</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-116541729-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-116541729-1');
+</script>
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> 
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">CMK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Let's create something!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+          
+  <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+</li>
+
+      
+
+      
+    </ul>
+  
+
+  
+    
+
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/31/setTimeout-vs-setInterval/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">setTimeout vs setInterval</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-31T20:23:26-07:00">2018-10-31</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/31/setTimeout-vs-setInterval/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/31/setTimeout-vs-setInterval/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views: 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="0-Credits-to"><a href="#0-Credits-to" class="headerlink" title="0. Credits to:"></a>0. Credits to:</h2><p><a href="http://www.laruence.com/2009/09/23/1089.html" target="_blank" rel="noopener">http://www.laruence.com/2009/09/23/1089.html</a></p>
+<p><a href="https://www.jeffjade.com/2015/08/03/2015-08-03-javascript-this/" target="_blank" rel="noopener">https://www.jeffjade.com/2015/08/03/2015-08-03-javascript-this/</a></p>
+<p><a href="https://www.youtube.com/watch?v=8aGhZQkoFbQ" target="_blank" rel="noopener">https://www.youtube.com/watch?v=8aGhZQkoFbQ</a></p>
+<p><a href="https://www.zhihu.com/question/55050034" target="_blank" rel="noopener">https://www.zhihu.com/question/55050034</a></p>
+<p><a href="https://codepen.io/discountry/pen/XRXdVX?editors=1011" target="_blank" rel="noopener">https://codepen.io/discountry/pen/XRXdVX?editors=1011</a></p>
+<h2 id="I-setTimeout"><a href="#I-setTimeout" class="headerlink" title="I. setTimeout"></a>I. <code>setTimeout</code></h2><ol>
+<li>After <code>delay</code> period, put <code>cb</code> to <u><strong>taskQueue</strong></u> of main thread, rather than executing <code>cb</code> right away!<ul>
+<li>only guarantees after exact<code>delay</code>, <code>cb</code> is scheduled,</li>
+<li>cannot guarantee <code>cb</code> being executed after exact <code>delay</code>, because maybe at that time, the main thread is still dealing a time-consuming task, which will postpone the execution of <code>cb</code></li>
+</ul>
+</li>
+<li><p>Good use case: <u><strong>recursively schedule delayed task</strong></u>, like a <code>node</code> data structure</p>
+<ul>
+<li>deal with CPU intensive task, set aside period for UI update to be executed to avoid freezing</li>
+<li>eg.  break down large task into smaller ones, schedule smaller task execution every delay period <ul>
+<li>the bigger <code>delay</code> period is, the longer time left for UI</li>
+<li>the time left for UI is exactly <code>delay</code> period</li>
+<li>NOTE: don’t use <code>setInterval</code>, since the execution time for <code>cb</code>  can be longer than<code>delay</code> , resulting in there’s no time left for UI update. When <code>cb</code> finishes execution,  the UI update and next <code>cb</code> will <strong><u>race</u></strong> to be executed in next <strong>event loop</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong><code>setTimeout(cb, 0)</code> </strong></p>
+<ul>
+<li></li>
+<li><p><u><strong>Waiting for elements mounted to DOM by GUI thread, then switch to JS thread, do the manipulation by <code>cb</code></strong></u></p>
+</li>
+<li><p>Every function put inside <code>setTimeout</code> with <code>0</code> delay, will <strong><u>respect</u> all the DOM task</strong>, and will <strong>scheduled after all DOM tasck</strong></p>
+</li>
+<li><p>will execute right after all <strong><u>synchronous task</u></strong> is finished on stack by main thread</p>
+</li>
+<li><p>i.e. has to wait for next <strong><u>event loop</u></strong> come</p>
+</li>
+<li><p><strong>Great Use Case:</strong></p>
+<ul>
+<li><p>set the order of event handler: </p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. parent event_handler will be executed first, </span></span><br><span class="line"><span class="comment">// 2. then the target element </span></span><br><span class="line"><span class="keyword">let</span> input = <span class="built_in">document</span>.getElementById(<span class="string">'myButton'</span>);</span><br><span class="line"></span><br><span class="line">input.onclick = <span class="function"><span class="keyword">function</span> <span class="title">A</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span> <span class="title">B</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    input.value +=<span class="string">' input'</span>;</span><br><span class="line">  &#125;, <span class="number">0</span>)</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">document</span>.body.onclick = <span class="function"><span class="keyword">function</span> <span class="title">C</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  input.value += <span class="string">' body'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>tackle the <strong><u>race problem of keypress</u></strong></p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">	keypress has two results:</span></span><br><span class="line"><span class="comment">	1. give input the value of pressed key [asynchronous - hardware]</span></span><br><span class="line"><span class="comment">	2. call the keypress event handler [asynchronous - event]</span></span><br><span class="line"><span class="comment">	</span></span><br><span class="line"><span class="comment">	BAD version: </span></span><br><span class="line"><span class="comment">		- cannot get the current key value when callback is called</span></span><br><span class="line"><span class="comment">		- can only get the value of previous pressed key value</span></span><br><span class="line"><span class="comment">	GOOD version:</span></span><br><span class="line"><span class="comment">		- use setTimeout(fn, 0)</span></span><br><span class="line"><span class="comment">		- callback will be executed after the key value is updated in DOM</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line">&lt;input type=<span class="string">"text"</span> id=<span class="string">"input-box"</span>&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1. BAD Version</span></span><br><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">'input-box'</span>).onkeypress = <span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</span><br><span class="line">  	<span class="keyword">this</span>.value = <span class="keyword">this</span>.value.toUpperCase();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. GOOD Version</span></span><br><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">'input-box'</span>).onkeypress = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> self = <span class="keyword">this</span>;</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    self.value = self.value.toUpperCase();</span><br><span class="line">  &#125;, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="II-setInterval"><a href="#II-setInterval" class="headerlink" title="II. setInterval"></a>II. <code>setInterval</code></h2><ol>
+<li>Every <code>delay</code> period, put <code>cb</code> to <u><strong>taskQueue</strong></u> of main thread if there is no <code>cb</code> waiting to be executed on the taskQueue; Otherwise, won’t schedule <code>cb</code> even <code>delay</code> period is achieved</li>
+<li><p><strong><u>Note:</u></strong> </p>
+<ol>
+<li>when delay is up, even there exists an CPU-intensive task , <code>setInterval</code> won’t wait for the finish of the current task, instead put the <code>cb</code> directly to <strong><u>taskQueue at the exact time spot</u></strong>; </li>
+<li>But if the main thread is still executing task, the <code>cb</code> has to waits to be executed </li>
+<li>There is NO accumulated <code>cb</code> scheduled on event queue,  even if there is a CPU intensive task blocking the periodic <code>cb</code> scheduling.</li>
+<li><code>setInterval</code> timer has a check mechnism to ensure, there will be only one <code>cb</code> on event queue</li>
+</ol>
+</li>
+<li><p>Common use case: <strong>CSS animation</strong></p>
+<ul>
+<li><p>Note1: </p>
+<ul>
+<li>it only focus scheduling <code>cb</code> after <code>delay</code>, don’t care how long vacant time left</li>
+<li>it’s possible that execution of <code>cb</code> is longer than <code>delay</code>, then next <code>cb</code> will be executed right after first <code>cb</code> finishes</li>
+</ul>
+</li>
+<li><p>Note2: </p>
+<ul>
+<li><p>mustn’t use <strong>time</strong> variable as terminating condition to clear interval, </p>
+</li>
+<li><p>because some time it cost longer to execute <code>cb</code>, making some scheduled task won’t be executed</p>
+</li>
+<li><p>use other variable as terminating condition to clear interval</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> div = <span class="built_in">document</span>.getElementById(<span class="string">'someDiv'</span>);</span><br><span class="line"><span class="keyword">let</span> opacity = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">let</span> fader = setInterval(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	opacity -= <span class="number">0.1</span>;</span><br><span class="line">		<span class="keyword">if</span> (opacity &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">			div.style.opacity = opacity;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			clearInterval(fader);   <span class="comment">// use `opacity` as terminating condition</span></span><br><span class="line">		&#125;</span><br><span class="line">&#125;, <span class="number">100</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="III-Common-Problems"><a href="#III-Common-Problems" class="headerlink" title="III. Common Problems"></a>III. Common Problems</h2><ol>
+<li><p><strong><code>this</code> problem =&gt; because of <code>window.setTimeout</code> or <code>window.setInterval</code></strong></p>
+<ul>
+<li><p><code>setTimeout( function(){ this.value=50 }, 1000 )</code></p>
+</li>
+<li><p><u>Problem:</u> </p>
+<ul>
+<li>example above, exist <code>this</code> in the callback function, if not <code>bind</code> actual object, <code>this</code> will refer <code>window</code></li>
+<li><code>setTimeout</code> <code>setInterval</code> will change the reference of <code>this</code> to <code>window</code></li>
+</ul>
+</li>
+<li><p><u>Why?</u></p>
+<ul>
+<li><code>this</code> always refers to the object who calls the function where <code>this</code> resides</li>
+<li>when <code>cb</code> executed, it is executed like <code>cb()</code>, which omits the prefix object: <code>window</code></li>
+</ul>
+</li>
+<li><p><u>How to solve?</u></p>
+<ul>
+<li><p>use <code>bind()</code> to produce a new <code>cb</code> function carrying this reference to right object</p>
+</li>
+<li><p>use <code>apply</code> or <code>call</code></p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="string">"string belongs to window"</span>    <span class="comment">// note: not " let a = ... ";</span></span><br><span class="line">obj = &#123;</span><br><span class="line">    a: <span class="string">"string belongs to obj"</span>,</span><br><span class="line">    printA: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; <span class="built_in">console</span>.log(<span class="keyword">this</span>.a) &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1. "string belongs to window", after 1s</span></span><br><span class="line">setTimeout(obj.printA, <span class="number">1000</span>)  </span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. "string belongs to window", after 1s</span></span><br><span class="line"><span class="keyword">let</span> temp = obj.printA</span><br><span class="line">setTimeout(temp, <span class="number">1000</span>)  	  </span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. "string belongs to obj"</span></span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; obj.printA.apply(obj) &#125;, <span class="number">2000</span>) </span><br><span class="line"></span><br><span class="line"><span class="comment">// 4. "string belongs to obj" </span></span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; obj.printA() &#125;, <span class="number">3000</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Implement a <code>setInterval</code> using <code>setTimeout</code></p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">customSetInterval</span>(<span class="params"> cb, delay </span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> time_handle = <span class="literal">null</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">wrapper</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        cb.apply(<span class="literal">null</span>)</span><br><span class="line">        time_handle= setTimeout(wrapper, delay)</span><br><span class="line">    &#125;</span><br><span class="line">    time_handle= setTimeout(wrapper, delay)</span><br><span class="line">    <span class="keyword">return</span> time_handle</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Test</span></span><br><span class="line"><span class="keyword">let</span> i = <span class="number">0</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">cb</span>(<span class="params"></span>)</span>&#123; i+=<span class="number">1</span>; <span class="built_in">console</span>.log(i) &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> interval_handle = customSetInterval(cb, <span class="number">1000</span>)  <span class="comment">// print  1 , 2 , 3 , 4 , ...</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// clearTimeout(interval_handle)   // use to clear interval</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p><u>how to handle encoding task for a file (CPU intensive)?</u></p>
+<ul>
+<li><p><strong>Problem</strong>: it might freeze the UI when encode the whole file</p>
+</li>
+<li><p><strong>Solution</strong>: </p>
+<ul>
+<li><p>Divide the file into several part, using a symbol, or using size</p>
+</li>
+<li><p>for each small part, just take over CPU, since it’s small task</p>
+</li>
+<li><p>between each encoding, leave time for UI interaction</p>
+</li>
+<li><p>Note: use <code>setTimeout</code> instead of <code>setInterval</code></p>
+</li>
+<li><p>Since the execution time for <code>cb</code>  can be longer than<code>delay</code> , resulting in there’s no time left for UI update. When <code>cb</code> finishes execution,  the UI update and next <code>cb</code> will <strong><u>race</u></strong> to be executed in next <strong>event loop</strong></p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">	input: the file to be encoded</span></span><br><span class="line"><span class="comment">	output: the encoded goal file </span></span><br><span class="line"><span class="comment">	totalSize: the size of the input file</span></span><br><span class="line"><span class="comment">	encode: the function used to encode</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">encodeWrapper</span>(<span class="params"> input, output, totalSize, encode </span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> output = <span class="string">""</span></span><br><span class="line">    <span class="keyword">let</span> accumSize = <span class="number">0</span></span><br><span class="line">    <span class="keyword">let</span> i = <span class="number">0</span></span><br><span class="line">    <span class="keyword">let</span> timeoutHandle = <span class="literal">null</span></span><br><span class="line">    <span class="comment">/* delayed recursion</span></span><br><span class="line"><span class="comment">       i: ith step    </span></span><br><span class="line"><span class="comment">       stepSize: how big to encod for a step</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">encodeHelper</span>(<span class="params">i, stepSize </span>)</span>&#123;</span><br><span class="line">        output += encode( input.substring(i*stepSize,stepSize) )</span><br><span class="line">        <span class="keyword">if</span>( i*stepSize &gt; totalSize ) &#123;</span><br><span class="line">            clearInterval(timeoutHandle)</span><br><span class="line">            <span class="keyword">return</span> output</span><br><span class="line">        &#125;</span><br><span class="line">        timeoutHandle = setTimeout(encodeHelper(i+<span class="number">1</span>, stepSize), <span class="number">100</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> encodeHelper(<span class="number">0</span>, <span class="number">1024</span>) </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><u>How to write a <strong>delayed recursion</strong> ?</u></p>
+<ul>
+<li><p>Problem: Calculate the sum from 0 to n</p>
+</li>
+<li><p>Solution:  f(n) = f(n-1) + n;    f(0) = 0</p>
+</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">	f(n) = f(n-1) + n</span></span><br><span class="line"><span class="comment">	f(0) = 0</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">wrapper</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> timeHandle = <span class="number">0</span></span><br><span class="line">    <span class="keyword">let</span> accum = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// recursive call itself every 1000ms</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">sum</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">        timeHandle=setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (n === <span class="number">0</span>) &#123;</span><br><span class="line">                clearTimeout(timeHandle)</span><br><span class="line">                alert(accum) <span class="comment">// output the result</span></span><br><span class="line">                <span class="keyword">return</span> </span><br><span class="line">            &#125;</span><br><span class="line">            accum += n</span><br><span class="line">            sum(n<span class="number">-1</span>)</span><br><span class="line">        &#125;,<span class="number">1000</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    sum(n)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ol start="4">
+<li><p><strong>Debouncify a function</strong></p>
+<ul>
+<li><p><strong><u>Problem</u></strong>: Some Ajax functions can be frequently called using events, which will cause severe performance problem on backend</p>
+</li>
+<li><p><strong><u>Solution</u></strong>:  </p>
+<ul>
+<li>we want to call Ajax function only after a period <u><strong>delay</strong></u> time (so that we can make sure the user is really waiting to for to make Ajax call, rather than in the middle of typing)</li>
+<li>when there is another intention to call the Ajax function in the middle of last delay, we want to reschedule the ajax call after another delay</li>
+</ul>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">callAjaxRightAway</span>(<span class="params"></span>)</span>&#123; </span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Ajax call starting, with arguments: "</span> + [...arguments] ) </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Debouncify</span>(<span class="params"> fn, delay </span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> time_handle = <span class="literal">null</span></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        clearTimeout(time_handle)</span><br><span class="line">        <span class="keyword">let</span> args = <span class="built_in">arguments</span></span><br><span class="line">        time_handle = setTimeout( <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; fn.apply(<span class="literal">null</span>,args) &#125;, delay)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> delayedFun = Debouncify(callAjaxRightAway, <span class="number">2000</span>) </span><br><span class="line"></span><br><span class="line">delayedFun(&#123;<span class="attr">arr</span>:[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], <span class="attr">heigh</span>: <span class="number">10</span> &#125;) <span class="comment">// will be ignored</span></span><br><span class="line">delayedFun(<span class="number">1</span>,<span class="number">2</span>)							<span class="comment">// will be ignored</span></span><br><span class="line">delayedFun(<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>)    <span class="comment">// "Ajax call starting, with arguments: a,b,c"</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Vanilla-JS/" rel="tag"># Vanilla JS</a>
+          
+            <a href="/tags/setTimeout/" rel="tag"># setTimeout</a>
+          
+            <a href="/tags/setInterval/" rel="tag"># setInterval</a>
+          
+            <a href="/tags/Event-Loop/" rel="tag"># Event Loop</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/30/Negative-Margin-in-Layout/" rel="next" title="Negative Margin in Layout">
+                <i class="fa fa-chevron-left"></i> Negative Margin in Layout
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/sea.jpg"
+                alt="Mingkai Cao" />
+            
+              <p class="site-author-name" itemprop="name">Mingkai Cao</p>
+              <p class="site-description motion-element" itemprop="description">All-trade Jack, loves full-stack</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">61</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">98</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/caomingkai" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:mingkaic@usc.edu" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-Credits-to"><span class="nav-number">1.</span> <span class="nav-text">0. Credits to:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#I-setTimeout"><span class="nav-number">2.</span> <span class="nav-text">I. setTimeout</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#II-setInterval"><span class="nav-number">3.</span> <span class="nav-text">II. setInterval</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#III-Common-Problems"><span class="nav-number">4.</span> <span class="nav-text">III. Common Problems</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate"> 
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mingkai Cao</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.6</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.6"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.6"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.6"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.6"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.6"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'hG8fgggWL7hK1jsXsRoVCNWv-MdYXbMMI',
+        appKey: 'VRAYsgwdkRyyb8bAFQ5uii6o',
+        placeholder: 'Any comment?',
+        avatar:'',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+    // 新增以下代码即可，可以移除.info下所有子节点
+    var infoEle = document.querySelector('#comments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0){
+      infoEle.childNodes.forEach(function(item) {
+        item.parentNode.removeChild(item);
+      });
+    }
+
+
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+<style>
+    #comments .vempty{
+        display: none;
+    }
+</style>
+
+</body>
+</html>

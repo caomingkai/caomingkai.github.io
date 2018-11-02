@@ -106,7 +106,7 @@
 <meta property="og:url" content="http://yoursite.com/2018/10/31/setTimeout-vs-setInterval/index.html">
 <meta property="og:site_name" content="CMK">
 <meta property="og:description" content="0. Credits to:http://www.laruence.com/2009/09/23/1089.html https://www.jeffjade.com/2015/08/03/2015-08-03-javascript-this/ https://www.youtube.com/watch?v=8aGhZQkoFbQ https://www.zhihu.com/question/55">
-<meta property="og:updated_time" content="2018-11-01T06:24:26.000Z">
+<meta property="og:updated_time" content="2018-11-01T22:23:58.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="setTimeout vs setInterval">
 <meta name="twitter:description" content="0. Credits to:http://www.laruence.com/2009/09/23/1089.html https://www.jeffjade.com/2015/08/03/2015-08-03-javascript-this/ https://www.youtube.com/watch?v=8aGhZQkoFbQ https://www.zhihu.com/question/55">
@@ -457,9 +457,20 @@
 </li>
 </ul>
 </li>
-<li><p><strong><code>setTimeout(cb, 0)</code> </strong></p>
+<li><p><strong><code>setTimeout(cb, 0):</code> </strong> </p>
 <ul>
-<li></li>
+<li><ol>
+<li><strong>等到Call Stack为空，即下一轮 Event Loop的时候 执行 <code>cb</code></strong></li>
+</ol>
+</li>
+<li><ol start="2">
+<li><u><strong>Render Queue</strong></u> 比 <u><strong>Callback Queue</strong></u> 在browser中的<strong>优先级高</strong>，他们<u><strong>共用一个JS V8 Engine</strong></u>。因此，callback中的<code>cb</code>会等到DOM被render之后在调用，这就是为什么使用 <strong><code>setTimeout(cb, 0)</code> </strong> </li>
+</ol>
+</li>
+<li><ol start="3">
+<li>这样，即便有很多<code>setTimeout(cb, 0)</code><strong>短时间大量</strong>被调用，也会因为<strong><u>render queue的高优先级</u></strong>，使得它能够在两个<code>cb</code> 调用之间，插入到 JS V8 thread中update DOM，从而使<strong><u>页面不会freeze</u></strong></li>
+</ol>
+</li>
 <li><p><u><strong>Waiting for elements mounted to DOM by GUI thread, then switch to JS thread, do the manipulation by <code>cb</code></strong></u></p>
 </li>
 <li><p>Every function put inside <code>setTimeout</code> with <code>0</code> delay, will <strong><u>respect</u> all the DOM task</strong>, and will <strong>scheduled after all DOM tasck</strong></p>
@@ -654,6 +665,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2018/11/01/Sorting-Algorithms-in-JS/" rel="prev" title="Sorting Algorithms in JS">
+                Sorting Algorithms in JS <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -733,7 +748,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">61</span>
+                    <span class="site-state-item-count">62</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -965,7 +980,17 @@
                     
                       
                     
-                    <span class="site-state-item-count">98</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">103</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

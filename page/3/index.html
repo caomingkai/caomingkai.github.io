@@ -332,6 +332,677 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/02/Note-of-Eloquent-JavaScript/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/02/Note-of-Eloquent-JavaScript/" itemprop="url">Note of Eloquent JavaScript - [Pure JS]</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-02T22:22:23-07:00">2018-10-02</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/02/Note-of-Eloquent-JavaScript/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/02/Note-of-Eloquent-JavaScript/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="I-Value-Type-Operators"><a href="#I-Value-Type-Operators" class="headerlink" title="I. Value, Type, Operators"></a>I. Value, Type, Operators</h2><ol>
+<li><p>Object, Number, String, Boolean, null, undefined, Symbol</p>
+<ul>
+<li>Symbol: used for global unique value in Map: <a href="https://zhuanlan.zhihu.com/p/22652486" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/22652486</a></li>
+</ul>
+</li>
+<li><p><code>typeof</code> will return <strong>lowercase string type</strong></p>
+<ul>
+<li><code>typeof null</code> =&gt; <code>&quot;object&quot;</code></li>
+<li><code>typeof undefined</code> =&gt; <code>&quot;undefined&quot;</code></li>
+<li><code>typeof 5</code> =&gt; <code>&quot;number&quot;</code></li>
+<li><code>typeof Number(&quot;4&quot;)</code> =&gt; <code>&quot;number&quot;</code></li>
+<li><code>typeof NaN</code> =&gt; <code>&quot;number&quot;</code></li>
+<li><code>typeof Infinity</code> =&gt; <code>&quot;number&quot;</code></li>
+<li><code>typeof [1,2]</code> =&gt; <code>&quot;object&quot;</code></li>
+</ul>
+</li>
+<li><p>comparsion</p>
+<p>There is only one value in JavaScript that is not equal to itself, and that is <code>NaN</code>(“not a number”).</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(NaN == NaN)  // false !!!!</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>operator used on string / null / number</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">console.log(8 * null)   // → 0</span><br><span class="line">console.log(&quot;5&quot; - 1)    // → 4</span><br><span class="line">console.log(&quot;5&quot; + 1)    // → &quot;51&quot;  !!!</span><br><span class="line">console.log(&quot;5&quot; * 1)    // → 5</span><br><span class="line">console.log(&quot;five&quot; * 2) // → NaN</span><br><span class="line">console.log(false == 0) // → true</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>when <code>null</code> or <code>undefined</code> occurs on either side of the operator, it produces true only if both sides are one of <code>null</code> or <code>undefined</code>.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">console.log(null == undefined);</span><br><span class="line">// → true</span><br><span class="line">console.log(null == 0);</span><br><span class="line">// → falseProgram Structure</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="II-Program-Structure"><a href="#II-Program-Structure" class="headerlink" title="II. Program Structure"></a>II. Program Structure</h2><ol>
+<li><p><strong><u>scope</u></strong>: Each variable has a <u><em>scope</em></u>, which is the part of the program in which the binding is visible.</p>
+<ul>
+<li>all variables in JS have its own scope, we can use <code>this</code> to refer it</li>
+<li>useful in <strong>Closure</strong></li>
+</ul>
+</li>
+<li><p><strong><u>variable</u></strong> :are reference, think it as <strong>tentscles</strong>, not <strong>boxes</strong></p>
+</li>
+<li><p><strong><u>function (Important List Inside)</u></strong>: </p>
+<ul>
+<li><p><strong><u>optional arguments:</u></strong></p>
+<ul>
+<li>If you pass too many, the extra ones are <u>ignored</u>. </li>
+<li>If you pass too few, the missing parameters get assigned the value <code>undefined</code>.<ul>
+<li>use default value like this: <code>function power(base, exponent = 2) {...}</code></li>
+</ul>
+</li>
+<li>How to call a pass a function with <strong><u>variant num of parameters</u></strong>?: <code>funName(...arg)</code></li>
+</ul>
+</li>
+<li><p><strong><u>function expression</u></strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Define f to hold a function value</span></span><br><span class="line"><span class="keyword">const</span> f = <span class="function"><span class="keyword">function</span>(<span class="params">a</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(a + <span class="number">2</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong><u>function declaration</u></strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Declare g to be a function</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">g</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a * b * <span class="number">3.5</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong><u>arrow function</u></strong>: automatically bind its <code>scope</code> to <code>this</code> inside the function (variables with implicit <code>this</code>)</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// A less verbose function value</span></span><br><span class="line"><span class="keyword">let</span> h = <span class="function"><span class="params">a</span> =&gt;</span> a % <span class="number">3</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong><u>Closure</u></strong></p>
+<ul>
+<li>What happens to local bindings when the function call that created them is no longer active?</li>
+<li>This feature—<u><em>being able to reference a specific instance of a local variable in an <strong>enclosing scope</strong></em></u>—is called <strong><em>[closure]</em></strong></li>
+<li><em>Local variables inside the outer function are created again for every call</em></li>
+<li><em>Different calls can’t trample on one another’s local bindings.</em></li>
+</ul>
+</li>
+<li><p>built-in functions</p>
+<ul>
+<li><p><code>prompt()</code> can get user’s input using a popup box:  <code>let inputName = prompt(&quot;please input your name&quot;)</code></p>
+</li>
+<li><p><code>console.log()</code> can also print <strong><u>object</u></strong>, <code>console.log(&quot;this obj is&quot;, obj)</code>, instead of <code>console.log(&quot;this obj is&quot; + obj)</code></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="III-Data-Structures-Objects"><a href="#III-Data-Structures-Objects" class="headerlink" title="III. Data Structures: Objects"></a>III. Data Structures: Objects</h2><ol>
+<li></li>
+<li><p>Property of Object** : </p>
+<ul>
+<li>Almost all JavaScript values have properties. The exceptions are <code>null</code> and <code>undefined</code>.</li>
+<li>2 ways to access properties:<ul>
+<li>obj.x</li>
+<li>obj[a]    //  a = “x”</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Method of Object:</strong></p>
+<ul>
+<li>2 ways to call methods:<ul>
+<li>obj.x</li>
+<li><strong>obj[a] (val)    //  a = “x”</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Mutability:</strong></p>
+<ul>
+<li><p><strong>Tip1:</strong> Regardless of whether you use regular or strict equality, object comparisons only evaluate to <code>true</code> <strong>if you compare the same exact object</strong>.</p>
+</li>
+<li><p>Why we need <strong>Mutability</strong>? - since we want want one obj affect others when we change one of them</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> object1 = &#123;<span class="attr">value</span>: <span class="number">10</span>&#125;;</span><br><span class="line"><span class="keyword">let</span> object2 = object1;</span><br><span class="line"></span><br><span class="line">object1.value = <span class="number">15</span>; 		 <span class="comment">// we update the value of object1</span></span><br><span class="line"><span class="built_in">console</span>.log(object2.value);  <span class="comment">// the value of object2 also changed, which is not what we want!</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>How to keep <strong>Mutability</strong>?</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> object1 = &#123;<span class="attr">value</span>: <span class="number">10</span>&#125;;</span><br><span class="line"><span class="keyword">let</span> object2 = &#123;...object1&#125;;</span><br><span class="line"></span><br><span class="line">object1.value = <span class="number">15</span>; 		 <span class="comment">// we update the value of object1</span></span><br><span class="line"><span class="built_in">console</span>.log(object2.value);  <span class="comment">// the value of object2 also changed, which is not what we want!</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="IV-Data-Structures-Array"><a href="#IV-Data-Structures-Array" class="headerlink" title="IV. Data Structures: Array"></a>IV. Data Structures: Array</h2><ol>
+<li><p><strong><code>for...of</code> vs <code>for...in</code> vs <code>forEach()</code></strong> : </p>
+<ul>
+<li><p><code>for..in</code> operates on <strong>any object</strong>; it serves as a way to inspect <u>enumerable properties</u> on this object</p>
+</li>
+<li><p><code>for...of</code> : mainly used to iterate <strong>only iterable object</strong>, it serves as a way to inspect all <u>iterable entries</u> of this object; It cannot used on Object, can be only used on Map, Set, Array, String</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">//  The e.g.</span><br><span class="line"></span><br><span class="line">Object.prototype.objCustom = function() &#123;&#125;; </span><br><span class="line">Array.prototype.arrCustom = function() &#123;&#125;;</span><br><span class="line"></span><br><span class="line">let iterable = [3, 5, 7];</span><br><span class="line">iterable.foo = &apos;hello&apos;;</span><br><span class="line"></span><br><span class="line">for (let i in iterable) &#123;</span><br><span class="line">  console.log(i); // logs 0, 1, 2, &quot;foo&quot;, &quot;arrCustom&quot;, &quot;objCustom&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">for (let i in iterable) &#123;</span><br><span class="line">  if (iterable.hasOwnProperty(i)) &#123;</span><br><span class="line">    console.log(i); // logs 0, 1, 2, &quot;foo&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">for (let i of iterable) &#123;</span><br><span class="line">  console.log(i); // logs 3, 5, 7</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>forEach()</code>: is a <strong>method</strong> only belonging to the royal family of Arrays, including Map, Set (since Map, Set are implemented using Array). It iterate <u>iterable elements</u> in an array. It mainly depends on its callback function</p>
+<ul>
+<li><code>map.forEach( callback(val, key, map) )</code></li>
+<li><code>array.forEach( callback(val, index, array) )</code></li>
+<li><code>set.forEach( callback(val, key, set) )</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>common methods</strong></p>
+<ul>
+<li><p><code>includes()</code>: determines whether an array includes a certain element, returning <code>true</code> or <code>false</code> as appropriate.</p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> array1 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(array1.includes(<span class="number">2</span>));</span><br><span class="line"><span class="comment">// expected output: true</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> pets = [<span class="string">'cat'</span>, <span class="string">'dog'</span>, <span class="string">'bat'</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(pets.includes(<span class="string">'cat'</span>));</span><br><span class="line"><span class="comment">// expected output: true</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(pets.includes(<span class="string">'at'</span>));</span><br><span class="line"><span class="comment">// expected output: false</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>forEach()</code></p>
+</li>
+<li><p><code>map()</code></p>
+</li>
+<li><p><code>reduce()</code></p>
+</li>
+<li><p><code>filter()</code></p>
+</li>
+<li><p><code>push()</code>: push on end</p>
+</li>
+<li><p><code>pop()</code>: pop from end</p>
+</li>
+<li><p><code>shift()</code>: remove from front</p>
+</li>
+<li><p><code>unshift()</code>: add to front</p>
+</li>
+<li><p><code>sort()</code></p>
+</li>
+<li><p><code>reverse()</code></p>
+</li>
+<li><p><code>slice()</code>: return a new array (sub-array)</p>
+</li>
+<li><p><code>splice()</code>: modify current array (current array)</p>
+</li>
+<li><p><code>join()</code>: returns a new string by concatenating all of the elements in an array</p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> elements = [<span class="string">'Fire'</span>, <span class="string">'Wind'</span>, <span class="string">'Rain'</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(elements.join());</span><br><span class="line"><span class="comment">// expected output: Fire,Wind,Rain</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(elements.join(<span class="string">''</span>));</span><br><span class="line"><span class="comment">// expected output: FireWindRain</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(elements.join(<span class="string">'-'</span>));</span><br><span class="line"><span class="comment">// expected output: Fire-Wind-Rain</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>concat()</code></p>
+</li>
+<li><p><code>indexOf()</code></p>
+</li>
+<li><p><code>lastIndexOf()</code></p>
+</li>
+<li><p><code>find()</code>:  returns the <strong>value</strong> of the <strong>first element</strong> in the array that satisfies the provided testing function. Otherwise <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined" target="_blank" rel="noopener"><code>undefined</code></a> is returned.</p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> array1 = [<span class="number">5</span>, <span class="number">12</span>, <span class="number">8</span>, <span class="number">130</span>, <span class="number">44</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> found = array1.find(<span class="function"><span class="keyword">function</span>(<span class="params">element</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> element &gt; <span class="number">10</span>;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(found);</span><br><span class="line"><span class="comment">// expected output: 12</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>findIndex()</code>: returns the <strong>index</strong> of the first element in the array <strong>that satisfies the provided testing function</strong>. Otherwise, it returns -1</p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> array1 = [<span class="number">5</span>, <span class="number">12</span>, <span class="number">8</span>, <span class="number">130</span>, <span class="number">44</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">findFirstLargeNumber</span>(<span class="params">element</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> element &gt; <span class="number">13</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(array1.findIndex(findFirstLargeNumber));</span><br><span class="line"><span class="comment">// expected output: 3</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>values()</code>:  returns a new <strong>Array Iterator</strong> object that contains the values for each index in the array</p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> array1 = [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>];</span><br><span class="line"><span class="keyword">const</span> iterator = array1.values();</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> value <span class="keyword">of</span> iterator) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(value); <span class="comment">// expected output: "a" "b" "c"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>fill()</code>: fills all the elements of an array from a start index to an end index with a static value. The end index is not included.</p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> array1 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// fill with 0 from position 2 until position 4</span></span><br><span class="line"><span class="built_in">console</span>.log(array1.fill(<span class="number">0</span>, <span class="number">2</span>, <span class="number">4</span>));</span><br><span class="line"><span class="comment">// expected output: [1, 2, 0, 0]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// fill with 5 from position 1</span></span><br><span class="line"><span class="built_in">console</span>.log(array1.fill(<span class="number">5</span>, <span class="number">1</span>));</span><br><span class="line"><span class="comment">// expected output: [1, 5, 5, 5]</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(array1.fill(<span class="number">6</span>));</span><br><span class="line"><span class="comment">// expected output: [6, 6, 6, 6]</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>flat()</code>:  creates a new array with all sub-array elements concatenated into it recursively up to the specified depth.</p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr1 = [<span class="number">1</span>, <span class="number">2</span>, [<span class="number">3</span>, <span class="number">4</span>]];</span><br><span class="line">arr1.flat(); </span><br><span class="line"><span class="comment">// [1, 2, 3, 4]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> arr2 = [<span class="number">1</span>, <span class="number">2</span>, [<span class="number">3</span>, <span class="number">4</span>, [<span class="number">5</span>, <span class="number">6</span>]]];</span><br><span class="line">arr2.flat();</span><br><span class="line"><span class="comment">// [1, 2, 3, 4, [5, 6]]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> arr3 = [<span class="number">1</span>, <span class="number">2</span>, [<span class="number">3</span>, <span class="number">4</span>, [<span class="number">5</span>, <span class="number">6</span>]]];</span><br><span class="line">arr3.flat(<span class="number">2</span>);</span><br><span class="line"><span class="comment">// [1, 2, 3, 4, 5, 6]</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="IV-Data-Structures-Map"><a href="#IV-Data-Structures-Map" class="headerlink" title="IV. Data Structures: Map"></a>IV. Data Structures: Map</h2><ol>
+<li><strong>internal structure</strong><ul>
+<li><code>new Map([iterable])</code></li>
+<li>iterable:  <u>key-value pairs</u> (<strong>arrays  with two elements</strong>, e.g. <code>[[ 1, &#39;one&#39; ],[ 2, &#39;two&#39; ]]</code>)</li>
+<li><code>new Map( [ [&quot;a&quot;, 1], [&quot;b&quot;, 2], [&quot;c&quot;, 3], [&quot;d&quot;, 4] ] )</code></li>
+</ul>
+</li>
+<li><strong>Map vs Object</strong><ul>
+<li>The keys of an <code>Object</code> are <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" target="_blank" rel="noopener"><code>Strings</code></a> and <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol" target="_blank" rel="noopener"><code>Symbols</code></a>, whereas they can be any value for a <code>Map</code>, including functions, objects, and any primitive.</li>
+<li>The keys in Map are ordered while keys added to object are not. Thus, when iterating over it, a Map object returns keys in order of insertion.</li>
+<li>You can get the size of a <code>Map</code> easily with the <code>size</code> property, while the number of properties in an <code>Object</code> must be determined manually.</li>
+<li>A <code>Map</code> is an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/iterable" target="_blank" rel="noopener">iterable</a> and can thus be directly iterated, whereas iterating over an <code>Object</code> requires obtaining its keys in some fashion and iterating over them.</li>
+<li>An <code>Object</code> has a prototype, so there are default keys in the map that could collide with your keys if you’re not careful. As of ES5 this can be bypassed by using <code>map = Object.create(null)</code>, but this is seldom done.</li>
+<li>A <code>Map</code> may perform better in scenarios involving frequent addition and removal of key pairs.</li>
+</ul>
+</li>
+</ol>
+<h2 id="V-Higher-Order-Functions"><a href="#V-Higher-Order-Functions" class="headerlink" title="V. Higher-Order Functions"></a>V. Higher-Order Functions</h2><ol>
+<li><p><strong>what?</strong></p>
+<ul>
+<li>Functions that <strong><u>operate on other functions</u></strong>, either by taking them <u>as arguments</u> or <u>as return value</u>, are called <em>higher-order functions</em></li>
+</ul>
+</li>
+<li><p><strong>why?   =&gt; handle actions, not just values</strong></p>
+<ul>
+<li><p><strong>eg1 : use function as arguments</strong></p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">obj</span>)</span>&#123; obj += <span class="number">1</span> &#125;;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">substract</span>(<span class="params">obj</span>)</span>&#123; obj -= <span class="number">1</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">repeatAction</span>(<span class="params">times, action</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; times; i++) &#123;</span><br><span class="line">    action(i);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">repeatAction(<span class="number">5</span>, add );</span><br><span class="line">repeatAction(<span class="number">5</span>, substract );</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>eg2 : use function as return value</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// utility function: returns another function,</span></span><br><span class="line"><span class="comment">// can check if a number &gt; certain number</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">greaterThan</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="params">m</span> =&gt;</span> m &gt; n;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> greaterThan10 = greaterThan(<span class="number">10</span>);</span><br><span class="line"><span class="built_in">console</span>.log(greaterThan10(<span class="number">11</span>));</span><br><span class="line"><span class="comment">// → true</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>eg3:</strong> </p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ----------- 1. filter() -----------</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">filter</span>(<span class="params">array, test</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> passed = [];</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> element <span class="keyword">of</span> array) &#123;</span><br><span class="line">    <span class="keyword">if</span> (test(element)) &#123;</span><br><span class="line">      passed.push(element);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> passed;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(filter(SCRIPTS, script =&gt; script.living));</span><br><span class="line"><span class="comment">// → [&#123;name: "Adlam", …&#125;, …]</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// ----------- 2. map() -----------</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">map</span>(<span class="params">array, transform</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> mapped = [];</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> element <span class="keyword">of</span> array) &#123;</span><br><span class="line">    mapped.push(transform(element));</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> mapped;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> rtlScripts = SCRIPTS.filter(<span class="function"><span class="params">s</span> =&gt;</span> s.direction == <span class="string">"rtl"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(map(rtlScripts, s =&gt; s.name));</span><br><span class="line"><span class="comment">// → ["Adlam", "Arabic", "Imperial Aramaic", …]</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// ----------- 3. reduce() -----------</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reduce</span>(<span class="params">array, combine, start</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> current = start;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> element <span class="keyword">of</span> array) &#123;</span><br><span class="line">    current = combine(current, element);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> current;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(reduce([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>], (a, b) =&gt; a + b, <span class="number">0</span>));</span><br><span class="line"><span class="comment">// → 10</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><strong>Composability</strong> [<u><strong>pipeline</strong></u>]</p>
+<ul>
+<li><p><u>what</u>:  we want to <em>compose</em> operations, to make <strong>meaningful &amp; readable</strong> code</p>
+</li>
+<li><p><u>How</u>:  create functions, to make a series action into a <strong><em><u>pipeline</u></em></strong></p>
+</li>
+<li><p>e.g.:</p>
+<ol>
+<li>we start with all scripts, </li>
+<li>filter out the living (or dead) ones, </li>
+<li>take the years from those, </li>
+<li>average them, </li>
+<li>and round the result.</li>
+</ol>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">average</span>(<span class="params">array</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> array.reduce(<span class="function">(<span class="params">a, b</span>) =&gt;</span> a + b) / array.length;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Math</span>.round(average(</span><br><span class="line">  SCRIPTS.filter(<span class="function"><span class="params">s</span> =&gt;</span> s.living).map(<span class="function"><span class="params">s</span> =&gt;</span> s.year))));</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="VI-The-life-of-Object"><a href="#VI-The-life-of-Object" class="headerlink" title="VI. The life of Object"></a>VI. The life of Object</h2><ol>
+<li><p><strong>Encapsulation / 封装</strong></p>
+<ol>
+<li><p><strong>What?</strong>: </p>
+<ul>
+<li><u>Internal details</u> of one object cannot be access from outside</li>
+<li>objects communicate via their <u>interface</u></li>
+</ul>
+</li>
+<li><p><strong>How?</strong></p>
+<ul>
+<li><u><strong>private</strong></u>: put an <strong>underscore</strong> (<code>_</code>) character at the start of property names to indicate that those properties are private.</li>
+</ul>
+</li>
+<li><p><strong>property</strong></p>
+<ul>
+<li>belongs to that object itself</li>
+<li>or can be traced back up to its prototype</li>
+</ul>
+</li>
+<li><p><strong>Method</strong></p>
+<ul>
+<li>each function has its own <code>this</code> property</li>
+<li><p><strong><u>arrow function</u></strong>: they do not bind their own <code>this</code> but can see the <code>this</code> binding of the scope around them</p>
+</li>
+<li><p><code>this</code>: every method have this implicit parameter passed into the function. The following are the same</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">speak</span>(<span class="params">line</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`The <span class="subst">$&#123;<span class="keyword">this</span>.type&#125;</span> rabbit says '<span class="subst">$&#123;line&#125;</span>'`</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> whiteRabbit = &#123;<span class="attr">type</span>: <span class="string">"white"</span>, speak&#125;;</span><br><span class="line"></span><br><span class="line">whiteRabbit.speak(<span class="string">"Burp"</span>);		  <span class="comment">// same effect</span></span><br><span class="line">speak.call(whiteRabbit, <span class="string">"Burp!"</span>); <span class="comment">// same effect</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p><strong>Polymorphism</strong></p>
+<ol>
+<li><p><strong>overriding derived <u>property</u></strong></p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Rabbit.prototype.teeth = <span class="string">"small"</span>;</span><br><span class="line"><span class="built_in">console</span>.log(killerRabbit.teeth);</span><br><span class="line"><span class="comment">// → small</span></span><br><span class="line">killerRabbit.teeth = <span class="string">"long, sharp, and bloody"</span>;</span><br><span class="line"><span class="built_in">console</span>.log(killerRabbit.teeth);</span><br><span class="line"><span class="comment">// → long, sharp, and bloody</span></span><br><span class="line"><span class="built_in">console</span>.log(blackRabbit.teeth);</span><br><span class="line"><span class="comment">// → small</span></span><br><span class="line"><span class="built_in">console</span>.log(Rabbit.prototype.teeth);</span><br><span class="line"><span class="comment">// → small</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p><strong>override derived <u>method</u></strong></p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Rabbit.prototype.toString = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">`a <span class="subst">$&#123;<span class="keyword">this</span>.type&#125;</span> rabbit`</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">String</span>(blackRabbit));</span><br><span class="line"><span class="comment">// → a black rabbit</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p><strong>Why use Map instead of pure Object?</strong></p>
+<ul>
+<li><p>We certainly didn’t list anybody named toString in our map. </p>
+</li>
+<li><p>Yet, because plain objects derive from <code>Object.prototype</code>, it looks like the property is there.</p>
+</li>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">let ages = &#123;</span><br><span class="line">  Boris: 39,</span><br><span class="line">  Liang: 22,</span><br><span class="line">  Júlia: 62</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">console.log(&quot;Is Jack&apos;s age known?&quot;, &quot;Jack&quot; in ages);</span><br><span class="line">// → Is Jack&apos;s age known? true</span><br><span class="line">console.log(&quot;Is Jack&apos;s age known?&quot;, &quot;Jack&quot; in ages);</span><br><span class="line">// → Is Jack&apos;s age known? false</span><br><span class="line">console.log(&quot;Is toString&apos;s age known?&quot;, &quot;toString&quot; in ages);</span><br><span class="line">// → Is toString&apos;s age known? true </span><br><span class="line">// ====&gt;【what we don&apos;t want！！！】</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>getters, setters, and static</p>
+<ol>
+<li><p><code>get</code>: The <strong>get</strong> syntax binds an object property to a function that will be called when that property is looked up.</p>
+<ol>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var obj = &#123;</span><br><span class="line">  log: [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;],</span><br><span class="line">  get latest() &#123;</span><br><span class="line">    if (this.log.length == 0) &#123;</span><br><span class="line">      return undefined;</span><br><span class="line">    &#125;</span><br><span class="line">    return this.log[this.log.length - 1];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">console.log(obj.latest);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p><code>set</code>: The <strong>set</strong> syntax binds an object property to a function to be called when there is an attempt to set that property.</p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> language = &#123;</span><br><span class="line">  set current(name) &#123;</span><br><span class="line">    <span class="keyword">this</span>.log.push(name);</span><br><span class="line">  &#125;,</span><br><span class="line">  log: []</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">language.current = <span class="string">'EN'</span>;</span><br><span class="line">language.current = <span class="string">'FA'</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(language.log);</span><br><span class="line"><span class="comment">// expected output: Array ["EN", "FA"]</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p><code>static</code>: methods that have <code>static</code> written before their name are stored on the constructor.</p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Temperature</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(celsius) &#123;</span><br><span class="line">    <span class="keyword">this</span>.celsius = celsius;</span><br><span class="line">  &#125;</span><br><span class="line">  get fahrenheit() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.celsius * <span class="number">1.8</span> + <span class="number">32</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  set fahrenheit(value) &#123;</span><br><span class="line">    <span class="keyword">this</span>.celsius = (value - <span class="number">32</span>) / <span class="number">1.8</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">static</span> fromFahrenheit(value) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Temperature((value - <span class="number">32</span>) / <span class="number">1.8</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> temp = <span class="keyword">new</span> Temperature(<span class="number">22</span>);</span><br><span class="line"><span class="built_in">console</span>.log(temp.fahrenheit);</span><br><span class="line"><span class="comment">// → 71.6</span></span><br><span class="line">temp.fahrenheit = <span class="number">86</span>;</span><br><span class="line"><span class="built_in">console</span>.log(temp.celsius);</span><br><span class="line"><span class="comment">// → 30</span></span><br><span class="line"></span><br><span class="line">Temperature.fromFahrenheit(<span class="number">100</span>)</span><br><span class="line"><span class="comment">// -&gt; Temperature &#123;celsius: 37.77777777777778&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p><strong>Inheritance</strong></p>
+<ol>
+<li><p><code>extends</code> operator</p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SymmetricMatrix</span> <span class="keyword">extends</span> <span class="title">Matrix</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(size, element = (x, y) =&gt; undefined) &#123; </span><br><span class="line">    <span class="keyword">super</span>(size, size, (x, y) =&gt; &#123; <span class="comment">// 'super' call its parents constructor</span></span><br><span class="line">      <span class="keyword">if</span> (x &lt; y) <span class="keyword">return</span> element(y, x);</span><br><span class="line">      <span class="keyword">else</span> <span class="keyword">return</span> element(x, y);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  set(x, y, value) &#123;</span><br><span class="line">    <span class="keyword">super</span>.set(x, y, value);       <span class="comment">// 'super' call its parents methods</span></span><br><span class="line">    <span class="keyword">if</span> (x != y) &#123;</span><br><span class="line">      <span class="keyword">super</span>.set(y, x, value);     <span class="comment">// 'super' call its parents methods</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> matrix = <span class="keyword">new</span> SymmetricMatrix(<span class="number">5</span>, (x, y) =&gt; <span class="string">`<span class="subst">$&#123;x&#125;</span>,<span class="subst">$&#123;y&#125;</span>`</span>);</span><br><span class="line"><span class="built_in">console</span>.log(matrix.get(<span class="number">2</span>, <span class="number">3</span>));</span><br><span class="line"><span class="comment">// → 3,2</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p><code>instanceof</code> operator</p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(</span><br><span class="line">  <span class="keyword">new</span> SymmetricMatrix(<span class="number">2</span>) <span class="keyword">instanceof</span> SymmetricMatrix);</span><br><span class="line"><span class="comment">// → true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">new</span> SymmetricMatrix(<span class="number">2</span>) <span class="keyword">instanceof</span> Matrix);</span><br><span class="line"><span class="comment">// → true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">new</span> Matrix(<span class="number">2</span>, <span class="number">2</span>) <span class="keyword">instanceof</span> SymmetricMatrix);</span><br><span class="line"><span class="comment">// → false</span></span><br><span class="line"><span class="built_in">console</span>.log([<span class="number">1</span>] <span class="keyword">instanceof</span> <span class="built_in">Array</span>);</span><br><span class="line"><span class="comment">// → true</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p><strong>prototype: 也是一个object, 用来表明该object中的哪些method用来 inherite</strong></p>
+<ul>
+<li><p><code>prototype</code>  vs <code>__proto__</code></p>
+<ul>
+<li><code>prototype</code>: an shared object contains all methods to be inherited by child objects</li>
+<li><code>__proto__</code>: indicating the object it’s inheriting, ie, <code>obj.prototype</code></li>
+</ul>
+</li>
+<li><p><strong>what</strong>:  can be treated as <u>parent class</u> in java. A prototype is another object that is used as a fallback source of properties.</p>
+</li>
+<li><p><code>object.prototype === null</code></p>
+</li>
+<li><p><code>Object.create()</code>:  create an object using anther object as the prototype. like <code>constructor()</code></p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> protoRabbit = &#123;</span><br><span class="line">  speak(line) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`The <span class="subst">$&#123;<span class="keyword">this</span>.type&#125;</span> rabbit says '<span class="subst">$&#123;line&#125;</span>'`</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">let</span> killerRabbit = <span class="built_in">Object</span>.create(protoRabbit);</span><br><span class="line">killerRabbit.type = <span class="string">"killer"</span>;</span><br><span class="line">killerRabbit.speak(<span class="string">"SKREEEE!"</span>);</span><br><span class="line"><span class="comment">// → The killer rabbit says 'SKREEEE!'</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><strong>class</strong>: clearer way to create prototype</p>
+<ul>
+<li><p><strong>What &amp; Details</strong></p>
+<ul>
+<li>The one named <code>constructor</code> is treated specially. It provides the <strong><u>actual constructor function</u></strong>, which will be bound to the name <code>Rabbit</code>. </li>
+<li>The others are packaged into that <strong><u>constructor’s prototype</u></strong>. Thus, the earlier class declaration is equivalent to the constructor definition from the previous section. It just looks nicer.</li>
+</ul>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Rabbit</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(type) &#123;</span><br><span class="line">    <span class="keyword">this</span>.type = type;</span><br><span class="line">  &#125;</span><br><span class="line">  speak(line) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`The <span class="subst">$&#123;<span class="keyword">this</span>.type&#125;</span> rabbit says '<span class="subst">$&#123;line&#125;</span>'`</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> killerRabbit = <span class="keyword">new</span> Rabbit(<span class="string">"killer"</span>);</span><br><span class="line"><span class="keyword">let</span> blackRabbit = <span class="keyword">new</span> Rabbit(<span class="string">"black"</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>NOTE: the <u>constructor</u>  are <strong>capitalized</strong></p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Rabbit</span>(<span class="params">type</span>) </span>&#123;   <span class="comment">// note: name are capitalized</span></span><br><span class="line">  <span class="keyword">this</span>.type = type;</span><br><span class="line">&#125;</span><br><span class="line">Rabbit.prototype.speak = <span class="function"><span class="keyword">function</span>(<span class="params">line</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`The <span class="subst">$&#123;<span class="keyword">this</span>.type&#125;</span> rabbit says '<span class="subst">$&#123;line&#125;</span>'`</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> weirdRabbit = <span class="keyword">new</span> Rabbit(<span class="string">"weird"</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="VII-Bugs"><a href="#VII-Bugs" class="headerlink" title="VII. Bugs"></a>VII. Bugs</h2><ol>
+<li><p>strict mode</p>
+<ol>
+<li><p>why?   =&gt; <u>we don’t want to write bugs!</u></p>
+</li>
+<li><p>how?</p>
+<ul>
+<li><p><code>use strict</code> <u>at  top of a file</u></p>
+</li>
+<li><p><code>use strict</code> in body of function</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">canYouSpotTheProblem</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"><span class="meta">  "use strict"</span>;</span><br><span class="line">  <span class="keyword">for</span> (counter = <span class="number">0</span>; counter &lt; <span class="number">10</span>; counter++) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Happy happy"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">canYouSpotTheProblem();</span><br><span class="line"><span class="comment">// → ReferenceError: counter is not defined</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p><strong>regular express</strong></p>
+<ol>
+<li><p>A regular expression is <strong>a type of object</strong></p>
+<ul>
+<li>with the <code>RegExp</code> constructor</li>
+<li>as a literal value by enclosing a pattern in forward slash (<code>/</code>) characters</li>
+</ul>
+</li>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let re1 = new RegExp(&quot;abc&quot;);</span><br><span class="line">let re2 = /abc/;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="VIII-Modules"><a href="#VIII-Modules" class="headerlink" title="VIII. Modules"></a>VIII. Modules</h2><ol>
+<li><p><strong>what &amp; why</strong></p>
+<ul>
+<li><u>Modules</u> are code snippet can be reused repeatedly</li>
+<li>We want do <strong>DRY</strong></li>
+</ul>
+</li>
+<li><p><strong>Inner implementation: [ important ]</strong></p>
+<ul>
+<li><p>we need JS has the ability to <u><strong>execute string</strong></u> of code, because what imported in are <strong>strings</strong>!</p>
+</li>
+<li><p>2 ways to execute strings as code in JS</p>
+<ul>
+<li><p><code>eval()</code>: drawback =&gt; <strong><u>change scope!</u></strong></p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> x = <span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">evalAndReturnX</span>(<span class="params">code</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">eval</span>(code);</span><br><span class="line">  <span class="keyword">return</span> x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(evalAndReturnX(<span class="string">"var x = 2"</span>));</span><br><span class="line"><span class="comment">// → 2</span></span><br><span class="line"><span class="built_in">console</span>.log(x);</span><br><span class="line"><span class="comment">// → 1</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>Function ( params_string, body_string )</code>:  <strong><u>self-contained module scope</u></strong></p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> plusOne = <span class="built_in">Function</span>(<span class="string">"n"</span>, <span class="string">"return n + 1;"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(plusOne(<span class="number">4</span>));</span><br><span class="line"><span class="comment">// → 5</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>CommonJS:  <code>require</code> &amp;  <code>exports</code></strong></p>
+<ul>
+<li><p>How to use</p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ordinal = <span class="built_in">require</span>(<span class="string">"ordinal"</span>);</span><br><span class="line"><span class="keyword">const</span> &#123;days, months&#125; = <span class="built_in">require</span>(<span class="string">"date-names"</span>);</span><br><span class="line"></span><br><span class="line">exports.formatDate = <span class="function"><span class="keyword">function</span>(<span class="params">date, format</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> format.replace(<span class="regexp">/YYYY|M(MMM)?|Do?|dddd/g</span>, tag =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (tag == <span class="string">"YYYY"</span>) <span class="keyword">return</span> date.getFullYear();</span><br><span class="line">    <span class="keyword">if</span> (tag == <span class="string">"M"</span>) <span class="keyword">return</span> date.getMonth();</span><br><span class="line">    <span class="keyword">if</span> (tag == <span class="string">"MMMM"</span>) <span class="keyword">return</span> months[date.getMonth()];</span><br><span class="line">    <span class="keyword">if</span> (tag == <span class="string">"D"</span>) <span class="keyword">return</span> date.getDate();</span><br><span class="line">    <span class="keyword">if</span> (tag == <span class="string">"Do"</span>) <span class="keyword">return</span> ordinal(date.getDate());</span><br><span class="line">    <span class="keyword">if</span> (tag == <span class="string">"dddd"</span>) <span class="keyword">return</span> days[date.getDay()];</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>require</code>: a function mainly used by CommonJS</p>
+<ul>
+<li>calling a function to access a dependency</li>
+<li>When you call this with the module name of a dependency, it makes sure the module is loaded and returns its interface.</li>
+<li>The inner implementation of <code>require()</code></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>.cache = <span class="built_in">Object</span>.create(<span class="literal">null</span>);    <span class="comment">// a running-time  global obj</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">require</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!(name <span class="keyword">in</span> <span class="built_in">require</span>.cache)) &#123;       <span class="comment">// check if alreay has the module in cache</span></span><br><span class="line">    <span class="keyword">let</span> code = readFile(name);          <span class="comment">// read [code STRING] from file</span></span><br><span class="line">    <span class="keyword">let</span> <span class="built_in">module</span> = &#123;<span class="attr">exports</span>: &#123;&#125;&#125;;         <span class="comment">// an callback container to fetch real one</span></span><br><span class="line">    <span class="built_in">require</span>.cache[name] = <span class="built_in">module</span>;       <span class="comment">// bind this container to cache</span></span><br><span class="line">    <span class="keyword">let</span> wrapper = <span class="built_in">Function</span>(<span class="string">"require, exports, module"</span>, code);<span class="comment">// 'eval' code String in &lt;local function scope&gt;</span></span><br><span class="line">    wrapper(<span class="built_in">require</span>, <span class="built_in">module</span>.exports, <span class="built_in">module</span>);   <span class="comment">// put all the code to module, </span></span><br><span class="line">  &#125;										<span class="comment">// while tackle module of the required one</span></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">require</span>.cache[name].exports;   <span class="comment">// output the </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><strong>ES6 Module: <code>export</code> &amp; <code>import</code></strong></p>
+<ol>
+<li><p>what &amp; why [<em>imported module are reference, not value</em>]</p>
+<ul>
+<li><u>Same</u>: try to tackle dependency, but</li>
+<li><u>Difference:</u> <ul>
+<li>imported module using ES6 are reference, not value; So local scope can access its value when there is update inside the imported module</li>
+<li>exporting module may change the value of the binding at any time, and the modules that import it will see its new value.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>How to use</p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> ordinal <span class="keyword">from</span> <span class="string">"ordinal"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;days, months&#125; <span class="keyword">from</span> <span class="string">"date-names"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">formatDate</span>(<span class="params">date, format</span>) </span>&#123; <span class="comment">/* ... */</span> &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="IX-Asynchronous-Programming"><a href="#IX-Asynchronous-Programming" class="headerlink" title="IX. Asynchronous Programming"></a>IX. Asynchronous Programming</h2><ol>
+<li><p>callback function</p>
+<ul>
+<li><p>Asynchronous behavior happens on its <u>own empty function call stack</u></p>
+</li>
+<li><p>callbacks are called by others, not directly called by the code that scheduled them. </p>
+</li>
+<li>If I call <code>setTimeout</code> from within a function, that function will have returned by the time the callback function is called. </li>
+<li>And when the callback returns, control does not go back to the function that scheduled it.</li>
+</ul>
+</li>
+<li><p>Promise</p>
+</li>
+<li><p><code>async</code> &amp; <code>await</code></p>
+</li>
+<li><p>generator</p>
+<ul>
+<li>What:  functions can be paused and then resumed again</li>
+<li>how: <code>function* funName(){ ... }</code></li>
+</ul>
+</li>
+<li><p>event loop</p>
+<ul>
+<li>all asynchronous events are put onto a <code>Queue</code> </li>
+<li>all synchronous function are executed in <code>Stack</code></li>
+</ul>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/02/Memory-Game/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2025,458 +2696,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/01/Node-js/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/01/Node-js/" itemprop="url">Node.js</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-01T16:24:07-07:00">2018-06-01</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/06/01/Node-js/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/06/01/Node-js/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Event-driven-amp-asynchrous-IO-amp-Event-Emitter"><a href="#Event-driven-amp-asynchrous-IO-amp-Event-Emitter" class="headerlink" title="Event-driven &amp; asynchrous IO &amp; Event Emitter"></a>Event-driven &amp; asynchrous IO &amp; <code>Event Emitter</code></h2><ol>
-<li><p><strong><u>NOTE :</u></strong></p>
-<ul>
-<li>Node.js is an application [<u><strong>a process</strong></u>]  in OS; but has <u><strong>multiple threads</strong></u></li>
-<li><strong><u>Only one JS thread</u></strong>, all others are <strong><u>worker threads</u></strong> in thread pool used by OS</li>
-<li>they share data via <strong><u>message queue</u></strong></li>
-</ul>
-</li>
-<li><p><strong>Asynchrous I/O</strong></p>
-<ul>
-<li>Each I/O operation is assigned a <code>worker thread</code> in Node.js <u>run time env</u>; </li>
-<li>But only one <code>master thread</code> (<u>js engine</u>) deal with computation</li>
-</ul>
-</li>
-<li><p><strong>Even Loop</strong></p>
-<ul>
-<li><p><strong>Node.js</strong> —  <strong>V8</strong> — <strong>libuv</strong> — <strong>OS</strong></p>
-</li>
-<li><p><strong>libuv [cross platform Asynchronous I/O]</strong>: handles utilize other threads to complete asynchronous I/O</p>
-</li>
-<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">   ┌───────────────────────────┐</span><br><span class="line">┌─&gt;│           timers          │</span><br><span class="line">│  └─────────────┬─────────────┘</span><br><span class="line">│  ┌─────────────┴─────────────┐</span><br><span class="line">│  │     pending callbacks     │</span><br><span class="line">│  └─────────────┬─────────────┘</span><br><span class="line">│  ┌─────────────┴─────────────┐</span><br><span class="line">│  │       idle, prepare       │</span><br><span class="line">│  └─────────────┬─────────────┘      ┌───────────────┐</span><br><span class="line">│  ┌─────────────┴─────────────┐      │   incoming:   │</span><br><span class="line">│  │           poll            │&lt;─────┤  connections, │</span><br><span class="line">│  └─────────────┬─────────────┘      │   data, etc.  │</span><br><span class="line">│  ┌─────────────┴─────────────┐      └───────────────┘</span><br><span class="line">│  │           check           │</span><br><span class="line">│  └─────────────┬─────────────┘</span><br><span class="line">│  ┌─────────────┴─────────────┐</span><br><span class="line">└──┤      close callbacks      │</span><br><span class="line">   └───────────────────────────┘</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ol>
-<h2 id="Node-js-use-cases"><a href="#Node-js-use-cases" class="headerlink" title="Node.js use cases"></a>Node.js use cases</h2><ol>
-<li><strong>I/O-bound application</strong><ul>
-<li>Except the only one JS processing thread, all other threads deal with I/O operation, so that I/O processing can happend simultaneously =&gt; <strong>save time</strong></li>
-<li>JS processing thread has no CPU-bound computation, only stay in <strong><u>event loop</u></strong>, and keep staring at the top of <strong><u>message queue</u></strong>; When some event done, handle its callbacks</li>
-</ul>
-</li>
-</ol>
-<h2 id="process-nextTick-vs-setImmediate"><a href="#process-nextTick-vs-setImmediate" class="headerlink" title="process.nextTick() vs. setImmediate()"></a><code>process.nextTick()</code> vs. <code>setImmediate()</code></h2><ol>
-<li><strong><u>tick:</u></strong> each iteration of an Event Loop is called a <em>tick.</em></li>
-<li><code>process.nextTick()</code> : will execute <strong><u>all callbacks</u></strong> set by it previousely in next tick</li>
-<li><code>setImmediate()</code>: will execute <strong><u>only one callback</u></strong> in next tick, even set multiple callbacks</li>
-</ol>
-<h2 id="CommonJS-require-amp-exports"><a href="#CommonJS-require-amp-exports" class="headerlink" title="CommonJS: require &amp; exports"></a>CommonJS: <code>require</code> &amp; <code>exports</code></h2><ol>
-<li><p><strong><u>Sad History</u></strong>: Before CommonJS, JavaScript doesn’t have module importing feature, so it is limited to small script, cannot be used to develop large project</p>
-</li>
-<li><p><strong><u>Current state :</u></strong> Many modules like <code>buffer</code>  <code>File</code>  <code>Http</code> <code>Socket</code> can be imported using <strong><em>CommonJS</em></strong></p>
-</li>
-<li><p><strong>Implementation:</strong></p>
-<ul>
-<li><p><code>module</code> is is <u><em>glolal object</em></u> in Node.js, have property <code>exports</code></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span> = &#123; <span class="attr">exports</span>: &#123;&#125; &#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Before we step into the details, let’s see before CommonJS, how to use import function. The public functions are exposed while the private properties and methods are encapsulated</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> revealingModule = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> privateVar = <span class="string">"Ben Thomas"</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">setNameFn</span>(<span class="params"> strName </span>) </span>&#123;</span><br><span class="line">        privateVar = strName;</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="keyword">return</span> &#123; <span class="attr">setName</span>: setNameFn, &#125;;</span><br><span class="line">&#125;)();</span><br><span class="line">revealingModule.setName( <span class="string">"Paul Adams"</span> );</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>When a module is exported, inside Node.js it will be wrapped as <code>IIFE</code> (Immediately Invoked Function Expression)</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. original code</span></span><br><span class="line"><span class="keyword">var</span> greet = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log(<span class="string">'Hello World'</span>); &#125;;</span><br><span class="line"><span class="built_in">module</span>.exports = greet;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. Parsed code by Node.js</span></span><br><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params">exports, require, module, __filename, __dirname</span>) </span>&#123; <span class="comment">//add by node.js</span></span><br><span class="line">      <span class="keyword">var</span> greet = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log(<span class="string">'Hello World'</span>); &#125;;</span><br><span class="line">      <span class="built_in">module</span>.exports = greet;</span><br><span class="line">&#125;).apply();                                        <span class="comment">//add by node.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> <span class="built_in">module</span>.exports;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><strong><u>How to use:</u></strong></p>
-<ul>
-<li><p>define module: <code>module.exports</code> or <code>exports</code> [<code>module.exports</code> === <code>exports</code>]</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* --- circle.js --- */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 1st way</span></span><br><span class="line">exports.area = <span class="function">(<span class="params">radius</span>) =&gt;</span> <span class="built_in">Math</span>.pow(radius, <span class="number">2</span>) * <span class="number">3.14</span>;</span><br><span class="line">exports.circunference = <span class="function">(<span class="params">radius</span>) =&gt;</span> <span class="number">2</span> * radius * <span class="number">3.14</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2nd way</span></span><br><span class="line"><span class="keyword">const</span> area = <span class="function">(<span class="params">radius</span>) =&gt;</span> <span class="built_in">Math</span>.pow(radius, <span class="number">2</span>) * <span class="number">3.14</span>;</span><br><span class="line"><span class="keyword">const</span> circunference = <span class="function">(<span class="params">radius</span>) =&gt;</span> <span class="number">2</span> * radius * <span class="number">3.14</span>;</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;<span class="attr">area</span>: area, <span class="attr">circumference</span>: circunference&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3rd way</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    area: <span class="function">(<span class="params">radius</span>) =&gt;</span> <span class="built_in">Math</span>.pow(radius, <span class="number">2</span>) * <span class="number">3.14</span>;</span><br><span class="line">    circunference: <span class="function">(<span class="params">radius</span>) =&gt;</span> <span class="number">2</span> * radius * <span class="number">3.14</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>use module everywhere:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> circle = <span class="built_in">require</span>(<span class="string">'./circle'</span>);</span><br><span class="line">circle.area(<span class="number">3</span>)</span><br><span class="line">circle.circunference(<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ol>
-<h2 id="AMD-Asynchronous-Module-Definition"><a href="#AMD-Asynchronous-Module-Definition" class="headerlink" title="AMD: (Asynchronous Module Definition)"></a>AMD: (Asynchronous Module Definition)</h2><ol>
-<li><p>Why need AMD?**</p>
-<ul>
-<li>Since Node.js are always running locally inside server, the <code>require</code> are instantly completed, i.e. <strong>synchronously</strong></li>
-<li>Browser need to download js files from server <strong>asynchorously</strong>. While one file want <code>require</code> another, the other one might still not downloaded =&gt; <u>ERROR</u>!</li>
-<li>Thus, we need another mechnism able to <strong><u>import modules asynchronously :</u></strong> AMD comes in!</li>
-</ul>
-</li>
-<li><p><strong>How to use it in browser?</strong></p>
-<ul>
-<li><p><strong><u>[Good Article]</u></strong>: <a href="https://www.sitepoint.com/understanding-requirejs-for-effective-javascript-module-loading/" target="_blank" rel="noopener">https://www.sitepoint.com/understanding-requirejs-for-effective-javascript-module-loading/</a></p>
-</li>
-<li><p>use <code>define()</code> to declare the module dependency for each file</p>
-</li>
-<li><p>download <code>require.js</code> &amp; <code>main.js</code> in same project folder as other js files</p>
-</li>
-<li><p>only add one <code>&lt;script&gt;</code> tag to HTML is OK, as follows</p>
-<ul>
-<li><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">data-main</span>=<span class="string">"scripts/main"</span> <span class="attr">src</span>=<span class="string">"scripts/require.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><ol>
-<li><p><strong>Request Method</strong></p>
-<ul>
-<li><p><code>request.method</code>: GET, POST, PUT, DELETE</p>
-<ul>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123; </span><br><span class="line">    <span class="keyword">switch</span> (req.method) </span><br><span class="line">        <span class="keyword">case</span> <span class="string">'POST'</span>:</span><br><span class="line">   			update(req, res);</span><br><span class="line">    		<span class="keyword">break</span>;</span><br><span class="line">  		<span class="keyword">case</span> <span class="string">'DELETE'</span>:</span><br><span class="line">    		remove(req, res);</span><br><span class="line">    		<span class="keyword">break</span>;</span><br><span class="line">  		<span class="keyword">case</span> <span class="string">'PUT'</span>:</span><br><span class="line">    		create(req, res);</span><br><span class="line">   		 	<span class="keyword">break</span>;</span><br><span class="line">  		<span class="keyword">case</span> <span class="string">'GET'</span>:</span><br><span class="line">  		<span class="keyword">default</span>:</span><br><span class="line">			get(req, res); </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>Request URL</strong></p>
-<ul>
-<li><p>complete URL like the following: (<u>Hash part will be discarded</u>)</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://user:pass@host.com:8080/p/a/t/h?query=string#hash</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>pathname</code> =  <code>url.parse(req.url).pathname</code></p>
-</li>
-<li><p><strong><u>routers in Node.js:</u></strong></p>
-<ul>
-<li><p>url: <code>/[controller]/[action]/a/b/c</code></p>
-</li>
-<li><p>handlers for different <u>controllers</u> &amp; <u>actions</u></p>
-</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// routes different urls to their related handlers</span></span><br><span class="line"><span class="keyword">var</span> url = <span class="built_in">require</span>(<span class="string">'url'</span>)</span><br><span class="line"><span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> pathname = url.parse(req.url).pathname;</span><br><span class="line">	<span class="keyword">var</span> paths = pathname.split(<span class="string">'/'</span>);</span><br><span class="line">	<span class="keyword">var</span> controller = paths[<span class="number">1</span>] || <span class="string">'index'</span>;</span><br><span class="line">	<span class="keyword">var</span> action = paths[<span class="number">2</span>] || <span class="string">'index'</span>;</span><br><span class="line">	<span class="keyword">var</span> args = paths.slice(<span class="number">3</span>);</span><br><span class="line">	<span class="keyword">if</span> (handles[controller] &amp;&amp; handles[controller][action]) &#123;</span><br><span class="line">		handles[controller][action].apply(<span class="literal">null</span>, [req, res].concat(args)); </span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		res.writeHead(<span class="number">500</span>);</span><br><span class="line">		res.end(<span class="string">'找不到响应控制器'</span>); &#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// handlers object</span></span><br><span class="line">handles.index = &#123;&#125;;</span><br><span class="line">handles.index.index = <span class="function"><span class="keyword">function</span> (<span class="params">req, res, foo, bar</span>) </span>&#123;</span><br><span class="line">	res.writeHead(<span class="number">200</span>);</span><br><span class="line">	res.end(foo); </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>Request Query String</strong></p>
-<ul>
-<li><p><code>query</code> =  <code>url.parse(req.url).query</code></p>
-</li>
-<li><p>url: <code>/domainname/path?foo=bar&amp;baz=val</code></p>
-<ul>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//eg1.  '/domainname/path?foo=bar&amp;baz=val' </span></span><br><span class="line">&#123;</span><br><span class="line">	foo: <span class="string">'bar'</span>,</span><br><span class="line">	baz: <span class="string">'val'</span> </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//eg2.  '/domainname/path?foo=bar&amp;foo=val' </span></span><br><span class="line">&#123;</span><br><span class="line">	foo: [<span class="string">'bar'</span>, <span class="string">'val'</span>],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>Cookie</strong></p>
-<ul>
-<li><p>workflow: [ key point: browser sends cookie for each request]</p>
-<ul>
-<li>server sends cookie to browser</li>
-<li>browser stores it in localstorage</li>
-<li>browser sends cookie <u>every time making request</u></li>
-</ul>
-</li>
-<li><p><strong>[For browser:]</strong>  string: <code>Cookie: foo=bar; baz=val</code>  =&gt; <code>req.header.cookie</code> </p>
-<ul>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// browser parse cookie</span></span><br><span class="line"><span class="keyword">var</span> parseCookie = <span class="function"><span class="keyword">function</span> (<span class="params">cookie</span>) </span>&#123; </span><br><span class="line">    <span class="keyword">var</span> cookies = &#123;&#125;;</span><br><span class="line">	<span class="keyword">if</span> (!cookie) &#123; <span class="keyword">return</span> cookies; &#125;</span><br><span class="line">	<span class="keyword">var</span> list = cookie.split(<span class="string">';'</span>);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; list.length; i++) &#123;</span><br><span class="line">		<span class="keyword">var</span> pair = list[i].split(<span class="string">'='</span>);</span><br><span class="line">		cookies[pair[<span class="number">0</span>].trim()] = pair[<span class="number">1</span>]; </span><br><span class="line">    &#125;</span><br><span class="line">	<span class="keyword">return</span> cookies; </span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// browser adds cookie to `req` object</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">	req.cookies = parseCookie(req.headers.cookie); </span><br><span class="line">    hande(req, res);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><strong>[For server:]</strong>  </p>
-<ul>
-<li><p>Format:</p>
-<ul>
-<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-Cookie: name=value; Path=/ ; Expires = Sun, 01/21/1987 09:01:01 GMT; Domain = .domain.com;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>arguments: </p>
-<ul>
-<li><code>name&amp;value</code>: the useful stuff</li>
-<li><code>domain</code>: cookie only sent to the domain</li>
-<li><code>path</code>: cookie only sent when this domain/path</li>
-<li><code>expire</code> / <code>maxAge</code>: when or how long expires</li>
-<li><code>HttpOnly</code>: will make this cookie cannot be access by <code>document.cookie</code></li>
-<li><code>secure</code>: only sent when HTTPS; not sent when HTTP</li>
-</ul>
-</li>
-<li><p><strong>Serialize Cookie [Server] : </strong>convert cookie to string</p>
-<ul>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> serialize = <span class="function"><span class="keyword">function</span> (<span class="params">name, val, opt</span>) </span>&#123; </span><br><span class="line">    <span class="keyword">var</span> pairs = [name + <span class="string">'='</span> + encode(val)]; opt = opt || &#123;&#125;;</span><br><span class="line">    <span class="keyword">if</span> (opt.maxAge) pairs.push(<span class="string">'Max-Age='</span> + opt.maxAge);</span><br><span class="line">    <span class="keyword">if</span> (opt.domain) pairs.push(<span class="string">'Domain='</span> + opt.domain);</span><br><span class="line">	<span class="keyword">if</span> (opt.path) pairs.push(<span class="string">'Path='</span> + opt.path);</span><br><span class="line">    <span class="keyword">if</span> (opt.expires) pairs.push(<span class="string">'Expires='</span> + opt.expires.toUTCString()); </span><br><span class="line">    <span class="keyword">if</span> (opt.httpOnly) pairs.push(<span class="string">'HttpOnly'</span>);</span><br><span class="line">    <span class="keyword">if</span> (opt.secure) pairs.push(<span class="string">'Secure'</span>);</span><br><span class="line">    <span class="keyword">return</span> pairs.join(<span class="string">'; '</span>); </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>Session</strong></p>
-<ul>
-<li><p><u><strong>why need it</strong></u>: <em>cookie with too much data</em> will make delay in network transmission </p>
-</li>
-<li><p><strong><u>Solution:</u></strong> </p>
-<ul>
-<li>store data on server side, give a key (sessionID) to cookie to refer its data</li>
-<li>set <code>expire</code> to its corresponding  cookie</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>Cache</strong> <strong><em><u>response file</u></em></strong> [ <u>has nothing to do with cookie</u> ]</p>
-<ul>
-<li>Client: <code>If-Modified-Since</code>,  Server:  <code>Last-Modified</code></li>
-<li>Client: <code>If-None-Match</code>,  Server:  <code>ETag</code><ul>
-<li>solve problem: even if file modified, but content didn’t modified</li>
-<li>compare the digest of target file</li>
-</ul>
-</li>
-<li>Server:  <code>Expires</code> / <code>Cache-Control</code><ul>
-<li>the first 2 ways still need to send request, and wait for response =&gt; waste time!</li>
-<li>This approach doesn’t need to send request if doesn’t <code>expires</code></li>
-<li>But there is a problem: the time are not the same on two sides, <code>max-age</code> of <code>cache-control</code>comes in</li>
-</ul>
-</li>
-<li>how to update cache when server file updated within expired period?<ul>
-<li><strong><u>Problem</u></strong>: browser will use stale file, since it not expire</li>
-<li>We also update the URL, since <em>Cache pairs with URL</em></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>Authentication / Authorization</strong> </p>
-<ul>
-<li><u>basic authentication</u><ul>
-<li>request with : <code>useranme</code> &amp; <code>password</code></li>
-</ul>
-</li>
-<li><u>OAuth2.0</u><ul>
-<li>request with <code>access_token</code></li>
-</ul>
-</li>
-<li><u>Bearer token: JWT</u><ul>
-<li>request with <code>Json Web Token</code></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>Form Data</strong></p>
-<ul>
-<li>content-type: <code>application/x-www-form-urlencoded</code> (“foo=bar&amp;baz=val”)</li>
-<li>content-type: <code>application/json;</code></li>
-<li>content-type: <code>application/xml;</code></li>
-</ul>
-</li>
-<li><p><strong>Simulate a Client(browser) &amp; a Server</strong></p>
-<ol>
-<li><p>server implementation [send response as a server]</p>
-<ol>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>)</span><br><span class="line"><span class="keyword">let</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)</span><br><span class="line"><span class="keyword">let</span> url = <span class="built_in">require</span>(<span class="string">'url'</span>)</span><br><span class="line"></span><br><span class="line">http.creatServer( <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> pathname = url.parse(req.url).pathname</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"request for "</span> + pathname + <span class="string">"received."</span>)</span><br><span class="line">    </span><br><span class="line">    fs.readFile(pathname.substr(<span class="number">1</span>), <span class="function"><span class="keyword">function</span>(<span class="params">err, data</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(err)&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(err)</span><br><span class="line">            res.writeHead(<span class="number">404</span>, &#123;<span class="string">'Content-Type'</span>: <span class="string">'text/html'</span>&#125;)</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            res.writeHead(<span class="number">200</span>, &#123;<span class="string">'Content-Type'</span>: <span class="string">'text/html'</span>&#125;)</span><br><span class="line">            res.write(data.toString())</span><br><span class="line">        &#125;</span><br><span class="line">        res.end()</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;).listen(<span class="number">8080</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Server running at http://127.0.0.1:8080/"</span>)</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-<li><p>client implementation [send request as a browser]</p>
-<ol>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> options =&#123;</span><br><span class="line">    host: <span class="string">'localhost'</span>,</span><br><span class="line">    port: <span class="string">'8080'</span>,</span><br><span class="line">    path: <span class="string">'/index.html'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> callback = <span class="function"><span class="keyword">function</span>(<span class="params">res</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> body = <span class="string">''</span></span><br><span class="line">    res.on( <span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">        body += data</span><br><span class="line">    &#125;)</span><br><span class="line">    </span><br><span class="line">    res.on( <span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(body)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> req = http.request(options, callback)</span><br><span class="line">req.end()</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-</ol>
-</li>
-</ol>
-<h2 id="XSS-CSRF"><a href="#XSS-CSRF" class="headerlink" title="XSS / CSRF"></a>XSS / CSRF</h2><ol>
-<li>XSS: cross site script<ul>
-<li>inject script from unsafe input, and runs it to get cookie, ie sessionID</li>
-<li><strong><u>[Solution]</u></strong>: convert to <u>HTML entities</u>: <code>&amp;</code> will be <code>&amp;amp;</code></li>
-</ul>
-</li>
-<li>CSRF: <ul>
-<li>don’t bother to get sessionID</li>
-<li>lure customer to another website, while he is in middle of session of some weak-protection Bank website</li>
-<li>the other website will submit a form to Bank website indicating transfer money</li>
-<li>Bank website server cannot tell from whom that request is. It still believe that is from its customer since he is in the middle of the session</li>
-<li><strong><u>[Solution]</u></strong>: <ul>
-<li>the Bank form add another random hidden input field</li>
-<li>each time receive request, check if the random value equal to sent one</li>
-<li>This way the form cannot be duplicate</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<h2 id="Global-variables"><a href="#Global-variables" class="headerlink" title="Global variables"></a>Global variables</h2><ol>
-<li><code>console</code> <ul>
-<li><code>console.log(&#39;11&#39;)</code></li>
-</ul>
-</li>
-<li><code>process</code> <ul>
-<li><code>process.exit(0)</code></li>
-<li><code>process.nextTick(callback)</code></li>
-</ul>
-</li>
-<li><code>__filename</code>: <strong><u>absolute path + name</u></strong> for the current script being executed</li>
-<li><code>__dirname</code>: <strong><u>absolute path</u></strong> for the current script being executed</li>
-</ol>
-<h2 id="Util-Objects"><a href="#Util-Objects" class="headerlink" title="Util Objects"></a>Util Objects</h2><ol>
-<li><code>util</code>: make one object inherit from the other one<ol>
-<li><code>util.inherits(constructor, superConstructor)</code></li>
-</ol>
-</li>
-</ol>
-<h2 id="Versions"><a href="#Versions" class="headerlink" title="Versions"></a>Versions</h2><ol>
-<li><strong>semantic versioning</strong> <ul>
-<li>consists of three numbers, separated by periods, such as 2.3.0</li>
-<li>the middle number has to be incremented, when new functionality is added</li>
-<li>the first number has to be incremented, when compatibility is broken, so that existing code that uses the package might not work with the new version,</li>
-</ul>
-</li>
-<li><strong>caret character (^)</strong><ul>
-<li>any version compatible with the given number may be installed</li>
-<li><code>^2.3.0</code> would mean that any version greater than or equal to 2.3.0 and less than 3.0.0 is allowed</li>
-</ul>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2528,7 +2747,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">61</span>
+                    <span class="site-state-item-count">62</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2760,7 +2979,17 @@
                     
                       
                     
-                    <span class="site-state-item-count">98</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">103</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

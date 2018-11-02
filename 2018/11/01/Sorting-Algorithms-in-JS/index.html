@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.6" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.6">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.6" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.6',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="I. Selection Sort totally unsorted: O(n^2)  partially sorted: O(n^2) ​      1234567891011121314151617181920212223/*  select min element from rest of unsorted elements, put into front    - totally unso">
+<meta name="keywords" content="insertion sort,selection sort,bubble sort,merge sort,quick sort">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sorting Algorithms in JS">
+<meta property="og:url" content="http://yoursite.com/2018/11/01/Sorting-Algorithms-in-JS/index.html">
+<meta property="og:site_name" content="CMK">
+<meta property="og:description" content="I. Selection Sort totally unsorted: O(n^2)  partially sorted: O(n^2) ​      1234567891011121314151617181920212223/*  select min element from rest of unsorted elements, put into front    - totally unso">
+<meta property="og:updated_time" content="2018-11-02T04:48:19.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Sorting Algorithms in JS">
+<meta name="twitter:description" content="I. Selection Sort totally unsorted: O(n^2)  partially sorted: O(n^2) ​      1234567891011121314151617181920212223/*  select min element from rest of unsorted elements, put into front    - totally unso">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/01/Sorting-Algorithms-in-JS/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Sorting Algorithms in JS | CMK</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-116541729-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-116541729-1');
+</script>
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> 
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">CMK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Let's create something!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+          
+  <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+</li>
+
+      
+
+      
+    </ul>
+  
+
+  
+    
+
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/01/Sorting-Algorithms-in-JS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Sorting Algorithms in JS</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-01T15:25:34-07:00">2018-11-01</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/11/01/Sorting-Algorithms-in-JS/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/11/01/Sorting-Algorithms-in-JS/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views: 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="I-Selection-Sort"><a href="#I-Selection-Sort" class="headerlink" title="I. Selection Sort"></a>I. Selection Sort</h2><ul>
+<li><p>totally unsorted: O(n^2)</p>
+</li>
+<li><p>partially sorted: O(n^2)</p>
+<p>​    </p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">  select min element from rest of unsorted elements, put into front</span></span><br><span class="line"><span class="comment">    - totally unsorted: O(n^2)</span></span><br><span class="line"><span class="comment">    - partially sorted: O(n^2)</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">slectionSort</span>(<span class="params"> list </span>)</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>( list === <span class="literal">null</span> || list.length &lt;= <span class="number">1</span> ) <span class="keyword">return</span> </span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">0</span>; i &lt; list.length; i++ )&#123;</span><br><span class="line">    <span class="keyword">let</span> curMinId = i</span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">let</span> j = i+<span class="number">1</span>; j &lt; list.length; j++ )&#123;</span><br><span class="line">      list[curMinId] &gt; list[j] &amp;&amp; (curMinId = j)</span><br><span class="line">    &#125;</span><br><span class="line">    [ list[i], list[curMinId] ] = [ list[curMinId], list[i] ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Test</span></span><br><span class="line"><span class="keyword">let</span> list = [ <span class="number">2</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">1</span> ]</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Original list: "</span> + list)</span><br><span class="line">slectionSort(list)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Selection sort: "</span> + list)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="II-Insertion-Sort"><a href="#II-Insertion-Sort" class="headerlink" title="II. Insertion Sort"></a>II. Insertion Sort</h2><ul>
+<li><p>totally unsorted: O(n^2)</p>
+</li>
+<li><p>partially sorted: O(n)</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">  for each element, insert it into the sorted part exactly before its position</span></span><br><span class="line"><span class="comment">    - totally unsorted: O(n^2)</span></span><br><span class="line"><span class="comment">    - partially sorted: O(n)</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">insertionSort</span>(<span class="params">list</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>( list === <span class="literal">null</span> || list.length &lt;= <span class="number">1</span> ) <span class="keyword">return</span> </span><br><span class="line">  </span><br><span class="line">  <span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">1</span>; i &lt; list.length; i++ )&#123;</span><br><span class="line">    <span class="keyword">let</span> idToBe = i</span><br><span class="line">    <span class="keyword">while</span>( idToBe<span class="number">-1</span> &gt;= <span class="number">0</span> &amp;&amp; list[idToBe] &lt; list[idToBe<span class="number">-1</span>] )&#123;</span><br><span class="line">      [ list[idToBe<span class="number">-1</span>], list[idToBe] ] = [ list[idToBe], list[idToBe<span class="number">-1</span>] ] </span><br><span class="line">      idToBe -= <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Test</span></span><br><span class="line"><span class="keyword">let</span> list = [ <span class="number">2</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">1</span> ]</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Original list: "</span> + list)</span><br><span class="line">insertionSort(list)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Insertion sort: "</span> + list)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="III-Bubble-Sort"><a href="#III-Bubble-Sort" class="headerlink" title="III. Bubble Sort"></a>III. Bubble Sort</h2><ul>
+<li><p><strong>BAD version:</strong></p>
+<ul>
+<li><p>totally unsorted: O(n^2)</p>
+</li>
+<li><p>partially sorted: O(n^2)</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">  for each element, compare with its right element, swap if it's larger;</span></span><br><span class="line"><span class="comment">  keep doing util (n-1)th, (n-2)th,, (n-3)th ... 1st position</span></span><br><span class="line"><span class="comment">    - totally unsorted: O(n^2)</span></span><br><span class="line"><span class="comment">    - partially sorted: O(n^2)</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bubbleSort</span>(<span class="params">list</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>( list === <span class="literal">null</span> || list.length &lt;= <span class="number">1</span> ) <span class="keyword">return</span> </span><br><span class="line">  <span class="keyword">for</span>( <span class="keyword">let</span> i = list.length<span class="number">-1</span>; i &gt; <span class="number">0</span>; i-- )&#123;</span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">let</span> k = <span class="number">0</span>; k &lt; i; k++ )&#123;</span><br><span class="line">      <span class="keyword">if</span>( list[k] &gt; list[k+<span class="number">1</span>] )&#123;</span><br><span class="line">         [ list[k], list[k+<span class="number">1</span>] ] = [ list[k+<span class="number">1</span>], list[k] ]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Test</span></span><br><span class="line"><span class="keyword">let</span> list = [ <span class="number">2</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">1</span> ]</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Original list: "</span> + list)</span><br><span class="line">bubbleSort(list)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Bubble sort: "</span> + list)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><strong>Good Version</strong></p>
+<ul>
+<li><p>totally unsorted: O(n^2)</p>
+</li>
+<li><p>partially sorted: O(n)  <strong><u>if no swap for a iteration, then every element is in its place, terminate</u></strong></p>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">  for each element, compare with its right element, swap if it's larger;</span></span><br><span class="line"><span class="comment">  keep doing util (n-1)th, (n-2)th,, (n-3)th ... 1st position</span></span><br><span class="line"><span class="comment">    - totally unsorted: O(n^2)</span></span><br><span class="line"><span class="comment">    - partially sorted: O(n)</span></span><br><span class="line"><span class="comment">    - if no swap for a iteration, then every element is in its place, terminate</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bubbleSort</span>(<span class="params">list</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>( list === <span class="literal">null</span> || list.length &lt;= <span class="number">1</span> ) <span class="keyword">return</span> </span><br><span class="line">  <span class="keyword">let</span> swapped = <span class="literal">true</span></span><br><span class="line">  <span class="keyword">for</span>( <span class="keyword">let</span> i = list.length<span class="number">-1</span>; i &gt; <span class="number">0</span>; i-- )&#123;</span><br><span class="line">  	<span class="keyword">if</span>(swapped === <span class="literal">false</span>) <span class="keyword">return</span> </span><br><span class="line">  	swapped = <span class="literal">false</span></span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">let</span> k = <span class="number">0</span>; k &lt; i; k++ )&#123;</span><br><span class="line">      <span class="keyword">if</span>( list[k] &gt; list[k+<span class="number">1</span>] )&#123;</span><br><span class="line">         [ list[k], list[k+<span class="number">1</span>] ] = [ list[k+<span class="number">1</span>], list[k] ]</span><br><span class="line">         swapped = <span class="literal">true</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Test</span></span><br><span class="line"><span class="keyword">let</span> list = [ <span class="number">2</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">1</span> ]</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Original list: "</span> + list)</span><br><span class="line">bubbleSort(list)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Bubble sort: "</span> + list)</span><br></pre></td></tr></table></figure>
+</code></pre><h2 id="VI-Merge-Sort"><a href="#VI-Merge-Sort" class="headerlink" title="VI. Merge Sort"></a>VI. Merge Sort</h2><ul>
+<li><p>Time Complexity</p>
+<ul>
+<li>totally unsorted: O(n^2)</li>
+<li>partially sorted: O(n)</li>
+</ul>
+</li>
+<li><p>Space Complexity:  <strong><u>cannot sort in-place</u></strong></p>
+<ul>
+<li>O(n^2)</li>
+</ul>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">  recursively divide list into two half, till each half have one or two elements</span></span><br><span class="line"><span class="comment">  recursively merge two half into one, till achieve original size</span></span><br><span class="line"><span class="comment">  </span></span><br><span class="line"><span class="comment">  Time Complexity</span></span><br><span class="line"><span class="comment">  	- totally unsorted: O(n^2)</span></span><br><span class="line"><span class="comment">    - partially sorted: O(n^2)</span></span><br><span class="line"><span class="comment">  Space Complexity:</span></span><br><span class="line"><span class="comment">  	- O(n^2)</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mergeSort</span>(<span class="params">list</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>( list === <span class="literal">null</span> || list.length &lt;= <span class="number">1</span> ) <span class="keyword">return</span> </span><br><span class="line">  <span class="keyword">return</span> divideAndMerge(list)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">divideAndMerge</span>(<span class="params">list</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">let</span> l1 = list.slice(<span class="number">0</span>, list.length/<span class="number">2</span>)  </span><br><span class="line">  <span class="keyword">if</span>( l1.length &gt; <span class="number">1</span> )  l1 = divideAndMerge(l1)</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">let</span> l2 = list.slice(list.length/<span class="number">2</span>, list.length)</span><br><span class="line">  <span class="keyword">if</span>( l2.length &gt; <span class="number">1</span> )  l2 = divideAndMerge(l2)</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> merge(l1, l2)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">merge</span>(<span class="params">l1, l2</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">let</span> list = []</span><br><span class="line">  <span class="keyword">let</span> i = <span class="number">0</span>, j = <span class="number">0</span>, k = <span class="number">0</span></span><br><span class="line">  <span class="keyword">while</span>(i &lt; l1.length &amp;&amp; j &lt; l2.length)&#123;</span><br><span class="line">    <span class="keyword">if</span>( l1[i] &gt; l2[j] ) </span><br><span class="line">      list[k++] = l2[j++]</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      list[k++] = l1[i++]</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">while</span>( i &lt; l1.length ) list[k++] = l1[i++]</span><br><span class="line">  <span class="keyword">while</span>( j &lt; l2.length ) list[k++] = l2[j++]</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> list</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Test</span></span><br><span class="line"><span class="keyword">let</span> list = [ <span class="number">2</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">1</span> ]</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Original list: "</span> + list)</span><br><span class="line">mergeSort(list)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Merge sort: "</span> + mergeSort(list))</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="V-Quick-Sort"><a href="#V-Quick-Sort" class="headerlink" title="V. Quick Sort"></a>V. Quick Sort</h2><ul>
+<li><p><strong><u>Time Complexity:</u></strong> </p>
+<ul>
+<li>totally unsorted: O(n^2)</li>
+<li>partially sorted: O(n)</li>
+</ul>
+</li>
+<li><p><strong><u>Space Complexity:</u></strong> O(n) <strong><u>in-place</u></strong></p>
+</li>
+<li><p><strong><u>Approach:</u></strong></p>
+<ul>
+<li>randomly choose a pivot, here we use the first element in the question list</li>
+<li>loop from both ends, compare value with pivot, and swap their value</li>
+<li>how to swap: <strong><u>front &amp; back two pointers</u></strong><ul>
+<li>“LeetCode: sort color”: <a href="https://leetcode.com/problems/sort-colors/description/" target="_blank" rel="noopener">https://leetcode.com/problems/sort-colors/description/</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">  1. randomly choose a pivot, here we use the first element in the question list</span></span><br><span class="line"><span class="comment">  2. loop from both ends, compare value with pivot, and swap their value</span></span><br><span class="line"><span class="comment">  3. how to swap: "LeetCode: sort color" ==&gt; "front &amp; back two ponters"</span></span><br><span class="line"><span class="comment">     https://leetcode.com/problems/sort-colors/description/</span></span><br><span class="line"><span class="comment">     </span></span><br><span class="line"><span class="comment">     </span></span><br><span class="line"><span class="comment">       0......0   1......1  x1  x2 .... xm   2.....2</span></span><br><span class="line"><span class="comment">                  ^         ^            ^</span></span><br><span class="line"><span class="comment">                 zero       i           two</span></span><br><span class="line"><span class="comment">              smallerToBe			 largerToBe</span></span><br><span class="line"><span class="comment">              </span></span><br><span class="line"><span class="comment">        区间一：0  | 区间二：1 | 区间三：未知 |  区间四：2</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">quickSort</span>(<span class="params">list, left, right</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>( list === <span class="literal">null</span> || left &gt;= right ) <span class="keyword">return</span> </span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> pivot = list[left],</span><br><span class="line">    	smallerToBe = left, </span><br><span class="line">        largerToBe = right, </span><br><span class="line">        i = left</span><br><span class="line">    	</span><br><span class="line">    <span class="keyword">while</span>( i &lt;= largerToBe )&#123;</span><br><span class="line">        <span class="keyword">if</span>( list[i] === pivot )&#123;</span><br><span class="line">            i++</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>( list[i] &lt; pivot )&#123;</span><br><span class="line">            swap(list, i++, smallerToBe++)</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            swap(list, i, largerToBe--)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    quickSort(list, left, smallerToBe<span class="number">-1</span>)  </span><br><span class="line">    quickSort(list, largerToBe+<span class="number">1</span>, right)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">swap</span>(<span class="params">list, p1, p2</span>)</span>&#123; [ list[p1], list[p2] ] = [ list[p2], list[p1] ] &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Test</span></span><br><span class="line"><span class="keyword">let</span> list = [ <span class="number">3</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">1</span> ]</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Original list: "</span> + list)</span><br><span class="line">quickSort(list, <span class="number">0</span>, list.length<span class="number">-1</span>)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Quick sort: "</span> + list)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/insertion-sort/" rel="tag"># insertion sort</a>
+          
+            <a href="/tags/selection-sort/" rel="tag"># selection sort</a>
+          
+            <a href="/tags/bubble-sort/" rel="tag"># bubble sort</a>
+          
+            <a href="/tags/merge-sort/" rel="tag"># merge sort</a>
+          
+            <a href="/tags/quick-sort/" rel="tag"># quick sort</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/31/setTimeout-vs-setInterval/" rel="next" title="setTimeout vs setInterval">
+                <i class="fa fa-chevron-left"></i> setTimeout vs setInterval
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/sea.jpg"
+                alt="Mingkai Cao" />
+            
+              <p class="site-author-name" itemprop="name">Mingkai Cao</p>
+              <p class="site-description motion-element" itemprop="description">All-trade Jack, loves full-stack</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">62</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">103</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/caomingkai" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:mingkaic@usc.edu" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#I-Selection-Sort"><span class="nav-number">1.</span> <span class="nav-text">I. Selection Sort</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#II-Insertion-Sort"><span class="nav-number">2.</span> <span class="nav-text">II. Insertion Sort</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#III-Bubble-Sort"><span class="nav-number">3.</span> <span class="nav-text">III. Bubble Sort</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VI-Merge-Sort"><span class="nav-number">4.</span> <span class="nav-text">VI. Merge Sort</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#V-Quick-Sort"><span class="nav-number">5.</span> <span class="nav-text">V. Quick Sort</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate"> 
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mingkai Cao</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.6</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.6"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.6"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.6"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.6"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.6"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'hG8fgggWL7hK1jsXsRoVCNWv-MdYXbMMI',
+        appKey: 'VRAYsgwdkRyyb8bAFQ5uii6o',
+        placeholder: 'Any comment?',
+        avatar:'',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+    // 新增以下代码即可，可以移除.info下所有子节点
+    var infoEle = document.querySelector('#comments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0){
+      infoEle.childNodes.forEach(function(item) {
+        item.parentNode.removeChild(item);
+      });
+    }
+
+
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+<style>
+    #comments .vempty{
+        display: none;
+    }
+</style>
+
+</body>
+</html>

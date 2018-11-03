@@ -332,216 +332,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/18/VM-How-does-fork-work/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/18/VM-How-does-fork-work/" itemprop="url">VM: How does fork() work?</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-18T15:12:11-07:00">2018-04-18</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Courses/" itemprop="url" rel="index"><span itemprop="name">Courses</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/18/VM-How-does-fork-work/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/18/VM-How-does-fork-work/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="fork-in-Kernel"><a href="#fork-in-Kernel" class="headerlink" title="fork( ) in Kernel"></a><em>fork</em>( ) in Kernel</h2><p>跟<code>read()</code>一样: 都是user process调用kernel syscall，trap into kernel，在interrupt handler中指明interrupt routine，最终由kernel代为执行任务；</p>
-<p>具体在kernle中要做的工作有以下几步：</p>
-<ol>
-<li>创建新的 PCB,<code>newProc = proc_create()</code></li>
-<li>拷贝address space,<code>vmmap_copy(newProc)</code><ul>
-<li>拷贝 vmmap(address space)的vmarea(只初步copy memory area):<br><code>newProc-&gt;p_vmmap = vmmap_clone(curproc-&gt;p_vmmap);</code></li>
-<li>拷贝每个vmarea对应的mmobj, from curproc<ul>
-<li>两个process的vmarea是一一对应的，遍历copy</li>
-<li>首先获得即将要拷贝的curproc的第一个vmarea</li>
-<li>从newProc的第一个vmarea开始，执行copy：<br> <code>curproc-&gt;vmarea-&gt;vma_obj</code></li>
-<li>更新vma_obj的refcount</li>
-<li>判断要该vmarea是否为Private,执行<strong>shadow copy</strong><ol>
-<li>if private，执行shadow copy</li>
-<li>并且要新vmarea插入到bottom_mmobj-&gt;mmo_vmas之后</li>
-</ol>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>清除 curproc 的pageTable 以及TLB缓存(必须在thread copy之前)<ul>
-<li>因为curproc的pageTable也会被copy(在thread copy的时候)<br>若不重新映射pageTable的话，两个process的vaddr会映射同一paddr</li>
-<li>既然pageTable需要重新映射，那么TLB也需要重新缓存新映射</li>
-</ul>
-</li>
-<li>创建新thread，拷贝cur thread内容，包括 register、stack、pageTable<ul>
-<li>拷贝parent的TCB到新的TCB：kth_new,<code>kth_new = kthread_clone(curthr)</code></li>
-<li>设置所属process，<code>kth_new-&gt;kt_proc = newProc</code></li>
-<li>将新thread插入到process的“线程链”之后</li>
-<li>更新register信息（包括page table信息）<ul>
-<li><strong>其实pageTable是给CPU使用的(以下可看出)</strong></li>
-<li><code>kt_ctx.c_pdptr = newProc-&gt;p_pagedir</code></li>
-<li><code>kt_ctx.c_eip = (uint32_t)userland_entry</code></li>
-<li><code>kt_ctx.c_esp = fork_setup_stack(regs,kth_new-&gt;kt_kstack)</code></li>
-<li><code>kt_ctx.c_kstack = (uintptr_t) kth_new-&gt;kt_kstack</code></li>
-<li><code>kt_ctx.c_kstacksz = DEFAULT_STACK_SIZE</code></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>拷贝file system的内容<ul>
-<li>拷贝curProc的file-descriptor-table</li>
-<li>注意这里是拷贝的 fd table的内容，并非 open-connection-table</li>
-<li>因为fd-table很大：NFILES，遍历拷贝<ul>
-<li>如果 p-&gt;p_files[i] != NULL，表明对应实际open-file</li>
-<li>还需要更新该open-file的refcount</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>拷贝p_cwd，并更新p_cwd的refcount:<code>p-&gt;p_cwd = curproc-&gt;p_cwd;</code><ul>
-<li>注意：这里的<code>p_cwd</code>在<code>proc_creat()</code>的时候复制了一遍了</li>
-<li>同时也要考虑<code>p_cwd=NULL</code>的情况如何处理</li>
-</ul>
-</li>
-<li>设置 heap segment 的break，与 curproc 的一致</li>
-<li>将新thread加入到 run queue 中</li>
-<li>设置 parent proc的fork()返回值：newProc-&gt;p_pid</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/18/VM-Virtual-memory-File-system-Memory-object-in-VM/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2804,6 +2594,217 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/01/RAM-File-System/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/01/RAM-File-System/" itemprop="url">FS - RAM File System</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-01T12:23:19-07:00">2018-04-01</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Courses/" itemprop="url" rel="index"><span itemprop="name">Courses</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/01/RAM-File-System/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/01/RAM-File-System/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="0-What"><a href="#0-What" class="headerlink" title="0. What?"></a>0. What?</h2><p>A specific file system, using RAM<br>提供 file system “统一接口”的”具体实现”，即：Vnode ops函数指针的具体实现</p>
+<h2 id="1-filesystem-structure"><a href="#1-filesystem-structure" class="headerlink" title="1. filesystem structure"></a>1. filesystem structure</h2><ul>
+<li><p>成员变量：相当于 superblock</p>
+  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ramfs</span> &#123;</span></span><br><span class="line">    <span class="keyword">ramfs_inode_t</span> *rfs_inodes[RAMFS_MAX_FILES];  <span class="comment">/*        </span></span><br><span class="line"><span class="comment">    Array of all files */</span></span><br><span class="line">&#125; <span class="keyword">ramfs_t</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>成员函数</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">static fs_ops_t ramfs_ops = &#123;</span><br><span class="line">    .read_vnode   = ramfs_read_vnode,</span><br><span class="line">    .delete_vnode = ramfs_delete_vnode,</span><br><span class="line">    .query_vnode  = ramfs_query_vnode,</span><br><span class="line">    .umount       = ramfs_umount</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<h2 id="2-‘inode’-structure"><a href="#2-‘inode’-structure" class="headerlink" title="2. ‘inode’ structure"></a>2. ‘inode’ structure</h2><h4 id="成员变量：相当于-inode"><a href="#成员变量：相当于-inode" class="headerlink" title="成员变量：相当于 inode"></a>成员变量：相当于 inode</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">typedef struct ramfs_inode &#123;</span><br><span class="line">    off_t     rf_size;       /* Total file size */</span><br><span class="line">    ino_t     rf_ino;        /* Inode number */</span><br><span class="line">    char     *rf_mem;        /* Memory for this file (1 page) */</span><br><span class="line">    int       rf_mode;       /* Type of file */</span><br><span class="line">    int       rf_linkcount;  /* Number of links to this file */</span><br><span class="line">&#125; ramfs_inode_t;</span><br></pre></td></tr></table></figure>
+<h4 id="成员函数"><a href="#成员函数" class="headerlink" title="成员函数:"></a>成员函数:</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">static vnode_ops_t ramfs_dir_vops = &#123;</span><br><span class="line">        .read = NULL,</span><br><span class="line">        .write = NULL,</span><br><span class="line">        .mmap = NULL,</span><br><span class="line">        .create = ramfs_create,</span><br><span class="line">        .mknod = ramfs_mknod,</span><br><span class="line">        .lookup = ramfs_lookup,</span><br><span class="line">        .link = ramfs_link,</span><br><span class="line">        .unlink = ramfs_unlink,</span><br><span class="line">        .mkdir = ramfs_mkdir,</span><br><span class="line">        .rmdir = ramfs_rmdir,</span><br><span class="line">        .readdir = ramfs_readdir,</span><br><span class="line">        .stat = ramfs_stat,</span><br><span class="line">        .fillpage = NULL,</span><br><span class="line">        .dirtypage = NULL,</span><br><span class="line">        .cleanpage = NULL</span><br><span class="line">&#125;;</span><br><span class="line">    </span><br><span class="line">static vnode_ops_t ramfs_file_vops = &#123;</span><br><span class="line">        .read = ramfs_read,</span><br><span class="line">        .write = ramfs_write,</span><br><span class="line">        .mmap = NULL,</span><br><span class="line">        .create = NULL,</span><br><span class="line">        .mknod = NULL,</span><br><span class="line">        .lookup = NULL,</span><br><span class="line">        .link = NULL,</span><br><span class="line">        .unlink = NULL,</span><br><span class="line">        .mkdir = NULL,</span><br><span class="line">        .rmdir = NULL,</span><br><span class="line">        .stat = ramfs_stat,</span><br><span class="line">        .fillpage = NULL,</span><br><span class="line">        .dirtypage = NULL,</span><br><span class="line">        .cleanpage = NULL</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="3-Specific-Filesystem-operation"><a href="#3-Specific-Filesystem-operation" class="headerlink" title="3. Specific Filesystem operation"></a>3. Specific Filesystem operation</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">1. void ramfs_read_vnode(vnode_t *vn)</span><br><span class="line"></span><br><span class="line">    - 这一步让 generic vnode 有了生命，具备file system specific operations</span><br><span class="line">    - 根据传入的vnode中的vnum、fs参数;</span><br><span class="line">    - 由该specific file system 对该vnode加载上其自身的 inode信息、vnode_operations等等；</span><br><span class="line">    - 使该 vnode 成为完整的对象</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">2. void ramfs_delete_vnode(vnode_t *vn);</span><br><span class="line">    - 从硬盘删除该inode</span><br><span class="line"></span><br><span class="line">3. int ramfs_query_vnode(vnode_t *vn);</span><br><span class="line">    - 查看该vnode是否在硬盘中有相应的inode</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="4-vnode-operation"><a href="#4-vnode-operation" class="headerlink" title="4. vnode operation"></a>4. vnode operation</h2><ol start="0">
+<li><p>entry = VNODE_TO_DIRENT(vndoe dir);<br>拿到该 vnode dir 所属的entry，即 [name:inode_num] pairs<br>需要使用循环，来遍历所有的entry；无法random access</p>
+</li>
+<li><p>ramfs_create(vnode_t *dir, const char *name, size_t name_len, vnode_t **result)</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- 调用ramfs_lookup(),确定该dir中没有‘name’名字的 subdir；  </span><br><span class="line">- 在当前vnode dir中找第一个可用的subdir entry; 一个dir含有的entry不能超过 RAMFS_MAX_DIRENT</span><br><span class="line">- 调用 inode_num=ramfs_alloc_inode() 创建新的inode</span><br><span class="line">- 调用 vget(inode_num)</span><br><span class="line">    - vget中会调用ramfs_read_vnode(vnode_t *vn)该vnode的加载完成</span><br><span class="line">- 设置subdir的名字，完成dir creation</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="2">
+<li><p>ramfs_mknod(struct vnode *dir, const char *name, size_t name_len, int mode, devid_t devid)</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- 调用ramfs_lookup(),确定该dir中没有‘name’名字的 subdir；  </span><br><span class="line">- 在当前vnode dir中找可用的subdir entry; 一个dir含有的entry不能超过 RAMFS_MAX_DIRENT</span><br><span class="line">- 调用 inode_num=ramfs_alloc_inode() 创建新的inode</span><br><span class="line">- 不需要调用 vget(inode_num)，不需要加载vnode，因为其为特殊的special file【character、bulk】</span><br><span class="line">- 设置subdir的名字，完成dir mknod</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="3">
+<li><p>ramfs_lookup(vnode_t *dir, const char *name, size_t namelen, vnode_t **result)</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">- 注意：这个函数很重要：是 name resolution 的重要一步；负责从 “name ==&gt; vnode_num ==&gt; vnode” 的解析。</span><br><span class="line">- 也是在这一步，这也是vget()的主要应用场景</span><br><span class="line">- vget()，又会调用 AFS的ramfs_read_vnode(),从而使返回vnode“活起来”，是vnode完整。</span><br><span class="line">- 至此，ramfs_lookup() 完成了 VFS-AFS-VFS 的旅程</span><br><span class="line">- 查看该‘dir&apos;vnode下是否有名字为’name‘的vnode，结果放到result  </span><br><span class="line">- 调用VNODE_TO_RAMFSINODE，根据dir vnode或得 inode</span><br><span class="line">- 遍历该 inode 下属的entries，看是否有该“name”的 entry</span><br><span class="line">- if YES，调用vget(entry.ino_num)返回该vnode到result</span><br><span class="line">- vget中会调用ramfs_read_vnode(vnode_t *vn)该vnode的加载完成</span><br><span class="line">- vget( ) 内部创建一个“半成品”vnode，传入 ramfs_read_vnode( )</span><br><span class="line">- ramfs_read_vnode( ) 根据具体的file system将该vnode中的所有成员函数、成员变量补充完成</span><br><span class="line">- 至此，vget() 返回的vnode是“活的”、完整的</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="4">
+<li><p>ramfs_link(vnode_t *oldvnode, vnode_t *dir, const char *name, size_t name_len)</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- sets up a hard link. it links oldvnode into dir with the specified name.  </span><br><span class="line">- 调用ramfs_lookup()保证“name”不在“dir”中</span><br><span class="line">- 遍历当前vnode dir，找第一个可用的subdir entry; 一个dir含有的entry不能超过 RAMFS_MAX_DIRENT</span><br><span class="line">- 将新拿到的entry的inode_num，设置为oldvnode的vnode_num</span><br><span class="line">    entry-&gt;rd_ino = oldvnode-&gt;vn_vno;</span><br><span class="line">- 设置名字</span><br><span class="line">    strncpy(entry-&gt;rd_name, name, MIN(name_len, NAME_LEN - 1));</span><br><span class="line">    entry-&gt;rd_name[MIN(name_len, NAME_LEN - 1)] = &apos;\0&apos;;</span><br><span class="line">- 增加 linkcount</span><br><span class="line">    VNODE_TO_RAMFSINODE(oldvnode)-&gt;rf_linkcount++;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ramfs_unlink(vnode_t *dir, const char *name, size_t namelen)</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- removes the link to the vnode in dir specified by name  </span><br><span class="line">- 调用ramfs_lookup()保证“name”在“dir”中</span><br><span class="line">- 遍历当前vnode dir，找到该entry，并将其名字设置为空</span><br><span class="line">    entry-&gt;rd_name[0] = &apos;\0&apos;;</span><br><span class="line">- 减少 linkcount</span><br><span class="line">    VNODE_TO_RAMFSINODE(oldvnode)-&gt;rf_linkcount++;</span><br><span class="line"></span><br><span class="line">- 调用vput(vn);处理相应的vnode</span><br><span class="line">    - 减少 vn_refcount</span><br><span class="line">    - 当 vn_refcount==0 时候，调用 ramfs_delete_vnode()</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="6">
+<li><p>ramfs_mkdir(vnode_t *dir, const char *name, size_t name_len)</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- mkdir creates a directory called name in dir</span><br><span class="line">- 调用ramfs_lookup(),确定该dir中没有‘name’名字的 subdir；  </span><br><span class="line">- 在当前vnode dir中找第一个可用的subdir entry; 一个dir含有的entry不能超过 RAMFS_MAX_DIRENT</span><br><span class="line">- 调用 inode_num=ramfs_alloc_inode() 创建新的inode</span><br><span class="line">- Set entry in its parent: dir</span><br><span class="line">    - 关联inode，entry-&gt;rd_ino = inode_num;</span><br><span class="line">    - 设置名字，strncpy(entry-&gt;rd_name, name, MIN(name_len, NAME_LEN - 1));</span><br><span class="line">        entry-&gt;rd_name[MIN(name_len, NAME_LEN - 1)] = &apos;\0&apos;;</span><br><span class="line">- Set up &apos;.&apos; and &apos;..&apos; in the directory</span><br><span class="line">- 设置subdir的名字，完成dir mknod</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ramfs_rmdir(vnode_t *dir, const char *name, size_t name_len)</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- removes the directory called name from dir. the directory to be removed must be empty (except for . and .. of course).</span><br><span class="line">- 调用ramfs_lookup(),确定该dir中没有‘name’名字的 entry，并获得 inode；</span><br><span class="line">- 调用S_ISDIR(),确保该name是一个directory </span><br><span class="line">- 遍历该inode下的entry，make sure that this directory is empty</span><br><span class="line">- 便利parent dir，找到对应的name，将其删除</span><br><span class="line">    - 删除名字</span><br><span class="line">    - vput(vn)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ramfs_read(vnode_t *file, off_t offset, void *buf, size_t count)</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- read transfers at most count bytes from file into buf. It begins reading from the file at offset bytes into the file.</span><br><span class="line">- 调用VNODE_TO_RAMFSINODE(),获得vnode对应的inode</span><br><span class="line">- 确保inode不是directory</span><br><span class="line">- 将inode中的内容inode-&gt;rf_mem复制到buf中</span><br><span class="line">     memcpy(buf, inode-&gt;rf_mem + offset, ret);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ramfs_write(vnode_t *file, off_t offset, const void *buf, size_t count)</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- transfers count bytes from buf into file.</span><br><span class="line">- 调用VNODE_TO_RAMFSINODE(),获得vnode对应的inode</span><br><span class="line">- 确保inode不是directory</span><br><span class="line">- 将buf中的内容复制到inode中的inode-&gt;rf_mem</span><br><span class="line">     memcpy(inode-&gt;rf_mem + offset, buf, ret);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ramfs_readdir(vnode_t *dir, off_t offset, struct dirent *d)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- 在当前dir中，从offset处，“挨个”读取dir中的entry到数据结构d中；成功读取某个entry后，返回值是下一次调用该函数时应该起始的offset（相当于加了刚刚读取entry/inode的file_size）</span><br><span class="line">- reads one directory entry from the dir into the struct dirent. On success, it returns the amount that offset should be increased by to obtain the next directory entry with a subsequent call to readdir. </span><br><span class="line">- 确保inode是directory</span><br><span class="line">- 将buf中的内容复制到inode中的inode-&gt;rf_mem</span><br><span class="line">     memcpy(inode-&gt;rf_mem + offset, buf, ret);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ramfs_stat(vnode_t *file, struct stat *buf)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- sets the fields in the given buf, filling it with information about file</span><br><span class="line">- 在 stat 中填入各种统计信息</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -2855,7 +2856,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">63</span>
+                    <span class="site-state-item-count">62</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

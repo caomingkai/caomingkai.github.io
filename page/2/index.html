@@ -332,6 +332,263 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/14/Common-Algorithm-Problems-JS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/14/Common-Algorithm-Problems-JS/" itemprop="url">Common Algorithm Problems - JS</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-14T14:54:09-07:00">2018-10-14</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/14/Common-Algorithm-Problems-JS/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/14/Common-Algorithm-Problems-JS/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ol start="0">
+<li><h2 id="All-credits-to-ThatJSDude"><a href="#All-credits-to-ThatJSDude" class="headerlink" title="All credits to ThatJSDude"></a>All credits to <strong><u><a href="https://www.thatjsdude.com" target="_blank" rel="noopener">ThatJSDude</a></u></strong></h2></li>
+<li><h2 id="Verify-a-prime-number"><a href="#Verify-a-prime-number" class="headerlink" title="Verify a prime number?"></a><a href="https://www.thatjsdude.com/interview/js1.html#isPrime" target="_blank" rel="noopener">Verify a prime number?</a></h2><ol>
+<li><p>version 1: <strong>not too good</strong></p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isPrime</span>(<span class="params"> num </span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> i = <span class="number">2</span></span><br><span class="line">    <span class="keyword">while</span>( i &lt;= num/<span class="number">2</span> )&#123;</span><br><span class="line">        <span class="keyword">if</span>( num % <span class="number">2</span> === <span class="number">0</span> ) <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        i += <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Test </span></span><br><span class="line"><span class="built_in">console</span>.log(isPrime(<span class="number">1</span>))   <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(isPrime(<span class="number">2</span>))   <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(isPrime(<span class="number">4</span>))   <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(isPrime(<span class="number">7</span>))   <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(isPrime(<span class="number">101</span>)) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p>Improved Version</p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isPrime</span>(<span class="params">n</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">let</span> divisor = <span class="number">3</span>, </span><br><span class="line">  <span class="keyword">let</span> limit = <span class="built_in">Math</span>.sqrt(n);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//check simple cases</span></span><br><span class="line">  <span class="keyword">if</span> (n == <span class="number">2</span> || n == <span class="number">3</span>) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  <span class="keyword">if</span> (n % <span class="number">2</span> == <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span> (divisor &lt;= limit)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> (n % divisor == <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">else</span>  divisor += <span class="number">2</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&gt; isPrime(<span class="number">137</span>);</span><br><span class="line">  = <span class="literal">true</span></span><br><span class="line">&gt; isPrime(<span class="number">237</span>);</span><br><span class="line">  = <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><h2 id="Find-all-prime-factors-of-a-number"><a href="#Find-all-prime-factors-of-a-number" class="headerlink" title="Find all prime factors of a number?"></a><a href="https://www.thatjsdude.com/interview/js1.html#primFactors" target="_blank" rel="noopener">Find all prime factors of a number?</a></h2><ol>
+<li><p>Find all prime factors</p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">findAllPrimeFactors</span>(<span class="params"> num </span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> factors = []</span><br><span class="line">    <span class="keyword">let</span> i = <span class="number">2</span></span><br><span class="line">    <span class="keyword">while</span>( num &gt; <span class="number">2</span> )&#123;</span><br><span class="line">        <span class="keyword">if</span>( num % i === <span class="number">0</span> )&#123;</span><br><span class="line">            factors.push(i)</span><br><span class="line">            num /= i</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> factors</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// test</span></span><br><span class="line"><span class="built_in">console</span>.log(findAllPrimeFactors(<span class="number">420</span>)) <span class="comment">// 2 2 3 5 7</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p>Find distinct prime factors</p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">findDistinctPrimeFactors</span>(<span class="params"> num </span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> factors = []</span><br><span class="line">    <span class="keyword">let</span> i = <span class="number">2</span></span><br><span class="line">    <span class="keyword">let</span> temp = num</span><br><span class="line">    <span class="keyword">while</span>( i &lt;= num/<span class="number">2</span> )&#123;</span><br><span class="line">        <span class="keyword">if</span>( temp % i === <span class="number">0</span> ) &#123;</span><br><span class="line">            factors.push(i)</span><br><span class="line">            <span class="keyword">while</span>(temp % i === <span class="number">0</span>) temp /= i</span><br><span class="line">        &#125;</span><br><span class="line">        i += <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> factors</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// test</span></span><br><span class="line"><span class="built_in">console</span>.log(findDistinctPrimeFactors(<span class="number">420</span>)) <span class="comment">// 2 3 5 7</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><h2 id="Get-nth-Fibonacci-number"><a href="#Get-nth-Fibonacci-number" class="headerlink" title="Get nth Fibonacci number?"></a><a href="https://www.thatjsdude.com/interview/js1.html#fibonacci" target="_blank" rel="noopener">Get nth Fibonacci number?</a></h2><ol>
+<li><p><code>f(n) = f(n-1) + f(n-2)</code></p>
+</li>
+<li><p>Give <code>n</code>, print fibonacci sequence from 0 ~ n</p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. Iterative</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> fb = []</span><br><span class="line">    fb[<span class="number">0</span>] = <span class="number">1</span></span><br><span class="line">    fb[<span class="number">1</span>] = <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">2</span>; i &lt;= n; i++ )&#123;</span><br><span class="line">        fb[i] = fb[i<span class="number">-1</span>] + fb[i<span class="number">-2</span>]</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> fb;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. recursive</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">wrapperFb</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> memo = <span class="keyword">new</span> <span class="built_in">Array</span>(n+<span class="number">1</span>).fill(<span class="number">0</span>)</span><br><span class="line">    memo[<span class="number">0</span>] = <span class="number">1</span></span><br><span class="line">    memo[<span class="number">1</span>] = <span class="number">1</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>( n===<span class="number">0</span> || n===<span class="number">1</span> ) <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span>( memo[n] !== <span class="number">0</span> ) </span><br><span class="line">            <span class="keyword">return</span> memo[n]</span><br><span class="line">        <span class="keyword">else</span> </span><br><span class="line">            memo[n] = f(n<span class="number">-1</span>) + f(n<span class="number">-2</span>)</span><br><span class="line">        <span class="keyword">return</span> memo[n]</span><br><span class="line">    &#125;</span><br><span class="line">    f(n)</span><br><span class="line">    <span class="keyword">return</span> memo</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(wrapperFb(<span class="number">5</span>)) <span class="comment">// 1 1 2 3 5 8</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p>Give <code>n</code>, print the <code>nth</code> fibonacci number</p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. iterative</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fth</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> fb = []</span><br><span class="line">    fb[<span class="number">0</span>] = <span class="number">1</span></span><br><span class="line">    fb[<span class="number">1</span>] = <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">2</span>; i &lt;= n; i++ )&#123;</span><br><span class="line">        fb[i] = fb[i<span class="number">-1</span>] + fb[i<span class="number">-2</span>]</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> fb[n];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(fth(<span class="number">5</span>)) <span class="comment">// 8</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. recursive</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">wrapperFb</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> memo = <span class="keyword">new</span> <span class="built_in">Array</span>(n+<span class="number">1</span>).fill(<span class="number">0</span>)</span><br><span class="line">    memo[<span class="number">0</span>] = <span class="number">1</span></span><br><span class="line">    memo[<span class="number">1</span>] = <span class="number">1</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>( n===<span class="number">0</span> || n===<span class="number">1</span> ) <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span>( memo[n] !== <span class="number">0</span> ) </span><br><span class="line">            <span class="keyword">return</span> memo[n]</span><br><span class="line">        <span class="keyword">else</span> </span><br><span class="line">            memo[n] = f(n<span class="number">-1</span>) + f(n<span class="number">-2</span>)</span><br><span class="line">        <span class="keyword">return</span> memo[n]</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> f(n)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(wrapperFb(<span class="number">5</span>)) <span class="comment">//  8</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><h2 id="Find-the-greatest-common-divisor-of-two-numbers"><a href="#Find-the-greatest-common-divisor-of-two-numbers" class="headerlink" title="Find the greatest common divisor of two numbers?"></a><a href="https://www.thatjsdude.com/interview/js1.html#greatestCommonDivisor" target="_blank" rel="noopener">Find the greatest common divisor of two numbers?</a></h2><ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">greatCommonDevisor</span> (<span class="params"> n1, n2 </span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> res = <span class="number">1</span></span><br><span class="line">    <span class="keyword">let</span> i = <span class="number">2</span></span><br><span class="line">    <span class="keyword">while</span>( i &lt;= n1 || i &lt;= n2 )&#123;</span><br><span class="line">        <span class="keyword">while</span>( n1%i === <span class="number">0</span> &amp;&amp; n2%i === <span class="number">0</span> )&#123;</span><br><span class="line">            res *= i</span><br><span class="line">            n1 /= i</span><br><span class="line">            n2 /= i</span><br><span class="line">        &#125;</span><br><span class="line">        i += <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(greatCommonDevisor(<span class="number">36</span>,<span class="number">48</span>)) <span class="comment">// 12</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><h2 id="Remove-duplicate-members-from-an-array"><a href="#Remove-duplicate-members-from-an-array" class="headerlink" title="Remove duplicate members from an array?"></a><a href="https://www.thatjsdude.com/interview/js1.html#removeDuplicate" target="_blank" rel="noopener">Remove duplicate members from an array?</a></h2><ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">removeDup</span>(<span class="params">arr</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> set = <span class="keyword">new</span> <span class="built_in">Set</span>()</span><br><span class="line">    <span class="keyword">return</span> arr.filter( <span class="function"><span class="params">item</span> =&gt;</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>( !set.has(item) )&#123;</span><br><span class="line">            set.add(item)</span><br><span class="line">            <span class="keyword">return</span> item</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> arr = [<span class="number">3</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">3</span>,<span class="number">5</span>]</span><br><span class="line"><span class="built_in">console</span>.log(removeDup(arr))  <span class="comment">// [3,2,1,4,5]</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><h2 id="Merge-two-sorted-array"><a href="#Merge-two-sorted-array" class="headerlink" title="Merge two sorted array?"></a><a href="https://www.thatjsdude.com/interview/js1.html#mergeSotedArray" target="_blank" rel="noopener">Merge two sorted array?</a></h2><ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">merge</span>(<span class="params"> arr1, arr2 </span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> arr = []</span><br><span class="line">    <span class="keyword">let</span> i = <span class="number">0</span>, j = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span>( i &lt; arr1.length &amp;&amp; j &lt; arr2.length )&#123;</span><br><span class="line">        <span class="keyword">if</span>( arr1[i] &lt; arr2[j] )&#123;</span><br><span class="line">            arr.push(arr1[i])</span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            arr.push(arr2[j])</span><br><span class="line">            j += <span class="number">1</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>( i &lt; arr1.length ) arr.push(...arr1.slice(i))</span><br><span class="line">    <span class="keyword">if</span>( j &lt; arr2.length ) arr.push(...arr2.slice(j))</span><br><span class="line">    <span class="keyword">return</span> arr</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> arr1 = [ <span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">8</span> ]</span><br><span class="line"><span class="keyword">let</span> arr2 = [ <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span> ]</span><br><span class="line"><span class="built_in">console</span>.log(merge(arr1, arr2)) <span class="comment">// [1,1,2,2,3,4,5,5,6,7,8,8,9]</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><h2 id="Swap-two-numbers-without-using-a-temp-variable"><a href="#Swap-two-numbers-without-using-a-temp-variable" class="headerlink" title="Swap two numbers without using a temp variable?"></a><a href="https://www.thatjsdude.com/interview/js1.html#swapTemp" target="_blank" rel="noopener">Swap two numbers without using a temp variable?</a></h2><ol>
+<li><p>using <code>diff</code></p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">swap</span>(<span class="params">a, b</span>)</span>&#123;</span><br><span class="line">    a = a - b</span><br><span class="line">    b = a + b</span><br><span class="line">    a = b - a</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p>using <code>XOR</code></p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">swap</span>(<span class="params">a, b</span>)</span>&#123;</span><br><span class="line">    a = a ^ b</span><br><span class="line">    b = a ^ b</span><br><span class="line">    a = a ^ b</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><h2 id="Reverse-a-string-in-JavaScript"><a href="#Reverse-a-string-in-JavaScript" class="headerlink" title="Reverse a string in JavaScript?"></a><a href="https://www.thatjsdude.com/interview/js1.html#string_reverse" target="_blank" rel="noopener">Reverse a string in JavaScript?</a></h2><ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. recursive version</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reverseStr</span>(<span class="params"> str </span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>( str === <span class="string">""</span> ) <span class="keyword">return</span> <span class="string">""</span></span><br><span class="line">    <span class="keyword">return</span> reverseStr(str.substring(<span class="number">1</span>)) + str.charAt(<span class="number">0</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(reverseStr(<span class="string">"abcdef"</span>)) <span class="comment">// "fedcba"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. built-in method</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reverse</span>(<span class="params">str</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(!str || str.length &lt;<span class="number">2</span>) <span class="keyword">return</span> str;</span><br><span class="line">  <span class="keyword">return</span> str.split(<span class="string">''</span>).reverse().join(<span class="string">''</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(reverseStr(<span class="string">"abcdef"</span>)) <span class="comment">// "fedcba"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. string util method</span></span><br><span class="line"><span class="built_in">String</span>.prototype.reverse = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!<span class="keyword">this</span> || <span class="keyword">this</span>.length &lt;<span class="number">2</span>) <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">  	<span class="keyword">return</span> <span class="keyword">this</span>.split(<span class="string">''</span>).reverse().join(<span class="string">''</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> str = <span class="string">"abcdef"</span></span><br><span class="line"><span class="built_in">console</span>.log(str.reverse()) <span class="comment">// "fedcba"</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><h2 id="Find-the-first-non-repeating-char-in-a-string"><a href="#Find-the-first-non-repeating-char-in-a-string" class="headerlink" title="Find the first non repeating char in a string?"></a><a href="https://www.thatjsdude.com/interview/js1.html#firstNonRepeating" target="_blank" rel="noopener">Find the first non repeating char in a string?</a></h2><ol>
+<li><p>Using <code>Map</code> instead of <code>object</code> to collect the frequency for each char</p>
+</li>
+<li><p>Since we want to iterate the map in-order, while <code>object</code> cannot guanrentee this</p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// In the end, we need to iterate the key in-order, so we cannot count on object, but instead of Map, which give in-order traverse</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">firstNonRepeat</span>(<span class="params">str</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>()</span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">0</span>; i &lt; str.length; i++ )&#123;</span><br><span class="line">        <span class="keyword">let</span> char = str[i]</span><br><span class="line">        <span class="keyword">if</span>( map.has(char) )&#123;</span><br><span class="line">            map.set( char, map.get(char)+<span class="number">1</span> )</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            map.set( char, <span class="number">1</span> )</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> arr = <span class="built_in">Array</span>.from(map)</span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">0</span>; i &lt; arr.length; i++ )&#123;</span><br><span class="line">        <span class="keyword">if</span>( arr[i][<span class="number">1</span>] === <span class="number">1</span> ) <span class="keyword">return</span> arr[i][<span class="number">0</span>]</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> str = <span class="string">"the quick brown fox jumps then quickly blow air"</span></span><br><span class="line"><span class="built_in">console</span>.log(firstNonRepeat(str))</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><h2 id="Match-substring-of-a-sting"><a href="#Match-substring-of-a-sting" class="headerlink" title="Match substring of a sting?"></a><a href="https://www.thatjsdude.com/interview/js1.html#subString" target="_blank" rel="noopener">Match substring of a sting?</a></h2><ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// aaabc</span></span><br><span class="line"><span class="comment">// aab</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">subStringFinder</span>(<span class="params">str, subStr</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> index = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span>( index &lt;= str.length-subStr.length )&#123;</span><br><span class="line">        <span class="keyword">let</span> sub = str.substring(index, index+subStr.length)</span><br><span class="line">        <span class="keyword">if</span>( sub === subStr ) </span><br><span class="line">            <span class="keyword">return</span> index</span><br><span class="line">        <span class="keyword">else</span> </span><br><span class="line">            index += <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// test</span></span><br><span class="line"><span class="built_in">console</span>.log(subStringFinder(<span class="string">"aaabc"</span>, <span class="string">"aab"</span>)) <span class="comment">// 1</span></span><br><span class="line"><span class="built_in">console</span>.log(subStringFinder(<span class="string">'abbcdabbbbbck'</span>, <span class="string">'bbbck'</span>)  ) <span class="comment">// 8</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><h2 id="Create-all-permutation-of-a-string"><a href="#Create-all-permutation-of-a-string" class="headerlink" title="Create all permutation of a string?"></a><a href="https://www.thatjsdude.com/interview/js1.html#permutation" target="_blank" rel="noopener">Create all permutation of a string?</a></h2><ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*  </span></span><br><span class="line"><span class="comment">        0         1    2     3</span></span><br><span class="line"><span class="comment">    1   2   3</span></span><br><span class="line"><span class="comment">   2 3  </span></span><br><span class="line"><span class="comment">  3   2</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// [version 1.1 recursive]: String with no-dup character</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">permutations</span>(<span class="params">str</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> perm = []</span><br><span class="line">    <span class="keyword">let</span> prefix = <span class="string">""</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">dfs</span>(<span class="params">str</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>( prefix.length === str.length )&#123;</span><br><span class="line">            perm.push(<span class="keyword">new</span> <span class="built_in">String</span>(prefix))</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">0</span>; i &lt; str.length; i++ )&#123;</span><br><span class="line">            <span class="keyword">if</span>( prefix.indexOf(str[i]) === <span class="number">-1</span> )&#123;</span><br><span class="line">                prefix += str[i]</span><br><span class="line">                dfs(str)</span><br><span class="line">                prefix = prefix.substring(<span class="number">0</span>, prefix.length<span class="number">-1</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    dfs(str)</span><br><span class="line">    <span class="keyword">return</span> perm</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(permutations(<span class="string">"abc"</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">// [version 1.2 iterative]: String with no-dup character</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">permutations</span>(<span class="params">str</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> queue = []</span><br><span class="line">    queue.push(<span class="string">""</span>)</span><br><span class="line">    <span class="keyword">let</span> level = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span>( level &lt; str.length )&#123;</span><br><span class="line">        <span class="keyword">let</span> size = queue.length</span><br><span class="line">        <span class="keyword">for</span>( <span class="keyword">let</span> k = <span class="number">0</span>; k &lt; size; k++ )&#123;</span><br><span class="line">            <span class="keyword">let</span> prefix = queue.shift()</span><br><span class="line">            <span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">0</span>; i &lt; str.length; i++ )&#123;</span><br><span class="line">                <span class="keyword">if</span>( prefix.indexOf(str[i]) === <span class="number">-1</span> )&#123;</span><br><span class="line">                    queue.push(prefix+str[i])</span><br><span class="line">                &#125;</span><br><span class="line">        	&#125;</span><br><span class="line">        &#125;</span><br><span class="line">        level += <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> queue</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(permutations(<span class="string">"abc"</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// [version 2.1-recursive]: string with duplicate character</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">permutations</span>(<span class="params">str</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>()</span><br><span class="line">    <span class="keyword">let</span> perm = []</span><br><span class="line">    <span class="keyword">let</span> prefix = <span class="string">""</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">0</span>; i &lt; str.length; i++ )&#123;</span><br><span class="line">        <span class="keyword">if</span>( map.has(str[i]) )&#123;</span><br><span class="line">            map.set( str[i], map.get(str[i])+<span class="number">1</span> )</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            map.set( str[i], <span class="number">1</span> )</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">dfs</span>(<span class="params">str</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>( prefix.length == str.length )&#123;</span><br><span class="line">            perm.push(prefix)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">let</span> freqArr = <span class="built_in">Array</span>.from(map)</span><br><span class="line">        <span class="built_in">console</span>.log(freqArr)</span><br><span class="line">        <span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">0</span>; i &lt; freqArr.length; i++ )&#123;</span><br><span class="line">            <span class="keyword">let</span> char = freqArr[i][<span class="number">0</span>]</span><br><span class="line">            <span class="keyword">let</span> freq = freqArr[i][<span class="number">1</span>]</span><br><span class="line">            <span class="keyword">if</span>( map.get(char) &gt; <span class="number">0</span>)&#123;</span><br><span class="line">                prefix += char</span><br><span class="line">                map.set(char, freq<span class="number">-1</span> )</span><br><span class="line">                dfs(str)</span><br><span class="line">                map.set(char, freq )</span><br><span class="line">                prefix = prefix.substring(<span class="number">0</span>, prefix.length<span class="number">-1</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    dfs(str)</span><br><span class="line">    <span class="keyword">return</span> perm</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(permutations(<span class="string">"abc"</span>))</span><br><span class="line"><span class="built_in">console</span>.log(permutations(<span class="string">"aac"</span>))</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/10/Trie-Tree-Implementation-using-JS/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2830,478 +3087,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/03/Note-of-Eloquent-JavaScript-JS-and-Browser/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/03/Note-of-Eloquent-JavaScript-JS-and-Browser/" itemprop="url">Note of Eloquent JavaScript - [Browser]</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-03T15:53:04-07:00">2018-10-03</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/10/03/Note-of-Eloquent-JavaScript-JS-and-Browser/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/03/Note-of-Eloquent-JavaScript-JS-and-Browser/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="I-DOM"><a href="#I-DOM" class="headerlink" title="I. DOM"></a>I. DOM</h2><ol>
-<li><p><strong>what:</strong> document object model</p>
-</li>
-<li><p><strong>who&amp;why</strong>: </p>
-<ul>
-<li><u>the browser</u> build the DOM</li>
-<li>used to <u>draw the page</u> on screen</li>
-<li>provide <u>interface to JS</u> to dynamically manipulate elements on the page </li>
-</ul>
-</li>
-<li><p><strong>How to access it:</strong> <strong><code>document</code> object</strong></p>
-<ul>
-<li><code>document.documentElement</code> =&gt; ‘<html> …</html>‘</li>
-</ul>
-</li>
-<li><p><strong>moving throught the DOM tree</strong></p>
-<ul>
-<li><strong>traverse only element nodes</strong><ul>
-<li><code>children</code></li>
-<li></li>
-</ul>
-</li>
-<li><strong>traverse all node types</strong>: element node, text node, comment node, …<ul>
-<li><code>childNodes</code></li>
-<li><code>parentNode</code></li>
-<li><code>firstChild</code></li>
-<li><code>lastChild</code></li>
-<li><code>previousSibling</code></li>
-<li><code>nextSibling</code></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>traverse tree e.g.:</strong></p>
-<ul>
-<li><p><u>recursive functions</u> are often useful. The following function scans a document for text nodes containing a given string and returns <code>true</code> when it has found one:</p>
-<ul>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">talksAbout</span>(<span class="params">node, string</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (node.nodeType == Node.ELEMENT_NODE) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; node.childNodes.length; i++) &#123;</span><br><span class="line">      <span class="keyword">if</span> (talksAbout(node.childNodes[i], string)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (node.nodeType == Node.TEXT_NODE) &#123;</span><br><span class="line">    <span class="keyword">return</span> node.nodeValue.indexOf(string) &gt; <span class="number">-1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(talksAbout(<span class="built_in">document</span>.body, <span class="string">"book"</span>));</span><br><span class="line"><span class="comment">// → true</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>find element</strong></p>
-<ol>
-<li><p><code>document.querySelector(&quot;idName&quot;);</code></p>
-<ul>
-<li>first <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element" target="_blank" rel="noopener"><code>Element</code></a> within the document that matches the specified selector, or group of selectors. If no matches are found, <code>null</code> is returned.</li>
-<li><code>var el = document.querySelector(&quot;.myclass&quot;);</code></li>
-<li><code>var el = document.querySelector(&quot;div.user-panel.main input[name=&#39;login&#39;]&quot;);</code><ul>
-<li>Here, the first <strong>&lt;input&gt;</strong> element with the name “login” (<code>&lt;input name=&quot;login&quot;/&gt;</code>) located inside a <strong>&lt;div&gt;</strong> whose class is “user-panel main” (<code>&lt;div class=&quot;user-panel main&quot;&gt;</code>) in the document is returned.</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><code>document.getElementById(&quot;idName&quot;);</code></p>
-</li>
-<li><p><code>document.getElementsByTagName(&quot;idName&quot;);</code></p>
-</li>
-<li><p><code>document.getElementsByClassName(&quot;idName&quot;);</code></p>
-</li>
-<li><p><code>document.getElementsByName()</code>  when inside html we have <code>&lt;input name=&quot;down&quot;&gt;</code></p>
-</li>
-</ol>
-</li>
-<li><p><strong>change document</strong></p>
-<ol>
-<li><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">  <span class="keyword">let</span> paragraphs = <span class="built_in">document</span>.body.getElementsByTagName(<span class="string">"p"</span>);</span></span><br><span class="line"><span class="javascript">  <span class="built_in">document</span>.body.insertBefore(paragraphs[<span class="number">2</span>], paragraphs[<span class="number">0</span>]);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-<li><p><strong>create nodes</strong></p>
-<ol>
-<li><p><code>document.createTextNode(image.alt);</code></p>
-</li>
-<li><p><code>image.parentNode.replaceChild(text, image);</code></p>
-</li>
-<li><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>The <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"img/cat.png"</span> <span class="attr">alt</span>=<span class="string">"Cat"</span>&gt;</span> in the</span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"img/hat.png"</span> <span class="attr">alt</span>=<span class="string">"Hat"</span>&gt;</span>.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">"replaceImages()"</span>&gt;</span>Replace<span class="tag">&lt;/<span class="name">button</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">  <span class="function"><span class="keyword">function</span> <span class="title">replaceImages</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">let</span> images = <span class="built_in">document</span>.body.getElementsByTagName(<span class="string">"img"</span>);</span></span><br><span class="line"><span class="javascript">    <span class="keyword">for</span> (<span class="keyword">let</span> i = images.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">let</span> image = images[i];</span></span><br><span class="line"><span class="javascript">      <span class="keyword">if</span> (image.alt) &#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> text = <span class="built_in">document</span>.createTextNode(image.alt);</span></span><br><span class="line"><span class="undefined">        image.parentNode.replaceChild(text, image);</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">  &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-<li><p><strong>attributes</strong></p>
-<ul>
-<li>HTML allows setting any attribute you want on nodes. <code>&lt;p data=&quot;52&quot;&gt;</code></li>
-<li><p><code>setAttribute</code> &amp; <code>getAttribute</code></p>
-</li>
-<li><p>original attributes: <code>href</code>, <code>class</code>, <code>style</code></p>
-</li>
-<li>custom attributes: <code>data</code>, <code>myown</code></li>
-</ul>
-</li>
-</ol>
-<h2 id="II-CSS"><a href="#II-CSS" class="headerlink" title="II. CSS"></a>II. CSS</h2><ol>
-<li><p><strong>CSS specificity</strong></p>
-<ul>
-<li><p>inline_style=1000</p>
-</li>
-<li><p>id=100</p>
-</li>
-<li><p>class=10</p>
-</li>
-<li><p>element=1</p>
-</li>
-<li><p>e.g. </p>
-<ul>
-<li><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">A</span>: <span class="selector-tag">h1</span></span><br><span class="line"><span class="selector-tag">B</span>: <span class="selector-id">#content</span> <span class="selector-tag">h1</span></span><br><span class="line">C: &lt;div id="content"&gt;&lt;h1 style="color: #ffffff"&gt;Heading&lt;/h1&gt;&lt;/div&gt;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">The</span> <span class="selector-tag">specificity</span> <span class="selector-tag">of</span> <span class="selector-tag">A</span> <span class="selector-tag">is</span> 1 (<span class="selector-tag">one</span> <span class="selector-tag">element</span>)</span><br><span class="line"><span class="selector-tag">The</span> <span class="selector-tag">specificity</span> <span class="selector-tag">of</span> <span class="selector-tag">B</span> <span class="selector-tag">is</span> 101 (<span class="selector-tag">one</span> <span class="selector-tag">ID</span> <span class="selector-tag">reference</span> <span class="selector-tag">and</span> <span class="selector-tag">one</span> <span class="selector-tag">element</span>)</span><br><span class="line"><span class="selector-tag">The</span> <span class="selector-tag">specificity</span> <span class="selector-tag">of</span> <span class="selector-tag">C</span> <span class="selector-tag">is</span> 1000 (<span class="selector-tag">inline</span> <span class="selector-tag">styling</span>)</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">Since</span> 1 &lt; 101 &lt; 1000, <span class="selector-tag">the</span> <span class="selector-tag">third</span> <span class="selector-tag">rule</span> (<span class="selector-tag">C</span>) <span class="selector-tag">has</span> <span class="selector-tag">a</span> <span class="selector-tag">greater</span> <span class="selector-tag">level</span> <span class="selector-tag">of</span> <span class="selector-tag">specificity</span>, <span class="selector-tag">and</span> <span class="selector-tag">therefore</span> <span class="selector-tag">will</span> <span class="selector-tag">be</span> <span class="selector-tag">applied</span>.</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>multiple class name for element</strong>: <code>&lt;p class=&quot;leftAlign title&quot;&gt; content &lt;/p&gt;</code></p>
-</li>
-<li><p><strong>e.g.:</strong></p>
-<ol>
-<li><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* p elements with id 'main' and with classes a and b */</span></span><br><span class="line"><span class="selector-tag">p</span><span class="selector-id">#main</span><span class="selector-class">.a</span><span class="selector-class">.b</span> &#123;</span><br><span class="line">  <span class="attribute">margin-bottom</span>: <span class="number">20px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>p &gt; a {…}</code> applies the given styles to all <code>&lt;a&gt;</code> tags that are <strong>direct</strong> children of <code>&lt;p&gt;</code> tags. </p>
-</li>
-<li><p><code>p a {…}</code> applies to all <code>&lt;a&gt;</code> tags inside <code>&lt;p&gt;</code>tags, whether they are <strong>direct or indirect</strong> children.</p>
-</li>
-</ol>
-</li>
-<li><p><strong>position &amp; animation</strong></p>
-<ol>
-<li><p><u><strong>position:</strong></u> <code>transform</code>: used for <u>rotation</u>, <u>move</u>, <u>skew</u></p>
-<ul>
-<li><code>translate(x, y)</code>:  horizontally and vertically move</li>
-<li><code>translateX(x)</code>: horizontally move</li>
-<li><code>translateY(y)</code>: vertically move</li>
-<li><code>scale(x,y)</code>: zoom in &amp; out according to x-axis/ y-axis</li>
-<li><code>rotate(90deg)</code>: <strong>num&amp;deg: </strong>the angle is specified in the parameter </li>
-<li><code>skew(x-angle,y-angle)</code>: <strong>num&amp;deg: </strong>the angle is specified in the parameter </li>
-</ul>
-</li>
-<li><p><u><strong>animation:</strong></u> </p>
-<ul>
-<li><p><code>animation-name: mymove;</code>, <code>mymove</code> is created using <code>@keyframes</code> rule specifies the animation code</p>
-</li>
-<li><p><code>animation-duration</code>:</p>
-</li>
-<li><p><code>animation-delay</code>:</p>
-</li>
-<li><p><code>animation-iteration-count: 2</code>:</p>
-</li>
-<li><p>e.g. </p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">background</span>: red;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">    <span class="attribute">-webkit-animation-name</span>: mymove; <span class="comment">/* Safari 4.0 - 8.0 */</span></span><br><span class="line">    <span class="attribute">-webkit-animation-duration</span>: <span class="number">5s</span>; <span class="comment">/* Safari 4.0 - 8.0 */</span></span><br><span class="line">    <span class="attribute">animation-name</span>: mymove;</span><br><span class="line">    <span class="attribute">animation-duration</span>: <span class="number">5s</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Safari 4.0 - 8.0 */</span></span><br><span class="line">@-<span class="keyword">webkit</span>-<span class="keyword">keyframes</span> mymove &#123;</span><br><span class="line">    <span class="selector-tag">from</span> &#123;<span class="attribute">left</span>: <span class="number">0px</span>;&#125;</span><br><span class="line">    <span class="selector-tag">to</span> &#123;<span class="attribute">left</span>: <span class="number">200px</span>;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@<span class="keyword">keyframes</span> mymove &#123;</span><br><span class="line">    <span class="selector-tag">from</span> &#123;<span class="attribute">left</span>: <span class="number">0px</span>;&#125;</span><br><span class="line">    <span class="selector-tag">to</span> &#123;<span class="attribute">left</span>: <span class="number">200px</span>;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ol>
-</li>
-</ol>
-<h2 id="III-event-handler"><a href="#III-event-handler" class="headerlink" title="III. event handler"></a>III. event handler</h2><ol>
-<li><p><strong><em>event object</em></strong></p>
-<ul>
-<li>event handler functions are passed an argument: <strong><em>event object</em></strong></li>
-<li><code>event.target.innerHTML</code> or <code>event.target.value</code></li>
-</ul>
-</li>
-<li><p><strong>two ways to handle event</strong></p>
-<ul>
-<li><p><code>onclick</code> attribute: But can <u><em>only add one handler</em></u>, since a node can have only one <code>onclick</code> attr</p>
-</li>
-<li><p><code>addEventListener(event, callback)</code>: can add <u><em>many handlers</em></u></p>
-</li>
-<li><p><code>removeEventListener(event, callback)</code>: will remove handler on this event</p>
-<ul>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;button&gt;Act-once button&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">&lt;script&gt;</span></span><br><span class="line"><span class="regexp">  let button = document.querySelector("button");</span></span><br><span class="line"><span class="regexp">  function once() &#123;</span></span><br><span class="line"><span class="regexp">    console.log("Done.");</span></span><br><span class="line"><span class="regexp">    button.removeEventListener("click", once);</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">  button.addEventListener("click", once);</span></span><br><span class="line"><span class="regexp">&lt;/</span>script&gt;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>event loop</strong></p>
-<ul>
-<li>Never put too much <u>synchronous</u> work inside <u>asynchronous</u> callback! It will make page freezing!</li>
-<li>If have to, use the <u><strong>web worker</strong></u>:  is a JS <em><u>process</u></em> that runs alongside the main script, on its own timeline</li>
-</ul>
-</li>
-<li><p><strong>propagation</strong> </p>
-<ul>
-<li><p>the event will like ‘ <strong><u>bubble</u></strong>‘, propagation upward to elements who also registered for this event</p>
-<ul>
-<li><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// when inner div clicked, both "fun_2", "fun_1" will be called!!</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">'outer'</span> <span class="attr">onclick</span>=<span class="string">"fun_1()"</span>&gt;</span> </span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">'inner'</span> <span class="attr">onclick</span>=<span class="string">"fun_2()"</span> &gt;</span></span><br><span class="line">		</span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><code>stopPropagation</code> can <u>prevent bubbling</u>, prevent handlers further up from receiving the event</p>
-<ul>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;A paragraph <span class="keyword">with</span> a &lt;button&gt;button&lt;<span class="regexp">/button&gt;.&lt;/</span>p&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  <span class="keyword">let</span> para = <span class="built_in">document</span>.querySelector(<span class="string">"p"</span>);</span><br><span class="line">  <span class="keyword">let</span> button = <span class="built_in">document</span>.querySelector(<span class="string">"button"</span>);</span><br><span class="line">  para.addEventListener(<span class="string">"mousedown"</span>, () =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Handler for paragraph."</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">  button.addEventListener(<span class="string">"mousedown"</span>, event =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Handler for button."</span>);</span><br><span class="line">    event.stopPropagation();</span><br><span class="line">  &#125;);</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>Default action</strong></p>
-<ul>
-<li><p><strong>[Important]: </strong>JavaScript event handlers are called <strong><em>before</em></strong> the default behavior takes place. </p>
-</li>
-<li><p>If you click a link, you will be taken to the link’s target. </p>
-</li>
-<li><p>If you press the down arrow, the browser will scroll the page down. </p>
-</li>
-<li><p>If you right-click, you’ll get a context menu. </p>
-</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href=<span class="string">"https://developer.mozilla.org/"</span>&gt;MDN&lt;<span class="regexp">/a&gt;</span></span><br><span class="line"><span class="regexp">&lt;script&gt;</span></span><br><span class="line"><span class="regexp">  let link = document.querySelector("a");</span></span><br><span class="line"><span class="regexp">  link.addEventListener("click", event =&gt; &#123;</span></span><br><span class="line"><span class="regexp">    console.log("Nope.");</span></span><br><span class="line"><span class="regexp">    event.preventDefault();</span></span><br><span class="line"><span class="regexp">  &#125;);</span></span><br><span class="line"><span class="regexp">&lt;/</span>script&gt;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>event type:</p>
-<ol>
-<li><p>key</p>
-</li>
-<li><p>mouse</p>
-</li>
-<li><p>touchscreen</p>
-</li>
-<li><p><strong>scroll</strong></p>
-<ul>
-<li><p>Whenever an element is scrolled, a <code>&quot;scroll&quot;</code> event is fired on it</p>
-</li>
-<li><p><strong>e.g.:</strong> draws a progress bar above the document and updates it to fill up as you scroll down</p>
-<ul>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line">  #progress &#123;</span><br><span class="line">    border-bottom: <span class="number">2</span>px solid blue;</span><br><span class="line">    width: <span class="number">0</span>;</span><br><span class="line">    position: fixed;</span><br><span class="line">    top: <span class="number">0</span>; left: <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;<span class="regexp">/style&gt;</span></span><br><span class="line"><span class="regexp">&lt;div id="progress"&gt;&lt;/</span>div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  <span class="comment">// Create some content</span></span><br><span class="line">  <span class="built_in">document</span>.body.appendChild(<span class="built_in">document</span>.createTextNode(</span><br><span class="line">    <span class="string">"supercalifragilisticexpialidocious "</span>.repeat(<span class="number">1000</span>)));</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> bar = <span class="built_in">document</span>.querySelector(<span class="string">"#progress"</span>);</span><br><span class="line">  <span class="built_in">window</span>.addEventListener(<span class="string">"scroll"</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> max = <span class="built_in">document</span>.body.scrollHeight - innerHeight;</span><br><span class="line">    bar.style.width = <span class="string">`<span class="subst">$&#123;(pageYOffset <span class="regexp">/ max) * 100&#125;%`;</span></span></span></span><br><span class="line"><span class="string"><span class="subst"><span class="regexp">  &#125;);</span></span></span></span><br><span class="line"><span class="string"><span class="subst"><span class="regexp">&lt;/</span>script&gt;</span></span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><strong>scrollHeight</strong>: <code>ENTIRE  content &amp; padding (visible or not)</code></p>
-</li>
-<li><p><strong>offsetHeight</strong>: <code>VISIBLE content &amp; padding</code> <code>+ border + scrollbar</code></p>
-</li>
-<li><p><strong>clientHeight</strong>: <code>VISIBLE content &amp; padding</code></p>
-</li>
-<li><p><a href="https://stackoverflow.com/questions/22675126/what-is-offsetheight-clientheight-scrollheight" target="_blank" rel="noopener">https://stackoverflow.com/questions/22675126/what-is-offsetheight-clientheight-scrollheight</a></p>
-</li>
-<li><p><strong>outerHeight:</strong> height in pixels of the whole browser window, browser’s out-most height</p>
-</li>
-<li><p><strong>innerHeight:</strong> Height in pixels of the browser window viewport including the horizontal scrollbar</p>
-</li>
-<li><p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/innerHeight" target="_blank" rel="noopener">https://developer.mozilla.org/en-US/docs/Web/API/Window/innerHeight</a></p>
-</li>
-</ul>
-</li>
-<li><p><strong>focus event</strong></p>
-<ol>
-<li><p><code>focus</code> &amp; <code>blur</code></p>
-</li>
-<li><p>e.g.: <strong>prompt</strong> </p>
-<ol>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;Name: <span class="xml"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">data-help</span>=<span class="string">"Your full name"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line">&lt;p&gt;Age: <span class="xml"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">data-help</span>=<span class="string">"Your age in years"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line">&lt;p id=<span class="string">"help"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">  <span class="keyword">let</span> help = <span class="built_in">document</span>.querySelector(<span class="string">"#help"</span>);</span><br><span class="line">  <span class="keyword">let</span> fields = <span class="built_in">document</span>.querySelectorAll(<span class="string">"input"</span>);</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> field <span class="keyword">of</span> <span class="built_in">Array</span>.from(fields)) &#123;</span><br><span class="line">    field.addEventListener(<span class="string">"focus"</span>, event =&gt; &#123;</span><br><span class="line">      <span class="keyword">let</span> text = event.target.getAttribute(<span class="string">"data-help"</span>);</span><br><span class="line">      help.textContent = text;</span><br><span class="line">    &#125;);</span><br><span class="line">    field.addEventListener(<span class="string">"blur"</span>, event =&gt; &#123;</span><br><span class="line">      help.textContent = <span class="string">""</span>;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-</ol>
-</li>
-</ol>
-</li>
-</ol>
-<h2 id="IV-Timers"><a href="#IV-Timers" class="headerlink" title="IV. Timers"></a>IV. Timers</h2><ol>
-<li><code>handler = setTimeout(callback, time)</code></li>
-<li><code>clearTimeout(handler)</code></li>
-<li><code>handler = setInterval(callback, time)</code></li>
-<li><p><code>clearInterval(handler)</code></p>
-</li>
-<li><p>e.g.: </p>
-<ol>
-<li><p><u>make a bomb</u>: cancel a function you have scheduled</p>
-<ol>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. make it explods after 500ms</span></span><br><span class="line"><span class="keyword">let</span> bombTimer = setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"BOOM!"</span>);</span><br><span class="line">&#125;, <span class="number">500</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. since synchronous, can clear timer before it explods</span></span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">Math</span>.random() &lt; <span class="number">0.5</span>) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"Defused."</span>);</span><br><span class="line">  clearTimeout(bombTimer);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-<li><p>make a ticker: </p>
-<ol>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> ticks = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">let</span> clock = setInterval(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"tick"</span>, ticks++);</span><br><span class="line">  <span class="keyword">if</span> (ticks == <span class="number">10</span>) &#123;</span><br><span class="line">    clearInterval(clock);     <span class="comment">// can access outter var: clock</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"stop."</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;, <span class="number">200</span>);</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-</ol>
-</li>
-</ol>
-<h2 id="V-Debounce-Throttle"><a href="#V-Debounce-Throttle" class="headerlink" title="V. Debounce / Throttle"></a>V. Debounce / Throttle</h2><ol>
-<li><p><strong>why <u>Debounce &amp; Throttling</u>?</strong> </p>
-<ul>
-<li><strong><u>Debounce</u></strong>: For events like <u>keydown, scroll</u>, we don’t want to trigger event in the middle of it, but only want to trigger after user pause! <em>(ie. we only care the <strong>final result</strong>)</em></li>
-<li><u><strong>Throttling</strong></u>: For events like <u>mouseover</u>, we don’t want to trigger event every for every single move, but only want to trigger it every <code>200ms</code> if such event happens (<em>ie. we only care <strong>sample results</strong></em>)</li>
-</ul>
-</li>
-<li><p><strong>Debounce e.g. : </strong>debouce keydown  [ <code>setTimeout()</code> ]</p>
-<ol>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. clear last timer for each keydown event, </span></span><br><span class="line"><span class="comment">// 2. execute callback function after setting time</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// This way, if two keydown events happen less than 500ms, </span></span><br><span class="line"><span class="comment">// the first one will be cleard, won't execute the callback function</span></span><br><span class="line">&lt;textarea&gt;Type something here...&lt;<span class="regexp">/textarea&gt;</span></span><br><span class="line"><span class="regexp">&lt;script&gt;</span></span><br><span class="line"><span class="regexp">  let textarea = document.querySelector("textarea");</span></span><br><span class="line"><span class="regexp">  let timeout;</span></span><br><span class="line"><span class="regexp">  textarea.addEventListener("input", () =&gt; &#123;</span></span><br><span class="line"><span class="regexp">    clearTimeout(timeout);  </span></span><br><span class="line"><span class="regexp">    timeout = setTimeout(() =&gt; &#123;console.log("Typed!"); &#125;, 500);</span></span><br><span class="line"><span class="regexp">  &#125;);</span></span><br><span class="line"><span class="regexp">&lt;/</span>script&gt;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-<li><p><strong>Throttling e.g.: </strong>throttle mouseover[ <code>setTimeout()</code> ]</p>
-<ol>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. scheduled first sampling</span></span><br><span class="line"><span class="comment">// 2. only when scheduled, we execute function;</span></span><br><span class="line"><span class="comment">//    - set scheduled to be false</span></span><br><span class="line"><span class="comment">//    - after 1000ms, set scheduled to be true</span></span><br><span class="line">&lt;script&gt;</span><br><span class="line">  <span class="keyword">let</span> scheduled = <span class="literal">true</span>;</span><br><span class="line">  <span class="built_in">window</span>.addEventListener(<span class="string">"mousemove"</span>, event =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (scheduled) &#123;</span><br><span class="line">      <span class="built_in">document</span>.body.textContent = <span class="string">`Mouse at <span class="subst">$&#123;event.pageX&#125;</span>, <span class="subst">$&#123;event.pageY&#125;</span>`</span>;</span><br><span class="line">      scheduled = <span class="literal">false</span>;</span><br><span class="line">      setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123; scheduled = <span class="literal">true</span>; &#125;, <span class="number">1000</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-<li><p><strong><u>Debouncify a function</u></strong></p>
-<ul>
-<li><p>Given a function and a delay period, we want return a <strong><em>debouncified function</em></strong>:</p>
-<ul>
-<li>whenever called, will only be executed  after the specified delay. </li>
-<li>Ignore calls in the middle of the delay, and reschedule the starting time of delay</li>
-<li>must receive variant number of arguments</li>
-</ul>
-</li>
-<li><p>code implementation</p>
-<ul>
-<li><p>‘<strong><u>closure</u></strong>‘  is used here: the returned function have access to its outer function var: <code>timeout_handler</code>, and modify it by the returned functions</p>
-</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Each time the returned function is called,</span></span><br><span class="line"><span class="comment"> * First clear the previous scheduled 'func' call</span></span><br><span class="line"><span class="comment"> * Then, reschedule a new one</span></span><br><span class="line"><span class="comment"> * &lt;NOTE&gt; we used 'closure' here: the returned function have</span></span><br><span class="line"><span class="comment"> * access to its outer function var: timeout_handler, and modify  </span></span><br><span class="line"><span class="comment"> * it</span></span><br><span class="line"><span class="comment"> */</span> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">debouncify</span>(<span class="params"> func, delay </span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> timeout_handler   </span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;       <span class="comment">// Closure is used here</span></span><br><span class="line">        clearTimeout(timeout_handler)</span><br><span class="line">        timeout_handler = setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params">arguments</span>)</span>&#123;</span><br><span class="line">            func(<span class="built_in">arguments</span>)</span><br><span class="line">        &#125;, delay)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// test</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">printTime</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">new</span> <span class="built_in">Date</span>().toLocaleTimeString());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> printTimeAfterFiveSecs = debouncify(printTime, <span class="number">5000</span>)</span><br><span class="line"><span class="comment">// need to call </span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">new</span> <span class="built_in">Date</span>().toLocaleTimeString()) <span class="comment">// get the start time</span></span><br><span class="line">printTimeAfterFiveSecs()</span><br><span class="line">printTimeAfterFiveSecs()</span><br><span class="line">printTimeAfterFiveSecs()</span><br><span class="line">printTimeAfterFiveSecs()</span><br><span class="line">printTimeAfterFiveSecs()</span><br><span class="line">printTimeAfterFiveSecs()</span><br><span class="line">printTimeAfterFiveSecs()   <span class="comment">// should be 5sec after the start time</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3353,7 +3138,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">62</span>
+                    <span class="site-state-item-count">63</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -3599,7 +3384,19 @@
                     
                       
                     
-                    <span class="site-state-item-count">105</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">111</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

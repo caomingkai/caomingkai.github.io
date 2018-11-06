@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.6" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.6">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.6" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.6',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Create chaining functionImplement a function can take an executor , onSuccess, onFail callbacks, and call them in the right time. For the following example, please finish the exec function  slow is ex">
+<meta name="keywords" content="DOM,cache,chaining,polyfill,closure,composition,pipe,inheritance">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS common interview problems">
+<meta property="og:url" content="http://yoursite.com/2018/11/05/JS-common-interview-problems/index.html">
+<meta property="og:site_name" content="CMK">
+<meta property="og:description" content="Create chaining functionImplement a function can take an executor , onSuccess, onFail callbacks, and call them in the right time. For the following example, please finish the exec function  slow is ex">
+<meta property="og:updated_time" content="2018-11-06T05:33:27.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS common interview problems">
+<meta name="twitter:description" content="Create chaining functionImplement a function can take an executor , onSuccess, onFail callbacks, and call them in the right time. For the following example, please finish the exec function  slow is ex">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/05/JS-common-interview-problems/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>JS common interview problems | CMK</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-116541729-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-116541729-1');
+</script>
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> 
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">CMK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Let's create something!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+          
+  <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+</li>
+
+      
+
+      
+    </ul>
+  
+
+  
+    
+
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/05/JS-common-interview-problems/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JS common interview problems</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-05T21:31:41-08:00">2018-11-05</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/11/05/JS-common-interview-problems/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/11/05/JS-common-interview-problems/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views: 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Create-chaining-function"><a href="#Create-chaining-function" class="headerlink" title="Create chaining function"></a>Create chaining function</h2><p>Implement a function can take an <code>executor</code> , <code>onSuccess</code>, <code>onFail</code> callbacks, and call them in the right time. For the following example, please finish the <code>exec</code> function</p>
+<ul>
+<li><code>slow</code> is executor, defined by users</li>
+<li><code>success(onSuccess)</code>: <code>onSuccess</code> also defined by users, to receive the successful generated result</li>
+<li>fail(onFail)<code>:</code>onFail` also defined by users, to receive error message</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">exec</span>(<span class="params">executor</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> promise = &#123;</span><br><span class="line">        result: &#123;</span><br><span class="line">            state: <span class="string">"pending"</span>,</span><br><span class="line">            data: <span class="literal">null</span>,</span><br><span class="line">            error: <span class="literal">null</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        doneConsumers:[],</span><br><span class="line">        failConsumers:[],</span><br><span class="line">        done: <span class="function"><span class="keyword">function</span>(<span class="params">onDone</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.doneConsumers.push(onDone)</span><br><span class="line">            <span class="keyword">return</span> promise</span><br><span class="line">        &#125;,</span><br><span class="line">        fail: <span class="function"><span class="keyword">function</span>(<span class="params">onFail</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.failConsumers.push(onFail)</span><br><span class="line">			<span class="keyword">return</span> promise</span><br><span class="line">        &#125;,</span><br><span class="line">        runExecutor: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            executor(<span class="keyword">this</span>.resultHooks.bind(<span class="keyword">this</span>))</span><br><span class="line">        &#125;,</span><br><span class="line">        resultHooks: <span class="function"><span class="keyword">function</span>(<span class="params">error, data</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.result.data = data</span><br><span class="line">            <span class="keyword">this</span>.result.error = error</span><br><span class="line">            <span class="keyword">this</span>.result.state = data===<span class="literal">null</span> ? <span class="string">'failed'</span> : <span class="string">'done'</span></span><br><span class="line">            <span class="keyword">if</span>(<span class="keyword">this</span>.result.state === <span class="string">'done'</span>)&#123;</span><br><span class="line">                <span class="keyword">this</span>.doneConsumers.splice(<span class="number">0</span>).forEach(<span class="function">(<span class="params">fn</span>)=&gt;</span>&#123;</span><br><span class="line">                    fn(<span class="keyword">this</span>.result.data)</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(<span class="keyword">this</span>.result.state === <span class="string">'failed'</span>)&#123;</span><br><span class="line">                <span class="keyword">this</span>.failConsumers.splice(<span class="number">0</span>).forEach(<span class="function">(<span class="params">fn</span>)=&gt;</span>&#123;</span><br><span class="line">                    fn(<span class="keyword">this</span>.result.error)</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    promise.runExecutor()</span><br><span class="line">    <span class="keyword">return</span> promise</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// TEST</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">slow</span>(<span class="params">callback</span>) </span>&#123;</span><br><span class="line">    setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">Math</span>.random() &gt; <span class="number">0.5</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> callback(<span class="string">"Error 417"</span>,<span class="literal">null</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        callback(<span class="literal">null</span>, &#123;<span class="attr">id</span>:<span class="number">123</span>&#125;)</span><br><span class="line">    &#125;,<span class="number">500</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> p = exec(slow)</span><br><span class="line">.done(<span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"1st cb for DONE: "</span>);  <span class="built_in">console</span>.log(data);</span><br><span class="line">&#125;).done(<span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"2nd cb for DONE: "</span>);  <span class="built_in">console</span>.log(data);</span><br><span class="line">&#125;).done(<span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"3rd cb for DONE: "</span>);  <span class="built_in">console</span>.log(data);</span><br><span class="line">&#125;).fail(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"1st cb for Error: "</span> + err);</span><br><span class="line">&#125;).fail(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"2nd cb for Error: "</span> + err);</span><br><span class="line">&#125;).fail(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"3rd cb for Error: "</span> + err);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(p)</span><br></pre></td></tr></table></figure>
+<h2 id="Cache-expensive-function-execution"><a href="#Cache-expensive-function-execution" class="headerlink" title="Cache expensive function execution"></a>Cache expensive function execution</h2><p>If a function execution is very expensive, such as encoding function. Cachify the expensive function, so that next time it will instantly return last calculated result, when the same arguments passed in.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">cachify</span>(<span class="params">fn</span>)</span>&#123;</span><br><span class="line">    cache = &#123;&#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">let</span> key = [].slice.call(<span class="built_in">arguments</span>).join(<span class="string">','</span>)</span><br><span class="line">        <span class="keyword">if</span>(cache[key]) </span><br><span class="line">            <span class="keyword">return</span> cache[key]</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            cache[key] = fn.apply(<span class="literal">null</span>, <span class="built_in">arguments</span>)</span><br><span class="line">            <span class="keyword">return</span> cache[key]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// TEST</span></span><br><span class="line"><span class="keyword">let</span> timeConsumeFun = <span class="function"><span class="keyword">function</span>(<span class="params"> arg1, arg2 </span>)</span>&#123; </span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">100000000</span>; i++ )&#123;</span><br><span class="line">        arg1 += <span class="number">1</span>;</span><br><span class="line">        arg2 += <span class="number">1</span></span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">return</span> arg1 + arg2</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> startTime = <span class="built_in">Date</span>.now()</span><br><span class="line"><span class="keyword">let</span> cachedFun = cachify(timeConsumeFun)</span><br><span class="line"><span class="keyword">let</span> result1 = cachedFun(<span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line"><span class="keyword">let</span> timeUsedFirstTime = <span class="built_in">Date</span>.now() - startTime</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Result of first call should be 200000000: "</span>+ result1)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Time used for first call: "</span>+ timeUsedFirstTime)</span><br><span class="line"></span><br><span class="line">startTime = <span class="built_in">Date</span>.now()</span><br><span class="line"><span class="keyword">let</span> result2 = cachedFun(<span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line"><span class="keyword">let</span> timeUsedSecondTime = <span class="built_in">Date</span>.now() - startTime</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Result of seconde call should be 200000000: "</span>+ result2)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Time used for second call: "</span>+ timeUsedSecondTime)</span><br></pre></td></tr></table></figure>
+<h2 id="Polyfill-Array-prototype-forEach"><a href="#Polyfill-Array-prototype-forEach" class="headerlink" title="Polyfill Array.prototype.forEach"></a>Polyfill <code>Array.prototype.forEach</code></h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. Example to use forEach()</span></span><br><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">arr.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">item, index</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"item: "</span>+ item +<span class="string">", index: "</span>+index)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">typeof</span> <span class="built_in">Array</span>.prototype.forEach !== <span class="string">"function"</span>)&#123;</span><br><span class="line">    <span class="built_in">Array</span>.prototype.forEach = <span class="function"><span class="keyword">function</span>(<span class="params">cb</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.length; i++ )&#123;</span><br><span class="line">            cb(<span class="keyword">this</span>[i], i)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Polyfill-Array-prototype-reduce"><a href="#Polyfill-Array-prototype-reduce" class="headerlink" title="Polyfill Array.prototype.reduce"></a>Polyfill <code>Array.prototype.reduce</code></h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// if(Array.prototype.reduce)&#123;</span></span><br><span class="line">    <span class="built_in">Array</span>.prototype.reduce = <span class="function"><span class="keyword">function</span>(<span class="params">reducer, initial</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.length === <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span>( <span class="keyword">typeof</span> initial === <span class="string">'undefined'</span> ) </span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"No initial value provided"</span>)</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">return</span> initial</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">let</span> accum = <span class="keyword">typeof</span> initial === <span class="string">'undefined'</span> ? <span class="keyword">this</span>[<span class="number">0</span>] : initial</span><br><span class="line">        <span class="keyword">let</span> startIndex = <span class="keyword">typeof</span> initial === <span class="string">'undefined'</span> ? <span class="number">1</span> : <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span>( <span class="keyword">let</span> i = startIndex; i &lt; <span class="keyword">this</span>.length; i++ )&#123;</span><br><span class="line">            accum = reducer(accum, <span class="keyword">this</span>[i])</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> accum</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line">   </span><br><span class="line">    </span><br><span class="line"><span class="comment">// TEST    </span></span><br><span class="line"><span class="keyword">let</span> reducer = <span class="function">(<span class="params">accum, item</span>)=&gt;</span>&#123; <span class="keyword">return</span> accum+item &#125;</span><br><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="keyword">let</span> res = arr.reduce(reducer, <span class="number">1</span>) </span><br><span class="line"><span class="built_in">console</span>.log(res)				 <span class="comment">// 7</span></span><br><span class="line"></span><br><span class="line">arr = []</span><br><span class="line">res = arr.reduce(reducer, <span class="number">1</span>)</span><br><span class="line"><span class="built_in">console</span>.log(res)				 <span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line">arr = [<span class="number">10</span>]</span><br><span class="line">res = arr.reduce(reducer)</span><br><span class="line"><span class="built_in">console</span>.log(res)				 <span class="comment">// 10</span></span><br><span class="line"></span><br><span class="line">arr = [<span class="number">10</span>]</span><br><span class="line">res = arr.reduce(reducer, <span class="number">1</span>)</span><br><span class="line"><span class="built_in">console</span>.log(res)				 <span class="comment">// 11</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">arr = []</span><br><span class="line">res = arr.reduce(reducer)</span><br><span class="line"><span class="built_in">console</span>.log(res)	   <span class="comment">// Uncaught Error: No initial value provided</span></span><br></pre></td></tr></table></figure>
+<h2 id="Closure-a-comparison"><a href="#Closure-a-comparison" class="headerlink" title="Closure: a comparison"></a>Closure: a comparison</h2><ul>
+<li>ONLY variable inside a function can form into closure scope</li>
+<li>only variable itself cannot be updated or </li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Version 1: `countVal` is a function</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Counter</span>(<span class="params">start</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> count = start;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        increment: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; count++; &#125;,</span><br><span class="line">        countVal: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> count; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> foo = Counter(<span class="number">4</span>);</span><br><span class="line">foo.increment();</span><br><span class="line">foo.get(); <span class="comment">// 5</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Version 2: `countVal` is a variable</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Counter</span>(<span class="params">start</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> count = start;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        increment: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; count++; &#125;,</span><br><span class="line">        countVal: count</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> foo = Counter(<span class="number">4</span>);</span><br><span class="line">foo.increment();</span><br><span class="line">foo.get(); <span class="comment">// 4</span></span><br></pre></td></tr></table></figure>
+<h2 id="Variable-Hoisting"><a href="#Variable-Hoisting" class="headerlink" title="Variable Hoisting"></a>Variable Hoisting</h2><p>This following code snippet will parsed firstly into next code snippet</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">bar();</span><br><span class="line"><span class="keyword">var</span> bar = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line"><span class="keyword">var</span> someValue = <span class="number">42</span>;</span><br><span class="line"></span><br><span class="line">test();</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="literal">false</span>) &#123;</span><br><span class="line">        goo = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> goo = <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">var</span> e = data[i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The snippet will convert to the following: 上面代码在运行之前将会被转化。JavaScript 将会把 <code>var</code> 表达式和 <code>function</code> 声明提升到当前作用域的顶部。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// var 表达式被移动到这里</span></span><br><span class="line"><span class="keyword">var</span> bar, someValue; <span class="comment">// 缺省值是 'undefined'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数声明也会提升</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> goo, i, e; <span class="comment">// 没有块级作用域，这些变量被移动到函数顶部</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="literal">false</span>) &#123;</span><br><span class="line">        goo = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        goo = <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123;</span><br><span class="line">        e = data[i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bar(); <span class="comment">// 出错：TypeError，因为 bar 依然是 'undefined'</span></span><br><span class="line">someValue = <span class="number">42</span>; <span class="comment">// 赋值语句不会被提升规则（hoisting）影响</span></span><br><span class="line">bar = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line"></span><br><span class="line">test();</span><br></pre></td></tr></table></figure>
+<h2 id="Type-conversion-string-to-number"><a href="#Type-conversion-string-to-number" class="headerlink" title="Type conversion: string to number"></a>Type conversion: string to number</h2><ul>
+<li><p><code>Number(&quot;10&quot;)</code>: return a <strong><u>primitive number</u></strong></p>
+</li>
+<li><p><code>new Number(&quot;10&quot;)</code>: return a <strong><u>number object</u></strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Number</span>(<span class="number">10</span>) === <span class="number">10</span>;     <span class="comment">// False, 对象与数字的比较</span></span><br><span class="line"><span class="built_in">Number</span>(<span class="number">10</span>) === <span class="number">10</span>;         <span class="comment">// True, 数字与数字的比较</span></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Number</span>(<span class="number">10</span>) + <span class="number">0</span> === <span class="number">10</span>; <span class="comment">// True, 由于隐式的类型转换</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="LeetCode-word-break"><a href="#LeetCode-word-break" class="headerlink" title="LeetCode: word break"></a>LeetCode: word break</h2><p>Given an array of strings and a target string, determin whether the target string can be formed using strings from the given array.</p>
+<ol>
+<li><p><strong><u>BAD version :</u></strong> many duplicate check for substrings</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">canFormTarget</span>(<span class="params"> arr, target </span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>( target.length === <span class="number">0</span> ) <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">0</span>; i &lt; arr.length; i++ )&#123;</span><br><span class="line">        <span class="keyword">let</span> prefix = target.substr(<span class="number">0</span>,i+<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">let</span> suffix = target.substr(i+<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">if</span>( arr.includes(prefix) &amp;&amp; canFormTarget(arr, suffix) )</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Test</span></span><br><span class="line"><span class="keyword">let</span> arr = [<span class="string">"l"</span>, <span class="string">"e"</span>, <span class="string">"ee"</span>, <span class="string">"et"</span>, <span class="string">"co"</span>, <span class="string">"d"</span>, <span class="string">"e"</span>]</span><br><span class="line"><span class="keyword">let</span> target = <span class="string">"leetcode"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> startTime = <span class="built_in">Date</span>.now()</span><br><span class="line"><span class="keyword">let</span> result = canFormTarget(arr, target)</span><br><span class="line"><span class="keyword">let</span> timeElasped = <span class="built_in">Date</span>.now() - startTime</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Should true: "</span>+result +<span class="string">", using time: "</span>+timeElasped)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong><u>GOOD version :</u></strong> use <strong>DP with memoization</strong> to speed up process</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> strChecked = <span class="keyword">new</span> <span class="built_in">Map</span>()</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">canFormTarget</span>(<span class="params"> arr, target </span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>( target.length === <span class="number">0</span> ) <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    <span class="keyword">if</span>( strChecked.has(target) ) <span class="keyword">return</span> strChecked.get(target)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">0</span>; i &lt; arr.length; i++ )&#123;</span><br><span class="line">        <span class="keyword">let</span> prefix = target.substr(<span class="number">0</span>,i+<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">let</span> suffix = target.substr(i+<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">if</span>( arr.includes(prefix) &amp;&amp; canFormTarget(arr, suffix) )&#123;</span><br><span class="line">            strChecked.set([target, <span class="literal">true</span>])</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    strChecked.set([target, <span class="literal">false</span>])</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Test</span></span><br><span class="line"><span class="keyword">let</span> arr = [<span class="string">"l"</span>, <span class="string">"e"</span>, <span class="string">"ee"</span>, <span class="string">"et"</span>, <span class="string">"co"</span>, <span class="string">"d"</span>, <span class="string">"e"</span>]</span><br><span class="line"><span class="keyword">let</span> target = <span class="string">"leetcode"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> startTime = <span class="built_in">Date</span>.now()</span><br><span class="line"><span class="keyword">let</span> result = canFormTarget(arr, target)</span><br><span class="line"><span class="keyword">let</span> timeElasped = <span class="built_in">Date</span>.now() - startTime</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Should true: "</span>+result +<span class="string">", using time: "</span>+timeElasped)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="Curry-Function"><a href="#Curry-Function" class="headerlink" title="Curry Function"></a>Curry Function</h2><p>Implement a curry function <code>addToBase</code> will return another function take an argument to be added on the base.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addToBase</span>(<span class="params">base</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">addOn</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> base+addOn</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// TEST</span></span><br><span class="line"><span class="keyword">let</span> addToTen = addToBase(<span class="number">10</span>)</span><br><span class="line"><span class="built_in">console</span>.log(addToTen(<span class="number">1</span>)) <span class="comment">// 11</span></span><br><span class="line"><span class="built_in">console</span>.log(addToTen(<span class="number">3</span>)) <span class="comment">// 13</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> addToHundred = addToBase(<span class="number">100</span>)</span><br><span class="line"><span class="built_in">console</span>.log(addToHundred(<span class="number">1</span>)) <span class="comment">// 101</span></span><br><span class="line"><span class="built_in">console</span>.log(addToHundred(<span class="number">3</span>)) <span class="comment">// 103</span></span><br></pre></td></tr></table></figure>
+<h2 id="Counting-frequency-of-values-in-an-object"><a href="#Counting-frequency-of-values-in-an-object" class="headerlink" title="Counting frequency of values in an object"></a>Counting frequency of values in an object</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> names = [<span class="string">'Alice'</span>, <span class="string">'Bob'</span>, <span class="string">'Tiff'</span>, <span class="string">'Bruce'</span>, <span class="string">'Alice'</span>];</span><br><span class="line"><span class="keyword">let</span> res = names.reduce(<span class="function">(<span class="params">accum, item, index, names</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>( accum[item] )&#123;</span><br><span class="line">    accum[item]++</span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    accum[item] = <span class="number">1</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> accum</span><br><span class="line">&#125;,&#123;&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(res)</span><br></pre></td></tr></table></figure>
+<h2 id="Group-objects-by-a-certain-property"><a href="#Group-objects-by-a-certain-property" class="headerlink" title="Group objects by a certain property"></a>Group objects by a certain property</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> people = [</span><br><span class="line">    &#123;<span class="attr">name</span>: <span class="string">"a"</span>, <span class="attr">age</span>: <span class="number">10</span>&#125;,    </span><br><span class="line">    &#123;<span class="attr">name</span>: <span class="string">"b"</span>, <span class="attr">age</span>: <span class="number">10</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">name</span>: <span class="string">"c"</span>, <span class="attr">age</span>: <span class="number">12</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">name</span>: <span class="string">"d"</span>, <span class="attr">age</span>: <span class="number">12</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">name</span>: <span class="string">"e"</span>, <span class="attr">age</span>: <span class="number">12</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">name</span>: <span class="string">"f"</span>, <span class="attr">age</span>: <span class="number">14</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">name</span>: <span class="string">"g"</span>, <span class="attr">age</span>: <span class="number">15</span>&#125;,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">	OUTPUT should be: </span></span><br><span class="line"><span class="comment"> &#123; </span></span><br><span class="line"><span class="comment">   10: [</span></span><br><span class="line"><span class="comment">         &#123;name: "a", age: 10&#125;,    </span></span><br><span class="line"><span class="comment">         &#123;name: "b", age: 10&#125;,</span></span><br><span class="line"><span class="comment">       ],</span></span><br><span class="line"><span class="comment">   12: [</span></span><br><span class="line"><span class="comment">          &#123;name: "c", age: 12&#125;,</span></span><br><span class="line"><span class="comment">          &#123;name: "d", age: 12&#125;,</span></span><br><span class="line"><span class="comment">          &#123;name: "e", age: 12&#125;,</span></span><br><span class="line"><span class="comment">       ],</span></span><br><span class="line"><span class="comment">   14: [</span></span><br><span class="line"><span class="comment">   		  &#123;name: "f", age: 14&#125;</span></span><br><span class="line"><span class="comment">       ],</span></span><br><span class="line"><span class="comment">   15: [</span></span><br><span class="line"><span class="comment">     	  &#123;name: "g", age: 15&#125;</span></span><br><span class="line"><span class="comment">       ]</span></span><br><span class="line"><span class="comment"> &#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">groupByAge</span>(<span class="params">accum, item, index, arr</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(item.age <span class="keyword">in</span> accum)&#123;</span><br><span class="line">         accum[item.age].push(item)</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        accum[item.age] = [item]</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> accum</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> groupedPeople = people.reduce(groupByAge)</span><br><span class="line"><span class="built_in">console</span>.log(groupedPeople)</span><br></pre></td></tr></table></figure>
+<h2 id="Function-composition-enabling-piping"><a href="#Function-composition-enabling-piping" class="headerlink" title="Function composition enabling piping"></a>Function composition enabling piping</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> double = <span class="function"><span class="params">x</span> =&gt;</span> x + x;</span><br><span class="line"><span class="keyword">const</span> triple = <span class="function"><span class="params">x</span> =&gt;</span> <span class="number">3</span> * x;</span><br><span class="line"><span class="keyword">const</span> quadruple = <span class="function"><span class="params">x</span> =&gt;</span> <span class="number">4</span> * x;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Function composition enabling pipe functionality</span></span><br><span class="line"><span class="keyword">const</span> pipe = <span class="function">(<span class="params">...funcs</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">input</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> funcs.reduce(<span class="function">(<span class="params">accum, fun</span>)=&gt;</span>&#123;</span><br><span class="line">      accum = fun(accum)</span><br><span class="line">      <span class="keyword">return</span> accum</span><br><span class="line">    &#125;, input)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Composed functions for multiplication of specific values</span></span><br><span class="line"><span class="keyword">const</span> multiply6 = pipe(double, triple);</span><br><span class="line"><span class="keyword">const</span> multiply9 = pipe(triple, triple);</span><br><span class="line"><span class="keyword">const</span> multiply16 = pipe(quadruple, quadruple);</span><br><span class="line"><span class="keyword">const</span> multiply24 = pipe(double, triple, quadruple);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Usage</span></span><br><span class="line"><span class="built_in">console</span>.log(multiply6(<span class="number">6</span>)); <span class="comment">// 36</span></span><br><span class="line"><span class="built_in">console</span>.log(multiply9(<span class="number">9</span>)); <span class="comment">// 81</span></span><br><span class="line"><span class="built_in">console</span>.log(multiply16(<span class="number">16</span>)); <span class="comment">// 256</span></span><br><span class="line"><span class="built_in">console</span>.log(multiply24(<span class="number">10</span>)); <span class="comment">// 240</span></span><br></pre></td></tr></table></figure>
+<h2 id="Another-composition-pipe-example"><a href="#Another-composition-pipe-example" class="headerlink" title="Another composition / pipe example"></a>Another composition / pipe example</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> compose = <span class="function">(<span class="params">...args</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">x</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> args.reduce( <span class="function"><span class="keyword">function</span>(<span class="params">accum, item</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> item(accum)</span><br><span class="line">        &#125;, x)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> pipe = <span class="function">(<span class="params">...args</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">x</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> args.reduceRight( <span class="function"><span class="keyword">function</span>(<span class="params">accum, item</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> item(accum)</span><br><span class="line">        &#125;, x)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// TEST</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">" TEST: compose &amp; pipe: "</span>)</span><br><span class="line"><span class="keyword">const</span> add = <span class="function"><span class="params">x</span> =&gt;</span> y =&gt; x + y</span><br><span class="line"><span class="keyword">const</span> multiply = <span class="function"><span class="params">x</span> =&gt;</span> y =&gt; x * y</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> testCompose = compose(add(<span class="number">2</span>), multiply(<span class="number">3</span>), add(<span class="number">2</span>), multiply(<span class="number">3</span>))</span><br><span class="line"><span class="built_in">console</span>.log(testCompose(<span class="number">1</span>)) <span class="comment">// ( (2+1) * 3 + 2 )*3 = 9</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> testPipe = pipe(add(<span class="number">2</span>), multiply(<span class="number">3</span>), add(<span class="number">2</span>), multiply(<span class="number">3</span>))</span><br><span class="line"><span class="built_in">console</span>.log(testPipe(<span class="number">1</span>))     <span class="comment">//( ( ( 1 * 3) + 2) * 3) + 2</span></span><br></pre></td></tr></table></figure>
+<h2 id="Composition-vs-Inheritance"><a href="#Composition-vs-Inheritance" class="headerlink" title="Composition vs Inheritance"></a>Composition vs Inheritance</h2><p>Here we compare 2 ways to make an <code>Employee</code> object, using <strong><u>Composition</u></strong> and <strong><u>Inheritance</u></strong></p>
+<ol>
+<li><p>make <code>employee</code>  using <strong><u>Inheritance</u></strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">fn, ln</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.firstName = fn;</span><br><span class="line">  <span class="keyword">this</span>.lastName = ln;</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line">Person.prototype.getInfo = <span class="function"><span class="keyword">function</span>(<span class="params">greetStr</span>)</span>&#123;</span><br><span class="line">  <span class="comment">//In real life this method/function will be bigger</span></span><br><span class="line">  <span class="keyword">return</span> <span class="string">`<span class="subst">$&#123;greetStr&#125;</span>, I am <span class="subst">$&#123;<span class="keyword">this</span>.firstName&#125;</span> <span class="subst">$&#123;<span class="keyword">this</span>.lastName&#125;</span>.`</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Employee</span>(<span class="params">fn, ln, empid</span>)</span>&#123;</span><br><span class="line">  Person.call(<span class="keyword">this</span>, fn, ln);</span><br><span class="line">  <span class="keyword">this</span>.empid = empid;</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line">Employee.prototype = <span class="built_in">Object</span>.create(Person.prototype);</span><br><span class="line">Employee.prototype.getId = <span class="function"><span class="keyword">function</span>(<span class="params">greetStr</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">return</span> <span class="string">`<span class="subst">$&#123;greetStr&#125;</span>, my employee id is <span class="subst">$&#123;<span class="keyword">this</span>.empid&#125;</span>.`</span>;</span><br><span class="line">&#125;s</span><br><span class="line"><span class="keyword">var</span> e1 = <span class="keyword">new</span> Employee(<span class="string">"John"</span>, <span class="string">"Doe"</span>, <span class="number">123</span>);</span><br><span class="line"><span class="built_in">console</span>.log( e1.getInfo(<span class="string">'Hi'</span>) ); <span class="comment">// Hi, I am John Doe.</span></span><br><span class="line"><span class="built_in">console</span>.log( e1.getId(<span class="string">'Hello'</span>) ); <span class="comment">// Hello, my employee id is 123.</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>make <code>employee</code>  using <strong>Composition <u>[ Closure applied ]</u></strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getInfo</span>(<span class="params">firstName, lastName, greetStr</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">`<span class="subst">$&#123;greetStr&#125;</span>, I am <span class="subst">$&#123;firstName&#125;</span> <span class="subst">$&#123;lastName&#125;</span>.`</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getId</span>(<span class="params">empid, greetStr</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">`<span class="subst">$&#123;greetStr&#125;</span>, my employee id is <span class="subst">$&#123;empid&#125;</span>.`</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createEmployee</span>(<span class="params">fn, ln, empid</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    empid: empid,</span><br><span class="line">    getId : <span class="function">(<span class="params">greetStr</span>) =&gt;</span> getId(empid, greetStr),</span><br><span class="line">    getInfo: <span class="function">(<span class="params">greetStr</span>) =&gt;</span> getInfo(fn, ln, greetStr) </span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> e1 = createEmployee(<span class="string">"john"</span>, <span class="string">"doe"</span>, <span class="number">123</span>);</span><br><span class="line"><span class="built_in">console</span>.log( e1.getInfo(<span class="string">'Hi'</span>) ); <span class="comment">// Hi, I am John Doe.</span></span><br><span class="line"><span class="built_in">console</span>.log( e1.getId(<span class="string">'Hello'</span>) ); <span class="comment">// Hello, my employee id is 123.</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="CSS-width-100-for-parent-with-position-relative-amp-position-absolute"><a href="#CSS-width-100-for-parent-with-position-relative-amp-position-absolute" class="headerlink" title="CSS: width:100% for parent with position:relative &amp; position:absolute"></a>CSS: <code>width:100%</code> for parent with <code>position:relative</code> &amp; <code>position:absolute</code></h2><ol>
+<li><p><strong><u>will escape</u></strong> from <u>normal document flow</u>:</p>
+<ul>
+<li><code>position: absolute</code>: Note, if no <code>top</code>, <code>left</code>, <code>right</code>, <code>bottom</code> specified, it will stay at its original position</li>
+<li><code>postion:fixed</code> </li>
+</ul>
+</li>
+<li><p><strong><u>won’t escape</u></strong> from <u>normal document flow</u>:</p>
+<ul>
+<li><code>position: relative</code></li>
+<li><code>float</code></li>
+</ul>
+</li>
+<li><p><code>width:100%</code> : the percentage means relative to its <strong>parents</strong></p>
+<ul>
+<li><p><u>If still in normal document flow</u>: parent is its <u>container</u></p>
+</li>
+<li><p><u>if not in normal document flow:</u> parent is the element it <u>positioned</u> relative to</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">            <span class="selector-id">#outer</span>&#123;</span></span><br><span class="line"><span class="undefined">                width: 100px;            </span></span><br><span class="line"><span class="undefined">                height: 100px;</span></span><br><span class="line"><span class="undefined">                border: 1px red solid;</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="css">            <span class="selector-id">#inner1</span>&#123;</span></span><br><span class="line"><span class="undefined">                position: relative;</span></span><br><span class="line"><span class="css">                <span class="selector-tag">width</span><span class="selector-pseudo">:100</span>%;</span></span><br><span class="line"><span class="css">                <span class="selector-tag">height</span><span class="selector-pseudo">:100</span>%;</span></span><br><span class="line"><span class="undefined">                border: 1px green solid;</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="css">            <span class="selector-id">#inner2</span>&#123;</span></span><br><span class="line"><span class="undefined">                position: absolute;</span></span><br><span class="line"><span class="css">                <span class="selector-tag">width</span><span class="selector-pseudo">:100</span>%;</span></span><br><span class="line"><span class="css">                <span class="selector-tag">height</span><span class="selector-pseudo">:100</span>%;</span></span><br><span class="line"><span class="undefined">                border: 1px blue solid;</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"outer"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"inner1"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"inner2"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<h1 id="Add-Remove-amp-Toggle-Classes-With-classList-in-JavaScript"><a href="#Add-Remove-amp-Toggle-Classes-With-classList-in-JavaScript" class="headerlink" title="Add, Remove&amp; Toggle Classes With classList in JavaScript"></a>Add, Remove&amp; Toggle Classes With <code>classList</code> in JavaScript</h1><p>Say we have an element like this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;cool new shades&quot;&gt;</span><br><span class="line">  	content</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>We can get all class names using 2 ways:</p>
+<ol>
+<li><p><code>element.classList</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> shadesEl = <span class="built_in">document</span>.querySelector(<span class="string">'.cool'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(shadesEl.classList);</span><br><span class="line"><span class="comment">// ["cool", "new", "shades", value: "cool new shades"]</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(shadesEl.classList[<span class="number">1</span>]); <span class="comment">// new</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>element.className</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> shadesEl = <span class="built_in">document</span>.querySelector(<span class="string">'.cool'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(shadesEl.className);</span><br><span class="line"><span class="comment">// "cool new shades"</span></span><br></pre></td></tr></table></figure>
+<h4 id="add"><a href="#add" class="headerlink" title="add"></a><code>add</code></h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">shadesEl.classList.add(<span class="string">'make'</span>, <span class="string">'me'</span>, <span class="string">'look'</span>, <span class="string">'rad'</span>);</span><br><span class="line"><span class="comment">// &lt;div class="cool new shades make me look rad"&gt;content &lt;/div&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="contains"><a href="#contains" class="headerlink" title="contains"></a>contains</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(shadesEl.classList.contains(<span class="string">'look'</span>)); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<h4 id="item"><a href="#item" class="headerlink" title="item"></a>item</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(shadesEl.classList.item(<span class="number">3</span>));   <span class="comment">// make</span></span><br><span class="line"><span class="comment">// equals way</span></span><br><span class="line"><span class="built_in">console</span>.log(shadesEl.classList[<span class="number">3</span>]);  	   <span class="comment">// make</span></span><br></pre></td></tr></table></figure>
+<h4 id="remove"><a href="#remove" class="headerlink" title="remove"></a>remove</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">shadesEl.classList.remove(<span class="string">'cool'</span>, <span class="string">'make'</span>, <span class="string">'me'</span>);</span><br><span class="line"><span class="comment">// &lt;div class="new shades look rad"&gt;content &lt;/div&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="toggle"><a href="#toggle" class="headerlink" title="toggle"></a>toggle</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// GOOD version</span></span><br><span class="line">coolButton.addEventListener(<span class="string">'click'</span>, () =&gt; &#123;</span><br><span class="line">  shadesEl.classList.toggle(<span class="string">'cool'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// BAD toggle</span></span><br><span class="line"><span class="keyword">if</span> (shadesEl.classList.contains(<span class="string">'rad'</span>)) &#123;</span><br><span class="line">  shadesEl.classList.remove(<span class="string">'rad'</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  shadesEl.classList.add(<span class="string">'rad'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DOM/" rel="tag"># DOM</a>
+          
+            <a href="/tags/cache/" rel="tag"># cache</a>
+          
+            <a href="/tags/chaining/" rel="tag"># chaining</a>
+          
+            <a href="/tags/polyfill/" rel="tag"># polyfill</a>
+          
+            <a href="/tags/closure/" rel="tag"># closure</a>
+          
+            <a href="/tags/composition/" rel="tag"># composition</a>
+          
+            <a href="/tags/pipe/" rel="tag"># pipe</a>
+          
+            <a href="/tags/inheritance/" rel="tag"># inheritance</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/02/Write-Our-Own-Promise/" rel="next" title="Write A Promise">
+                <i class="fa fa-chevron-left"></i> Write A Promise
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/sea.jpg"
+                alt="Mingkai Cao" />
+            
+              <p class="site-author-name" itemprop="name">Mingkai Cao</p>
+              <p class="site-description motion-element" itemprop="description">All-trade Jack, loves full-stack</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">63</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">111</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/caomingkai" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:mingkaic@usc.edu" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Create-chaining-function"><span class="nav-number">1.</span> <span class="nav-text">Create chaining function</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cache-expensive-function-execution"><span class="nav-number">2.</span> <span class="nav-text">Cache expensive function execution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Polyfill-Array-prototype-forEach"><span class="nav-number">3.</span> <span class="nav-text">Polyfill Array.prototype.forEach</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Polyfill-Array-prototype-reduce"><span class="nav-number">4.</span> <span class="nav-text">Polyfill Array.prototype.reduce</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Closure-a-comparison"><span class="nav-number">5.</span> <span class="nav-text">Closure: a comparison</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Variable-Hoisting"><span class="nav-number">6.</span> <span class="nav-text">Variable Hoisting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Type-conversion-string-to-number"><span class="nav-number">7.</span> <span class="nav-text">Type conversion: string to number</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LeetCode-word-break"><span class="nav-number">8.</span> <span class="nav-text">LeetCode: word break</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Curry-Function"><span class="nav-number">9.</span> <span class="nav-text">Curry Function</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Counting-frequency-of-values-in-an-object"><span class="nav-number">10.</span> <span class="nav-text">Counting frequency of values in an object</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Group-objects-by-a-certain-property"><span class="nav-number">11.</span> <span class="nav-text">Group objects by a certain property</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Function-composition-enabling-piping"><span class="nav-number">12.</span> <span class="nav-text">Function composition enabling piping</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Another-composition-pipe-example"><span class="nav-number">13.</span> <span class="nav-text">Another composition / pipe example</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Composition-vs-Inheritance"><span class="nav-number">14.</span> <span class="nav-text">Composition vs Inheritance</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS-width-100-for-parent-with-position-relative-amp-position-absolute"><span class="nav-number">15.</span> <span class="nav-text">CSS: width:100% for parent with position:relative &amp; position:absolute</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Add-Remove-amp-Toggle-Classes-With-classList-in-JavaScript"><span class="nav-number"></span> <span class="nav-text">Add, Remove&amp; Toggle Classes With classList in JavaScript</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#add"><span class="nav-number">0.0.1.</span> <span class="nav-text">add</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#contains"><span class="nav-number">0.0.2.</span> <span class="nav-text">contains</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#item"><span class="nav-number">0.0.3.</span> <span class="nav-text">item</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#remove"><span class="nav-number">0.0.4.</span> <span class="nav-text">remove</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#toggle"><span class="nav-number">0.0.5.</span> <span class="nav-text">toggle</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate"> 
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mingkai Cao</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.6</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.6"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.6"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.6"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.6"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.6"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'hG8fgggWL7hK1jsXsRoVCNWv-MdYXbMMI',
+        appKey: 'VRAYsgwdkRyyb8bAFQ5uii6o',
+        placeholder: 'Any comment?',
+        avatar:'',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+    // 新增以下代码即可，可以移除.info下所有子节点
+    var infoEle = document.querySelector('#comments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0){
+      infoEle.childNodes.forEach(function(item) {
+        item.parentNode.removeChild(item);
+      });
+    }
+
+
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+<style>
+    #comments .vempty{
+        display: none;
+    }
+</style>
+
+</body>
+</html>

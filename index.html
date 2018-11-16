@@ -332,6 +332,175 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/15/CSS-Notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/15/CSS-Notes/" itemprop="url">CSS Notes</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-15T19:00:58-08:00">2018-11-15</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/11/15/CSS-Notes/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/11/15/CSS-Notes/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="I-Inherit-height-of-outer-div"><a href="#I-Inherit-height-of-outer-div" class="headerlink" title="I. Inherit height of outer div"></a>I. Inherit <code>height</code> of outer <code>div</code></h2><p><strong><u>Problem:</u></strong> how to make an inner div to inherit the <u>height</u> of its containing div ?</p>
+<ol>
+<li><p>If containing div already specified <code>height</code></p>
+<p>use <code>height: 100%</code> to inherit the outer div</p>
+</li>
+<li><p>if containing div doesn’t specify <code>height</code></p>
+<p>cannot use <code>height: 100%</code> to inherit the containing div. The computed height for the inner one will become <code>auto</code>, which means its height depends on its content</p>
+<blockquote>
+<p>If the height of the containing block is not specified explicitly (i.e., it depends on content height), and this element is not absolutely positioned, the value computes to <code>auto</code></p>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/height" target="_blank" rel="noopener">https://developer.mozilla.org/en-US/docs/Web/CSS/height</a></p>
+</blockquote>
+<p><strong><u>Right way</u></strong>: containing div set <code>position:relative</code>; inner div set <code>position: absolute</code> and <code>top:0</code> &amp; <code>bottom:0</code></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"> </span></span><br><span class="line"><span class="undefined">    #container&#123;</span></span><br><span class="line"><span class="undefined">        border: 1px solid red;</span></span><br><span class="line"><span class="undefined">        position: relative;</span></span><br><span class="line"><span class="undefined">    &#125; </span></span><br><span class="line"><span class="undefined">    #fullHeight&#123;</span></span><br><span class="line"><span class="undefined">        border: 1px solid green;</span></span><br><span class="line"><span class="undefined">        position: absolute;</span></span><br><span class="line"><span class="undefined">        top: 0;</span></span><br><span class="line"><span class="undefined">        bottom: 0;</span></span><br><span class="line"><span class="undefined">        width:100%;</span></span><br><span class="line"><span class="undefined">        background-color: grey;</span></span><br><span class="line"><span class="undefined">   	 	opacity: 0.5;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    #noHeight&#123;</span></span><br><span class="line"><span class="undefined">        height: 100%;</span></span><br><span class="line"><span class="undefined">        width: 100%;</span></span><br><span class="line"><span class="undefined">        border: 1px solid blue;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"noHeight"</span> &gt;</span>ads <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"fullHeight"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>Dummy text. Dummy text. Dummy text. Dummy text. <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="II-Set-mask-to-a-div-to-disable-it"><a href="#II-Set-mask-to-a-div-to-disable-it" class="headerlink" title="II. Set mask to a div to disable it"></a>II. Set mask to a <code>div</code> to disable it</h2><p><u><strong>Problem:</strong></u> set a mask layer to cover its outer div</p>
+<p><strong><u>Solution:</u></strong> use <code>position: absolute</code> &amp; <code>top: 0</code> &amp; <code>bottom: 0</code> to cover the whole <code>height</code> or its containing div, which set <code>position: relative</code> </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"> </span></span><br><span class="line"><span class="undefined">    #container&#123;</span></span><br><span class="line"><span class="undefined">        border: 1px solid red;</span></span><br><span class="line"><span class="undefined">        position: relative;</span></span><br><span class="line"><span class="undefined">    &#125; </span></span><br><span class="line"><span class="undefined">    #inner &#123;</span></span><br><span class="line"><span class="undefined">        background-color: coral;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    #mask&#123;</span></span><br><span class="line"><span class="undefined">        border: 1px solid green;</span></span><br><span class="line"><span class="undefined">        position: absolute;</span></span><br><span class="line"><span class="undefined">        top: 0;</span></span><br><span class="line"><span class="undefined">        bottom: 0;</span></span><br><span class="line"><span class="undefined">        width: 100%;</span></span><br><span class="line"><span class="undefined">        height: 100%;</span></span><br><span class="line"><span class="undefined">        background-color: grey;</span></span><br><span class="line"><span class="undefined">        opacity: 0.5;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"inner"</span> &gt;</span>myBox<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"mask"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>Dummy text. Dummy text. Dummy text. Dummy text. <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> inner = <span class="built_in">document</span>.getElementById(<span class="string">"inner"</span>)</span></span><br><span class="line"><span class="javascript">        inner.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;alert(<span class="string">"inner"</span>)&#125;)</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> mask = <span class="built_in">document</span>.getElementById(<span class="string">"mask"</span>)</span></span><br><span class="line"><span class="javascript">        mask.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;alert(<span class="string">"mask"</span>)&#125;)</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> container = <span class="built_in">document</span>.getElementById(<span class="string">"container"</span>)</span></span><br><span class="line"><span class="javascript">        container.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;alert(<span class="string">"container"</span>)&#125;)</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/05/JS-common-interview-problems/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2423,164 +2592,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/14/How-to-Flatten-an-Array/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/14/How-to-Flatten-an-Array/" itemprop="url">How to Flatten an Array</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-14T19:54:39-07:00">2018-10-14</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/10/14/How-to-Flatten-an-Array/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/14/How-to-Flatten-an-Array/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h2><p>Given an nested array, flatten it to  1-dimension array.</p>
-<p>For example: </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[1, [2, [ [3, 4], 5], 6], [7, 8], 9]</span><br><span class="line">=&gt; </span><br><span class="line">[1, 2, 3, 4, 5, 6, 7, 8,  9]</span><br></pre></td></tr></table></figure>
-<h2 id="Solution-1-iterative-version"><a href="#Solution-1-iterative-version" class="headerlink" title="Solution 1:  iterative version"></a>Solution 1:  iterative version</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. iterative [stack]</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">flatten1</span>(<span class="params"> arr </span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> res = []</span><br><span class="line">    <span class="keyword">let</span> stack = []</span><br><span class="line">    stack.push(arr)</span><br><span class="line">    <span class="keyword">while</span>( stack.length &gt; <span class="number">0</span> )&#123;</span><br><span class="line">        <span class="keyword">let</span> item = stack.pop()</span><br><span class="line">        <span class="keyword">if</span>( !<span class="built_in">Array</span>.isArray(item) )&#123;</span><br><span class="line">            res.push(item)</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">for</span>( <span class="keyword">let</span> i = item.length<span class="number">-1</span>; i &gt;=<span class="number">0</span>; i-- )&#123;</span><br><span class="line">                stack.push(item[i])</span><br><span class="line">            &#125; </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Solution-2-recursive-version"><a href="#Solution-2-recursive-version" class="headerlink" title="Solution 2:  recursive version"></a>Solution 2:  recursive version</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">flatten2</span>(<span class="params">arr</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>( !<span class="built_in">Array</span>.isArray(arr) )&#123;</span><br><span class="line">        <span class="keyword">return</span> [arr]</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> [].concat(...arr.map(flatten2))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Solution-3-recursive-version-shorter"><a href="#Solution-3-recursive-version-shorter" class="headerlink" title="Solution 3:  recursive version [shorter]"></a>Solution 3:  recursive version [shorter]</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">flatten</span>(<span class="params">a</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">Array</span>.isArray(a) ? [].concat(...a.map(flatten)) : a;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Testing"><a href="#Testing" class="headerlink" title="Testing"></a>Testing</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> test1 = [<span class="number">1</span>, [<span class="number">2</span>, <span class="number">3</span>, [<span class="number">4</span>, <span class="number">5</span>]], <span class="number">6</span>, [<span class="number">7</span>, [<span class="number">8</span>, <span class="number">9</span>], <span class="number">10</span>], <span class="number">11</span>]</span><br><span class="line"><span class="keyword">let</span> test2 = []</span><br><span class="line"><span class="keyword">let</span> test3 = [<span class="number">1</span>]</span><br><span class="line"><span class="keyword">let</span> test4 = <span class="number">1</span></span><br><span class="line"><span class="keyword">let</span> test5 = [[[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]]]</span><br><span class="line"><span class="keyword">let</span> test6 = [[[]],[],[],[],[[[]]]]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// let arrayFlattened1 = flatten1(test1).toString()</span></span><br><span class="line"><span class="comment">// let arrayFlattened2 = flatten1(test2).toString()</span></span><br><span class="line"><span class="comment">// let arrayFlattened3 = flatten1(test3).toString()</span></span><br><span class="line"><span class="comment">// let arrayFlattened4 = flatten1(test4).toString()</span></span><br><span class="line"><span class="comment">// let arrayFlattened5 = flatten1(test5).toString()</span></span><br><span class="line"><span class="comment">// let arrayFlattened6 = flatten1(test6).toString()</span></span><br><span class="line"><span class="keyword">let</span> arrayFlattened1 = flatten2(test1).toString()</span><br><span class="line"><span class="keyword">let</span> arrayFlattened2 = flatten2(test2).toString()</span><br><span class="line"><span class="keyword">let</span> arrayFlattened3 = flatten2(test3).toString()</span><br><span class="line"><span class="keyword">let</span> arrayFlattened4 = flatten2(test4).toString()</span><br><span class="line"><span class="keyword">let</span> arrayFlattened5 = flatten2(test5).toString()</span><br><span class="line"><span class="keyword">let</span> arrayFlattened6 = flatten2(test6).toString()</span><br><span class="line"><span class="built_in">console</span>.log(arrayFlattened1)</span><br><span class="line"><span class="built_in">console</span>.log(arrayFlattened2)</span><br><span class="line"><span class="built_in">console</span>.log(arrayFlattened3)</span><br><span class="line"><span class="built_in">console</span>.log(arrayFlattened4)</span><br><span class="line"><span class="built_in">console</span>.log(arrayFlattened5)</span><br><span class="line"><span class="built_in">console</span>.log(arrayFlattened6)</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2632,7 +2643,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">63</span>
+                    <span class="site-state-item-count">64</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2890,7 +2901,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">111</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">113</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

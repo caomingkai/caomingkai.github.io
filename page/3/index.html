@@ -332,6 +332,240 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/04/Flux-Redux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/04/Flux-Redux/" itemprop="url">Flux & Redux</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-04T21:04:19-07:00">2018-10-04</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/04/Flux-Redux/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/04/Flux-Redux/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="I-Flux"><a href="#I-Flux" class="headerlink" title="I. Flux"></a>I. Flux</h2><ol>
+<li><p><strong>4 parts of Flux architecture:</strong></p>
+<ul>
+<li>View</li>
+<li>Actions</li>
+<li>Dispatcher</li>
+<li>Store</li>
+</ul>
+</li>
+<li><p><strong>Relationship</strong></p>
+<ul>
+<li><strong>Store:</strong> model object managing all data; has updating methods as well<ul>
+<li>provide data to <u>View</u></li>
+<li>provide updating methods to <u>Actions</u></li>
+</ul>
+</li>
+<li><strong>Dispatcher:  </strong>extends <code>Event Emitter object</code><ul>
+<li>used by component to <u>register event &amp; callbacks</u></li>
+<li>used by component to <u>emit actions to call store updating methods</u></li>
+</ul>
+</li>
+<li><strong>View:</strong> receive data from store</li>
+<li><strong>Actions: </strong>used by <u><em>component</em></u> to let <u><em>dispather</em></u> <u>emit actions</u></li>
+<li>Great article: <a href="http://www.ruanyifeng.com/blog/2016/01/flux.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2016/01/flux.html</a></li>
+</ul>
+</li>
+</ol>
+<h2 id="II-Redux"><a href="#II-Redux" class="headerlink" title="II. Redux"></a>II. Redux</h2><ol>
+<li><p><strong><code>store</code></strong> </p>
+<ol>
+<li><code>getState()</code>: source of data</li>
+<li><code>dispath()</code>: emit actions, execute <u>reducer</u> to update state</li>
+<li><code>subscribe()</code>: component subscribe to receive updated state</li>
+</ol>
+</li>
+<li><p><strong>reducer</strong></p>
+<ul>
+<li>like<code>emitter.on</code>, used to register all the <u>updating functions</u> for related <u>actions</u></li>
+<li>pure function</li>
+<li><code>combineReducers()</code>: used to make logic clean</li>
+</ul>
+</li>
+<li><p><strong>Store implementation</strong></p>
+<ol>
+<li><p>How to use the <code>store</code> object</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createStore &#125; <span class="keyword">from</span> <span class="string">'redux'</span>;</span><br><span class="line"><span class="keyword">let</span> &#123; subscribe, dispatch, getState &#125; = createStore(reducer);</span><br><span class="line"><span class="comment">// or </span></span><br><span class="line"><span class="keyword">let</span> store = createStore(todoApp, <span class="built_in">window</span>.STATE_FROM_SERVER)</span><br><span class="line">store.getState()</span><br><span class="line">store.dispatch()</span><br><span class="line">store.subscribe()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>redux provide an interface <code>createStore()</code> to create the <code>store</code> object</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> createStore = <span class="function">(<span class="params">reducer</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> state;</span><br><span class="line">  <span class="keyword">let</span> listeners = [];</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> getState = <span class="function"><span class="params">()</span> =&gt;</span> state;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> dispatch = <span class="function">(<span class="params">action</span>) =&gt;</span> &#123;</span><br><span class="line">    state = reducer(state, action);</span><br><span class="line">    listeners.forEach(<span class="function"><span class="params">listener</span> =&gt;</span> listener());</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> subscribe = <span class="function">(<span class="params">listener</span>) =&gt;</span> &#123;</span><br><span class="line">    listeners.push(listener);</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      listeners = listeners.filter(<span class="function"><span class="params">l</span> =&gt;</span> l !== listener);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  dispatch(&#123;&#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123; getState, dispatch, subscribe &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p><strong>An example using Redux</strong></p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Counter = <span class="function">(<span class="params">&#123; value, onIncrement, onDecrement &#125;</span>) =&gt;</span> (</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">  &lt;h1&gt;&#123;value&#125;&lt;<span class="regexp">/h1&gt;</span></span><br><span class="line"><span class="regexp">  &lt;button onClick=&#123;onIncrement&#125;&gt;+&lt;/</span>button&gt;</span><br><span class="line">  &lt;button onClick=&#123;onDecrement&#125;&gt;-<span class="xml"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line">  &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">);</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">const reducer = (state = 0, action) =&gt; &#123;</span></span><br><span class="line"><span class="regexp">  switch (action.type) &#123;</span></span><br><span class="line"><span class="regexp">    case 'INCREMENT': return state + 1;</span></span><br><span class="line"><span class="regexp">    case 'DECREMENT': return state - 1;</span></span><br><span class="line"><span class="regexp">    default: return state;</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">const store = createStore(reducer);</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">const render = () =&gt; &#123;</span></span><br><span class="line"><span class="regexp">  ReactDOM.render(</span></span><br><span class="line"><span class="regexp">    &lt;Counter</span></span><br><span class="line"><span class="regexp">      value=&#123;store.getState()&#125;</span></span><br><span class="line"><span class="regexp">      onIncrement=&#123;() =&gt; store.dispatch(&#123;type: 'INCREMENT'&#125;)&#125;</span></span><br><span class="line"><span class="regexp">      onDecrement=&#123;() =&gt; store.dispatch(&#123;type: 'DECREMENT'&#125;)&#125;</span></span><br><span class="line"><span class="regexp">    /</span>&gt;,</span><br><span class="line">    <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>)</span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">render();</span><br><span class="line">store.subscribe(render);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="III-React-Redux-package"><a href="#III-React-Redux-package" class="headerlink" title="III. React-Redux package"></a>III. React-Redux package</h2><ol>
+<li><code>connect()</code>: <ul>
+<li>connect <u>UI component</u> with it outer <u>Controller component</u></li>
+<li>usage: <code>const Contrainer = connect(mapStateToprops, mapDispatchToProps)(UIComponent)</code></li>
+</ul>
+</li>
+<li><code>mapStateToProps()</code><ul>
+<li>map <code>state</code> in Redux store to UI </li>
+<li>like <code>eventEmitter.subscribe()</code>, will always get the updated state from Redux</li>
+</ul>
+</li>
+<li><p><code>mapDispatchToProps</code></p>
+<ul>
+<li>map <code>actions dispatch()</code> in Redux to UI</li>
+<li>like <code>eventEmitter.emit()</code>, will trigger actions when UI event is fired, to execute reducer to update the state</li>
+</ul>
+</li>
+<li><p><code>&lt;Provider&gt;</code> component</p>
+<ul>
+<li>an outer container, used to pass the <code>state</code> to inner components</li>
+<li>using <code>context</code> attribute</li>
+</ul>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/04/Ways-of-Creating-Objects-in-JS/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2863,196 +3097,6 @@
 </li>
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">int</span> cnt;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">boolean</span> isWord;</span><br><span class="line">	<span class="keyword">public</span> Map&lt;Character, Node&gt; children;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.cnt = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">this</span>.isWord = <span class="keyword">false</span>;</span><br><span class="line">		<span class="keyword">this</span>.children = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Trie</span></span>&#123;</span><br><span class="line">	Node root;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Trie</span><span class="params">( String[] strArr )</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.root = <span class="keyword">new</span> Node();</span><br><span class="line">		<span class="keyword">for</span>( String str : strArr )&#123;</span><br><span class="line">			insert( str );</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasPrefix</span><span class="params">(String str )</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>( str == <span class="keyword">null</span> || str.length() == <span class="number">0</span> ) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">		<span class="keyword">int</span> len = str.length();</span><br><span class="line">		Node cur = <span class="keyword">this</span>.root;</span><br><span class="line">		<span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++ )&#123;</span><br><span class="line">			<span class="keyword">char</span> ch = str.charAt(i);</span><br><span class="line">			<span class="keyword">if</span>( !cur.children.containsKey(ch) ) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">			cur = cur.children.get(ch);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> Node <span class="title">getPrefixNode</span> <span class="params">(String str)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>( !hasPrefix(str) ) <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">		<span class="keyword">int</span> len = str.length();</span><br><span class="line">		Node cur = <span class="keyword">this</span>.root;</span><br><span class="line">		<span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++ )&#123;</span><br><span class="line">			<span class="keyword">char</span> ch = str.charAt(i);</span><br><span class="line">			cur = cur.children.get(ch);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> cur;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">( String str )</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>( str == <span class="keyword">null</span> || str.length() == <span class="number">0</span> ) <span class="keyword">return</span>;</span><br><span class="line">		<span class="keyword">int</span> len = str.length();</span><br><span class="line">		Node cur = <span class="keyword">this</span>.root;</span><br><span class="line">		<span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++ )&#123;</span><br><span class="line">			<span class="keyword">char</span> ch = str.charAt(i);</span><br><span class="line">			<span class="keyword">if</span>( !cur.children.containsKey(ch) )&#123;</span><br><span class="line">				cur.children.put( ch, <span class="keyword">new</span> Node() );</span><br><span class="line">			&#125;</span><br><span class="line">			cur = cur.children.get(ch);</span><br><span class="line">		&#125;</span><br><span class="line">		cur.cnt++;</span><br><span class="line">		cur.isWord = <span class="keyword">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">delete</span> <span class="params">(String str )</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>( str == <span class="keyword">null</span> || str.length() == <span class="number">0</span> ) <span class="keyword">return</span>;</span><br><span class="line">		<span class="keyword">if</span>( !hasPrefix(str) ) <span class="keyword">return</span>;</span><br><span class="line">		Node cur = getPrefixNode(str);</span><br><span class="line">		cur.cnt--; </span><br><span class="line">		<span class="keyword">if</span>(cur.cnt &lt; <span class="number">0</span>) cur.cnt = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">if</span>(cur.cnt &gt; <span class="number">0</span>) <span class="keyword">return</span>; 	<span class="comment">// at this position, there still word exist</span></span><br><span class="line">		<span class="keyword">else</span>&#123;						<span class="comment">// at this position, there no word exist</span></span><br><span class="line">			<span class="keyword">if</span>( cur.children.size() &gt; <span class="number">0</span> ) &#123;	<span class="comment">// but can be prefix of other words</span></span><br><span class="line">				cur.isWord = <span class="keyword">false</span>;</span><br><span class="line">				<span class="keyword">return</span>;</span><br><span class="line">			&#125;<span class="keyword">else</span>&#123;							<span class="comment">// not a word, nor a prefix of others</span></span><br><span class="line">				deleteNode(str);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteNode</span><span class="params">( String str )</span></span>&#123;</span><br><span class="line">		<span class="keyword">int</span> len = str.length();</span><br><span class="line">		<span class="keyword">if</span>( len == <span class="number">0</span> ) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">		String prevStr = str.substring(<span class="number">0</span>, len-<span class="number">1</span>);</span><br><span class="line">		Node prevNode = getPrefixNode(prevStr);</span><br><span class="line">		prevNode.children.remove(str.charAt(len-<span class="number">1</span>));</span><br><span class="line">		<span class="keyword">if</span>( prevNode.children.size()==<span class="number">0</span> &amp;&amp; prevNode.cnt==<span class="number">0</span> ) delete(prevStr);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isWord</span><span class="params">( String str )</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>( !hasPrefix(str) ) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">		<span class="keyword">return</span> getPrefixNode(str).isWord;</span><br><span class="line">	&#125;	</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">countWord</span><span class="params">( String str )</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>( !hasPrefix(str) ) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">return</span> getPrefixNode(str).cnt;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TrieTree</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">( String[] args )</span></span>&#123;</span><br><span class="line">		String[] dict = &#123; <span class="string">"a"</span>, <span class="string">"ab"</span>, <span class="string">"ab"</span>, <span class="string">"abc"</span>, <span class="string">"abc"</span>, <span class="string">"abc"</span>, <span class="string">"abcd"</span>, <span class="string">"ac"</span>, <span class="string">"acd"</span>, <span class="string">"ad"</span>, <span class="string">"2,24"</span>,  <span class="string">"2,2,4"</span> &#125;;</span><br><span class="line">		Trie trieTree = <span class="keyword">new</span> Trie(dict);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// String isWordTest1 = "ab";</span></span><br><span class="line">		<span class="comment">// String isWordTest2 = "";</span></span><br><span class="line">		<span class="comment">// String isWordTest3 = "a";</span></span><br><span class="line">		<span class="comment">// String isWordTest4 = "abcd";</span></span><br><span class="line">		<span class="comment">// String isWordTest5 = "abcde";</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">// String countTest = "abc";</span></span><br><span class="line">		<span class="comment">// String insertTest = "abc";</span></span><br><span class="line">		</span><br><span class="line"></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.isWord(isWordTest1));</span></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.isWord(isWordTest2));</span></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.isWord(isWordTest3));</span></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.isWord(isWordTest4));</span></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.isWord(isWordTest5));</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.countWord(countTest));</span></span><br><span class="line">		<span class="comment">// trieTree.insert(insertTest);</span></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.countWord(countTest));</span></span><br><span class="line">		<span class="comment">// trieTree.insert(insertTest);</span></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.countWord(countTest));</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="comment">// String hasPrefixTest1 = "abcd";</span></span><br><span class="line">		<span class="comment">// String hasPrefixTest2 = "2,2";</span></span><br><span class="line">		<span class="comment">// String hasPrefixTest3 = "abcdd";</span></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.hasPrefix(hasPrefixTest1));</span></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.hasPrefix(hasPrefixTest2));</span></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.hasPrefix(hasPrefixTest3));</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		String deleteTest1 = <span class="string">"abcd"</span>;</span><br><span class="line">		String deleteTest2 = <span class="string">"abc"</span>;</span><br><span class="line">		String deleteTest3 = <span class="string">"ab"</span>;</span><br><span class="line">		trieTree.delete(deleteTest1);</span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest3)); <span class="comment">// 2</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest2)); <span class="comment">// 3</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest1)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println();</span><br><span class="line"></span><br><span class="line">		trieTree.delete(deleteTest1);</span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest3)); <span class="comment">// 2</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest2)); <span class="comment">// 3</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest1)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println();</span><br><span class="line"></span><br><span class="line">		trieTree.delete(deleteTest2);</span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest3)); <span class="comment">// 2</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest2)); <span class="comment">// 2</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest1)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println();</span><br><span class="line">		</span><br><span class="line">		trieTree.delete(deleteTest2);</span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest3)); <span class="comment">// 2</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest2)); <span class="comment">// 1</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest1)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println();</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		trieTree.delete(deleteTest2);</span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest3)); <span class="comment">// 2</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest2)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest1)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println();</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line"></span><br><span class="line">		trieTree.delete(deleteTest2);</span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest3)); <span class="comment">// 2</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest2)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest1)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println();</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line"></span><br><span class="line">		trieTree.delete(deleteTest3);</span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest3)); <span class="comment">// 1</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest2)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest1)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println();</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line"></span><br><span class="line">		trieTree.delete(deleteTest3);</span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest3)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest2)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest1)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println();</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line"></span><br><span class="line">		trieTree.delete(deleteTest1);</span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest3)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest2)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest1)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println();</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/23/Specifio-Work-Summary/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/23/Specifio-Work-Summary/" itemprop="url">Specifio Work Summary</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-23T20:04:05-07:00">2018-08-23</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Portfolios/" itemprop="url" rel="index"><span itemprop="name">Portfolios</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/08/23/Specifio-Work-Summary/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/08/23/Specifio-Work-Summary/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="I-PHP-legacy-website-to-React"><a href="#I-PHP-legacy-website-to-React" class="headerlink" title="I. PHP legacy website to React"></a>I. PHP legacy website to React</h2><h4 id="1-Current-website-PHP"><a href="#1-Current-website-PHP" class="headerlink" title="1. Current website (PHP)"></a>1. Current website (PHP)</h4><p>The company website in use is the old one at <a href="https://specif.io/" target="_blank" rel="noopener">https://specif.io/</a>.<br>Hopefully, Our new website will be put into use by October, 2018.</p>
-<h4 id="2-New-website-React-Gatsby-Sass"><a href="#2-New-website-React-Gatsby-Sass" class="headerlink" title="2. New website (React, Gatsby, Sass)"></a>2. New website (React, Gatsby, Sass)</h4><p>The new website is currently on staging, but you can still visit it through this link: <a href="https://publicdocker.specif.io/" target="_blank" rel="noopener">https://publicdocker.specif.io/</a></p>
-<p><strong>New features:</strong></p>
-<ul>
-<li>Static webpage auto generating from Markdown file <strong>(Gatsby.js)</strong></li>
-<li>better layout &amp; color scheme <strong>(React)</strong></li>
-<li>more user friendly</li>
-<li>more intuitive</li>
-<li>convey more information</li>
-</ul>
-<h2 id="II-Admin-Panel"><a href="#II-Admin-Panel" class="headerlink" title="II. Admin Panel"></a>II. Admin Panel</h2><p>Developped Admin Panel for both internal and external use, with 3-level privileged access.</p>
-<p><img src="https://github.com/caomingkai/specifio_projects/raw/master/Admin%20Panel/docPlan.png" alt="Admin Panel"></p>
-<h4 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction:"></a>1. Introduction:</h4><ol>
-<li><p>With Specifio’s Doc Plans feature, practitioners can control how Specifio creates draft applications so they consistently meet the preferences and requirements of clients and reviewers.</p>
-</li>
-<li><p>A practitioner’s “active” Doc Plan controls the appearance, content, and structure of the auto-drafts created by Specifio.</p>
-</li>
-<li><p>Practitioners can design a collection of different Doc Plans for different clients, technologies, or reviewers.</p>
-</li>
-<li><p>Doc Plans can be shared among registered users within your firm.</p>
-</li>
-</ol>
-<h4 id="2-Snapshots-for-key-features"><a href="#2-Snapshots-for-key-features" class="headerlink" title="2. Snapshots for key features"></a>2. Snapshots for key features</h4><ul>
-<li><p><strong>Video: Live demo page for setting like layout, format and content of their Doc Plans</strong></p>
-<p>  <a href="http://www.youtube.com/watch?feature=player_embedded&v=Gl8TfGINxko" target="_blank"><img src="http://img.youtube.com/vi/Gl8TfGINxko/0.jpg" alt="Doc Editor" width="400" height="300" border="8"></a></p>
-</li>
-<li><p><strong>Dashboard</strong></p>
-<p>  <img width="400" alt="auth0" src="https://github.com/caomingkai/specifio_projects/raw/master/Admin%20Panel/dashboard1.png"><br>  <br><br>  <img width="400" alt="auth0" src="https://github.com/caomingkai/specifio_projects/raw/master/Admin%20Panel/dashboard2.png"></p>
-</li>
-<li><p><strong>Auth0 integration</strong></p>
-<p>  <img width="400" alt="auth0" src="https://github.com/caomingkai/specifio_projects/raw/master/Admin%20Panel/auth0.png"></p>
-</li>
-<li><p><strong>Manage doc plans</strong></p>
-<p>  <img width="400" alt="docPlan.png" src="https://github.com/caomingkai/specifio_projects/raw/master/Admin%20Panel/docPlan.png"></p>
-</li>
-<li><p><strong>Manage profile</strong></p>
-<p>   <img width="400" alt="profile.png" src="https://github.com/caomingkai/specifio_projects/raw/master/Admin%20Panel/profile.png"></p>
-</li>
-</ul>
 
           
         

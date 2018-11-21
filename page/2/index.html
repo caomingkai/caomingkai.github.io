@@ -332,6 +332,171 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/14/Reposition-an-Array/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/14/Reposition-an-Array/" itemprop="url">Reposition an Array</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-14T19:59:57-07:00">2018-10-14</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/14/Reposition-an-Array/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/14/Reposition-an-Array/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h2><p>Given an original array, and it new position to be. Reposition it according the given indices array. For example:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr  =    [<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>, <span class="string">"d"</span>, <span class="string">"e"</span>, <span class="string">"f"</span>]</span><br><span class="line"><span class="keyword">let</span> indices = [ <span class="number">1</span>,   <span class="number">2</span>,   <span class="number">3</span>,   <span class="number">5</span>,   <span class="number">0</span>,   <span class="number">4</span> ]</span><br><span class="line"></span><br><span class="line"><span class="comment">// the new array should be ["e", "a", "b", "c", "f", "d"]</span></span><br></pre></td></tr></table></figure>
+<h2 id="Follow-Up"><a href="#Follow-Up" class="headerlink" title="Follow Up"></a>Follow Up</h2><p>Try to do it <strong><u>in-place</u></strong>, i.e. : Space Complexity <code>O(1)</code></p>
+<h2 id="Solution-1-Space-complexity-O-n"><a href="#Solution-1-Space-complexity-O-n" class="headerlink" title="Solution 1: Space complexity O(n)"></a>Solution 1: Space complexity <code>O(n)</code></h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">rePosition</span>(<span class="params">arr, indices</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>( arr.length !== indices.length ) </span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"they are not the same length"</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> newArr = indices.map(<span class="function">(<span class="params">item, index</span>)=&gt;</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> arr[indices.indexOf(index)]</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> newArr</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Tests</span></span><br><span class="line"><span class="keyword">let</span> newArr = []</span><br><span class="line"><span class="keyword">let</span> arr  =     [<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>, <span class="string">"d"</span>, <span class="string">"e"</span>, <span class="string">"f"</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment">// test 1</span></span><br><span class="line"><span class="keyword">let</span> indices1 = [ <span class="number">1</span>,   <span class="number">2</span>,   <span class="number">3</span>,   <span class="number">5</span>,   <span class="number">0</span>,   <span class="number">4</span> ]</span><br><span class="line">newArr = rePosition(arr, indices1)</span><br><span class="line"><span class="built_in">console</span>.log(newArr)  <span class="comment">// ["e", "a", "b", "c", "f", "d"]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// test 2</span></span><br><span class="line"><span class="keyword">let</span> indices2 = [ <span class="number">0</span>,   <span class="number">1</span>,   <span class="number">2</span>,   <span class="number">3</span>,   <span class="number">4</span>,   <span class="number">5</span> ]</span><br><span class="line">newArr = rePosition(arr, indices2)</span><br><span class="line"><span class="built_in">console</span>.log(newArr) <span class="comment">//  ["a", "b", "c", "d", "e", "f"]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// test 3</span></span><br><span class="line"><span class="keyword">let</span> indices3 = [ <span class="number">2</span>,   <span class="number">1</span>,   <span class="number">0</span>,   <span class="number">4</span>,   <span class="number">3</span>,   <span class="number">5</span> ]</span><br><span class="line">newArr = rePosition(arr, indices3)</span><br><span class="line"><span class="built_in">console</span>.log(newArr) <span class="comment">//  ["c", "b", "a", "e", "d", "f"]</span></span><br></pre></td></tr></table></figure>
+<h2 id="Solution-2-Space-complexity-O-1"><a href="#Solution-2-Space-complexity-O-1" class="headerlink" title="Solution 2: Space complexity O(1)"></a>Solution 2: Space complexity <code>O(1)</code></h2><p>We need two variables: <code>kickedItem</code> and <code>kickedIndex</code>, to denote the kicked item in <code>arr</code> and kicked index in <code>indices</code></p>
+<ol>
+<li><p>Every time we update an item in its new position,  we put item in its new position, and swap the kicked item and index to their counterpart in <code>arr</code> &amp; <code>indices</code></p>
+</li>
+<li><p>Since the kicked item &amp; its new position are just swapped to previous position, we can keep staring the same position to deal with the chaining update, until there is an end to the chain</p>
+</li>
+<li><p>NOTE: there are also cases (<em><u>test case 3</u></em>) that the new indices are not  depended upon one another, but instead they are partially dependent. That’s why we need to maintain two variable for both <code>arr</code> &amp; <code>indices</code>, rather than just for <code>arr</code></p>
+</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">rePosition</span>(<span class="params">arr, indices</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">if</span>( arr.length !== indices.length ) </span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"they are not the same length"</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">0</span>; i &lt; arr.length; i++ )&#123;</span><br><span class="line">        <span class="keyword">while</span>( i !== indices[i] )&#123;</span><br><span class="line">            <span class="keyword">let</span> kickedItem = arr[indices[i]]</span><br><span class="line">            <span class="keyword">let</span> kickedIndex = indices[indices[i]]</span><br><span class="line">            arr[indices[i]] = arr[i]</span><br><span class="line">            indices[indices[i]] = indices[i]</span><br><span class="line">            arr[i] = kickedItem</span><br><span class="line">            indices[i] = kickedIndex</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Tests</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// test 1</span></span><br><span class="line"><span class="keyword">let</span> arr  =     [<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>, <span class="string">"d"</span>, <span class="string">"e"</span>, <span class="string">"f"</span>]</span><br><span class="line"><span class="keyword">let</span> indices1 = [ <span class="number">1</span>,   <span class="number">2</span>,   <span class="number">3</span>,   <span class="number">5</span>,   <span class="number">0</span>,   <span class="number">4</span> ]</span><br><span class="line">rePosition(arr, indices1)</span><br><span class="line"><span class="built_in">console</span>.log(arr)  <span class="comment">// ["e", "a", "b", "c", "f", "d"]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// test 2</span></span><br><span class="line">arr  =     [<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>, <span class="string">"d"</span>, <span class="string">"e"</span>, <span class="string">"f"</span>]</span><br><span class="line"><span class="keyword">let</span> indices2 = [ <span class="number">0</span>,   <span class="number">1</span>,   <span class="number">2</span>,   <span class="number">3</span>,   <span class="number">4</span>,   <span class="number">5</span> ]</span><br><span class="line">rePosition(arr, indices2)</span><br><span class="line"><span class="built_in">console</span>.log(arr) <span class="comment">//  ["a", "b", "c", "d", "e", "f"]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// test 3</span></span><br><span class="line">arr  =     [<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>, <span class="string">"d"</span>, <span class="string">"e"</span>, <span class="string">"f"</span>]</span><br><span class="line"><span class="keyword">let</span> indices3 = [ <span class="number">2</span>,   <span class="number">1</span>,   <span class="number">0</span>,   <span class="number">4</span>,   <span class="number">3</span>,   <span class="number">5</span> ]</span><br><span class="line">rePosition(arr, indices3)</span><br><span class="line"><span class="built_in">console</span>.log(arr) <span class="comment">//  ["c", "b", "a", "e", "d", "f"]</span></span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/14/How-to-Flatten-an-Array/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2777,240 +2942,6 @@
 </ol>
 <h2 id="III-Implementation"><a href="#III-Implementation" class="headerlink" title="III. Implementation"></a>III. Implementation</h2><ol>
 <li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">"UTF-8"</span> /&gt;</span><br><span class="line">    &lt;title&gt;Hello World&lt;<span class="regexp">/title&gt;</span></span><br><span class="line"><span class="regexp">    &lt;script src="https:/</span><span class="regexp">/cdnjs.cloudflare.com/</span>ajax/libs/react/<span class="number">16.2</span><span class="number">.0</span>/umd/react.production.min.js<span class="string">"&gt;&lt;/script&gt;</span></span><br><span class="line"><span class="string">    &lt;script src="</span>https:<span class="comment">//cdnjs.cloudflare.com/ajax/libs/react-dom/16.2.0/umd/react-dom.production.min.js"&gt;&lt;/script&gt;</span></span><br><span class="line">    &lt;script src=<span class="string">"https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"</span>&gt;&lt;/script&gt;</span><br><span class="line">  &lt;<span class="regexp">/head&gt;</span></span><br><span class="line"><span class="regexp">  &lt;body&gt;</span></span><br><span class="line"><span class="regexp">    &lt;div id="root"&gt;&lt;/</span>div&gt;</span><br><span class="line">    &lt;script type=<span class="string">"text/jsx"</span>&gt;</span><br><span class="line"></span><br><span class="line">      <span class="class"><span class="keyword">class</span> <span class="title">Timer</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span></span>&#123;</span><br><span class="line">        <span class="keyword">constructor</span>(props)&#123;</span><br><span class="line">          <span class="keyword">super</span>(props)</span><br><span class="line">          <span class="keyword">this</span>.state=&#123; <span class="attr">currTime</span>: <span class="number">0</span> &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        componentDidMount ()&#123;</span><br><span class="line">          <span class="keyword">this</span>.props.timerObj.handler = setInterval(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.setState(&#123; <span class="attr">currTime</span>: <span class="keyword">this</span>.state.currTime+<span class="number">1000</span> &#125;)</span><br><span class="line">          &#125;, <span class="number">1000</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        render()&#123;</span><br><span class="line">          <span class="built_in">console</span>.log(<span class="string">"Inside Timer Component: "</span>, <span class="keyword">this</span>.state)</span><br><span class="line">          <span class="keyword">const</span> timePassed = <span class="keyword">this</span>.state.currTime / <span class="number">1000</span></span><br><span class="line">          <span class="keyword">return</span> &lt;span&gt;&#123;timePassed&#125;&lt;/span&gt;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">                    </span><br><span class="line"></span><br><span class="line">      <span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span></span>&#123;</span><br><span class="line">        <span class="keyword">constructor</span>(props)&#123;</span><br><span class="line">          <span class="keyword">super</span>(props)</span><br><span class="line">          <span class="keyword">this</span>.state = &#123; <span class="attr">showTimer</span>: <span class="literal">false</span> &#125;</span><br><span class="line">          <span class="keyword">this</span>.timerObj = &#123; <span class="attr">handler</span>: <span class="literal">null</span> &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        startTimer = <span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">          <span class="keyword">this</span>.setState(&#123; <span class="attr">showTimer</span>: <span class="literal">true</span> &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        stopTimer = <span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">          clearInterval(<span class="keyword">this</span>.timerObj.handler)</span><br><span class="line">          <span class="keyword">this</span>.setState(&#123;<span class="attr">showTimer</span>: <span class="literal">false</span>&#125;)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">        render()&#123;</span><br><span class="line">          <span class="built_in">console</span>.log(<span class="string">"App Component: "</span>, <span class="keyword">this</span>.state)</span><br><span class="line">          <span class="keyword">const</span> TimerPlaceholder = <span class="keyword">this</span>.state.showTimer ? &lt;Timer timerObj=&#123;this.timerObj&#125; /&gt; : null</span><br><span class="line">          return (</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">              &lt;h1&gt; React Inner Timer Component&lt;/h1&gt;</span><br><span class="line">              &lt;button onClick=&#123;this.startTimer&#125;&gt; startTimer &lt;/button&gt;</span><br><span class="line">              &lt;br /&gt;&lt;br /&gt;</span><br><span class="line">              </span><br><span class="line">              Time Passed: &#123;TimerPlaceholder &#125;</span><br><span class="line">              </span><br><span class="line">              &lt;br /&gt;&lt;br /&gt;</span><br><span class="line">              &lt;button onClick=&#123;this.stopTimer&#125;&gt; stopTimer &lt;/button&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">          )</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">            </span><br><span class="line">      ReactDOM.render(</span><br><span class="line">        &lt;App /&gt;,</span><br><span class="line">        document.getElementById('root')</span><br><span class="line">      );</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">  &lt;<span class="regexp">/body&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>html&gt;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/04/Flux-Redux/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/04/Flux-Redux/" itemprop="url">Flux & Redux</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-04T21:04:19-07:00">2018-10-04</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/10/04/Flux-Redux/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/04/Flux-Redux/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="I-Flux"><a href="#I-Flux" class="headerlink" title="I. Flux"></a>I. Flux</h2><ol>
-<li><p><strong>4 parts of Flux architecture:</strong></p>
-<ul>
-<li>View</li>
-<li>Actions</li>
-<li>Dispatcher</li>
-<li>Store</li>
-</ul>
-</li>
-<li><p><strong>Relationship</strong></p>
-<ul>
-<li><strong>Store:</strong> model object managing all data; has updating methods as well<ul>
-<li>provide data to <u>View</u></li>
-<li>provide updating methods to <u>Actions</u></li>
-</ul>
-</li>
-<li><strong>Dispatcher:  </strong>extends <code>Event Emitter object</code><ul>
-<li>used by component to <u>register event &amp; callbacks</u></li>
-<li>used by component to <u>emit actions to call store updating methods</u></li>
-</ul>
-</li>
-<li><strong>View:</strong> receive data from store</li>
-<li><strong>Actions: </strong>used by <u><em>component</em></u> to let <u><em>dispather</em></u> <u>emit actions</u></li>
-<li>Great article: <a href="http://www.ruanyifeng.com/blog/2016/01/flux.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2016/01/flux.html</a></li>
-</ul>
-</li>
-</ol>
-<h2 id="II-Redux"><a href="#II-Redux" class="headerlink" title="II. Redux"></a>II. Redux</h2><ol>
-<li><p><strong><code>store</code></strong> </p>
-<ol>
-<li><code>getState()</code>: source of data</li>
-<li><code>dispath()</code>: emit actions, execute <u>reducer</u> to update state</li>
-<li><code>subscribe()</code>: component subscribe to receive updated state</li>
-</ol>
-</li>
-<li><p><strong>reducer</strong></p>
-<ul>
-<li>like<code>emitter.on</code>, used to register all the <u>updating functions</u> for related <u>actions</u></li>
-<li>pure function</li>
-<li><code>combineReducers()</code>: used to make logic clean</li>
-</ul>
-</li>
-<li><p><strong>Store implementation</strong></p>
-<ol>
-<li><p>How to use the <code>store</code> object</p>
-</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createStore &#125; <span class="keyword">from</span> <span class="string">'redux'</span>;</span><br><span class="line"><span class="keyword">let</span> &#123; subscribe, dispatch, getState &#125; = createStore(reducer);</span><br><span class="line"><span class="comment">// or </span></span><br><span class="line"><span class="keyword">let</span> store = createStore(todoApp, <span class="built_in">window</span>.STATE_FROM_SERVER)</span><br><span class="line">store.getState()</span><br><span class="line">store.dispatch()</span><br><span class="line">store.subscribe()</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>redux provide an interface <code>createStore()</code> to create the <code>store</code> object</p>
-</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> createStore = <span class="function">(<span class="params">reducer</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> state;</span><br><span class="line">  <span class="keyword">let</span> listeners = [];</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> getState = <span class="function"><span class="params">()</span> =&gt;</span> state;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> dispatch = <span class="function">(<span class="params">action</span>) =&gt;</span> &#123;</span><br><span class="line">    state = reducer(state, action);</span><br><span class="line">    listeners.forEach(<span class="function"><span class="params">listener</span> =&gt;</span> listener());</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> subscribe = <span class="function">(<span class="params">listener</span>) =&gt;</span> &#123;</span><br><span class="line">    listeners.push(listener);</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      listeners = listeners.filter(<span class="function"><span class="params">l</span> =&gt;</span> l !== listener);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  dispatch(&#123;&#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123; getState, dispatch, subscribe &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-<li><p><strong>An example using Redux</strong></p>
-</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Counter = <span class="function">(<span class="params">&#123; value, onIncrement, onDecrement &#125;</span>) =&gt;</span> (</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">  &lt;h1&gt;&#123;value&#125;&lt;<span class="regexp">/h1&gt;</span></span><br><span class="line"><span class="regexp">  &lt;button onClick=&#123;onIncrement&#125;&gt;+&lt;/</span>button&gt;</span><br><span class="line">  &lt;button onClick=&#123;onDecrement&#125;&gt;-<span class="xml"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line">  &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">);</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">const reducer = (state = 0, action) =&gt; &#123;</span></span><br><span class="line"><span class="regexp">  switch (action.type) &#123;</span></span><br><span class="line"><span class="regexp">    case 'INCREMENT': return state + 1;</span></span><br><span class="line"><span class="regexp">    case 'DECREMENT': return state - 1;</span></span><br><span class="line"><span class="regexp">    default: return state;</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">const store = createStore(reducer);</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">const render = () =&gt; &#123;</span></span><br><span class="line"><span class="regexp">  ReactDOM.render(</span></span><br><span class="line"><span class="regexp">    &lt;Counter</span></span><br><span class="line"><span class="regexp">      value=&#123;store.getState()&#125;</span></span><br><span class="line"><span class="regexp">      onIncrement=&#123;() =&gt; store.dispatch(&#123;type: 'INCREMENT'&#125;)&#125;</span></span><br><span class="line"><span class="regexp">      onDecrement=&#123;() =&gt; store.dispatch(&#123;type: 'DECREMENT'&#125;)&#125;</span></span><br><span class="line"><span class="regexp">    /</span>&gt;,</span><br><span class="line">    <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>)</span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">render();</span><br><span class="line">store.subscribe(render);</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="III-React-Redux-package"><a href="#III-React-Redux-package" class="headerlink" title="III. React-Redux package"></a>III. React-Redux package</h2><ol>
-<li><code>connect()</code>: <ul>
-<li>connect <u>UI component</u> with it outer <u>Controller component</u></li>
-<li>usage: <code>const Contrainer = connect(mapStateToprops, mapDispatchToProps)(UIComponent)</code></li>
-</ul>
-</li>
-<li><code>mapStateToProps()</code><ul>
-<li>map <code>state</code> in Redux store to UI </li>
-<li>like <code>eventEmitter.subscribe()</code>, will always get the updated state from Redux</li>
-</ul>
-</li>
-<li><p><code>mapDispatchToProps</code></p>
-<ul>
-<li>map <code>actions dispatch()</code> in Redux to UI</li>
-<li>like <code>eventEmitter.emit()</code>, will trigger actions when UI event is fired, to execute reducer to update the state</li>
-</ul>
-</li>
-<li><p><code>&lt;Provider&gt;</code> component</p>
-<ul>
-<li>an outer container, used to pass the <code>state</code> to inner components</li>
-<li>using <code>context</code> attribute</li>
-</ul>
 </li>
 </ol>
 

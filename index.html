@@ -332,6 +332,413 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/01/Vigenere-Cipher-Vanilla-JS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/01/Vigenere-Cipher-Vanilla-JS/" itemprop="url">Vigenere Cipher - [Vanilla JS]</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-01T10:39:01-08:00">2018-12-01</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/12/01/Vigenere-Cipher-Vanilla-JS/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/12/01/Vigenere-Cipher-Vanilla-JS/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>Vigenere Cipher is used to encode original string to random string, with a given keyword.</p>
+<img src="/2018/12/01/Vigenere-Cipher-Vanilla-JS/demo.gif">
+<h1 id="Components"><a href="#Components" class="headerlink" title="Components"></a>Components</h1><ol>
+<li>Keyword Input Component</li>
+<li>Keywords Display Component</li>
+<li>Source Text Input Component</li>
+<li>Source Text Display Component</li>
+<li>Cipher Text Display Component</li>
+</ol>
+<h1 id="Model-amp-Events"><a href="#Model-amp-Events" class="headerlink" title="Model &amp; Events"></a>Model &amp; Events</h1><ol>
+<li><p>Model</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> valid = <span class="literal">true</span></span><br><span class="line"><span class="keyword">let</span> kw_to_be = []</span><br><span class="line"><span class="keyword">let</span> kw = []</span><br><span class="line"><span class="keyword">let</span> kw_idx = <span class="number">0</span></span><br><span class="line"><span class="keyword">let</span> kw_char_row = []</span><br><span class="line"><span class="keyword">let</span> kw_num_row  = []</span><br><span class="line"><span class="keyword">let</span> ciph_row  = []</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Events</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 2.1 keyword input event handler</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">inputHandler</span>(<span class="params">e</span>)</span>&#123;&#125; </span><br><span class="line">    </span><br><span class="line"><span class="comment">// 2.2 source click button event handler</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">clickHandler</span>(<span class="params">id</span>)</span>&#123;&#125;</span><br><span class="line">   </span><br><span class="line"><span class="comment">// 2.3 update button event handler</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">updateBtnHandler</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">   </span><br><span class="line"><span class="comment">// 2.4 clear button event handler</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">clearBtnHandler</span>(<span class="params"></span>)</span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="Layout-amp-Logic"><a href="#Layout-amp-Logic" class="headerlink" title="Layout &amp; Logic"></a>Layout &amp; Logic</h1><img src="/2018/12/01/Vigenere-Cipher-Vanilla-JS/Layout&Logic.jpg">
+<h1 id="Code-Implementation"><a href="#Code-Implementation" class="headerlink" title="Code Implementation"></a>Code Implementation</h1><ol>
+<li><p>HTML</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"style.css"</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">&lt;!-- 1. Keyword Input Component --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span>Configuration<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">h1</span>&gt;</span> <span class="tag">&lt;<span class="name">p</span>&gt;</span>Keyword<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">"comp"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">"inputBox"</span> <span class="attr">type</span>=<span class="string">"text"</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"updateBtn"</span> &gt;</span>Update<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">"validation"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>Length of keyword should be in range: 3~8 <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>Characters should be uppercase<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">&lt;!-- 2. Keyword Display Component --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">table</span> <span class="attr">class</span>=<span class="string">"comp"</span>&gt;</span><span class="tag">&lt;<span class="name">tbody</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">tr</span> <span class="attr">id</span>=<span class="string">"kwCharRow"</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">tr</span> <span class="attr">id</span>=<span class="string">"kwNumRow"</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tbody</span>&gt;</span><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">&lt;!-- 3. Source Text Input Component --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span>Encoding<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">h1</span>&gt;</span> <span class="tag">&lt;<span class="name">p</span>&gt;</span>Source Text<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">table</span> <span class="attr">class</span>=<span class="string">"comp"</span>&gt;</span><span class="tag">&lt;<span class="name">tbody</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">tr</span> <span class="attr">id</span>=<span class="string">"srcTextRow"</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">tr</span> <span class="attr">id</span>=<span class="string">"ciphTextRow"</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tbody</span>&gt;</span><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">&lt;!-- 4. Source Text Display Component --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"comp"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span>  <span class="attr">id</span>=<span class="string">"srcText"</span> <span class="attr">type</span>=<span class="string">"text"</span>  <span class="attr">disabled</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"clearBtn"</span>&gt;</span>Clear<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  </span><br><span class="line">    <span class="comment">&lt;!-- 5. Cipher Text Display Component --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"comp"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">p</span>&gt;</span>Cipher Text<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">"ciphText"</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">disabled</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"script.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>JS</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 0.1 const</span></span><br><span class="line">  <span class="keyword">const</span> CHAR_NUM = <span class="number">26</span></span><br><span class="line">  <span class="keyword">const</span> CHAR_CODE_A = <span class="number">65</span></span><br><span class="line">  <span class="keyword">const</span> CHAR_CODE_Z = <span class="number">90</span></span><br><span class="line">  <span class="keyword">const</span> CHAR_CODE_ALL = <span class="keyword">new</span> <span class="built_in">Array</span>(CHAR_NUM).fill(<span class="number">1</span>).map( <span class="function">(<span class="params"> _, i </span>) =&gt;</span> (CHAR_CODE_A+i) )</span><br><span class="line">  <span class="keyword">const</span> CHAR_ALL = CHAR_CODE_ALL.map(<span class="function"><span class="params">item</span>=&gt;</span><span class="built_in">String</span>.fromCharCode(item))</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 0.2 helper functions</span></span><br><span class="line">  <span class="keyword">const</span> getEle = <span class="function">(<span class="params">id</span>) =&gt;</span> <span class="built_in">document</span>.getElementById(id)</span><br><span class="line">  <span class="keyword">const</span> setEleVal = <span class="function">(<span class="params">ele, val</span>)=&gt;</span> &#123;ele.value = val&#125;</span><br><span class="line">  <span class="keyword">const</span> creatEle = <span class="function">(<span class="params">tag</span>) =&gt;</span> <span class="built_in">document</span>.createElement(tag)</span><br><span class="line">  <span class="keyword">const</span> creatText = <span class="function">(<span class="params">str</span>) =&gt;</span> <span class="built_in">document</span>.createTextNode(str)</span><br><span class="line">  <span class="keyword">const</span> generateEle = <span class="function">(<span class="params"> tag, data, parent </span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> tempNode = <span class="built_in">document</span>.createDocumentFragment()</span><br><span class="line">    data.forEach(<span class="function">(<span class="params">item, index</span>)=&gt;</span>&#123;</span><br><span class="line">      <span class="keyword">const</span> td = creatEle(<span class="string">'TD'</span>)</span><br><span class="line">      <span class="keyword">const</span> text = creatText(item)</span><br><span class="line">      <span class="keyword">if</span>( tag === <span class="string">'srcTextRow'</span> )&#123;</span><br><span class="line">        <span class="keyword">const</span> btn = creatEle(<span class="string">'BUTTON'</span>)</span><br><span class="line">        btn.appendChild(text)</span><br><span class="line">        btn.onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;clickHandler(index)&#125;</span><br><span class="line">        td.appendChild(btn)</span><br><span class="line">      &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        td.appendChild(text)</span><br><span class="line">      &#125;</span><br><span class="line">      tempNode.appendChild(td)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (parent.firstChild) &#123; parent.removeChild(parent.firstChild) &#125;</span><br><span class="line">    parent.appendChild(tempNode)</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">const</span> updateCiphTextRow = <span class="function">(<span class="params">kw_idx</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> offset = kw[kw_idx].charCodeAt(<span class="number">0</span>) - CHAR_CODE_A</span><br><span class="line">    <span class="keyword">return</span> CHAR_CODE_ALL.map(<span class="function"><span class="params">item</span>=&gt;</span>&#123;</span><br><span class="line">      <span class="keyword">const</span> code = (item+offset &lt;= CHAR_CODE_Z) ? (item+offset) : (item+offset-CHAR_NUM)</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">String</span>.fromCharCode(code)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">const</span> updateHighlightIndex = <span class="function">(<span class="params">id</span>)=&gt;</span>&#123;</span><br><span class="line">    kwCharRow.childNodes.forEach( <span class="function"><span class="keyword">function</span>(<span class="params">item, index</span>)</span>&#123;</span><br><span class="line">      item.className = id===index ? <span class="string">"highlight"</span> : <span class="string">""</span></span><br><span class="line">    &#125;)</span><br><span class="line">    kwNumRow.childNodes.forEach( <span class="function"><span class="keyword">function</span>(<span class="params">item, index</span>)</span>&#123;</span><br><span class="line">      item.className = id===index ? <span class="string">"highlight"</span> : <span class="string">""</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 0.3 DOM Elements</span></span><br><span class="line">  <span class="keyword">const</span> inputBox = getEle(<span class="string">"inputBox"</span>)</span><br><span class="line">  <span class="keyword">const</span> errorHint = getEle(<span class="string">"validation"</span>)</span><br><span class="line">  <span class="keyword">const</span> updatBtn = getEle(<span class="string">"updatBtn"</span>)</span><br><span class="line">  <span class="keyword">const</span> kwCharRow = getEle(<span class="string">"kwCharRow"</span>)</span><br><span class="line">  <span class="keyword">const</span> kwNumRow = getEle(<span class="string">"kwNumRow"</span>)</span><br><span class="line">  <span class="keyword">const</span> srcTextRow = getEle(<span class="string">"srcTextRow"</span>)</span><br><span class="line">  <span class="keyword">const</span> ciphTextRow = getEle(<span class="string">"ciphTextRow"</span>)</span><br><span class="line">  <span class="keyword">const</span> srcText = getEle(<span class="string">"srcText"</span>)</span><br><span class="line">  <span class="keyword">const</span> clearBtn = getEle(<span class="string">"clearBtn"</span>)</span><br><span class="line">  <span class="keyword">const</span> ciphText = getEle(<span class="string">"ciphText"</span>)</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  <span class="comment">/* </span></span><br><span class="line"><span class="comment">    1. models</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="keyword">let</span> valid = <span class="literal">true</span></span><br><span class="line">  <span class="keyword">let</span> kw_to_be = []</span><br><span class="line">  <span class="keyword">let</span> kw = []</span><br><span class="line">  <span class="keyword">let</span> kw_idx = <span class="number">0</span></span><br><span class="line">  <span class="keyword">let</span> kw_char_row = []</span><br><span class="line">  <span class="keyword">let</span> kw_num_row  = []</span><br><span class="line">  <span class="keyword">let</span> ciph_row  = []</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="comment">/* </span></span><br><span class="line"><span class="comment">    2. event handlers &amp; DOM manipulation</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 2.1 keyword input event handler</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">inputHandler</span>(<span class="params">e</span>)</span>&#123; </span><br><span class="line">    kw_to_be = e.target.value.split(<span class="string">""</span>)</span><br><span class="line">    <span class="keyword">const</span> len = kw_to_be.length</span><br><span class="line">    <span class="keyword">const</span> lenValid = (len&gt;=<span class="number">3</span> &amp;&amp; len&lt;=<span class="number">8</span>)</span><br><span class="line">    <span class="keyword">const</span> caseValid = kw_to_be.every(</span><br><span class="line">      item =&gt; item==item.toUpperCase()</span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">const</span> validNew = lenValid &amp;&amp; caseValid</span><br><span class="line">    <span class="keyword">if</span>(valid!==validNew)&#123;</span><br><span class="line">      valid = validNew</span><br><span class="line">      errorHint.classList.toggle(<span class="string">"invalid"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  inputBox.oninput=inputHandler</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 2.2 source click button event handler</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">clickHandler</span>(<span class="params">id</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(kw.length === <span class="number">0</span> ) <span class="keyword">return</span> </span><br><span class="line">    srcText.value = srcText.value + CHAR_ALL[id]</span><br><span class="line">    ciphText.value = ciphText.value + ciph_row[id]</span><br><span class="line">    kw_idx = kw_idx+<span class="number">1</span> &lt; kw.length ? kw_idx+<span class="number">1</span> : kw_idx+<span class="number">1</span>-kw.length</span><br><span class="line">    ciph_row = updateCiphTextRow(kw_idx)</span><br><span class="line">    generateEle(<span class="string">"ciphTextRow"</span>, ciph_row, ciphTextRow)</span><br><span class="line">    updateHighlightIndex(kw_idx)</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 2.3 update button event handler</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">updateBtnHandler</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!valid) <span class="keyword">return</span></span><br><span class="line">    kw = kw_to_be</span><br><span class="line">    kw_idx = <span class="number">0</span></span><br><span class="line">    <span class="keyword">const</span> kw_num = kw.map(<span class="function"><span class="params">item</span>=&gt;</span>item.charCodeAt(<span class="number">0</span>)-CHAR_CODE_A)</span><br><span class="line">    ciph_row = kw.length===<span class="number">0</span> ? [] : updateCiphTextRow(kw_idx)</span><br><span class="line">    generateEle(<span class="string">"kwCharRow"</span>, kw, kwCharRow)</span><br><span class="line">    generateEle(<span class="string">"kwNumRow"</span>, kw_num, kwNumRow)</span><br><span class="line">    generateEle(<span class="string">"ciphTextRow"</span>, ciph_row, ciphTextRow)</span><br><span class="line">    updateHighlightIndex(kw_idx)</span><br><span class="line">    srcText.value = <span class="string">""</span></span><br><span class="line">    ciphText.value = <span class="string">""</span></span><br><span class="line">  &#125;</span><br><span class="line">  updateBtn.onclick=updateBtnHandler</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 2.4 clear button event handler</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">clearBtnHandler</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    kw_idx = <span class="number">0</span></span><br><span class="line">    ciph_row = updateCiphTextRow(kw_idx)</span><br><span class="line">    updateHighlightIndex(kw_idx)</span><br><span class="line">    generateEle(<span class="string">"ciphTextRow"</span>, ciph_row, ciphTextRow)</span><br><span class="line">    srcText.value = <span class="string">""</span></span><br><span class="line">    ciphText.value = <span class="string">""</span></span><br><span class="line">  &#125;</span><br><span class="line">  clearBtn.onclick=clearBtnHandler</span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">  </span><br><span class="line">  <span class="comment">// populate 'A'~'Z' in srcTextRow</span></span><br><span class="line">  <span class="keyword">let</span> tempNode = <span class="built_in">document</span>.createDocumentFragment()</span><br><span class="line">  generateEle(<span class="string">"srcTextRow"</span>, CHAR_ALL, srcTextRow)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>CSS</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">table</span>&#123;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">1px</span> solid black;</span><br><span class="line">  <span class="attribute">border-collapse</span>:collapse;</span><br><span class="line">  <span class="attribute">text-align</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">table</span> <span class="selector-tag">td</span> &#123;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">1px</span> solid black;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">5px</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">20px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">20px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">h1</span>&#123;</span><br><span class="line">  <span class="attribute">margin-top</span>: <span class="number">30px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">h1</span> <span class="selector-tag">span</span>&#123;</span><br><span class="line">  <span class="attribute">color</span>: grey;</span><br><span class="line">  <span class="attribute">border-bottom</span>: <span class="number">1px</span> solid ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">input</span><span class="selector-attr">[disabled]</span>&#123;</span><br><span class="line">  <span class="attribute">background-color</span>:<span class="number">#F5F5DC</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="selector-tag">ul</span>&#123;</span><br><span class="line">  <span class="attribute">display</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.invalid</span>&#123;</span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">  <span class="attribute">color</span>: red;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.highlight</span>&#123;</span><br><span class="line">  <span class="attribute">background-color</span>: yellow;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.comp</span>&#123;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">5px</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/01/Vigenere-Cipher-React/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/01/Vigenere-Cipher-React/" itemprop="url">Vigenere Cipher - [React]</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-01T10:38:35-08:00">2018-12-01</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/12/01/Vigenere-Cipher-React/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/12/01/Vigenere-Cipher-React/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>Vigenere Cipher is used to encode original string to random string, with a given keyword.</p>
+<img src="/2018/12/01/Vigenere-Cipher-React/demo.gif">
+<h1 id="Components"><a href="#Components" class="headerlink" title="Components"></a>Components</h1><ol>
+<li>App (main component)</li>
+<li>KeywordInputComp </li>
+<li>KeywordsDisplayComp</li>
+<li>SourceTextInputComp</li>
+<li>SourceTextDisplayComp</li>
+<li>CipherTextDisplayComp</li>
+</ol>
+<h1 id="Layout"><a href="#Layout" class="headerlink" title="Layout"></a>Layout</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">App Comp </span><br><span class="line"> |</span><br><span class="line"> |__Keyword Input Comp </span><br><span class="line"> |</span><br><span class="line"> |__Keyword Display Comp</span><br><span class="line"> |</span><br><span class="line"> |__Source Text Input Comp</span><br><span class="line"> |</span><br><span class="line"> |__Source Text Display Comp</span><br><span class="line"> |</span><br><span class="line"> |__Cipher Text Display Comp</span><br></pre></td></tr></table></figure>
+<h1 id="Model-amp-Actions"><a href="#Model-amp-Actions" class="headerlink" title="Model &amp; Actions"></a>Model &amp; Actions</h1><ol>
+<li><p>App state:</p>
+<ul>
+<li>1.1 keyword</li>
+<li>1.2 keyword_index</li>
+<li>1.3 cipher_array</li>
+<li>1.4 source_text</li>
+<li><p>1.5 cipher_text</p>
+</li>
+<li><p>1.6 keyword_input</p>
+</li>
+<li>1.7 update</li>
+<li>1.8 sourceClick</li>
+<li>1.9 clear</li>
+</ul>
+</li>
+<li><p>KeywordInputComp props:</p>
+<ul>
+<li><p>keep keyword_to_be as App’s instance variable</p>
+</li>
+<li><p>1.6</p>
+</li>
+<li>1.7</li>
+</ul>
+</li>
+<li><p>KeywordsDisplayComp props:</p>
+<ul>
+<li>1.1</li>
+<li>1.2</li>
+</ul>
+</li>
+<li><p>SourceTextInputComp props:</p>
+<ul>
+<li><p>1.3</p>
+</li>
+<li><p>1.8</p>
+</li>
+</ul>
+</li>
+<li><p>SourceTextDisplayComp props:</p>
+<ul>
+<li><p>1.4</p>
+</li>
+<li><p>1.9</p>
+</li>
+</ul>
+</li>
+<li><p>CipherTextDisplayComp props:</p>
+<ul>
+<li>1.5</li>
+</ul>
+</li>
+</ol>
+<h1 id="Layout-amp-Logic"><a href="#Layout-amp-Logic" class="headerlink" title="Layout &amp; Logic"></a>Layout &amp; Logic</h1><img src="/2018/12/01/Vigenere-Cipher-React/Layout&Logic.jpg">
+<h1 id="Code-Implementation"><a href="#Code-Implementation" class="headerlink" title="Code Implementation"></a>Code Implementation</h1><ol>
+<li><p>HTML</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://unpkg.com/babel-standalone@6/babel.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">data-require</span>=<span class="string">"react@*"</span> <span class="attr">data-semver</span>=<span class="string">"0.14.0"</span> <span class="attr">src</span>=<span class="string">"https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">data-require</span>=<span class="string">"react@*"</span> <span class="attr">data-semver</span>=<span class="string">"0.14.0"</span> <span class="attr">src</span>=<span class="string">"https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react-dom.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"style.css"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"root"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"script.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>JSX</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Component = React.Component</span><br><span class="line"><span class="keyword">const</span> CHAR_CODE_A = <span class="number">65</span></span><br><span class="line"><span class="keyword">const</span> CHAR_CODE_Z = <span class="number">90</span></span><br><span class="line"><span class="keyword">const</span> CHAR_CODE_ALL = <span class="keyword">new</span> <span class="built_in">Array</span>( <span class="number">26</span> ).fill(<span class="number">1</span>).map( <span class="function">(<span class="params"> _, i </span>) =&gt;</span> (<span class="number">65</span>+i) )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 1. Keyword Input Component</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">KeywordInputComp</span> <span class="keyword">extends</span> <span class="title">Component</span></span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(props)&#123;</span><br><span class="line">    <span class="keyword">super</span>(props)</span><br><span class="line">    <span class="keyword">this</span>.state=&#123; <span class="attr">valid</span>: <span class="literal">true</span> &#125;</span><br><span class="line">    <span class="keyword">this</span>.inputHandler = <span class="keyword">this</span>.inputHandler.bind(<span class="keyword">this</span>)</span><br><span class="line">    <span class="keyword">this</span>.updateHandler = <span class="keyword">this</span>.updateHandler.bind(<span class="keyword">this</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  inputHandler(e)&#123;</span><br><span class="line">    <span class="keyword">const</span> valid = <span class="keyword">this</span>.props.keywordInput(e)</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;valid&#125;)</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  updateHandler()&#123;</span><br><span class="line">    <span class="keyword">if</span>( <span class="keyword">this</span>.state.valid ) <span class="keyword">this</span>.props.update()</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  render()&#123;</span><br><span class="line">    <span class="keyword">return</span>(</span><br><span class="line">      &lt;div className=<span class="string">"comp"</span>&gt;</span><br><span class="line">        &lt;input onInput=&#123;<span class="keyword">this</span>.inputHandler&#125; type=<span class="string">"text"</span> /&gt;</span><br><span class="line">        &lt;button onClick=&#123;<span class="keyword">this</span>.updateHandler&#125;&gt;Update&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">        &lt;ul className=&#123;this.state.valid ? "valid":"invalid"&#125;&gt;</span></span><br><span class="line"><span class="regexp">          &lt;li&gt;Length of keyword should be in range: 3~8 &lt;/</span>li&gt;</span><br><span class="line">          &lt;li&gt;Characters should be uppercase&lt;<span class="regexp">/li&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/u</span>l&gt;</span><br><span class="line">      &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ 2. Keyword Display Component</span></span><br><span class="line"><span class="regexp">const KeywordDisplayComp = (props)=&gt;&#123;</span></span><br><span class="line"><span class="regexp">  const &#123;keyword, keyword_index&#125; = props</span></span><br><span class="line"><span class="regexp">  const td_char_arr = keyword.map((item,id)=&gt;(</span></span><br><span class="line"><span class="regexp">    &lt;td className=&#123;id===keyword_index?'highlight':''&#125; key=&#123;id&#125;&gt;&#123;item&#125;&lt;/</span>td&gt;)</span><br><span class="line">  )</span><br><span class="line">  <span class="keyword">const</span> td_offset_arr = keyword.map(<span class="function">(<span class="params">item,id</span>)=&gt;</span>(</span><br><span class="line">    &lt;td className=&#123;id===keyword_index?<span class="string">'highlight'</span>:<span class="string">''</span>&#125; key=&#123;id&#125;&gt;</span><br><span class="line">      &#123;item.charCodeAt(<span class="number">0</span>)-CHAR_CODE_A&#125;</span><br><span class="line">    &lt;<span class="regexp">/td&gt;)</span></span><br><span class="line"><span class="regexp">  )</span></span><br><span class="line"><span class="regexp">  </span></span><br><span class="line"><span class="regexp">  return (</span></span><br><span class="line"><span class="regexp">    &lt;table className="comp"&gt;&lt;tbody&gt;</span></span><br><span class="line"><span class="regexp">      &lt;tr&gt;&#123;td_char_arr&#125;&lt;/</span>tr&gt;</span><br><span class="line">      &lt;tr&gt;&#123;td_offset_arr&#125;&lt;<span class="regexp">/tr&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>tbody&gt;<span class="xml"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. Source Text Input Component</span></span><br><span class="line"><span class="keyword">const</span> SourceTextInputComp = <span class="function">(<span class="params">props</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="keyword">const</span> &#123;cipher_array, sourceClick&#125; = props</span><br><span class="line">  <span class="keyword">const</span> td_source_arr = CHAR_CODE_ALL.map(<span class="function">(<span class="params">item,id</span>)=&gt;</span>(</span><br><span class="line">      &lt;td key=&#123;item&#125;&gt;</span><br><span class="line">        &lt;button onClick=&#123;<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;sourceClick(id)&#125;&#125; &gt;</span><br><span class="line">          &#123;<span class="built_in">String</span>.fromCharCode(item)&#125;</span><br><span class="line">        &lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">      &lt;/</span>td&gt;)</span><br><span class="line">  )</span><br><span class="line">  <span class="keyword">const</span> td_cipher_arr = cipher_array.map(<span class="function">(<span class="params">item,id</span>)=&gt;</span><span class="xml"><span class="tag">&lt;<span class="name">td</span> <span class="attr">key</span>=<span class="string">&#123;id&#125;</span>&gt;</span>&#123;item&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span>)</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span>(</span><br><span class="line">    &lt;table className=<span class="string">"comp"</span>&gt;<span class="xml"><span class="tag">&lt;<span class="name">tbody</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">tr</span>&gt;</span>&#123;td_source_arr&#125;<span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">tr</span>&gt;</span>&#123;td_cipher_arr&#125;<span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">tbody</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 4. Source Text Display Component</span></span><br><span class="line"><span class="keyword">const</span> SourceTextDisplayComp = <span class="function">(<span class="params">props</span>)=&gt;</span>(</span><br><span class="line">  &lt;div className=<span class="string">"comp"</span>&gt;</span><br><span class="line">    &lt;input type=<span class="string">"text"</span> value=&#123;props.source_text&#125; disabled /&gt;</span><br><span class="line">    &lt;button onClick=&#123;props.clear&#125;&gt;Clear&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">  &lt;/</span>div&gt;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 5. Cipher Text Display Component</span></span><br><span class="line"><span class="keyword">const</span> CipherTextDisplayComp = <span class="function">(<span class="params">props</span>)=&gt;</span>(</span><br><span class="line">  &lt;div className=<span class="string">"comp"</span>&gt;</span><br><span class="line">    &lt;p&gt;Cipher Text&lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">    &lt;input type="text" value=&#123;props.cipher_text&#125; disabled /</span>&gt;</span><br><span class="line">  &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">)</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ 6. Main Component</span></span><br><span class="line"><span class="regexp">class App extends Component&#123;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  constructor()&#123;</span></span><br><span class="line"><span class="regexp">    super()</span></span><br><span class="line"><span class="regexp">    this.state=&#123;</span></span><br><span class="line"><span class="regexp">      keyword:        [],</span></span><br><span class="line"><span class="regexp">      keyword_index:  0,</span></span><br><span class="line"><span class="regexp">      cipher_array:   [],</span></span><br><span class="line"><span class="regexp">      source_text:    "",</span></span><br><span class="line"><span class="regexp">      cipher_text:    "",</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">    this.keyword_to_be = []</span></span><br><span class="line"><span class="regexp">    this.keywordInput = this.keywordInput.bind(this)</span></span><br><span class="line"><span class="regexp">    this.update = this.update.bind(this)</span></span><br><span class="line"><span class="regexp">    this.sourceClick = this.sourceClick.bind(this)</span></span><br><span class="line"><span class="regexp">    this.clear = this.clear.bind(this)</span></span><br><span class="line"><span class="regexp">    this.calc_cipher_array = this.calc_cipher_array.bind(this)</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">  </span></span><br><span class="line"><span class="regexp">  </span></span><br><span class="line"><span class="regexp">  /</span><span class="regexp">/ keyword input handler</span></span><br><span class="line"><span class="regexp">  keywordInput(e)&#123;</span></span><br><span class="line"><span class="regexp">    this.keyword_to_be = e.target.value.split("")</span></span><br><span class="line"><span class="regexp">    const len = this.keyword_to_be.length</span></span><br><span class="line"><span class="regexp">    const lenValid = (len&gt;=3 &amp;&amp; len&lt;=8)</span></span><br><span class="line"><span class="regexp">    const caseValid = this.keyword_to_be.every(</span></span><br><span class="line"><span class="regexp">      item =&gt; item==item.toUpperCase()</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">    return (lenValid &amp;&amp; caseValid)</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">  </span></span><br><span class="line"><span class="regexp">  /</span><span class="regexp">/ helper function:</span></span><br><span class="line"><span class="regexp">  /</span><span class="regexp">/ calc cipher chars on source text input interface</span></span><br><span class="line"><span class="regexp">  calc_cipher_array(kw, id)&#123;</span></span><br><span class="line"><span class="regexp">    if(kw.length===0) return []</span></span><br><span class="line"><span class="regexp">    const offset = kw[id].charCodeAt(0) - CHAR_CODE_A</span></span><br><span class="line"><span class="regexp">    return CHAR_CODE_ALL.map(function(item,index)&#123;</span></span><br><span class="line"><span class="regexp">      const code = (item+offset) &lt;= CHAR_CODE_Z ? </span></span><br><span class="line"><span class="regexp">                   (item+offset) :</span></span><br><span class="line"><span class="regexp">                   (item+offset-CHAR_CODE_Z+CHAR_CODE_A-1)</span></span><br><span class="line"><span class="regexp">      return String.fromCharCode(code)</span></span><br><span class="line"><span class="regexp">    &#125;)</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">  </span></span><br><span class="line"><span class="regexp">  /</span><span class="regexp">/ update handler</span></span><br><span class="line"><span class="regexp">  update()&#123;</span></span><br><span class="line"><span class="regexp">    const &#123;keyword, keyword_index &#125; = this.state</span></span><br><span class="line"><span class="regexp">    const cipher_array = this.calc_cipher_array(this.keyword_to_be, 0)</span></span><br><span class="line"><span class="regexp">    this.setState(&#123;</span></span><br><span class="line"><span class="regexp">      keyword: this.keyword_to_be,</span></span><br><span class="line"><span class="regexp">      keyword_index: 0,</span></span><br><span class="line"><span class="regexp">      cipher_array,</span></span><br><span class="line"><span class="regexp">      source_text:"",</span></span><br><span class="line"><span class="regexp">      cipher_text:"",</span></span><br><span class="line"><span class="regexp">    &#125;)</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">  </span></span><br><span class="line"><span class="regexp">  /</span><span class="regexp">/ click handler for source text input interface</span></span><br><span class="line"><span class="regexp">  sourceClick(id)&#123;</span></span><br><span class="line"><span class="regexp">    let &#123;</span></span><br><span class="line"><span class="regexp">      keyword, keyword_index, </span></span><br><span class="line"><span class="regexp">      cipher_array, source_text, cipher_text </span></span><br><span class="line"><span class="regexp">    &#125; = this.state</span></span><br><span class="line"><span class="regexp">    if(keyword.length===0) return</span></span><br><span class="line"><span class="regexp">    </span></span><br><span class="line"><span class="regexp">    keyword_index = (keyword_index+1) &lt; keyword.length ? </span></span><br><span class="line"><span class="regexp">                    (keyword_index+1) : (keyword_index+1-keyword.length)</span></span><br><span class="line"><span class="regexp">    const cipher_array_new = this.calc_cipher_array(keyword, keyword_index)</span></span><br><span class="line"><span class="regexp">    this.setState(&#123;</span></span><br><span class="line"><span class="regexp">      keyword_index,</span></span><br><span class="line"><span class="regexp">      cipher_array:cipher_array_new,</span></span><br><span class="line"><span class="regexp">      source_text:source_text+String.fromCharCode(id+CHAR_CODE_A),</span></span><br><span class="line"><span class="regexp">      cipher_text:cipher_text+cipher_array[id],</span></span><br><span class="line"><span class="regexp">    &#125;)</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">  </span></span><br><span class="line"><span class="regexp">  </span></span><br><span class="line"><span class="regexp">  /</span><span class="regexp">/ clear handler</span></span><br><span class="line"><span class="regexp">  clear()&#123;</span></span><br><span class="line"><span class="regexp">    const &#123;keyword&#125; = this.state</span></span><br><span class="line"><span class="regexp">    const cipher_array_new = this.calc_cipher_array(keyword, 0)</span></span><br><span class="line"><span class="regexp">    this.setState(&#123;</span></span><br><span class="line"><span class="regexp">      keyword_index: 0,</span></span><br><span class="line"><span class="regexp">      cipher_array:cipher_array_new,</span></span><br><span class="line"><span class="regexp">      source_text: "",</span></span><br><span class="line"><span class="regexp">      cipher_text: "",</span></span><br><span class="line"><span class="regexp">    &#125;)</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  </span></span><br><span class="line"><span class="regexp">  render()&#123;</span></span><br><span class="line"><span class="regexp">    const &#123;</span></span><br><span class="line"><span class="regexp">      keyword, keyword_index, cipher_array, </span></span><br><span class="line"><span class="regexp">      source_text, cipher_text, </span></span><br><span class="line"><span class="regexp">    &#125; = this.state</span></span><br><span class="line"><span class="regexp">    </span></span><br><span class="line"><span class="regexp">    return (</span></span><br><span class="line"><span class="regexp">      &lt;div&gt;</span></span><br><span class="line"><span class="regexp">        &lt;h1&gt;&lt;span&gt;Configuration&lt;/</span>span&gt;<span class="xml"><span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span> &lt;p&gt;Keyword&lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">        </span></span><br><span class="line"><span class="regexp">        &lt;KeywordInputComp </span></span><br><span class="line"><span class="regexp">          keywordInput=&#123;this.keywordInput&#125; </span></span><br><span class="line"><span class="regexp">          update=&#123;this.update&#125; </span></span><br><span class="line"><span class="regexp">        /</span>&gt;</span><br><span class="line">        </span><br><span class="line">        &lt;KeywordDisplayComp</span><br><span class="line">          keyword=&#123;keyword&#125;</span><br><span class="line">          keyword_index=&#123;keyword_index&#125;</span><br><span class="line">        /&gt;</span><br><span class="line">        </span><br><span class="line">        &lt;h1&gt;<span class="xml"><span class="tag">&lt;<span class="name">span</span>&gt;</span>Encoding<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span> &lt;p&gt;Source Text&lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">        </span></span><br><span class="line"><span class="regexp">        &lt;SourceTextInputComp </span></span><br><span class="line"><span class="regexp">          cipher_array=&#123;cipher_array&#125;</span></span><br><span class="line"><span class="regexp">          sourceClick=&#123;this.sourceClick&#125;</span></span><br><span class="line"><span class="regexp">        /</span>&gt;</span><br><span class="line">        </span><br><span class="line">        &lt;SourceTextDisplayComp </span><br><span class="line">          source_text=&#123;source_text&#125; </span><br><span class="line">          clear=&#123;<span class="keyword">this</span>.clear&#125;</span><br><span class="line">        /&gt;</span><br><span class="line">        </span><br><span class="line">        &lt;CipherTextDisplayComp </span><br><span class="line">          cipher_text=&#123;cipher_text&#125; </span><br><span class="line">        /&gt;</span><br><span class="line">      &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">ReactDOM.render( &lt;App /</span> &gt; ,</span><br><span class="line">  <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>CSS</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">table</span>&#123;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">1px</span> solid black;</span><br><span class="line">  <span class="attribute">border-collapse</span>:collapse;</span><br><span class="line">  <span class="attribute">text-align</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">table</span> <span class="selector-tag">td</span> &#123;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">1px</span> solid black;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">5px</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">20px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">20px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">h1</span>&#123;</span><br><span class="line">  <span class="attribute">margin-top</span>: <span class="number">30px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">h1</span> <span class="selector-tag">span</span>&#123;</span><br><span class="line">  <span class="attribute">color</span>: grey;</span><br><span class="line">  <span class="attribute">border-bottom</span>: <span class="number">1px</span> solid ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">input</span><span class="selector-attr">[disabled]</span>&#123;</span><br><span class="line">  <span class="attribute">background-color</span>:<span class="number">#F5F5DC</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.valid</span>&#123;</span><br><span class="line">  <span class="attribute">display</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.invalid</span>&#123;</span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">  <span class="attribute">color</span>: red;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.highlight</span>&#123;</span><br><span class="line">  <span class="attribute">background-color</span>: yellow;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.comp</span>&#123;</span><br><span class="line">  <span class="attribute">margin-bottom</span>: <span class="number">5px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/15/CSS-Notes/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2205,426 +2612,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/15/Common-DOM-Manipulations/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/15/Common-DOM-Manipulations/" itemprop="url">Common DOM Manipulations</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-15T17:40:29-07:00">2018-10-15</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/10/15/Common-DOM-Manipulations/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/15/Common-DOM-Manipulations/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Window-VS-document"><a href="#Window-VS-document" class="headerlink" title="Window VS document"></a><code>Window</code> VS <code>document</code></h2><ol>
-<li><code>window</code>: a global object, and everything runs under it, including <code>document</code><ul>
-<li>global variables, </li>
-<li>global functions, </li>
-<li><code>location</code></li>
-<li><code>history</code></li>
-<li><code>setTimeout</code></li>
-<li>ajax call (XMLHttpRequest),</li>
-<li><code>console</code></li>
-<li><code>localStorage</code></li>
-</ul>
-</li>
-<li><code>documnet</code>: represents the DOM and DOM is the object oriented representation of the html markup you have written; <ul>
-<li>All the nodes are part of document. Hence you can use getElementById or addEventListener on document.</li>
-</ul>
-</li>
-</ol>
-<h2 id="window-onload-vs-document-onload"><a href="#window-onload-vs-document-onload" class="headerlink" title="window.onload vs document.onload"></a><code>window.onload</code> vs <code>document.onload</code></h2><ol>
-<li><code>window.onload</code>: When <u><strong>EVERYTHING</strong></u> is loaded. DOM is ready and all the contents including images, css, scripts, sub-frames, etc. finished loaded.</li>
-<li><code>document.onload</code>: once the <strong><u>DOM</u></strong> is loaded, regardless of the css, scripts,…</li>
-</ol>
-<h2 id="attribute-vs-property"><a href="#attribute-vs-property" class="headerlink" title="attribute vs property"></a><code>attribute</code> vs <code>property</code></h2><ol>
-<li><p><code>attribute</code>: belongs to <u>HTML tag</u>, is <strong><u>static</u></strong> after being initialized</p>
-</li>
-<li><p><code>property</code>: belongs to <u>DOM node</u>, is <strong><u>dynamic</u></strong> while interact with its element</p>
-</li>
-<li><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">"my-input"</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">value</span>=<span class="string">"Name:"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> myInput = <span class="built_in">document</span>.getElementById(<span class="string">'my-input'</span>);</span></span><br><span class="line"><span class="javascript">    myInput.getAttribute(<span class="string">'value'</span>); <span class="comment">//"Name:"</span></span></span><br><span class="line"><span class="javascript">    myInput.value; <span class="comment">//'my dude'</span></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="Add-class-to-element-classList"><a href="#Add-class-to-element-classList" class="headerlink" title="Add class to element: classList"></a>Add <code>class</code> to element: <code>classList</code></h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addClass</span>(<span class="params">selector, className</span>)</span>&#123;</span><br><span class="line">   <span class="keyword">var</span> elm = <span class="built_in">document</span>.querySelector(selector);</span><br><span class="line">   <span class="keyword">if</span> (elm)&#123;</span><br><span class="line">      elm.classList.add(className);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Check-Descendant"><a href="#Check-Descendant" class="headerlink" title="Check Descendant"></a>Check Descendant</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isDescendant</span>(<span class="params">parent, child</span>)</span>&#123; </span><br><span class="line">  <span class="keyword">while</span>(child.parentNode )&#123; </span><br><span class="line">    <span class="keyword">if</span>(child.parentNode == parent)</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      child = child.parentNode;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Create-DOM-element-innerHTML-vs-appendChild"><a href="#Create-DOM-element-innerHTML-vs-appendChild" class="headerlink" title="Create DOM element: innerHTML vs appendChild"></a>Create DOM element: <code>innerHTML</code> vs <code>appendChild</code></h2><ol>
-<li><p><code>innerHTML</code>: browser removes all the current children of the elements. Parse the string and assign the parsed string to the element as children. So, <strong><u>Slow!</u></strong></p>
-<ol>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ul = <span class="built_in">document</span>.getElementById(<span class="string">'myList'</span>);</span><br><span class="line"></span><br><span class="line">el.innerHTML = <span class="string">'&lt;li&gt;Only one item&lt;/li&gt;'</span>;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-<li><p><code>appendChild</code>: you create a new Element. Since you are creating it, browser doesnt have to parse string and there is no invalid html.  so, <strong><u>Fast</u></strong>!</p>
-<ol>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> li = <span class="built_in">document</span>.createElement(<span class="string">"li"</span>);</span><br><span class="line"><span class="keyword">var</span> text = <span class="built_in">document</span>.createTextNode(<span class="string">'Only one Item'</span>);</span><br><span class="line"></span><br><span class="line">li.appendChild(text);</span><br><span class="line">ul.appendChild(li);</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-</ol>
-<h2 id="CrateDocumentFragment-improve-performance"><a href="#CrateDocumentFragment-improve-performance" class="headerlink" title="CrateDocumentFragment: improve performance"></a><code>CrateDocumentFragment</code>: improve performance</h2><ol>
-<li><p><code>documentFragment</code> a lightweight or minimal part of a DOM or a subtree of a DOM tree. </p>
-</li>
-<li><p>It is very helpful when you are manipulating a part of DOM for multiple times.</p>
-</li>
-<li><p>It becomes expensive to hit a certain portion of DOM for hundreds time. You might cause reflow for hundred times. Stay tuned for reflow.</p>
-<ul>
-<li><p>BAD practice: </p>
-<ul>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//bad practice. you are hitting the DOM every single time</span></span><br><span class="line"><span class="keyword">var</span> list = [<span class="string">'foo'</span>, <span class="string">'bar'</span>, <span class="string">'baz'</span>, ... ],</span><br><span class="line">    el, text;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; list.length; i++) &#123;</span><br><span class="line">    el = <span class="built_in">document</span>.createElement(<span class="string">'li'</span>);</span><br><span class="line">    text = <span class="built_in">document</span>.createTextNode(list[i]);</span><br><span class="line">    el.appendChild(text);</span><br><span class="line">    <span class="built_in">document</span>.body.appendChild(el);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>GOOD practice:</p>
-<ul>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//good practice. you causing reflow one time</span></span><br><span class="line"><span class="keyword">var</span> fragment = <span class="built_in">document</span>.createDocumentFragment(),</span><br><span class="line">    list = [<span class="string">'foo'</span>, <span class="string">'bar'</span>, <span class="string">'baz'</span>, ...],</span><br><span class="line">    el, text;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; list.length; i++) &#123;</span><br><span class="line">    el = <span class="built_in">document</span>.createElement(<span class="string">'li'</span>);</span><br><span class="line">    text = <span class="built_in">document</span>.createTextNode(list[i]);</span><br><span class="line">    el.appendChild(text);</span><br><span class="line">    fragment.appendChild(el);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">document</span>.body.appendChild(fragment);</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<h2 id="reflow"><a href="#reflow" class="headerlink" title="reflow"></a>reflow</h2><ol>
-<li><strong><u>[reflow] :</u></strong> flow of the elements in the page is changed due to <strong><u>change size or position</u></strong><ul>
-<li>When you change size or position of an element in the page, all the elements after it has to change their position according to the changes you made.</li>
-<li>For example, if you change height on an element, all the elements under it has to move down in the page to accomodate a change in height.</li>
-</ul>
-</li>
-<li>Reasons: <ul>
-<li>change layout (geometry of the page)</li>
-<li>resize the window</li>
-<li>change height/width of any element</li>
-<li><u>changing font, or font size</u></li>
-<li>move DOM element (<u>animation</u>)</li>
-<li>adding or removing stylesheet</li>
-<li>calculating offset height or offset width</li>
-<li><code>display: none;</code></li>
-</ul>
-</li>
-</ol>
-<h2 id="repaint"><a href="#repaint" class="headerlink" title="repaint"></a>repaint</h2><ol>
-<li>It happens when you change the <strong><u>look of an element</u></strong> without changing the <u>size and shape</u>. This doesn’t cause reflow as geometry of the element didn’t changed.</li>
-<li>Reasons:<ul>
-<li>change background color</li>
-<li>change text color</li>
-<li>visibility hidden</li>
-</ul>
-</li>
-</ol>
-<h2 id="destroy-button"><a href="#destroy-button" class="headerlink" title="destroy button"></a>destroy button</h2><p>Create a button that is destroyed by clicking on it but two new buttons are created in it’s place.</p>
-<p>​    </p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"wrapper"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"doubleHolder"</span> <span class="attr">class</span>=<span class="string">"double"</span>&gt;</span>double<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="built_in">document</span>.getElementById(<span class="string">'doubleHolder'</span>).addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;   </span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> btn = <span class="built_in">document</span>.createElement(<span class="string">'button'</span>);</span></span><br><span class="line"><span class="javascript">        btn.setAttribute(<span class="string">'class'</span>, <span class="string">'double'</span>);</span></span><br><span class="line"><span class="javascript">        btn.innerHTML = <span class="string">'double1'</span>;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> btn2 = <span class="built_in">document</span>.createElement(<span class="string">'button'</span>);</span></span><br><span class="line"><span class="javascript">        btn2.setAttribute(<span class="string">'class'</span>, <span class="string">'double'</span>);</span></span><br><span class="line"><span class="javascript">        btn2.innerHTML = <span class="string">'double2'</span>;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> wrapper = <span class="built_in">document</span>.getElementById(<span class="string">'wrapper'</span>)</span></span><br><span class="line"><span class="undefined">        wrapper.appendChild(btn);</span></span><br><span class="line"><span class="undefined">        wrapper.appendChild(btn2);</span></span><br><span class="line"><span class="undefined">        wrapper.removeChild(e.target);   </span></span><br><span class="line"><span class="undefined">    &#125;); </span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="Get-text-of-a-Node-innerHTML-textContent-innerText"><a href="#Get-text-of-a-Node-innerHTML-textContent-innerText" class="headerlink" title="Get text of a Node: innerHTML textContent innerText"></a>Get text of a Node: <code>innerHTML</code> <code>textContent</code> <code>innerText</code></h2><ol>
-<li><p><strong>innerHTML</strong> parses content as HTML and takes longer. Also vulnerable to <a href="https://developer.mozilla.org/en-US/docs/Glossary/Cross-site_scripting" target="_blank" rel="noopener">XSS attacks</a></p>
-</li>
-<li><p><strong>textContent</strong> uses straight text, does not parse HTML, and is faster.</p>
-<ol>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Given the following HTML fragment:</span></span><br><span class="line"><span class="comment">//   &lt;div id="divA"&gt;This is &lt;span&gt;some&lt;/span&gt; text&lt;/div&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Get the text content:</span></span><br><span class="line"><span class="keyword">var</span> text = <span class="built_in">document</span>.getElementById(<span class="string">"divA"</span>).textContent;</span><br><span class="line"><span class="comment">// |text| is set to "This is some text".</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Set the text content:</span></span><br><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">"divA"</span>).textContent = <span class="string">"This is some text"</span>;</span><br><span class="line"><span class="comment">// The HTML for divA is now:</span></span><br><span class="line"><span class="comment">//   &lt;div id="divA"&gt;This is some text&lt;/div&gt;</span></span><br><span class="line">Polyfill</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-<li><p><strong>innerText</strong> Takes styles into consideration. It won’t get hidden text for instance.: Bad, causing <strong><u>reflow</u></strong> !</p>
-</li>
-</ol>
-<h2 id="defer-vs-async"><a href="#defer-vs-async" class="headerlink" title="defer vs async"></a>defer vs async</h2><ol>
-<li><code>defer</code> &amp; <code>async</code> are only effective in <code>&lt;script&gt;</code> tag.  HTML parser will ignore <code>defer</code> and <code>async</code> keyword for inline script (script that does not have a src attribute).</li>
-<li><strong><u>normal:</u></strong> When you have a plain script tag (no defer or async keyword), parser will <u><em>pause parsing</em></u>, script would be <u><em>downloaded and exectuted</em></u>. After that parsing resume</li>
-<li><u><strong>async:</strong></u>  downloading script won’t affect HTML paring, but executing will pause HTML parsing. Once downloaded, script begin to executed, will pause HTML parsing</li>
-<li><strong><u>defer:</u></strong> downloading script won’t affect HTML paring, also executing won’t affect HTML parsing. The script with <code>defer</code> will executed util HTML finish parsing</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/15/Create-a-Calculator-Vanilla-JS/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/15/Create-a-Calculator-Vanilla-JS/" itemprop="url">Create a Calculator - [Vanilla JS]</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-15T16:38:37-07:00">2018-10-15</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/10/15/Create-a-Calculator-Vanilla-JS/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/15/Create-a-Calculator-Vanilla-JS/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h2><p>Build a web calculator, that supports the basic operations of <code>add</code>, <code>remove</code>, <code>multiply</code> and <code>divide</code>.</p>
-<p>In addition, support resetting the current state, as well as a decimal point button.</p>
-<h2 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  	<span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">       <span class="selector-class">.wrapper</span>&#123;</span></span><br><span class="line"><span class="undefined">          width: 400px;</span></span><br><span class="line"><span class="undefined">          height: 400px;</span></span><br><span class="line"><span class="undefined">          margin: 15px auto;</span></span><br><span class="line"><span class="undefined">          border: 1px solid black;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.display-panel</span>&#123;</span></span><br><span class="line"><span class="undefined">          margin: 10px auto;</span></span><br><span class="line"><span class="undefined">          width: 95%;</span></span><br><span class="line"><span class="undefined">          height: 60px;</span></span><br><span class="line"><span class="undefined">          line-height: 60px;</span></span><br><span class="line"><span class="undefined">          font-size: 30px;</span></span><br><span class="line"><span class="undefined">          border: 1px solid black;</span></span><br><span class="line"><span class="undefined">          text-align: right;</span></span><br><span class="line"><span class="undefined">          overflow-y: hidden;</span></span><br><span class="line"><span class="undefined">          overflow-x: scroll;</span></span><br><span class="line"><span class="undefined">          white-space: nowrap;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="css">        <span class="selector-class">.ctl-panel</span>&#123;</span></span><br><span class="line"><span class="undefined">          margin: 5px auto;</span></span><br><span class="line"><span class="undefined">          width: 95%;</span></span><br><span class="line"><span class="undefined">          height: 300px;</span></span><br><span class="line"><span class="undefined">          border: 1px solid black;</span></span><br><span class="line"><span class="undefined">          font-size: 30px;</span></span><br><span class="line"><span class="undefined">          display: flex;</span></span><br><span class="line"><span class="undefined">          flex-flow: row wrap;</span></span><br><span class="line"><span class="undefined">          justify-content: space-around;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="css">        <span class="selector-class">.left-part</span>&#123;</span></span><br><span class="line"><span class="undefined">          border: 1px solid red;</span></span><br><span class="line"><span class="undefined">          flex: 1 1 70%;</span></span><br><span class="line"><span class="undefined">          display: grid;</span></span><br><span class="line"><span class="undefined">          justify-content: space-around;</span></span><br><span class="line"><span class="undefined">          align-content: space-around;</span></span><br><span class="line"><span class="undefined">          grid-template-columns: auto auto auto;</span></span><br><span class="line"><span class="undefined">          grid-template-rows: auto auto auto auto;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="css">        <span class="selector-class">.right-part</span>&#123;</span></span><br><span class="line"><span class="undefined">          flex: 1 1 20%;</span></span><br><span class="line"><span class="undefined">          border: 1px solid red;</span></span><br><span class="line"><span class="undefined">          display: grid;</span></span><br><span class="line"><span class="undefined">          justify-content: space-around;</span></span><br><span class="line"><span class="undefined">          align-content: space-around;</span></span><br><span class="line"><span class="undefined">          grid-template-columns: auto;</span></span><br><span class="line"><span class="undefined">          grid-template-rows: 30% 60%;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="css">        <span class="selector-id">#equal</span>&#123;</span></span><br><span class="line"><span class="undefined">          height: 100%;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        button&#123;</span></span><br><span class="line"><span class="undefined">          width: 50px;</span></span><br><span class="line"><span class="undefined">          height: 50px;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"wrapper"</span>&gt;</span> </span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"display-panel"</span> <span class="attr">id</span>=<span class="string">"display"</span>&gt;</span></span><br><span class="line">        display placeholdersdsfsdfsdfsdffsdfsdffsdf</span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"ctl-panel"</span> <span class="attr">id</span>=<span class="string">"panel"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">'left-part'</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">button</span>&gt;</span>+<span class="tag">&lt;/<span class="name">button</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">button</span>&gt;</span>-<span class="tag">&lt;/<span class="name">button</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">button</span>&gt;</span>&amp;times;<span class="tag">&lt;/<span class="name">button</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">button</span>&gt;</span>7<span class="tag">&lt;/<span class="name">button</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">button</span>&gt;</span>8<span class="tag">&lt;/<span class="name">button</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">button</span>&gt;</span>9<span class="tag">&lt;/<span class="name">button</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">button</span>&gt;</span>4<span class="tag">&lt;/<span class="name">button</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">button</span>&gt;</span>5<span class="tag">&lt;/<span class="name">button</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">button</span>&gt;</span>6<span class="tag">&lt;/<span class="name">button</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">button</span>&gt;</span>1<span class="tag">&lt;/<span class="name">button</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">button</span>&gt;</span>2<span class="tag">&lt;/<span class="name">button</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">button</span>&gt;</span>3<span class="tag">&lt;/<span class="name">button</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">button</span>&gt;</span>0<span class="tag">&lt;/<span class="name">button</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">button</span>&gt;</span>.<span class="tag">&lt;/<span class="name">button</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">button</span>&gt;</span>C<span class="tag">&lt;/<span class="name">button</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">'right-part'</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">button</span>&gt;</span>&amp;divide;<span class="tag">&lt;/<span class="name">button</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"equal"</span>&gt;</span>&amp;equals;<span class="tag">&lt;/<span class="name">button</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      </span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="keyword">function</span> <span class="title">handleInput</span>(<span class="params">e</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">let</span> val = e.target.textContent</span></span><br><span class="line"><span class="javascript">          <span class="keyword">let</span> display = <span class="built_in">document</span>.getElementById(<span class="string">"display"</span>)</span></span><br><span class="line"><span class="javascript">          <span class="keyword">if</span>(isNum(val))&#123;</span></span><br><span class="line"><span class="undefined">             handleNum(val, display);</span></span><br><span class="line"><span class="javascript">          &#125;<span class="keyword">else</span> <span class="keyword">if</span>(isDot(val))&#123;</span></span><br><span class="line"><span class="undefined">             handleDot(val, display);      </span></span><br><span class="line"><span class="javascript">          &#125;<span class="keyword">else</span> <span class="keyword">if</span>(isOperator(val))&#123;</span></span><br><span class="line"><span class="undefined">             handleOperator(val, display)</span></span><br><span class="line"><span class="javascript">          &#125;<span class="keyword">else</span> <span class="keyword">if</span>(isEqual(val))&#123;</span></span><br><span class="line"><span class="undefined">             handleCalc(display)</span></span><br><span class="line"><span class="javascript">          &#125;<span class="keyword">else</span> <span class="keyword">if</span>(isClear(val))&#123;</span></span><br><span class="line"><span class="undefined">             handleClear(display)</span></span><br><span class="line"><span class="javascript">          &#125;<span class="keyword">else</span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span> </span></span><br><span class="line"><span class="undefined">          &#125;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="keyword">function</span> <span class="title">handleClear</span>(<span class="params">display</span>)</span>&#123; </span></span><br><span class="line"><span class="javascript">            display.textContent = <span class="string">""</span> </span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">        </span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="keyword">function</span> <span class="title">handleNum</span>(<span class="params">v, display</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">let</span> oldText = display.textContent</span></span><br><span class="line"><span class="undefined">          display.textContent += v</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="keyword">function</span> <span class="title">handleOperator</span>(<span class="params">v, display</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">let</span> oldText = display.textContent</span></span><br><span class="line"><span class="javascript">          <span class="keyword">if</span>( isOperator(oldText[oldText.length<span class="number">-1</span>]) )</span></span><br><span class="line"><span class="undefined">              oldText=oldText.substr(0,oldText.length-1)</span></span><br><span class="line"><span class="undefined">          display.textContent = oldText+v</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="keyword">function</span> <span class="title">handleDot</span>(<span class="params">v, display</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">let</span> oldText = display.textContent</span></span><br><span class="line"><span class="javascript">          <span class="keyword">if</span>( isDot(oldText[oldText.length<span class="number">-1</span>]) ) <span class="keyword">return</span></span></span><br><span class="line"><span class="undefined">          display.textContent += v</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        </span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="keyword">function</span> <span class="title">handleCalc</span>(<span class="params">display</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">let</span> oldText = display.textContent</span></span><br><span class="line"><span class="javascript">          <span class="keyword">if</span>( !isNum(oldText[oldText.length<span class="number">-1</span>]) ) &#123;</span></span><br><span class="line"><span class="undefined">            display.textContent = 0</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span></span></span><br><span class="line"><span class="undefined">          &#125;</span></span><br><span class="line"><span class="undefined">          display.textContent = calc(oldText)</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">		</span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="keyword">function</span> <span class="title">calc</span>(<span class="params"> text </span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">let</span> stack = []</span></span><br><span class="line"><span class="javascript">          <span class="keyword">let</span> numbers = text.split(<span class="regexp">/\+|\-|\×|\÷/</span>)</span></span><br><span class="line"><span class="javascript">          <span class="keyword">let</span> operators =  text.replace(<span class="regexp">/[0-9]|\./g</span>, <span class="string">""</span>).split(<span class="string">""</span>)</span></span><br><span class="line"><span class="javascript">          <span class="built_in">console</span>.log(numbers)</span></span><br><span class="line"><span class="javascript">          <span class="built_in">console</span>.log(operators)</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">          stack.push(<span class="keyword">new</span> <span class="built_in">Number</span>(numbers[<span class="number">0</span>]) )</span></span><br><span class="line"><span class="javascript">          <span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">0</span>; i &lt; operators.length; i++ )&#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">let</span> num = <span class="keyword">new</span> <span class="built_in">Number</span>( numbers[i+<span class="number">1</span>] )</span></span><br><span class="line"><span class="javascript">            <span class="keyword">if</span>(operators[i] === <span class="string">"+"</span>)&#123;</span></span><br><span class="line"><span class="undefined">              stack.push(num)</span></span><br><span class="line"><span class="javascript">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(operators[i] === <span class="string">"-"</span>)&#123;</span></span><br><span class="line"><span class="undefined">              stack.push(-num)</span></span><br><span class="line"><span class="javascript">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(operators[i] === <span class="string">"×"</span>)&#123;</span></span><br><span class="line"><span class="javascript">              <span class="keyword">let</span> top = stack.pop()</span></span><br><span class="line"><span class="undefined">              stack.push(top*num)</span></span><br><span class="line"><span class="javascript">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(operators[i] === <span class="string">"÷"</span>)&#123;</span></span><br><span class="line"><span class="javascript">              <span class="keyword">let</span> top = stack.pop()</span></span><br><span class="line"><span class="undefined">              stack.push(top/num)</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="undefined">          &#125;</span></span><br><span class="line"><span class="javascript">          <span class="built_in">console</span>.log(stack)</span></span><br><span class="line"><span class="javascript">          <span class="keyword">return</span> stack.reduce(<span class="function">(<span class="params">item,accum</span>)=&gt;</span>&#123;</span></span><br><span class="line"><span class="javascript">               <span class="keyword">return</span> accum + item</span></span><br><span class="line"><span class="undefined">          &#125;,0)</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">        </span></span><br><span class="line"><span class="undefined">        </span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="keyword">function</span> <span class="title">isNum</span>(<span class="params">v</span>)</span>&#123;  <span class="keyword">return</span> v &gt;= <span class="string">"0"</span> &amp;&amp; v &lt;= <span class="string">"9"</span> &#125;</span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="keyword">function</span> <span class="title">isClear</span>(<span class="params">v</span>)</span>&#123; <span class="keyword">return</span> v === <span class="string">'C'</span> &#125;</span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="keyword">function</span> <span class="title">isEqual</span>(<span class="params">v</span>)</span>&#123; <span class="keyword">return</span> v === <span class="string">'='</span> &#125;</span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="keyword">function</span> <span class="title">isDot</span>(<span class="params">v</span>)</span>&#123; <span class="keyword">return</span> v === <span class="string">'.'</span> &#125;</span></span><br><span class="line"><span class="javascript">		<span class="function"><span class="keyword">function</span> <span class="title">isOperator</span>(<span class="params">v</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">return</span> v === <span class="string">'+'</span> ||  v === <span class="string">'-'</span> ||  v === <span class="string">'÷'</span> ||  v === <span class="string">'×'</span></span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">        </span></span><br><span class="line"><span class="javascript">        <span class="built_in">document</span>.getElementById(<span class="string">"panel"</span>).addEventListener( <span class="string">"click"</span>, handleInput )</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2676,7 +2663,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">64</span>
+                    <span class="site-state-item-count">66</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2940,7 +2927,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">114</span>
+                      
+                    
+                    <span class="site-state-item-count">115</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

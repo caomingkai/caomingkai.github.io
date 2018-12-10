@@ -106,7 +106,7 @@
 <meta property="og:url" content="http://yoursite.com/2018/09/05/this-arrow-function/index.html">
 <meta property="og:site_name" content="CMK">
 <meta property="og:description" content="I. this in function what is this ?  all regular functions have this keyword this determines how a function is called on whom!   this in global context  this refers  gloabl object, no matter in strict">
-<meta property="og:updated_time" content="2018-10-06T06:34:36.000Z">
+<meta property="og:updated_time" content="2018-12-10T21:25:03.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="&#39;this&#39; &amp; arrow function">
 <meta name="twitter:description" content="I. this in function what is this ?  all regular functions have this keyword this determines how a function is called on whom!   this in global context  this refers  gloabl object, no matter in strict">
@@ -523,7 +523,11 @@
 </li>
 <li><p><code>this</code> in <u><strong>DOM event handler</strong></u></p>
 <ul>
-<li><p><code>this</code> is set to the <strong><u>target element</u></strong> the event fired from</p>
+<li><p><del><code>this</code> is set to the <strong><u>target element</u></strong> the event fired from</del></p>
+</li>
+<li><p><code>this</code> is set to the <strong><u>current element</u></strong> to which the event handler is attached; not the target element</p>
+</li>
+<li><p><code>this === e.currentTarget</code></p>
 </li>
 <li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// When called as a listener, turns the related element blue</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bluify</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// Always true</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span> === e.currentTarget); </span><br><span class="line">  <span class="comment">// true when currentTarget and target are the same object</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span> === e.target);</span><br><span class="line">  <span class="keyword">this</span>.style.backgroundColor = <span class="string">'#A5D9F3'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Get a list of every element in the document</span></span><br><span class="line"><span class="keyword">var</span> elements = <span class="built_in">document</span>.getElementsByTagName(<span class="string">'*'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Add bluify as a click listener so when the</span></span><br><span class="line"><span class="comment">// element is clicked on, it turns blue</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; elements.length; i++) &#123;</span><br><span class="line">  elements[i].addEventListener(<span class="string">'click'</span>, bluify, <span class="literal">false</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
@@ -732,7 +736,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">64</span>
+                    <span class="site-state-item-count">65</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

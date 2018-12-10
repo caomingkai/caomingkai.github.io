@@ -332,6 +332,177 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/05/A-Way-to-Make-an-Efficient-React-Timer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/05/A-Way-to-Make-an-Efficient-React-Timer/" itemprop="url">A Way to Make an Efficient React Timer</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-05T15:38:28-07:00">2018-10-05</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/05/A-Way-to-Make-an-Efficient-React-Timer/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/05/A-Way-to-Make-an-Efficient-React-Timer/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="I-The-Problem"><a href="#I-The-Problem" class="headerlink" title="I. The Problem"></a>I. The Problem</h2><p>It is very common we need to implement a <strong><u>Timer</u></strong> in our daily projects. Of course, there are several ways to make one. </p>
+<p>Most online resource only introduces how to make a Timer as the only one component itself, while in reality we want our Timer to be an sub-component of some parent component</p>
+<p>We don’t want to put the <code>time_elapsed</code> state in the <code>state</code> of its parent component. That way, every one seconds, the parent component will rerender over and over, even though all other state field stay the same.</p>
+<h2 id="II-We-Want-Efficiency"><a href="#II-We-Want-Efficiency" class="headerlink" title="II. We Want Efficiency"></a>II. We Want Efficiency</h2><p>Here, the basic idea is: </p>
+<ol>
+<li>we put the <code>time_elapsed</code>  state in a single component with no other state field in it.<ul>
+<li>start <code>hanler = setInterval()</code> to update the <code>time_elapsed</code> , in <code>componentDidMount()</code> stage</li>
+<li>pass out the <code>handler</code> to its parent component</li>
+</ul>
+</li>
+<li>we also want the parent component can <code>startTimer</code> and <code>stopTimer</code><ul>
+<li>we need to get the handler of the <code>setInterval()</code>, in order to stop it in outside</li>
+<li>BUT, how to get the handler???  ==&gt; we pass in an object as <code>props</code> to timer component</li>
+</ul>
+</li>
+</ol>
+<h2 id="III-Implementation"><a href="#III-Implementation" class="headerlink" title="III. Implementation"></a>III. Implementation</h2><ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">"UTF-8"</span> /&gt;</span><br><span class="line">    &lt;title&gt;Hello World&lt;<span class="regexp">/title&gt;</span></span><br><span class="line"><span class="regexp">    &lt;script src="https:/</span><span class="regexp">/cdnjs.cloudflare.com/</span>ajax/libs/react/<span class="number">16.2</span><span class="number">.0</span>/umd/react.production.min.js<span class="string">"&gt;&lt;/script&gt;</span></span><br><span class="line"><span class="string">    &lt;script src="</span>https:<span class="comment">//cdnjs.cloudflare.com/ajax/libs/react-dom/16.2.0/umd/react-dom.production.min.js"&gt;&lt;/script&gt;</span></span><br><span class="line">    &lt;script src=<span class="string">"https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"</span>&gt;&lt;/script&gt;</span><br><span class="line">  &lt;<span class="regexp">/head&gt;</span></span><br><span class="line"><span class="regexp">  &lt;body&gt;</span></span><br><span class="line"><span class="regexp">    &lt;div id="root"&gt;&lt;/</span>div&gt;</span><br><span class="line">    &lt;script type=<span class="string">"text/jsx"</span>&gt;</span><br><span class="line"></span><br><span class="line">      <span class="class"><span class="keyword">class</span> <span class="title">Timer</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span></span>&#123;</span><br><span class="line">        <span class="keyword">constructor</span>(props)&#123;</span><br><span class="line">          <span class="keyword">super</span>(props)</span><br><span class="line">          <span class="keyword">this</span>.state=&#123; <span class="attr">currTime</span>: <span class="number">0</span> &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        componentDidMount ()&#123;</span><br><span class="line">          <span class="keyword">this</span>.props.timerObj.handler = setInterval(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.setState(&#123; <span class="attr">currTime</span>: <span class="keyword">this</span>.state.currTime+<span class="number">1000</span> &#125;)</span><br><span class="line">          &#125;, <span class="number">1000</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        render()&#123;</span><br><span class="line">          <span class="built_in">console</span>.log(<span class="string">"Inside Timer Component: "</span>, <span class="keyword">this</span>.state)</span><br><span class="line">          <span class="keyword">const</span> timePassed = <span class="keyword">this</span>.state.currTime / <span class="number">1000</span></span><br><span class="line">          <span class="keyword">return</span> &lt;span&gt;&#123;timePassed&#125;&lt;/span&gt;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">                    </span><br><span class="line"></span><br><span class="line">      <span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span></span>&#123;</span><br><span class="line">        <span class="keyword">constructor</span>(props)&#123;</span><br><span class="line">          <span class="keyword">super</span>(props)</span><br><span class="line">          <span class="keyword">this</span>.state = &#123; <span class="attr">showTimer</span>: <span class="literal">false</span> &#125;</span><br><span class="line">          <span class="keyword">this</span>.timerObj = &#123; <span class="attr">handler</span>: <span class="literal">null</span> &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        startTimer = <span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">          <span class="keyword">this</span>.setState(&#123; <span class="attr">showTimer</span>: <span class="literal">true</span> &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        stopTimer = <span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">          clearInterval(<span class="keyword">this</span>.timerObj.handler)</span><br><span class="line">          <span class="keyword">this</span>.setState(&#123;<span class="attr">showTimer</span>: <span class="literal">false</span>&#125;)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">        render()&#123;</span><br><span class="line">          <span class="built_in">console</span>.log(<span class="string">"App Component: "</span>, <span class="keyword">this</span>.state)</span><br><span class="line">          <span class="keyword">const</span> TimerPlaceholder = <span class="keyword">this</span>.state.showTimer ? &lt;Timer timerObj=&#123;this.timerObj&#125; /&gt; : null</span><br><span class="line">          return (</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">              &lt;h1&gt; React Inner Timer Component&lt;/h1&gt;</span><br><span class="line">              &lt;button onClick=&#123;this.startTimer&#125;&gt; startTimer &lt;/button&gt;</span><br><span class="line">              &lt;br /&gt;&lt;br /&gt;</span><br><span class="line">              </span><br><span class="line">              Time Passed: &#123;TimerPlaceholder &#125;</span><br><span class="line">              </span><br><span class="line">              &lt;br /&gt;&lt;br /&gt;</span><br><span class="line">              &lt;button onClick=&#123;this.stopTimer&#125;&gt; stopTimer &lt;/button&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">          )</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">            </span><br><span class="line">      ReactDOM.render(</span><br><span class="line">        &lt;App /&gt;,</span><br><span class="line">        document.getElementById('root')</span><br><span class="line">      );</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">  &lt;<span class="regexp">/body&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>html&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/04/Flux-Redux/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2567,7 +2738,7 @@
         
           
             <h2 id="I-problem"><a href="#I-problem" class="headerlink" title="I. problem"></a>I. problem</h2><p>given 500 revisions of programs,  write a program that will find and return the FIRST bad revision given a <code>isBad(revision i)</code> function.</p>
-<h2 id="II-Code"><a href="#II-Code" class="headerlink" title="II. Code"></a>II. Code</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isBad</span>(<span class="params"> version </span>)</span>&#123; <span class="keyword">return</span> version === <span class="number">0</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">firstBadVersion</span>(<span class="params"> versions </span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>( <span class="keyword">typeof</span> versions === <span class="string">'undefined'</span> || versions.length === <span class="number">0</span> ) </span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> left = <span class="number">0</span>, right = versions.length<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">while</span>( left &lt; right )&#123;</span><br><span class="line">        <span class="keyword">let</span> mid = (left + right) / <span class="number">2</span></span><br><span class="line">        <span class="keyword">if</span>( isBad(mid) )&#123;</span><br><span class="line">            right = mid</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            left = mid+<span class="number">1</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> versions[left]===<span class="number">0</span> ? left : <span class="number">-1</span></span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Testing		0 1 2 3 4 5 6  should return index: 4</span></span><br><span class="line"><span class="keyword">let</span> versions = [<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>]</span><br><span class="line"><span class="built_in">console</span>.log(firstBadVersion(versions))  <span class="comment">// 4</span></span><br><span class="line"></span><br><span class="line">versions = [<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>]</span><br><span class="line"><span class="built_in">console</span>.log(firstBadVersion(versions))  <span class="comment">// 6</span></span><br><span class="line"></span><br><span class="line">versions = [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]</span><br><span class="line"><span class="built_in">console</span>.log(firstBadVersion(versions))  <span class="comment">// 0</span></span><br><span class="line"></span><br><span class="line">versions = [<span class="number">0</span>]</span><br><span class="line"><span class="built_in">console</span>.log(firstBadVersion(versions))  <span class="comment">// 0</span></span><br><span class="line"></span><br><span class="line">versions = [<span class="number">1</span>]</span><br><span class="line"><span class="built_in">console</span>.log(firstBadVersion(versions))  <span class="comment">// -1</span></span><br><span class="line"></span><br><span class="line">versions = [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>]</span><br><span class="line"><span class="built_in">console</span>.log(firstBadVersion(versions))  <span class="comment">// -1</span></span><br><span class="line"></span><br><span class="line">versions = []</span><br><span class="line"><span class="built_in">console</span>.log(firstBadVersion(versions))  <span class="comment">// -1</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(firstBadVersion())  		<span class="comment">// -1</span></span><br></pre></td></tr></table></figure>
+<h2 id="II-Code"><a href="#II-Code" class="headerlink" title="II. Code"></a>II. Code</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isBad</span>(<span class="params"> version </span>)</span>&#123; <span class="keyword">return</span> version === <span class="number">0</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">firstBadVersion</span>(<span class="params"> versions </span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>( <span class="keyword">typeof</span> versions === <span class="string">'undefined'</span> || versions.length === <span class="number">0</span> ) </span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> left = <span class="number">0</span>, right = versions.length<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">while</span>( left &lt; right )&#123;</span><br><span class="line">        <span class="keyword">let</span> mid = left + <span class="built_in">Math</span>.floor((right-left)/<span class="number">2</span>)</span><br><span class="line">        <span class="keyword">if</span>( isBad(versions[mid]) )&#123;</span><br><span class="line">            right = mid</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            left = mid+<span class="number">1</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> versions[left]===<span class="number">0</span> ? left : <span class="number">-1</span></span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Testing		  0 1 2 3 4 5 6  should return index: 4</span></span><br><span class="line"><span class="keyword">let</span> versions = [<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>]</span><br><span class="line"><span class="built_in">console</span>.log(firstBadVersion(versions))  <span class="comment">// 4</span></span><br><span class="line"></span><br><span class="line">versions = [<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>]</span><br><span class="line"><span class="built_in">console</span>.log(firstBadVersion(versions))  <span class="comment">// 5</span></span><br><span class="line"></span><br><span class="line">versions = [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]</span><br><span class="line"><span class="built_in">console</span>.log(firstBadVersion(versions))  <span class="comment">// 0</span></span><br><span class="line"></span><br><span class="line">versions = [<span class="number">0</span>]</span><br><span class="line"><span class="built_in">console</span>.log(firstBadVersion(versions))  <span class="comment">// 0</span></span><br><span class="line"></span><br><span class="line">versions = [<span class="number">1</span>]</span><br><span class="line"><span class="built_in">console</span>.log(firstBadVersion(versions))  <span class="comment">// -1</span></span><br><span class="line"></span><br><span class="line">versions = [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>]</span><br><span class="line"><span class="built_in">console</span>.log(firstBadVersion(versions))  <span class="comment">// -1</span></span><br><span class="line"></span><br><span class="line">versions = []</span><br><span class="line"><span class="built_in">console</span>.log(firstBadVersion(versions))  <span class="comment">// -1</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(firstBadVersion())  		<span class="comment">// -1</span></span><br></pre></td></tr></table></figure>
 
           
         
@@ -2807,7 +2978,11 @@
 </li>
 <li><p><code>this</code> in <u><strong>DOM event handler</strong></u></p>
 <ul>
-<li><p><code>this</code> is set to the <strong><u>target element</u></strong> the event fired from</p>
+<li><p><del><code>this</code> is set to the <strong><u>target element</u></strong> the event fired from</del></p>
+</li>
+<li><p><code>this</code> is set to the <strong><u>current element</u></strong> to which the event handler is attached; not the target element</p>
+</li>
+<li><p><code>this === e.currentTarget</code></p>
 </li>
 <li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// When called as a listener, turns the related element blue</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bluify</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// Always true</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span> === e.currentTarget); </span><br><span class="line">  <span class="comment">// true when currentTarget and target are the same object</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span> === e.target);</span><br><span class="line">  <span class="keyword">this</span>.style.backgroundColor = <span class="string">'#A5D9F3'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Get a list of every element in the document</span></span><br><span class="line"><span class="keyword">var</span> elements = <span class="built_in">document</span>.getElementsByTagName(<span class="string">'*'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Add bluify as a click listener so when the</span></span><br><span class="line"><span class="comment">// element is clicked on, it turns blue</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; elements.length; i++) &#123;</span><br><span class="line">  elements[i].addEventListener(<span class="string">'click'</span>, bluify, <span class="literal">false</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
@@ -2916,225 +3091,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/31/Trie/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/31/Trie/" itemprop="url">Trie</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-31T10:07:43-07:00">2018-08-31</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/08/31/Trie/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/08/31/Trie/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="what"><a href="#what" class="headerlink" title="what"></a>what</h2><p>Trie, is actually a more general tree, also <strong>prefix tree</strong>.</p>
-<p>Used for <strong><em>massive</em></strong> words process, dictionary representation, and lexicographic sorting, word frequency calc.</p>
-<h2 id="How"><a href="#How" class="headerlink" title="How"></a>How</h2><h4 id="I-TrieNode"><a href="#I-TrieNode" class="headerlink" title="I. TrieNode"></a>I. TrieNode</h4><p>TrieNode has mainly two parts:</p>
-<ol>
-<li><code>children</code>, to link next possible characters appear in a words. If only considering ‘A-Z’, there is 26 children at most</li>
-<li>info used to record current TrieNode<ul>
-<li><code>isWord</code>, denotes previous character is a word or not.</li>
-<li><code>cnt</code>, denotes number of words consist of current prefix</li>
-</ul>
-</li>
-</ol>
-<p><strong><em>Note:</em></strong> this representation is a little different from binary tree, in which info data are stored for current Node. However, in Trie, info data are stored for previous Node, as follows:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">For dictionary: &#123; <span class="string">"a"</span>, <span class="string">"bd"</span>, <span class="string">"c"</span> &#125;, the Trie would be represented as following:</span><br><span class="line"></span><br><span class="line"><span class="function">root <span class="title">TrieNode</span><span class="params">(<span class="number">0xefe4</span>)</span></span></span><br><span class="line"><span class="function">- cnt: 0</span></span><br><span class="line"><span class="function">- isWord: <span class="keyword">false</span></span></span><br><span class="line"><span class="function">- children:</span>&#123;<span class="string">'a'</span>: TrieNode , <span class="string">'b'</span>: TrieNode, <span class="string">'c'</span>: TrieNode, ... &#125;</span><br><span class="line">            /				      |				          \</span><br><span class="line">            TrieNode(<span class="number">0xffe3</span>)	TrieNode(<span class="number">0xffe4</span>)   			TrieNode(<span class="number">0xffe5</span>)</span><br><span class="line">            - cnt: <span class="number">1</span>			- cnt: <span class="number">0</span>					- cnt: <span class="number">1</span></span><br><span class="line">            - isWord: <span class="keyword">true</span>		- isWord: <span class="keyword">false</span>				- isWord: <span class="keyword">false</span></span><br><span class="line">            - children: <span class="keyword">null</span>	- children: &#123;<span class="string">'d'</span>:TrieNode&#125;  - children: <span class="keyword">null</span></span><br><span class="line">                                    |</span><br><span class="line">                                   ...</span><br></pre></td></tr></table></figure>
-<h2 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h2><ul>
-<li><p>interfaces</p>
-<ul>
-<li>build (constructor)</li>
-<li>isWord</li>
-<li>countWord</li>
-<li>insert</li>
-<li>delete</li>
-<li>hasPrefix</li>
-<li>getPrefixNode</li>
-</ul>
-</li>
-<li><p>Time Complexity: [ <code>n</code> words, <code>K</code> is number of characters of the longest word ]</p>
-<ul>
-<li>build: O(nK)</li>
-<li>isWord: O(K)</li>
-<li>countWord: O(K)</li>
-<li>insert: O(K)</li>
-<li>delete: O(K)</li>
-</ul>
-</li>
-<li><p>Space Complexity: [<code>N</code> is the number of all characters appears in the dictionary ]</p>
-<ul>
-<li>too much space: O(N) +O(N^2) +O(N^3) +O(N^4) + O(N^K)</li>
-<li>good news is: when it is a really dictionary, all the space will be filled up, so not so much waste</li>
-</ul>
-</li>
-<li><p><code>delete</code> might be a little complex. The to-be-deleted word possibly :</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">when need delete a node, what should really to be done????</span><br><span class="line">    - delete the key from HashMap&lt;Character, Node&gt;</span><br><span class="line">    - reset to <span class="keyword">null</span> when using Node[]</span><br><span class="line">So, always ask two questions:</span><br><span class="line">	- the node to be deleted, is part of other <span class="keyword">long</span> word [by checking <span class="string">'children'</span>]?</span><br><span class="line">    - the node itself is the end of a word? [by checking <span class="string">'isWord'</span> &amp; <span class="string">'cnt'</span>]?</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>null</code>, empty string, not exists in the Trie</li>
-<li>contains other short words: “abc”, “ab”<ul>
-<li><strong>recursively from bottom to top</strong> delete node, till the longest prefix</li>
-</ul>
-</li>
-<li>has same words as itself: “abc”, “abc”<ul>
-<li>don’t delete node, only update <code>cnt</code></li>
-</ul>
-</li>
-<li>being a prefix of other long words: “abc”, “abcde”<ul>
-<li>don’t delete node, only update <code>isWord</code></li>
-</ul>
-</li>
-<li>share prefix with other words: “abc”, “abd”<ul>
-<li><strong>recursively from bottom to top</strong> delete node, till the longest prefix</li>
-</ul>
-</li>
-<li>only itself in the dictionary, not affect others “abc”<ul>
-<li>delte all nodes</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">int</span> cnt;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">boolean</span> isWord;</span><br><span class="line">	<span class="keyword">public</span> Map&lt;Character, Node&gt; children;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.cnt = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">this</span>.isWord = <span class="keyword">false</span>;</span><br><span class="line">		<span class="keyword">this</span>.children = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Trie</span></span>&#123;</span><br><span class="line">	Node root;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Trie</span><span class="params">( String[] strArr )</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.root = <span class="keyword">new</span> Node();</span><br><span class="line">		<span class="keyword">for</span>( String str : strArr )&#123;</span><br><span class="line">			insert( str );</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasPrefix</span><span class="params">(String str )</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>( str == <span class="keyword">null</span> || str.length() == <span class="number">0</span> ) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">		<span class="keyword">int</span> len = str.length();</span><br><span class="line">		Node cur = <span class="keyword">this</span>.root;</span><br><span class="line">		<span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++ )&#123;</span><br><span class="line">			<span class="keyword">char</span> ch = str.charAt(i);</span><br><span class="line">			<span class="keyword">if</span>( !cur.children.containsKey(ch) ) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">			cur = cur.children.get(ch);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> Node <span class="title">getPrefixNode</span> <span class="params">(String str)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>( !hasPrefix(str) ) <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">		<span class="keyword">int</span> len = str.length();</span><br><span class="line">		Node cur = <span class="keyword">this</span>.root;</span><br><span class="line">		<span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++ )&#123;</span><br><span class="line">			<span class="keyword">char</span> ch = str.charAt(i);</span><br><span class="line">			cur = cur.children.get(ch);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> cur;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">( String str )</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>( str == <span class="keyword">null</span> || str.length() == <span class="number">0</span> ) <span class="keyword">return</span>;</span><br><span class="line">		<span class="keyword">int</span> len = str.length();</span><br><span class="line">		Node cur = <span class="keyword">this</span>.root;</span><br><span class="line">		<span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++ )&#123;</span><br><span class="line">			<span class="keyword">char</span> ch = str.charAt(i);</span><br><span class="line">			<span class="keyword">if</span>( !cur.children.containsKey(ch) )&#123;</span><br><span class="line">				cur.children.put( ch, <span class="keyword">new</span> Node() );</span><br><span class="line">			&#125;</span><br><span class="line">			cur = cur.children.get(ch);</span><br><span class="line">		&#125;</span><br><span class="line">		cur.cnt++;</span><br><span class="line">		cur.isWord = <span class="keyword">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">delete</span> <span class="params">(String str )</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>( str == <span class="keyword">null</span> || str.length() == <span class="number">0</span> ) <span class="keyword">return</span>;</span><br><span class="line">		<span class="keyword">if</span>( !hasPrefix(str) ) <span class="keyword">return</span>;</span><br><span class="line">		Node cur = getPrefixNode(str);</span><br><span class="line">		cur.cnt--; </span><br><span class="line">		<span class="keyword">if</span>(cur.cnt &lt; <span class="number">0</span>) cur.cnt = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">if</span>(cur.cnt &gt; <span class="number">0</span>) <span class="keyword">return</span>; 	<span class="comment">// at this position, there still word exist</span></span><br><span class="line">		<span class="keyword">else</span>&#123;						<span class="comment">// at this position, there no word exist</span></span><br><span class="line">			<span class="keyword">if</span>( cur.children.size() &gt; <span class="number">0</span> ) &#123;	<span class="comment">// but can be prefix of other words</span></span><br><span class="line">				cur.isWord = <span class="keyword">false</span>;</span><br><span class="line">				<span class="keyword">return</span>;</span><br><span class="line">			&#125;<span class="keyword">else</span>&#123;							<span class="comment">// not a word, nor a prefix of others</span></span><br><span class="line">				deleteNode(str);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteNode</span><span class="params">( String str )</span></span>&#123;</span><br><span class="line">		<span class="keyword">int</span> len = str.length();</span><br><span class="line">		<span class="keyword">if</span>( len == <span class="number">0</span> ) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">		String prevStr = str.substring(<span class="number">0</span>, len-<span class="number">1</span>);</span><br><span class="line">		Node prevNode = getPrefixNode(prevStr);</span><br><span class="line">		prevNode.children.remove(str.charAt(len-<span class="number">1</span>));</span><br><span class="line">		<span class="keyword">if</span>( prevNode.children.size()==<span class="number">0</span> &amp;&amp; prevNode.cnt==<span class="number">0</span> ) delete(prevStr);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isWord</span><span class="params">( String str )</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>( !hasPrefix(str) ) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">		<span class="keyword">return</span> getPrefixNode(str).isWord;</span><br><span class="line">	&#125;	</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">countWord</span><span class="params">( String str )</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>( !hasPrefix(str) ) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">return</span> getPrefixNode(str).cnt;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TrieTree</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">( String[] args )</span></span>&#123;</span><br><span class="line">		String[] dict = &#123; <span class="string">"a"</span>, <span class="string">"ab"</span>, <span class="string">"ab"</span>, <span class="string">"abc"</span>, <span class="string">"abc"</span>, <span class="string">"abc"</span>, <span class="string">"abcd"</span>, <span class="string">"ac"</span>, <span class="string">"acd"</span>, <span class="string">"ad"</span>, <span class="string">"2,24"</span>,  <span class="string">"2,2,4"</span> &#125;;</span><br><span class="line">		Trie trieTree = <span class="keyword">new</span> Trie(dict);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// String isWordTest1 = "ab";</span></span><br><span class="line">		<span class="comment">// String isWordTest2 = "";</span></span><br><span class="line">		<span class="comment">// String isWordTest3 = "a";</span></span><br><span class="line">		<span class="comment">// String isWordTest4 = "abcd";</span></span><br><span class="line">		<span class="comment">// String isWordTest5 = "abcde";</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">// String countTest = "abc";</span></span><br><span class="line">		<span class="comment">// String insertTest = "abc";</span></span><br><span class="line">		</span><br><span class="line"></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.isWord(isWordTest1));</span></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.isWord(isWordTest2));</span></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.isWord(isWordTest3));</span></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.isWord(isWordTest4));</span></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.isWord(isWordTest5));</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.countWord(countTest));</span></span><br><span class="line">		<span class="comment">// trieTree.insert(insertTest);</span></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.countWord(countTest));</span></span><br><span class="line">		<span class="comment">// trieTree.insert(insertTest);</span></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.countWord(countTest));</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="comment">// String hasPrefixTest1 = "abcd";</span></span><br><span class="line">		<span class="comment">// String hasPrefixTest2 = "2,2";</span></span><br><span class="line">		<span class="comment">// String hasPrefixTest3 = "abcdd";</span></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.hasPrefix(hasPrefixTest1));</span></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.hasPrefix(hasPrefixTest2));</span></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.hasPrefix(hasPrefixTest3));</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		String deleteTest1 = <span class="string">"abcd"</span>;</span><br><span class="line">		String deleteTest2 = <span class="string">"abc"</span>;</span><br><span class="line">		String deleteTest3 = <span class="string">"ab"</span>;</span><br><span class="line">		trieTree.delete(deleteTest1);</span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest3)); <span class="comment">// 2</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest2)); <span class="comment">// 3</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest1)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println();</span><br><span class="line"></span><br><span class="line">		trieTree.delete(deleteTest1);</span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest3)); <span class="comment">// 2</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest2)); <span class="comment">// 3</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest1)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println();</span><br><span class="line"></span><br><span class="line">		trieTree.delete(deleteTest2);</span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest3)); <span class="comment">// 2</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest2)); <span class="comment">// 2</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest1)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println();</span><br><span class="line">		</span><br><span class="line">		trieTree.delete(deleteTest2);</span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest3)); <span class="comment">// 2</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest2)); <span class="comment">// 1</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest1)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println();</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		trieTree.delete(deleteTest2);</span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest3)); <span class="comment">// 2</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest2)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest1)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println();</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line"></span><br><span class="line">		trieTree.delete(deleteTest2);</span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest3)); <span class="comment">// 2</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest2)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest1)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println();</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line"></span><br><span class="line">		trieTree.delete(deleteTest3);</span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest3)); <span class="comment">// 1</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest2)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest1)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println();</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line"></span><br><span class="line">		trieTree.delete(deleteTest3);</span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest3)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest2)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest1)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println();</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line"></span><br><span class="line">		trieTree.delete(deleteTest1);</span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest3)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest2)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest1)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println();</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3186,7 +3142,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">64</span>
+                    <span class="site-state-item-count">65</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

@@ -332,6 +332,755 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/27/News-Recommendation-using-Wed-Mining/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/27/News-Recommendation-using-Wed-Mining/" itemprop="url">News Recommendation using Wed Mining</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-27T15:02:08-07:00">2018-03-27</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Portfolios/" itemprop="url" rel="index"><span itemprop="name">Portfolios</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/27/News-Recommendation-using-Wed-Mining/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/03/27/News-Recommendation-using-Wed-Mining/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="I-Introduction"><a href="#I-Introduction" class="headerlink" title="I. Introduction"></a>I. Introduction</h2><p>An internet-based news aggregator, providing hot news scraping on popular news sources, with recommendation feature based on users’ preference with the help of Machine Learning.</p>
+<p><strong>#Github</strong>: <a href="https://github.com/caomingkai/News_Recommendation_System" target="_blank" rel="noopener">https://github.com/caomingkai/News_Recommendation_System</a>  </p>
+<p><strong>Pull it and run it with Shell script!</strong></p>
+<ul>
+<li><strong>Firstly, run <code>./launcher.sh</code>:</strong><ul>
+<li>run redis</li>
+<li>run mongoDB locally</li>
+<li>start recommendation service(python)</li>
+<li>start backend service(phython)</li>
+<li>start web-server service(Node.js + ReactJS)</li>
+</ul>
+</li>
+<li><strong>Secondly, run <code>./news_pipeline_launcher.sh</code>:</strong><ul>
+<li>run redis</li>
+<li>run mongoDB locally</li>
+<li>install python requirements</li>
+<li>start news_topic_modeling_service (python Machine Learning)</li>
+<li>start news collecting service(data pipeline + web scraping)</li>
+</ul>
+</li>
+</ul>
+<h2 id="II-Tech-stack"><a href="#II-Tech-stack" class="headerlink" title="II. Tech stack:"></a>II. Tech stack:</h2><ul>
+<li><strong>Front end:  React, Express, Node.js, OAuth</strong><ul>
+<li>Built a responsive single-page web application for users to browse news (React, Node.js, RPC, SOA, JWT)</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><strong>Back end: Python RPC, MongoDB, Redis, RabbitMQ</strong><ul>
+<li>Service Oriented, multiple backends serving via JSON RPC</li>
+<li>Implemented a data pipeline which monitors, scrapes and deduplicates news</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><strong>News recommendation system: Tensorflow, DNN, NLP</strong><ul>
+<li>Designed and built an offline training pipeline for news topic modeling</li>
+<li>Deployed an online classifying service for news topic modeling using trained model</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><strong>News topic classifying system: TF-IDF, NLP, RabbitMQ</strong><ul>
+<li>Implemented a click event log processor which collects users’ click logs, updated a news model for each user</li>
+</ul>
+</li>
+</ul>
+<p><strong>Chart1: Login Page with Authentication</strong><br><img src="/2018/03/27/News-Recommendation-using-Wed-Mining/loginPage.png" title="This is an image"></p>
+<p><strong>Chart2: News feed page</strong><br><img src="/2018/03/27/News-Recommendation-using-Wed-Mining/newsPage.png" title="This is an image"></p>
+<h2 id="III-System-structure"><a href="#III-System-structure" class="headerlink" title="III. System structure:"></a>III. System structure:</h2><ol>
+<li><strong>Front end tier</strong>: React &amp; Node.js</li>
+<li><strong>Back end tier</strong>: providing RPC API for communication among different tiers</li>
+<li><strong>News recommendation system</strong>: time decay algorithm</li>
+<li><strong>News topic classifying system</strong>: Tensorflow with 2-layer CNN model for classification</li>
+<li><strong>data pipeline</strong>: get news sources<ul>
+<li>News monitor: gets news from News.API</li>
+<li>News scraper: web scraper</li>
+<li>News deduper: news TF-IDF deduplication</li>
+</ul>
+</li>
+</ol>
+<p><strong>Chart 3: System with Machine Learning module</strong><br><img src="https://github.com/caomingkai/News_Recommendation_System/raw/master/with%20ML%20topic%20classification1.png" alt="chart"></p>
+<p><strong>Chart 4: System with Recommendation module</strong><br><img src="https://github.com/caomingkai/News_Recommendation_System/raw/master/with%20Recommendation%20module.png" alt="chart"></p>
+<p><strong>Chart 5: Service dependency</strong><br><img src="https://github.com/caomingkai/News_Recommendation_System/raw/master/chart.jpg" alt="chart"></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/27/Facebook-Custom-Search/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/27/Facebook-Custom-Search/" itemprop="url">Facebook Custom Search</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-27T12:32:37-07:00">2018-03-27</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Portfolios/" itemprop="url" rel="index"><span itemprop="name">Portfolios</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/27/Facebook-Custom-Search/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/03/27/Facebook-Custom-Search/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="I-Introduction"><a href="#I-Introduction" class="headerlink" title="I. Introduction"></a>I. Introduction</h2><p>An application for both web-version and IOS-version, supported by PHP-based server on AWS EC2, allows searching, displaying and posting information on Facebook.</p>
+<p>Tech stacks: <strong>AngularJS, Bootstrp, PHP, AWS EC2, Swift, Cocoa</strong></p>
+<p><strong>Github web</strong>: <a href="https://github.com/caomingkai/FaceBook-custom-Search-Web-App" target="_blank" rel="noopener">https://github.com/caomingkai/FaceBook-custom-Search-Web-App</a></p>
+<p><strong>Github IOS</strong>: <a href="https://github.com/caomingkai/FaceBook-custom-Search-Web-App" target="_blank" rel="noopener">https://github.com/caomingkai/FaceBook-custom-Search-Web-App</a></p>
+<p><a href="http://default-environment.twp33krzmp.us-west-1.elasticbeanstalk.com/index.html" target="_blank" rel="noopener"><br>    <img src="/2018/03/27/Facebook-Custom-Search/FB.png" title="This is an image"><br></a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/27/eCommerce-Website-Design/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/27/eCommerce-Website-Design/" itemprop="url">eCommerce Website Design</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-27T10:59:15-07:00">2018-03-27</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Portfolios/" itemprop="url" rel="index"><span itemprop="name">Portfolios</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/27/eCommerce-Website-Design/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/03/27/eCommerce-Website-Design/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Designed and developed an eCommerce website for a milk tea house, including ‘Menu’, ‘Contact’, ‘Career’ sections.</p>
+<p>Tech stacks: <strong>Shopify Liquid, HTML, Bootstrap, JavaScript</strong></p>
+<p><strong><em>password:</em></strong>  ttotea</p>
+<p><a href="https://www.ttotea.com/" target="_blank" rel="noopener"><br>    <img src="/2018/03/27/eCommerce-Website-Design/ttotea.png" title="This is an image"><br></a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/27/Binary-Search-variations/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/27/Binary-Search-variations/" itemprop="url">Binary Search variations</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-27T09:12:32-07:00">2018-03-27</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/27/Binary-Search-variations/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/03/27/Binary-Search-variations/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong><em>Credit to : <a href="http://izualzhy.cn/algorithm/2014/04/18/binary-search-analysis" target="_blank" rel="noopener">http://izualzhy.cn/algorithm/2014/04/18/binary-search-analysis</a></em></strong></p>
+<h2 id="I-二分法及变种的注意点："><a href="#I-二分法及变种的注意点：" class="headerlink" title="I. 二分法及变种的注意点："></a>I. 二分法及变种的注意点：</h2><h4 id="1-如何得到循环不变式"><a href="#1-如何得到循环不变式" class="headerlink" title="1. 如何得到循环不变式"></a>1. 如何得到循环不变式</h4><p>【定义】就是在每次循环里，我们都可以保证要找的index在我们新构造 的区间里。<br>【例子】如正常二分法，循环不变式表述如下：  </p>
+<pre><code>if array[mid] &gt; key:
+    right = mid - 1
+ else if array[mid] &lt; key:
+     left = mid + 1
+ else
+     return mid
+</code></pre><p>考虑中间值与key的关系： </p>
+<ul>
+<li>如果中间值比key大，那么[mid, right]的值我们都可以忽略掉了，这些值都比key要大。只要在[left, mid-1]里查找就是了。</li>
+<li>如果中间值比key小，那么[left, mid]的值可以 忽略掉，这些值都比key要小，只要在[mid+1, right]里查找就可以了。</li>
+<li>如果相等，表示找到了，可以直接返回。如果最后这个区间没有，那么就确实是没有 。所以说循环不变式，就是在每次循环里，我们都可以保证要找的index在我们新构造的区间里</li>
+</ul>
+<h4 id="2-数组是非递增还是非递减"><a href="#2-数组是非递增还是非递减" class="headerlink" title="2. 数组是非递增还是非递减"></a>2. 数组是非递增还是非递减</h4><h4 id="3-结束条件，即while-condition-应当是-lt-还是-lt"><a href="#3-结束条件，即while-condition-应当是-lt-还是-lt" class="headerlink" title="3. 结束条件，即while (condition) 应当是&lt;还是&lt;="></a>3. 结束条件，即while (condition) 应当是&lt;还是&lt;=</h4><pre><code>“&lt; ” 表明可选区间长度 2～n ；  OR    
+“&lt;= ” 表明可选区间长度 1～n 
+</code></pre><h4 id="4-求mid应当是向上取整还是向下取整"><a href="#4-求mid应当是向上取整还是向下取整" class="headerlink" title="4. 求mid应当是向上取整还是向下取整"></a>4. 求mid应当是向上取整还是向下取整</h4><pre><code>mid = (left + right) &gt;&gt;1       OR
+mid = (left + right + 1) &gt;&gt;1
+</code></pre><h4 id="5-while-结束后是否需要判断一次条件"><a href="#5-while-结束后是否需要判断一次条件" class="headerlink" title="5.  while 结束后是否需要判断一次条件"></a>5.  while 结束后是否需要判断一次条件</h4><pre><code>对应可选区间为2～n情况，将所有元素check完毕；  
+同时，调整mid取整方式，使该判断优雅
+</code></pre><hr>
+<h2 id="II-常见问题："><a href="#II-常见问题：" class="headerlink" title="II. 常见问题："></a>II. 常见问题：</h2><h4 id="1-查找值key的下标，如果不存在返回-1"><a href="#1-查找值key的下标，如果不存在返回-1" class="headerlink" title="1. 查找值key的下标，如果不存在返回-1."></a>1. 查找值key的下标，如果不存在返回-1.</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">BS</span><span class="params">(<span class="keyword">const</span> Vec Int&amp; vec, <span class="keyword">int</span> key)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>, right = vec.size() - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (left &lt;= right)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> mid = (left + right) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (vec[mid] &gt; key)</span><br><span class="line">            right = mid - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (vec[mid] &lt; key)</span><br><span class="line">            left = mid + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="keyword">return</span> mid;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果中间值比key大，那么[mid, right]的值我们都可以忽略掉了，这些值都比key要大。只要在[left, mid-1]里查找就是了。</li>
+<li>如果中间值比key小，那么[left, mid]的值可以 忽略掉，这些值都比key要小，只要在[mid+1, right]里查找就可以了。</li>
+<li>如果相等，表示找到了， 可以直接返回。</li>
+</ul>
+<p>因此，循环不变式就是在每次循环里，我们都可以保证要找的index在我们新构造 的区间里。如果最后这个区间没有，那么就确实是没有。<br><strong>注意mid的求法</strong>，可能会int越界，但我们先不用考虑这个问题，要记住的是这点：<u>mid是偏向left的，即如果left=1,right=2,则mid=1。</u></p>
+<h4 id="2-查找值key第一次出现的下标x，如果不存在返回-1"><a href="#2-查找值key第一次出现的下标x，如果不存在返回-1" class="headerlink" title="2. 查找值key第一次出现的下标x，如果不存在返回-1."></a>2. 查找值key第一次出现的下标x，如果不存在返回-1.</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">BS_First</span><span class="params">(<span class="keyword">const</span> VecInt&amp; vec, <span class="keyword">int</span> key)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>, right = vec.size() - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (left &lt; right)                 <span class="comment">//问题1，left &lt; right时继续，相等就break.</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> mid = (left + right) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (vec[mid] &lt; key)</span><br><span class="line">            left = mid + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            right = mid;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (vec[left] == key)               <span class="comment">//问题2,再判断一次。</span></span><br><span class="line">        <span class="keyword">return</span> left;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们仍然考虑中间值与key的关系：</p>
+<ul>
+<li>如果array[mid]&lt;key，那么x一定在[mid+1, right]区间里。</li>
+<li>如果array[mid]&gt;key，那么x一定在[left, mid-1]区间里。</li>
+<li>如果array[mid]≤key，那么不能推断任何关系。比如对key=1,数组{0,1,1,2,3},{0,0,0,1,2},array[mid] = array[2] ≤ 1，但一个在左半区间，一个在右半区间。</li>
+<li>如果array[mid]≥key，那么x一定在[left, mid]区间里。</li>
+<li>综合上面的结果，我们可以采用1,4即&lt;和≥的组合判断来实现我们的循环不变式，即循环过程中一直满足key在我们的区间里。</li>
+</ul>
+<p><strong>注意问题：</strong></p>
+<ul>
+<li>循环能否退出,我们注意到4的区间改变里是令right = mid,如果left=right=mid时，循环是无法退出的。换句话说，第一个问题我们始终在减小着区间，而在这个问题里，某种情况下区间是不会减小的！ —– 见代码</li>
+<li>循环退出后的判断问题，再看下我们的条件1,4组合，只是使得我们最后的区间满足了≥key，是否=key，还需要再判断一次。 —– 见代码</li>
+</ul>
+<h4 id="3-查找值key最后一次出现的下标x，如果不存在返回-1"><a href="#3-查找值key最后一次出现的下标x，如果不存在返回-1" class="headerlink" title="3. 查找值key最后一次出现的下标x，如果不存在返回-1."></a>3. 查找值key最后一次出现的下标x，如果不存在返回-1.</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">BS_Last</span><span class="params">(<span class="keyword">const</span> VecInt&amp; vec, <span class="keyword">int</span> key)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>, right = vec.size() - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (left &lt; right)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> mid = (left + right + <span class="number">1</span>) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (vec[mid] &gt; key)</span><br><span class="line">            right = mid - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            left = mid;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (vec[left] == key)</span><br><span class="line">        <span class="keyword">return</span> left;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>循环不变式（省去分析的过程，同上）：</p>
+<ul>
+<li>如果array[mid]&gt;key，那么x一定在[left, mid-1]区间里。</li>
+<li>如果array[mid]≤key, 那么x一定在[mid, right]区间里。</li>
+</ul>
+<p><strong>注意问题：</strong></p>
+<ul>
+<li>在条件2里，实际上我们是令left=mid，但是如前面提到的，如果left=1,right=2,那么mid=left=1，同时又进入到条件2,left=mid=1，即使我们在while设定了left &lt; right仍然无法退出循环，</li>
+<li>解决的办法很简单：mid = (left + right + 1) &gt;&gt; 1， 向上取整就可以了。</li>
+</ul>
+<h4 id="4-查找刚好小于key的元素下标x，如果不存在返回-1"><a href="#4-查找刚好小于key的元素下标x，如果不存在返回-1" class="headerlink" title="4. 查找刚好小于key的元素下标x，如果不存在返回-1."></a>4. 查找刚好小于key的元素下标x，如果不存在返回-1.</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">BS_Last_Less</span><span class="params">(<span class="keyword">const</span> VecInt&amp; vec, <span class="keyword">int</span> key)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>, right = vec.size() - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (left &lt; right)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> mid = (left + right + <span class="number">1</span>) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (vec[mid] &lt; key)</span><br><span class="line">            left = mid;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            right = mid - <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (vec[left] &lt; key)</span><br><span class="line">        <span class="keyword">return</span> left;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>循环不变式（省去分析的过程，同上）：</p>
+<ul>
+<li>如果array[mid]&lt;key，那么x在区间[mid, right]</li>
+<li>如果array[mid]≥key，那么x在区间[left, mid-1]</li>
+</ul>
+<h4 id="5-查找刚好大于key的元素下标x，如果不存在返回-1-等价于std-upper-bound"><a href="#5-查找刚好大于key的元素下标x，如果不存在返回-1-等价于std-upper-bound" class="headerlink" title="5. 查找刚好大于key的元素下标x，如果不存在返回-1,等价于std::upper_bound."></a>5. 查找刚好大于key的元素下标x，如果不存在返回-1,等价于std::upper_bound.</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">BS_First_Greater</span><span class="params">(<span class="keyword">const</span> VecInt&amp; vec, <span class="keyword">int</span> key)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>, right = vec.size() - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (left &lt; right)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> mid = (left + right) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (vec[mid] &gt; key)</span><br><span class="line">            right = mid;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            left = mid + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (vec[left] &gt; key)</span><br><span class="line">        <span class="keyword">return</span> left;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>循环不变式（省去分析的过程，同上）：</p>
+<ul>
+<li>如果array[mid]&gt;key，那么x在区间[left, mid]</li>
+<li>如果array[mid]≤key，那么x在区间[mid + 1, right]</li>
+</ul>
+<h4 id="6-查找第一个-gt-key的下标，如果不存在返回-1-等价于std-lower-bound"><a href="#6-查找第一个-gt-key的下标，如果不存在返回-1-等价于std-lower-bound" class="headerlink" title="6. 查找第一个&gt;=key的下标，如果不存在返回-1,等价于std::lower_bound."></a>6. 查找第一个&gt;=key的下标，如果不存在返回-1,等价于std::lower_bound.</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">BS_First_Greater_Or_Equal</span><span class="params">(<span class="keyword">const</span> VecInt&amp; vec, <span class="keyword">int</span> key)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>, right = vec.size() - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (left &lt; right)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> mid = (left + right) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (vec[mid] &lt; key)</span><br><span class="line">            left = mid +<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            right = mid;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (vec[left] &gt;= key)</span><br><span class="line">        <span class="keyword">return</span> left;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>循环不变式（省去分析的过程，同上）：</p>
+<ul>
+<li>如果array[mid]&lt;key，那么x在区间[mid + 1, right]</li>
+<li>如果array[mid]≥key，那么x在区间[left, mid]</li>
+</ul>
+<hr>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/01/MERN-Stack-Online-Exam-System/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1868,7 +2617,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">65</span>
+                    <span class="site-state-item-count">69</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2134,7 +2883,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">114</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">117</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

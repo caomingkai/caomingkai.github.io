@@ -332,6 +332,655 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/10/Counting-holes-in-number/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/10/Counting-holes-in-number/" itemprop="url">Counting holes in number</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-10T16:32:18-08:00">2018-12-10</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/12/10/Counting-holes-in-number/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/12/10/Counting-holes-in-number/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="I-Problem"><a href="#I-Problem" class="headerlink" title="I. Problem"></a>I. Problem</h2><p>Given a random number, count how many holes in total. Note: the holes for each digits are listed below</p>
+<ul>
+<li>0: 1hole</li>
+<li>1: 0 hole</li>
+<li>2: 0 hole</li>
+<li>3: 0 hole</li>
+<li>4: 1 hole</li>
+<li>5: 0 hole</li>
+<li>6: 1 hole</li>
+<li>7: 0 hole</li>
+<li>8: 2 holes</li>
+<li>9: 1 hole</li>
+</ul>
+<h2 id="II-Solution"><a href="#II-Solution" class="headerlink" title="II. Solution"></a>II. Solution</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Test</span></span><br><span class="line"><span class="keyword">let</span> n = getHoles(<span class="number">1234567</span>)    </span><br><span class="line"><span class="built_in">console</span>.log(n)			<span class="comment">// 2</span></span><br><span class="line"></span><br><span class="line">n = getHoles(<span class="number">1</span>)    </span><br><span class="line"><span class="built_in">console</span>.log(n)			<span class="comment">// 0</span></span><br><span class="line"></span><br><span class="line">n = getHoles(<span class="number">0</span>)    </span><br><span class="line"><span class="built_in">console</span>.log(n)			<span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line">n = getHoles(<span class="number">9</span>)    </span><br><span class="line"><span class="built_in">console</span>.log(n)			<span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line">n = getHoles(<span class="number">12</span>)    </span><br><span class="line"><span class="built_in">console</span>.log(n)			<span class="comment">// 0</span></span><br><span class="line"></span><br><span class="line">n = getHoles(<span class="number">-14</span>)    </span><br><span class="line"><span class="built_in">console</span>.log(n)			<span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getHoles</span>(<span class="params"> num </span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(num === <span class="number">0</span>) <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>([[<span class="number">0</span>,<span class="number">1</span>],[<span class="number">1</span>,<span class="number">0</span>],[<span class="number">2</span>,<span class="number">0</span>],[<span class="number">3</span>,<span class="number">0</span>],[<span class="number">4</span>,<span class="number">1</span>],[<span class="number">5</span>,<span class="number">0</span>],[<span class="number">6</span>,<span class="number">1</span>],[<span class="number">7</span>,<span class="number">0</span>],[<span class="number">8</span>,<span class="number">2</span>],[<span class="number">9</span>,<span class="number">1</span>]])</span><br><span class="line">    <span class="keyword">let</span> res = <span class="number">0</span></span><br><span class="line">    num = <span class="built_in">Math</span>.abs(num)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span>( num &gt; <span class="number">0</span> )&#123;</span><br><span class="line">        <span class="keyword">let</span> lastDigit = num % <span class="number">10</span></span><br><span class="line">        res += map.get(lastDigit)</span><br><span class="line">        num = <span class="built_in">Math</span>.floor(num/<span class="number">10</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="III-Complexity"><a href="#III-Complexity" class="headerlink" title="III. Complexity"></a>III. Complexity</h2><ul>
+<li>Time: O(n)</li>
+<li>Space: O(1) </li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/10/Trailing-zeros-of-n！/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/10/Trailing-zeros-of-n！/" itemprop="url">Trailing zeros of n！</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-10T16:31:24-08:00">2018-12-10</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/12/10/Trailing-zeros-of-n！/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/12/10/Trailing-zeros-of-n！/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="I-Problem"><a href="#I-Problem" class="headerlink" title="I. Problem"></a>I. Problem</h2><p>Count how many trailing ‘0’ for the result of <code>n!</code></p>
+<h2 id="II-Solution"><a href="#II-Solution" class="headerlink" title="II. Solution"></a>II. Solution</h2><p>The <code>0</code> are <strong><u>only</u></strong> contributed by both factor <code>2</code> and <code>5</code>, which means the number of trailing <code>0</code> equals the number of pairs of <code>2</code> &amp; <code>5</code></p>
+<p>Thus, we only need to find out how many times of the factor <code>2</code> and factor <code>5</code> in this n! is good enogh; and then <code>min(num_2, num_5)</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// // Test</span></span><br><span class="line"><span class="keyword">let</span> res = trailing_zeros_for_factorial_of(<span class="number">5</span>)</span><br><span class="line"><span class="built_in">console</span>.log(res)	<span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line">res = trailing_zeros_for_factorial_of(<span class="number">8</span>)</span><br><span class="line"><span class="built_in">console</span>.log(res)    <span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line">res = trailing_zeros_for_factorial_of(<span class="number">10</span>)</span><br><span class="line"><span class="built_in">console</span>.log(res)    <span class="comment">// 2</span></span><br><span class="line"></span><br><span class="line">res = trailing_zeros_for_factorial_of(<span class="number">15</span>)</span><br><span class="line"><span class="built_in">console</span>.log(res)    <span class="comment">// 3</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">trailing_zeros_for_factorial_of</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> num_2 = <span class="number">0</span>    </span><br><span class="line">    <span class="keyword">let</span> num_5 = <span class="number">0</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> d = <span class="number">5</span></span><br><span class="line">    <span class="keyword">while</span>(n &gt;= d)&#123;</span><br><span class="line">        num_5 += <span class="built_in">Math</span>.floor(n / d)</span><br><span class="line">        d *= <span class="number">5</span> </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    d = <span class="number">2</span></span><br><span class="line">    <span class="keyword">while</span>(n &gt;= d)&#123;</span><br><span class="line">        num_2 += <span class="built_in">Math</span>.floor(n / d)</span><br><span class="line">        d *= <span class="number">2</span> </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Math</span>.min(num_2, num_5)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="III-Complexity"><a href="#III-Complexity" class="headerlink" title="III. Complexity"></a>III. Complexity</h2><ol>
+<li>Time: O(n)</li>
+<li>Space: O(1)</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/10/Sort-a-Map/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/10/Sort-a-Map/" itemprop="url">Sort a Map</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-10T16:29:27-08:00">2018-12-10</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/12/10/Sort-a-Map/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/12/10/Sort-a-Map/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="I-Problem"><a href="#I-Problem" class="headerlink" title="I. Problem"></a>I. Problem</h2><p>Given a map, whose key are integer, sort map entries by the order of its key</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Map</span>:[</span><br><span class="line">    [<span class="number">2</span>, <span class="string">'c'</span>],</span><br><span class="line">    [<span class="number">1</span>, <span class="string">'a'</span>],   </span><br><span class="line">    [<span class="number">4</span>, <span class="string">'a'</span>],</span><br><span class="line">    [<span class="number">3</span>, <span class="string">'e'</span>],</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">res: [</span><br><span class="line">    [<span class="number">1</span>, <span class="string">'a'</span>],    </span><br><span class="line">    [<span class="number">2</span>, <span class="string">'c'</span>],</span><br><span class="line">    [<span class="number">3</span>, <span class="string">'e'</span>],</span><br><span class="line">    [<span class="number">4</span>, <span class="string">'a'</span>],</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<h2 id="II-Solution"><a href="#II-Solution" class="headerlink" title="II. Solution"></a>II. Solution</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Test</span></span><br><span class="line"><span class="keyword">let</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>([[<span class="number">2</span>, <span class="string">'c'</span>], [<span class="number">1</span>, <span class="string">'a'</span>], [<span class="number">4</span>, <span class="string">'a'</span>], [<span class="number">3</span>, <span class="string">'e'</span>]])</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sortMap</span>(<span class="params">map</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> resKey = []</span><br><span class="line">    map.forEach(<span class="function">(<span class="params">val, key</span>)=&gt;</span>&#123;</span><br><span class="line">        resKey.push(key)</span><br><span class="line">    &#125;)</span><br><span class="line">    resKey.sort()</span><br><span class="line">    <span class="keyword">return</span> resKey.map(<span class="function"><span class="params">item</span>=&gt;</span> [item, map.get(item)])</span><br><span class="line">&#125;</span><br><span class="line">                   </span><br><span class="line"><span class="built_in">console</span>.log(sortMap(map))</span><br></pre></td></tr></table></figure>
+<h2 id="III-Complexity"><a href="#III-Complexity" class="headerlink" title="III. Complexity"></a>III. Complexity</h2><ol>
+<li>Time: O(N*logN) </li>
+<li>Space: O(N)</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/10/Reverse-all-words-in-a-string/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/10/Reverse-all-words-in-a-string/" itemprop="url">Reverse all words in a string</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-10T16:28:53-08:00">2018-12-10</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/12/10/Reverse-all-words-in-a-string/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/12/10/Reverse-all-words-in-a-string/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="I-Problem"><a href="#I-Problem" class="headerlink" title="I. Problem"></a>I. Problem</h2><p>Given a string consisted of several words, reverse all words in this string.</p>
+<p>Note: </p>
+<ol>
+<li>you need to trim starting &amp; trailing white space</li>
+<li>reduce multiple spaces to only on space between each word</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"   This is a    test   string  "</span> </span><br><span class="line">  ==&gt; </span><br><span class="line"><span class="string">"string test a is This"</span></span><br></pre></td></tr></table></figure>
+<h2 id="II-Solution"><a href="#II-Solution" class="headerlink" title="II. Solution"></a>II. Solution</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Test</span></span><br><span class="line"><span class="keyword">let</span> str = <span class="string">"   This is a test   string"</span></span><br><span class="line"><span class="keyword">let</span> res = reverseString(str)</span><br><span class="line"><span class="built_in">console</span>.log(res)	   		<span class="comment">// "string test a is This"</span></span><br><span class="line"></span><br><span class="line">str = <span class="string">"This    "</span></span><br><span class="line">res = reverseString(str) </span><br><span class="line"><span class="built_in">console</span>.log(res)	   		<span class="comment">// "This"</span></span><br><span class="line"></span><br><span class="line">str = <span class="string">"This is  "</span></span><br><span class="line">res = reverseString(str) </span><br><span class="line"><span class="built_in">console</span>.log(res)	   		<span class="comment">// "is This"</span></span><br><span class="line"></span><br><span class="line">str = <span class="string">"This"</span></span><br><span class="line">res = reverseString(str) </span><br><span class="line"><span class="built_in">console</span>.log(res)	   		<span class="comment">// "This"</span></span><br><span class="line"></span><br><span class="line">str = <span class="string">""</span></span><br><span class="line">res = reverseString(str) </span><br><span class="line"><span class="built_in">console</span>.log(res)	   		<span class="comment">// ""</span></span><br><span class="line"></span><br><span class="line">str = <span class="string">"  "</span></span><br><span class="line">res = reverseString(str) </span><br><span class="line"><span class="built_in">console</span>.log(res)	   		<span class="comment">// ""</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reverseString</span>  (<span class="params">str</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> arr = str.trim().split(<span class="regexp">/\s+/</span>)</span><br><span class="line">    <span class="keyword">let</span> n = arr.length</span><br><span class="line">    </span><br><span class="line">    reverse(arr, <span class="number">0</span>, n<span class="number">-1</span>)</span><br><span class="line">    <span class="keyword">let</span> start = <span class="number">0</span></span><br><span class="line">    <span class="keyword">let</span> end = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">1</span>; i &lt; n; i++ )&#123;</span><br><span class="line">        <span class="keyword">let</span> prevChar = arr[i<span class="number">-1</span>]</span><br><span class="line">        <span class="keyword">let</span> currChar = arr[i]</span><br><span class="line">        <span class="keyword">if</span>( prevChar !== <span class="string">' '</span> &amp;&amp; currChar === <span class="string">' '</span> )&#123;</span><br><span class="line">            end = i<span class="number">-1</span></span><br><span class="line">            reverse(arr, start, end)</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>( prevChar === <span class="string">' '</span> &amp;&amp; currChar !== <span class="string">' '</span> )&#123;</span><br><span class="line">            start = i</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(start!==<span class="number">0</span>) reverse(arr, start, n<span class="number">-1</span>)</span><br><span class="line">    <span class="keyword">return</span> arr.join(<span class="string">' '</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reverse</span> (<span class="params">arr, left, right</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">while</span>( left &lt; right )&#123;</span><br><span class="line">        [arr[left], arr[right]] = [arr[right], arr[left]]</span><br><span class="line">        left++</span><br><span class="line">        right--</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="III-Complexity"><a href="#III-Complexity" class="headerlink" title="III. Complexity"></a>III. Complexity</h2><ol>
+<li>Time: O(N)</li>
+<li>Space: O(N)</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/09/How-to-Check-Data-Types-in-JS/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1589,978 +2238,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/31/setTimeout-vs-setInterval/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/31/setTimeout-vs-setInterval/" itemprop="url">setTimeout vs setInterval</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-31T20:23:26-07:00">2018-10-31</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/10/31/setTimeout-vs-setInterval/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/31/setTimeout-vs-setInterval/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="0-Credits-to"><a href="#0-Credits-to" class="headerlink" title="0. Credits to:"></a>0. Credits to:</h2><p><a href="http://www.laruence.com/2009/09/23/1089.html" target="_blank" rel="noopener">http://www.laruence.com/2009/09/23/1089.html</a></p>
-<p><a href="https://www.jeffjade.com/2015/08/03/2015-08-03-javascript-this/" target="_blank" rel="noopener">https://www.jeffjade.com/2015/08/03/2015-08-03-javascript-this/</a></p>
-<p><a href="https://www.youtube.com/watch?v=8aGhZQkoFbQ" target="_blank" rel="noopener">https://www.youtube.com/watch?v=8aGhZQkoFbQ</a></p>
-<p><a href="https://www.zhihu.com/question/55050034" target="_blank" rel="noopener">https://www.zhihu.com/question/55050034</a></p>
-<p><a href="https://codepen.io/discountry/pen/XRXdVX?editors=1011" target="_blank" rel="noopener">https://codepen.io/discountry/pen/XRXdVX?editors=1011</a></p>
-<h2 id="I-setTimeout"><a href="#I-setTimeout" class="headerlink" title="I. setTimeout"></a>I. <code>setTimeout</code></h2><ol>
-<li>After <code>delay</code> period, put <code>cb</code> to <u><strong>taskQueue</strong></u> of main thread, rather than executing <code>cb</code> right away!<ul>
-<li>only guarantees after exact<code>delay</code>, <code>cb</code> is scheduled,</li>
-<li>cannot guarantee <code>cb</code> being executed after exact <code>delay</code>, because maybe at that time, the main thread is still dealing a time-consuming task, which will postpone the execution of <code>cb</code></li>
-</ul>
-</li>
-<li><p>Good use case: <u><strong>recursively schedule delayed task</strong></u>, like a <code>node</code> data structure</p>
-<ul>
-<li>deal with CPU intensive task, set aside period for UI update to be executed to avoid freezing</li>
-<li>eg.  break down large task into smaller ones, schedule smaller task execution every delay period <ul>
-<li>the bigger <code>delay</code> period is, the longer time left for UI</li>
-<li>the time left for UI is exactly <code>delay</code> period</li>
-<li>NOTE: don’t use <code>setInterval</code>, since the execution time for <code>cb</code>  can be longer than<code>delay</code> , resulting in there’s no time left for UI update. When <code>cb</code> finishes execution,  the UI update and next <code>cb</code> will <strong><u>race</u></strong> to be executed in next <strong>event loop</strong></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong><code>setTimeout(cb, 0):</code> </strong> </p>
-<ul>
-<li><ol>
-<li><strong>等到Call Stack为空，即下一轮 Event Loop的时候 执行 <code>cb</code></strong></li>
-</ol>
-</li>
-<li><ol start="2">
-<li><u><strong>Render Queue</strong></u> 比 <u><strong>Callback Queue</strong></u> 在browser中的<strong>优先级高</strong>，他们<u><strong>共用一个JS V8 Engine</strong></u>。因此，callback中的<code>cb</code>会等到DOM被render之后在调用，这就是为什么使用 <strong><code>setTimeout(cb, 0)</code> </strong> </li>
-</ol>
-</li>
-<li><ol start="3">
-<li>这样，即便有很多<code>setTimeout(cb, 0)</code><strong>短时间大量</strong>被调用，也会因为<strong><u>render queue的高优先级</u></strong>，使得它能够在两个<code>cb</code> 调用之间，插入到 JS V8 thread中update DOM，从而使<strong><u>页面不会freeze</u></strong></li>
-</ol>
-</li>
-<li><p><u><strong>Waiting for elements mounted to DOM by GUI thread, then switch to JS thread, do the manipulation by <code>cb</code></strong></u></p>
-</li>
-<li><p>Every function put inside <code>setTimeout</code> with <code>0</code> delay, will <strong><u>respect</u> all the DOM task</strong>, and will <strong>scheduled after all DOM tasck</strong></p>
-</li>
-<li><p>will execute right after all <strong><u>synchronous task</u></strong> is finished on stack by main thread</p>
-</li>
-<li><p>i.e. has to wait for next <strong><u>event loop</u></strong> come</p>
-</li>
-<li><p><strong>Great Use Case:</strong></p>
-<ul>
-<li><p>set the order of event handler: </p>
-<ul>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. parent event_handler will be executed first, </span></span><br><span class="line"><span class="comment">// 2. then the target element </span></span><br><span class="line"><span class="keyword">let</span> input = <span class="built_in">document</span>.getElementById(<span class="string">'myButton'</span>);</span><br><span class="line"></span><br><span class="line">input.onclick = <span class="function"><span class="keyword">function</span> <span class="title">A</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span> <span class="title">B</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    input.value +=<span class="string">' input'</span>;</span><br><span class="line">  &#125;, <span class="number">0</span>)</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">document</span>.body.onclick = <span class="function"><span class="keyword">function</span> <span class="title">C</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  input.value += <span class="string">' body'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>tackle the <strong><u>race problem of keypress</u></strong></p>
-<ul>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">	keypress has two results:</span></span><br><span class="line"><span class="comment">	1. give input the value of pressed key [asynchronous - hardware]</span></span><br><span class="line"><span class="comment">	2. call the keypress event handler [asynchronous - event]</span></span><br><span class="line"><span class="comment">	</span></span><br><span class="line"><span class="comment">	BAD version: </span></span><br><span class="line"><span class="comment">		- cannot get the current key value when callback is called</span></span><br><span class="line"><span class="comment">		- can only get the value of previous pressed key value</span></span><br><span class="line"><span class="comment">	GOOD version:</span></span><br><span class="line"><span class="comment">		- use setTimeout(fn, 0)</span></span><br><span class="line"><span class="comment">		- callback will be executed after the key value is updated in DOM</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line">&lt;input type=<span class="string">"text"</span> id=<span class="string">"input-box"</span>&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1. BAD Version</span></span><br><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">'input-box'</span>).onkeypress = <span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</span><br><span class="line">  	<span class="keyword">this</span>.value = <span class="keyword">this</span>.value.toUpperCase();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. GOOD Version</span></span><br><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">'input-box'</span>).onkeypress = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> self = <span class="keyword">this</span>;</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    self.value = self.value.toUpperCase();</span><br><span class="line">  &#125;, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<h2 id="II-setInterval"><a href="#II-setInterval" class="headerlink" title="II. setInterval"></a>II. <code>setInterval</code></h2><ol>
-<li>Every <code>delay</code> period, put <code>cb</code> to <u><strong>taskQueue</strong></u> of main thread if there is no <code>cb</code> waiting to be executed on the taskQueue; Otherwise, won’t schedule <code>cb</code> even <code>delay</code> period is achieved</li>
-<li><p><strong><u>Note:</u></strong> </p>
-<ol>
-<li>when delay is up, even there exists an CPU-intensive task , <code>setInterval</code> won’t wait for the finish of the current task, instead put the <code>cb</code> directly to <strong><u>taskQueue at the exact time spot</u></strong>; </li>
-<li>But if the main thread is still executing task, the <code>cb</code> has to waits to be executed </li>
-<li>There is NO accumulated <code>cb</code> scheduled on event queue,  even if there is a CPU intensive task blocking the periodic <code>cb</code> scheduling.</li>
-<li><code>setInterval</code> timer has a check mechnism to ensure, there will be only one <code>cb</code> on event queue</li>
-</ol>
-</li>
-<li><p>Common use case: <strong>CSS animation</strong></p>
-<ul>
-<li><p>Note1: </p>
-<ul>
-<li>it only focus scheduling <code>cb</code> after <code>delay</code>, don’t care how long vacant time left</li>
-<li>it’s possible that execution of <code>cb</code> is longer than <code>delay</code>, then next <code>cb</code> will be executed right after first <code>cb</code> finishes</li>
-</ul>
-</li>
-<li><p>Note2: </p>
-<ul>
-<li><p>mustn’t use <strong>time</strong> variable as terminating condition to clear interval, </p>
-</li>
-<li><p>because some time it cost longer to execute <code>cb</code>, making some scheduled task won’t be executed</p>
-</li>
-<li><p>use other variable as terminating condition to clear interval</p>
-</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> div = <span class="built_in">document</span>.getElementById(<span class="string">'someDiv'</span>);</span><br><span class="line"><span class="keyword">let</span> opacity = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">let</span> fader = setInterval(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	opacity -= <span class="number">0.1</span>;</span><br><span class="line">		<span class="keyword">if</span> (opacity &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">			div.style.opacity = opacity;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			clearInterval(fader);   <span class="comment">// use `opacity` as terminating condition</span></span><br><span class="line">		&#125;</span><br><span class="line">&#125;, <span class="number">100</span>);</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<h2 id="III-Common-Problems"><a href="#III-Common-Problems" class="headerlink" title="III. Common Problems"></a>III. Common Problems</h2><ol>
-<li><p><strong><code>this</code> problem =&gt; because of <code>window.setTimeout</code> or <code>window.setInterval</code></strong></p>
-<ul>
-<li><p><code>setTimeout( function(){ this.value=50 }, 1000 )</code></p>
-</li>
-<li><p><u>Problem:</u> </p>
-<ul>
-<li>example above, exist <code>this</code> in the callback function, if not <code>bind</code> actual object, <code>this</code> will refer <code>window</code></li>
-<li><code>setTimeout</code> <code>setInterval</code> will change the reference of <code>this</code> to <code>window</code></li>
-</ul>
-</li>
-<li><p><u>Why?</u></p>
-<ul>
-<li><code>this</code> always refers to the object who calls the function where <code>this</code> resides</li>
-<li>when <code>cb</code> executed, it is executed like <code>cb()</code>, which omits the prefix object: <code>window</code></li>
-</ul>
-</li>
-<li><p><u>How to solve?</u></p>
-<ul>
-<li><p>use <code>bind()</code> to produce a new <code>cb</code> function carrying this reference to right object</p>
-</li>
-<li><p>use <code>apply</code> or <code>call</code></p>
-</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="string">"string belongs to window"</span>    <span class="comment">// note: not " let a = ... ";</span></span><br><span class="line">obj = &#123;</span><br><span class="line">    a: <span class="string">"string belongs to obj"</span>,</span><br><span class="line">    printA: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; <span class="built_in">console</span>.log(<span class="keyword">this</span>.a) &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1. "string belongs to window", after 1s</span></span><br><span class="line">setTimeout(obj.printA, <span class="number">1000</span>)  </span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. "string belongs to window", after 1s</span></span><br><span class="line"><span class="keyword">let</span> temp = obj.printA</span><br><span class="line">setTimeout(temp, <span class="number">1000</span>)  	  </span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. "string belongs to obj"</span></span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; obj.printA.apply(obj) &#125;, <span class="number">2000</span>) </span><br><span class="line"></span><br><span class="line"><span class="comment">// 4. "string belongs to obj" </span></span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; obj.printA() &#125;, <span class="number">3000</span>)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Implement a <code>setInterval</code> using <code>setTimeout</code></p>
-<ol>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">customSetInterval</span>(<span class="params"> cb, delay </span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> time_handle = <span class="literal">null</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">wrapper</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        cb.apply(<span class="literal">null</span>)</span><br><span class="line">        time_handle= setTimeout(wrapper, delay)</span><br><span class="line">    &#125;</span><br><span class="line">    time_handle= setTimeout(wrapper, delay)</span><br><span class="line">    <span class="keyword">return</span> time_handle</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Test</span></span><br><span class="line"><span class="keyword">let</span> i = <span class="number">0</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">cb</span>(<span class="params"></span>)</span>&#123; i+=<span class="number">1</span>; <span class="built_in">console</span>.log(i) &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> interval_handle = customSetInterval(cb, <span class="number">1000</span>)  <span class="comment">// print  1 , 2 , 3 , 4 , ...</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// clearTimeout(interval_handle)   // use to clear interval</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-<li><p><u>how to handle encoding task for a file (CPU intensive)?</u></p>
-<ul>
-<li><p><strong>Problem</strong>: it might freeze the UI when encode the whole file</p>
-</li>
-<li><p><strong>Solution</strong>: </p>
-<ul>
-<li><p>Divide the file into several part, using a symbol, or using size</p>
-</li>
-<li><p>for each small part, just take over CPU, since it’s small task</p>
-</li>
-<li><p>between each encoding, leave time for UI interaction</p>
-</li>
-<li><p>Note: use <code>setTimeout</code> instead of <code>setInterval</code></p>
-</li>
-<li><p>Since the execution time for <code>cb</code>  can be longer than<code>delay</code> , resulting in there’s no time left for UI update. When <code>cb</code> finishes execution,  the UI update and next <code>cb</code> will <strong><u>race</u></strong> to be executed in next <strong>event loop</strong></p>
-</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">	input: the file to be encoded</span></span><br><span class="line"><span class="comment">	output: the encoded goal file </span></span><br><span class="line"><span class="comment">	totalSize: the size of the input file</span></span><br><span class="line"><span class="comment">	encode: the function used to encode</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">encodeWrapper</span>(<span class="params"> input, output, totalSize, encode </span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> output = <span class="string">""</span></span><br><span class="line">    <span class="keyword">let</span> accumSize = <span class="number">0</span></span><br><span class="line">    <span class="keyword">let</span> i = <span class="number">0</span></span><br><span class="line">    <span class="keyword">let</span> timeoutHandle = <span class="literal">null</span></span><br><span class="line">    <span class="comment">/* delayed recursion</span></span><br><span class="line"><span class="comment">       i: ith step    </span></span><br><span class="line"><span class="comment">       stepSize: how big to encod for a step</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">encodeHelper</span>(<span class="params">i, stepSize </span>)</span>&#123;</span><br><span class="line">        output += encode( input.substring(i*stepSize,stepSize) )</span><br><span class="line">        <span class="keyword">if</span>( i*stepSize &gt; totalSize ) &#123;</span><br><span class="line">            clearInterval(timeoutHandle)</span><br><span class="line">            <span class="keyword">return</span> output</span><br><span class="line">        &#125;</span><br><span class="line">        timeoutHandle = setTimeout(encodeHelper(i+<span class="number">1</span>, stepSize), <span class="number">100</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> encodeHelper(<span class="number">0</span>, <span class="number">1024</span>) </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><u>How to write a <strong>delayed recursion</strong> ?</u></p>
-<ul>
-<li><p>Problem: Calculate the sum from 0 to n</p>
-</li>
-<li><p>Solution:  f(n) = f(n-1) + n;    f(0) = 0</p>
-</li>
-</ul>
-</li>
-</ol>
-<ul>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">	f(n) = f(n-1) + n</span></span><br><span class="line"><span class="comment">	f(0) = 0</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">wrapper</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> timeHandle = <span class="number">0</span></span><br><span class="line">    <span class="keyword">let</span> accum = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// recursive call itself every 1000ms</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">sum</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">        timeHandle=setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (n === <span class="number">0</span>) &#123;</span><br><span class="line">                clearTimeout(timeHandle)</span><br><span class="line">                alert(accum) <span class="comment">// output the result</span></span><br><span class="line">                <span class="keyword">return</span> </span><br><span class="line">            &#125;</span><br><span class="line">            accum += n</span><br><span class="line">            sum(n<span class="number">-1</span>)</span><br><span class="line">        &#125;,<span class="number">1000</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    sum(n)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<ol start="4">
-<li><p><strong>Debouncify a function</strong></p>
-<ul>
-<li><p><strong><u>Problem</u></strong>: Some Ajax functions can be frequently called using events, which will cause severe performance problem on backend</p>
-</li>
-<li><p><strong><u>Solution</u></strong>:  </p>
-<ul>
-<li>we want to call Ajax function only after a period <u><strong>delay</strong></u> time (so that we can make sure the user is really waiting to for to make Ajax call, rather than in the middle of typing)</li>
-<li>when there is another intention to call the Ajax function in the middle of last delay, we want to reschedule the ajax call after another delay</li>
-</ul>
-</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">callAjaxRightAway</span>(<span class="params"></span>)</span>&#123; </span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Ajax call starting, with arguments: "</span> + [...arguments] ) </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Debouncify</span>(<span class="params"> fn, delay </span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> time_handle = <span class="literal">null</span></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        clearTimeout(time_handle)</span><br><span class="line">        <span class="keyword">let</span> args = <span class="built_in">arguments</span></span><br><span class="line">        time_handle = setTimeout( <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; fn.apply(<span class="literal">null</span>,args) &#125;, delay)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> delayedFun = Debouncify(callAjaxRightAway, <span class="number">2000</span>) </span><br><span class="line"></span><br><span class="line">delayedFun(&#123;<span class="attr">arr</span>:[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], <span class="attr">heigh</span>: <span class="number">10</span> &#125;) <span class="comment">// will be ignored</span></span><br><span class="line">delayedFun(<span class="number">1</span>,<span class="number">2</span>)							<span class="comment">// will be ignored</span></span><br><span class="line">delayedFun(<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>)    <span class="comment">// "Ajax call starting, with arguments: a,b,c"</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/30/Negative-Margin-in-Layout/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/30/Negative-Margin-in-Layout/" itemprop="url">Negative Margin in Layout</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-30T17:41:46-07:00">2018-10-30</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/10/30/Negative-Margin-in-Layout/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/30/Negative-Margin-in-Layout/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Credits-to"><a href="#Credits-to" class="headerlink" title="Credits to:"></a>Credits to:</h2><ol>
-<li><a href="http://icewind-blog.com/2014/05/27/css-negative-margin/" target="_blank" rel="noopener">http://icewind-blog.com/2014/05/27/css-negative-margin/</a></li>
-<li><a href="https://blog.csdn.net/zhoulei1995/article/details/80161240" target="_blank" rel="noopener">https://blog.csdn.net/zhoulei1995/article/details/80161240</a></li>
-<li><a href="https://github.com/rccoder/blog/issues/6" target="_blank" rel="noopener">https://github.com/rccoder/blog/issues/6</a></li>
-<li><a href="https://www.jianshu.com/p/487d131537b4" target="_blank" rel="noopener">https://www.jianshu.com/p/487d131537b4</a></li>
-<li><a href="https://alistapart.com/article/holygrail" target="_blank" rel="noopener">https://alistapart.com/article/holygrail</a></li>
-</ol>
-<h2 id="Document-flow"><a href="#Document-flow" class="headerlink" title="Document flow"></a>Document flow</h2><p>All block elements like boxes (block/inline) flowing on water; The water push them to left, and to top</p>
-<ol>
-<li>inline elements are only push to left; When there is no space in a row, it will automatically switch to next line <strong><u>without new line generated</u></strong></li>
-<li><code>float</code> will make element escape from normal document flow</li>
-<li><u>inline element</u> <code>float</code> will make it to be <u>block element</u></li>
-<li><code>position: absolute</code> &amp; <code>position: fixed</code> will also make escape</li>
-</ol>
-<h2 id="Margin-Used-in-Domcument-FLow"><a href="#Margin-Used-in-Domcument-FLow" class="headerlink" title="Margin Used in Domcument FLow"></a>Margin Used in Domcument FLow</h2><ul>
-<li><p><strong><code>margin</code></strong> determine the <u>hidden outer border</u> (not <code>border</code>) for all elements. </p>
-</li>
-<li><p>All elements have a hidden outer border used by browser to arrange elements.</p>
-</li>
-</ul>
-<h2 id="Positive-Margin"><a href="#Positive-Margin" class="headerlink" title="Positive Margin"></a>Positive Margin</h2><ol>
-<li>block element:  will make margins on 4 directions have a gap between its <u>parents</u> or its <u>siblings</u></li>
-<li>inline element:  will only respect <code>left-margin</code> and <code>right-margin</code></li>
-</ol>
-<h2 id="Negative-Margin"><a href="#Negative-Margin" class="headerlink" title="Negative Margin"></a>Negative Margin</h2><ol>
-<li><p><u>normal document flow</u></p>
-<ul>
-<li><strong>positive</strong>: margin will separate boxes by a gap</li>
-<li><strong>negative</strong>:<ul>
-<li><code>margin-left</code> 和 <code>margin-top</code>：affect itself, move to its left/top by value</li>
-<li><code>margin-right</code> 和 <code>margin-bottom</code>：affect adjacent elements, pull them to its right/bottom by value</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><u>escape document flow</u>:  <strong>absolute position</strong></p>
-<ul>
-<li><code>margin-left</code> 和 <code>margin-top</code>：can affect itself, move to its left/top by value</li>
-<li><code>margin-right</code> 和 <code>margin-bottom</code>：won’t affect adjacent, since it out of normal document flow</li>
-</ul>
-</li>
-<li><p><u>escape document flow</u>:  <strong>float</strong></p>
-<p>determined by <code>float</code> direction (like normal doc flow)</p>
-<ul>
-<li><p>when <code>float: left</code>: </p>
-<ul>
-<li><code>margin-left: -5px</code> will move itself to left by 5px</li>
-<li><code>margin-right: -5px</code> will move adjacent element to its right by 5px</li>
-<li><code>margin-top</code>：can affect itself, move to its top by value</li>
-<li><code>margin-bottom</code>：will move adjacent element to its bottom by value</li>
-</ul>
-</li>
-<li><p>when <code>float: right</code>: </p>
-<ul>
-<li><code>margin-right: -5px</code> will move adjacent element to its right by 5px</li>
-<li><code>margin-left: -5px</code> will move itself to left by 5px</li>
-<li><code>margin-top</code>：can affect itself, move to its top by value</li>
-<li><code>margin-bottom</code>：will move adjacent element to its bottom by value</li>
-</ul>
-</li>
-<li><p><strong><u>[NOTE]：</u></strong> <code>margin-left:-100%</code> in <code>float</code> document flow</p>
-<ul>
-<li><p>since <code>float</code> flow is like inline elements, no new line between lines, even though they are in different lines</p>
-</li>
-<li><p>For example below: even though at first <code>left</code> is on bottom of <code>main</code>, does not mean it break off from <code>main</code>, it still adjacent to <code>main</code></p>
-</li>
-<li><p><code>margin-left: -100%;</code> moves itself to its left by 100% width of its parent</p>
-</li>
-<li><p>Example</p>
-<ul>
-<li><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"main"</span> &gt;</span>  main <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"left"</span> &gt;</span>  left <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"right"</span>&gt;</span> right <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">    <span class="selector-class">.main</span>&#123;</span></span><br><span class="line"><span class="undefined">        float: left;</span></span><br><span class="line"><span class="undefined">        width: 100%;   // occupy whole width</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="css">    <span class="selector-class">.left</span>&#123;</span></span><br><span class="line"><span class="undefined">        float: left;</span></span><br><span class="line"><span class="undefined">        width: 50px;   // its own width</span></span><br><span class="line"><span class="undefined">        margin-left: -100%; </span></span><br><span class="line"><span class="undefined">        // even though at first it is on bottom of</span></span><br><span class="line"><span class="undefined">        // main, does not mean break off from main</span></span><br><span class="line"><span class="undefined">        // when '-100%' negative margin,</span></span><br><span class="line"><span class="undefined">        // it move itself to its left by </span></span><br><span class="line"><span class="undefined">        // 100% width of parent</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="css">    <span class="selector-class">.right</span>&#123;</span></span><br><span class="line"><span class="undefined">        float: left;</span></span><br><span class="line"><span class="undefined">        width: 50px;</span></span><br><span class="line"><span class="undefined">        margin-left: -50px;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<h2 id="Use-case-of-negative-margin"><a href="#Use-case-of-negative-margin" class="headerlink" title="Use case of negative margin"></a>Use case of negative margin</h2><ol>
-<li><p><strong>Layout Difference: <u>Holy Grail</u> vs <u>Double wings</u></strong></p>
-<ul>
-<li><u>Holy Grail</u>: background won’t affect two sides, even it’s higher than two sides</li>
-<li><u>Double wings</u>: background affects parts below two sides, when it’s higher than two sides</li>
-</ul>
-</li>
-<li><p><strong>Layout of Holy Grail (圣杯布局) </strong> </p>
-<ul>
-<li><p><a href="https://blog.csdn.net/zhoulei1995/article/details/80161240" target="_blank" rel="noopener">https://blog.csdn.net/zhoulei1995/article/details/80161240</a></p>
-</li>
-<li><p>container set aside <code>left/right padding</code> padding for left/right section</p>
-</li>
-<li><p>move left/right section onto main using <code>negative margin</code></p>
-</li>
-<li><p>move left/right section to padding place using <code>position:relative</code></p>
-<ul>
-<li><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">        	<span class="selector-class">.container</span> &#123;</span></span><br><span class="line"><span class="undefined">                padding: 0 300px 0 200px;</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="css">            <span class="selector-class">.content</span> &#123;</span></span><br><span class="line"><span class="undefined">                float: left;</span></span><br><span class="line"><span class="undefined">                width: 100%;</span></span><br><span class="line"><span class="css">                <span class="selector-tag">background</span>: <span class="selector-id">#f00</span>;</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="css">            <span class="selector-class">.left</span> &#123;</span></span><br><span class="line"><span class="undefined">                position: relative;</span></span><br><span class="line"><span class="undefined">                left: -200px;</span></span><br><span class="line"><span class="undefined">                float: left;</span></span><br><span class="line"><span class="undefined">                width: 200px;</span></span><br><span class="line"><span class="undefined">                margin-left: -100%;</span></span><br><span class="line"><span class="css">                <span class="selector-tag">background</span>: <span class="selector-id">#0f0</span>;</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="css">            <span class="selector-class">.right</span> &#123;</span></span><br><span class="line"><span class="undefined">                position: relative;</span></span><br><span class="line"><span class="undefined">                right: -300px;</span></span><br><span class="line"><span class="undefined">                float: left;</span></span><br><span class="line"><span class="undefined">                width: 300px;</span></span><br><span class="line"><span class="undefined">                margin-left: -300px;</span></span><br><span class="line"><span class="css">                <span class="selector-tag">background</span>: <span class="selector-id">#00f</span>;</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="undefined">        </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"content"</span>&gt;</span></span><br><span class="line">                中间内容区域 中间内容区域 中间内容区域 </span><br><span class="line">                中间内容区域 中间内容区域 中间内容区域 </span><br><span class="line">                中间内容区域 中间内容区域 中间内容区域 </span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"left"</span>&gt;</span>左侧边栏区域<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"right"</span>&gt;</span>右侧边栏区域<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>Double Wings layout (双飞翼布局)</strong></p>
-<ul>
-<li><p><a href="https://blog.csdn.net/zhoulei1995/article/details/80161240" target="_blank" rel="noopener">https://blog.csdn.net/zhoulei1995/article/details/80161240</a></p>
-</li>
-<li><p>move left/right section onto wrapper using <code>negative margin</code></p>
-</li>
-<li><p>set <code>margin left/right</code> to main, to make it won’t hidden by two sides</p>
-<ul>
-<li><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">        	<span class="selector-class">.wrapper</span> &#123;</span></span><br><span class="line"><span class="undefined">                float: left;</span></span><br><span class="line"><span class="undefined">                width: 100%;</span></span><br><span class="line"><span class="css">                <span class="selector-tag">background</span>: <span class="selector-id">#f00</span>;</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="css">            <span class="selector-class">.content</span> &#123;</span></span><br><span class="line"><span class="undefined">                margin-left: 200px;</span></span><br><span class="line"><span class="undefined">                margin-right: 300px;</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="css">            <span class="selector-class">.left</span> &#123;</span></span><br><span class="line"><span class="undefined">                float: left;</span></span><br><span class="line"><span class="undefined">                width: 200px;</span></span><br><span class="line"><span class="undefined">                margin-left: -100%;</span></span><br><span class="line"><span class="css">                <span class="selector-tag">background</span>: <span class="selector-id">#0f0</span>;</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="css">            <span class="selector-class">.right</span> &#123;</span></span><br><span class="line"><span class="undefined">                float: left;</span></span><br><span class="line"><span class="undefined">                width: 300px;</span></span><br><span class="line"><span class="undefined">                margin-left: -300px;</span></span><br><span class="line"><span class="css">                <span class="selector-tag">background</span>: <span class="selector-id">#00f</span>;</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="undefined">        </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"wrapper"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"content"</span>&gt;</span></span><br><span class="line">                中间内容区域 中间内容区域 中间内容区域 </span><br><span class="line">                中间内容区域 中间内容区域 中间内容区域 </span><br><span class="line">                中间内容区域 中间内容区域 中间内容区域			<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"left"</span>&gt;</span>左侧边栏区域<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"right"</span>&gt;</span>右侧边栏区域<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Horizontal &amp; Vertical Center</p>
-<ul>
-<li><p>For <code>position: absolute</code>, even thought it out of the normal document flow, the negative left/top still affect itself, moving to its left/top by value</p>
-<ul>
-<li><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE HTML&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span> Center <span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">     <span class="selector-tag">body</span>&#123; <span class="attribute">margin</span>:<span class="number">0</span>;<span class="attribute">padding</span>:<span class="number">0</span>;&#125;</span></span><br><span class="line"><span class="css">     <span class="selector-id">#test</span>&#123;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">width</span><span class="selector-pseudo">:200px</span>;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">height</span><span class="selector-pseudo">:200px</span>;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">background</span>:<span class="selector-id">#F60</span>;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">position</span><span class="selector-pseudo">:absolute</span>;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">left</span><span class="selector-pseudo">:50</span>%;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">top</span><span class="selector-pseudo">:50</span>%;</span></span><br><span class="line"><span class="undefined">        margin-left: -100px;</span></span><br><span class="line"><span class="undefined">        margin-top: -100px;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"test"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/23/Specifio-Work-Summary/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/23/Specifio-Work-Summary/" itemprop="url">Specifio Work Summary</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-23T20:04:05-07:00">2018-10-23</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Portfolios/" itemprop="url" rel="index"><span itemprop="name">Portfolios</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/10/23/Specifio-Work-Summary/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/23/Specifio-Work-Summary/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="I-PHP-legacy-website-to-React"><a href="#I-PHP-legacy-website-to-React" class="headerlink" title="I. PHP legacy website to React"></a>I. PHP legacy website to React</h2><h4 id="1-Current-website-PHP"><a href="#1-Current-website-PHP" class="headerlink" title="1. Current website (PHP)"></a>1. Current website (PHP)</h4><p>The company website in use is the old one at <a href="https://specif.io/" target="_blank" rel="noopener">https://specif.io/</a>.<br>Hopefully, Our new website will be put into use by October, 2018.</p>
-<h4 id="2-New-website-React-Gatsby-Sass"><a href="#2-New-website-React-Gatsby-Sass" class="headerlink" title="2. New website (React, Gatsby, Sass)"></a>2. New website (React, Gatsby, Sass)</h4><p>The new website is currently on staging, but you can still visit it through this link: <a href="https://publicdocker.specif.io/" target="_blank" rel="noopener">https://publicdocker.specif.io/</a></p>
-<p><strong>New features:</strong></p>
-<ul>
-<li>Static webpage auto generating from Markdown file <strong>(Gatsby.js)</strong></li>
-<li>better layout &amp; color scheme <strong>(React)</strong></li>
-<li>more user friendly</li>
-<li>more intuitive</li>
-<li>convey more information</li>
-</ul>
-<h2 id="II-Admin-Panel"><a href="#II-Admin-Panel" class="headerlink" title="II. Admin Panel"></a>II. Admin Panel</h2><p>Developped Admin Panel for both internal and external use, with 3-level privileged access.</p>
-<p><img src="https://github.com/caomingkai/specifio_projects/raw/master/Admin%20Panel/docPlan.png" alt="Admin Panel"></p>
-<h4 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction:"></a>1. Introduction:</h4><ol>
-<li><p>With Specifio’s Doc Plans feature, practitioners can control how Specifio creates draft applications so they consistently meet the preferences and requirements of clients and reviewers.</p>
-</li>
-<li><p>A practitioner’s “active” Doc Plan controls the appearance, content, and structure of the auto-drafts created by Specifio.</p>
-</li>
-<li><p>Practitioners can design a collection of different Doc Plans for different clients, technologies, or reviewers.</p>
-</li>
-<li><p>Doc Plans can be shared among registered users within your firm.</p>
-</li>
-</ol>
-<h4 id="2-Snapshots-for-key-features"><a href="#2-Snapshots-for-key-features" class="headerlink" title="2. Snapshots for key features"></a>2. Snapshots for key features</h4><ul>
-<li><p><strong>Video: Live demo page for setting like layout, format and content of their Doc Plans</strong></p>
-<p>  <a href="http://www.youtube.com/watch?feature=player_embedded&v=Gl8TfGINxko" target="_blank"><img src="http://img.youtube.com/vi/Gl8TfGINxko/0.jpg" alt="Doc Editor" width="400" height="300" border="8"></a></p>
-</li>
-<li><p><strong>Dashboard</strong></p>
-<p>  <img width="400" alt="auth0" src="https://github.com/caomingkai/specifio_projects/raw/master/Admin%20Panel/dashboard1.png"><br>  <br><br>  <img width="400" alt="auth0" src="https://github.com/caomingkai/specifio_projects/raw/master/Admin%20Panel/dashboard2.png"></p>
-</li>
-<li><p><strong>Auth0 integration</strong></p>
-<p>  <img width="400" alt="auth0" src="https://github.com/caomingkai/specifio_projects/raw/master/Admin%20Panel/auth0.png"></p>
-</li>
-<li><p><strong>Manage doc plans</strong></p>
-<p>  <img width="400" alt="docPlan.png" src="https://github.com/caomingkai/specifio_projects/raw/master/Admin%20Panel/docPlan.png"></p>
-</li>
-<li><p><strong>Manage profile</strong></p>
-<p>   <img width="400" alt="profile.png" src="https://github.com/caomingkai/specifio_projects/raw/master/Admin%20Panel/profile.png"></p>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/16/Create-a-Calculator-React/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/16/Create-a-Calculator-React/" itemprop="url">Create a Calculator - [React]</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-16T09:51:15-07:00">2018-10-16</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/10/16/Create-a-Calculator-React/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/10/16/Create-a-Calculator-React/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h2><p>Build a web calculator, that supports the basic operations of <code>add</code>, <code>remove</code>, <code>multiply</code> and <code>divide</code>.</p>
-<p>In addition, support resetting the current state, as well as a decimal point button.</p>
-<h2 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h2><ol>
-<li><p>HTML</p>
-<ol>
-<li><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"center-child"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"app"</span> &gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-<li><p>CSS</p>
-<ol>
-<li><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.wrapper</span>&#123;</span><br><span class="line">          <span class="attribute">width</span>: <span class="number">400px</span>;</span><br><span class="line">          <span class="attribute">height</span>: <span class="number">400px</span>;</span><br><span class="line">          <span class="attribute">margin</span>: <span class="number">15px</span> auto;</span><br><span class="line">          <span class="attribute">border</span>: <span class="number">1px</span> solid black;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="selector-class">.display-panel</span>&#123;</span><br><span class="line">          <span class="attribute">margin</span>: <span class="number">10px</span> auto;</span><br><span class="line">          <span class="attribute">width</span>: <span class="number">95%</span>;</span><br><span class="line">          <span class="attribute">height</span>: <span class="number">60px</span>;</span><br><span class="line">          <span class="attribute">line-height</span>: <span class="number">60px</span>;</span><br><span class="line">          <span class="attribute">font-size</span>: <span class="number">30px</span>;</span><br><span class="line">          <span class="attribute">border</span>: <span class="number">1px</span> solid black;</span><br><span class="line">          <span class="attribute">text-align</span>: right;</span><br><span class="line">          <span class="attribute">overflow-y</span>: hidden;</span><br><span class="line">          <span class="attribute">overflow-x</span>: scroll;</span><br><span class="line">          <span class="attribute">white-space</span>: nowrap;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="selector-class">.ctl-panel</span>&#123;</span><br><span class="line">          <span class="attribute">margin</span>: <span class="number">5px</span> auto;</span><br><span class="line">          <span class="attribute">width</span>: <span class="number">95%</span>;</span><br><span class="line">          <span class="attribute">height</span>: <span class="number">300px</span>;</span><br><span class="line">          <span class="attribute">border</span>: <span class="number">1px</span> solid black;</span><br><span class="line">          <span class="attribute">font-size</span>: <span class="number">30px</span>;</span><br><span class="line">          <span class="attribute">display</span>: flex;</span><br><span class="line">          <span class="attribute">flex-flow</span>: row wrap;</span><br><span class="line">          <span class="attribute">justify-content</span>: space-around;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="selector-class">.left-part</span>&#123;</span><br><span class="line">          <span class="attribute">border</span>: <span class="number">1px</span> solid red;</span><br><span class="line">          <span class="attribute">flex</span>: <span class="number">1</span> <span class="number">1</span> <span class="number">70%</span>;</span><br><span class="line">          <span class="attribute">display</span>: grid;</span><br><span class="line">          <span class="attribute">justify-content</span>: space-around;</span><br><span class="line">          <span class="attribute">align-content</span>: space-around;</span><br><span class="line">          <span class="attribute">grid-template-columns</span>: auto auto auto;</span><br><span class="line">          <span class="attribute">grid-template-rows</span>: auto auto auto auto;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="selector-class">.right-part</span>&#123;</span><br><span class="line">          <span class="attribute">flex</span>: <span class="number">1</span> <span class="number">1</span> <span class="number">20%</span>;</span><br><span class="line">          <span class="attribute">border</span>: <span class="number">1px</span> solid red;</span><br><span class="line">          <span class="attribute">display</span>: grid;</span><br><span class="line">          <span class="attribute">justify-content</span>: space-around;</span><br><span class="line">          <span class="attribute">align-content</span>: space-around;</span><br><span class="line">          <span class="attribute">grid-template-columns</span>: auto;</span><br><span class="line">          <span class="attribute">grid-template-rows</span>: <span class="number">30%</span> <span class="number">60%</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="selector-id">#equal</span>&#123;</span><br><span class="line">          <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="selector-tag">button</span>&#123;</span><br><span class="line">          <span class="attribute">width</span>: <span class="number">50px</span>;</span><br><span class="line">          <span class="attribute">height</span>: <span class="number">50px</span>;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-<li><p>JS</p>
-<ol>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Calc</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span></span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>()&#123;</span><br><span class="line">    <span class="keyword">super</span>()</span><br><span class="line">    <span class="keyword">this</span>.state = &#123;</span><br><span class="line">      display: <span class="string">""</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  handleClick(e)&#123;</span><br><span class="line">    <span class="keyword">let</span> val = e.target.textContent</span><br><span class="line">    <span class="keyword">let</span> display = <span class="keyword">this</span>.state.display</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.isNum(val))&#123;</span><br><span class="line">      <span class="keyword">this</span>.handleNum(val, display);</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="keyword">this</span>.isDot(val))&#123;</span><br><span class="line">      <span class="keyword">this</span>.handleDot(val, display);      </span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="keyword">this</span>.isOperator(val))&#123;</span><br><span class="line">      <span class="keyword">this</span>.handleOperator(val, display)</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="keyword">this</span>.isEqual(val))&#123;</span><br><span class="line">      <span class="keyword">this</span>.handleCalc(display)</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="keyword">this</span>.isClear(val))&#123;</span><br><span class="line">      <span class="keyword">this</span>.handleClear(display)</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      <span class="keyword">return</span> </span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">        handleClear(display)&#123; </span><br><span class="line">            <span class="keyword">this</span>.setState(&#123;<span class="attr">display</span>: <span class="string">""</span>&#125;)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        handleNum(v, display)&#123;</span><br><span class="line">           <span class="keyword">this</span>.setState(&#123;<span class="attr">display</span>: <span class="keyword">this</span>.state.display+v&#125;)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        handleOperator(v, display)&#123;</span><br><span class="line">          <span class="keyword">let</span> oldText = display</span><br><span class="line">          <span class="keyword">if</span>( oldText === <span class="string">""</span> ) <span class="keyword">return</span> </span><br><span class="line">          <span class="keyword">if</span>( <span class="keyword">this</span>.isOperator(oldText[oldText.length<span class="number">-1</span>]) )</span><br><span class="line">              oldText=oldText.substr(<span class="number">0</span>,oldText.length<span class="number">-1</span>)</span><br><span class="line">          <span class="keyword">this</span>.setState(&#123;<span class="attr">display</span>: oldText+v&#125;)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        handleDot(v, display)&#123;</span><br><span class="line">          <span class="keyword">let</span> oldText = display</span><br><span class="line">          <span class="keyword">if</span>( <span class="keyword">this</span>.isDot(oldText[oldText.length<span class="number">-1</span>]) ) <span class="keyword">return</span></span><br><span class="line">          display.textContent += v</span><br><span class="line">          <span class="keyword">this</span>.setState(&#123;<span class="attr">display</span>: <span class="keyword">this</span>.state.display+v&#125;)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        </span><br><span class="line">        handleCalc(display)&#123;</span><br><span class="line">          <span class="keyword">let</span> oldText = display</span><br><span class="line">          <span class="keyword">if</span>( !<span class="keyword">this</span>.isNum(oldText[oldText.length<span class="number">-1</span>]) ) &#123;</span><br><span class="line">            <span class="keyword">this</span>.setState(&#123;<span class="attr">display</span>:<span class="number">0</span>&#125;)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">this</span>.setState(&#123;<span class="attr">display</span>: <span class="keyword">this</span>.calc(oldText)&#125;)</span><br><span class="line">        &#125;</span><br><span class="line">		</span><br><span class="line">      calc( text )&#123;</span><br><span class="line">          <span class="keyword">let</span> stack = []</span><br><span class="line">          <span class="keyword">let</span> numbers = text.split(<span class="regexp">/\+|\-|\×|\÷/</span>)</span><br><span class="line">          <span class="keyword">let</span> operators =  text.replace(<span class="regexp">/[0-9]|\./g</span>, <span class="string">""</span>).split(<span class="string">""</span>)</span><br><span class="line">          <span class="built_in">console</span>.log(numbers)</span><br><span class="line">          <span class="built_in">console</span>.log(operators)</span><br><span class="line"></span><br><span class="line">          stack.push(<span class="keyword">new</span> <span class="built_in">Number</span>(numbers[<span class="number">0</span>]) )</span><br><span class="line">          <span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">0</span>; i &lt; operators.length; i++ )&#123;</span><br><span class="line">            <span class="keyword">let</span> num = <span class="keyword">new</span> <span class="built_in">Number</span>( numbers[i+<span class="number">1</span>] )</span><br><span class="line">            <span class="keyword">if</span>(operators[i] === <span class="string">"+"</span>)&#123;</span><br><span class="line">              stack.push(num)</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(operators[i] === <span class="string">"-"</span>)&#123;</span><br><span class="line">              stack.push(-num)</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(operators[i] === <span class="string">"×"</span>)&#123;</span><br><span class="line">              <span class="keyword">let</span> top = stack.pop()</span><br><span class="line">              stack.push(top*num)</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(operators[i] === <span class="string">"÷"</span>)&#123;</span><br><span class="line">              <span class="keyword">let</span> top = stack.pop()</span><br><span class="line">              stack.push(top/num)</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="built_in">console</span>.log(stack)</span><br><span class="line">          <span class="keyword">return</span> stack.reduce(<span class="function">(<span class="params">item,accum</span>)=&gt;</span>&#123;</span><br><span class="line">               <span class="keyword">return</span> accum + item</span><br><span class="line">          &#125;,<span class="number">0</span>)</span><br><span class="line">     &#125;</span><br><span class="line">        </span><br><span class="line">    isNum(v)&#123;  <span class="keyword">return</span> v &gt;= <span class="string">"0"</span> &amp;&amp; v &lt;= <span class="string">"9"</span> &#125;</span><br><span class="line">    isClear(v)&#123; <span class="keyword">return</span> v === <span class="string">'C'</span> &#125;</span><br><span class="line">    isEqual(v)&#123; <span class="keyword">return</span> v === <span class="string">'='</span> &#125;</span><br><span class="line">    isDot(v)&#123; <span class="keyword">return</span> v === <span class="string">'.'</span> &#125;</span><br><span class="line">	isOperator(v)&#123; <span class="keyword">return</span> v === <span class="string">'+'</span> ||  v === <span class="string">'-'</span> ||  v === <span class="string">'÷'</span> ||  v === <span class="string">'×'</span> &#125;</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  render()&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div className=<span class="string">"wrapper"</span>&gt; </span><br><span class="line">      &lt;div className=<span class="string">"display-panel"</span> id=<span class="string">"display"</span>&gt;&#123;<span class="keyword">this</span>.state.display&#125;</span><br><span class="line">      &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">      &lt;div className="ctl-panel" id="panel" onClick=&#123;(e)=&gt;&#123;this.handleClick(e)&#125;&#125;&gt;</span></span><br><span class="line"><span class="regexp">        &lt;div className='left-part'&gt;</span></span><br><span class="line"><span class="regexp">            &lt;div&gt;&lt;button&gt;+&lt;/</span>button&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">            &lt;div&gt;<span class="xml"><span class="tag">&lt;<span class="name">button</span>&gt;</span>-<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">            &lt;div&gt;<span class="xml"><span class="tag">&lt;<span class="name">button</span>&gt;</span>&amp;times;<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">            &lt;div&gt;<span class="xml"><span class="tag">&lt;<span class="name">button</span>&gt;</span>7<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">            &lt;div&gt;<span class="xml"><span class="tag">&lt;<span class="name">button</span>&gt;</span>8<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">            &lt;div&gt;<span class="xml"><span class="tag">&lt;<span class="name">button</span>&gt;</span>9<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">            &lt;div&gt;<span class="xml"><span class="tag">&lt;<span class="name">button</span>&gt;</span>4<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">            &lt;div&gt;<span class="xml"><span class="tag">&lt;<span class="name">button</span>&gt;</span>5<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">            &lt;div&gt;<span class="xml"><span class="tag">&lt;<span class="name">button</span>&gt;</span>6<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">            &lt;div&gt;<span class="xml"><span class="tag">&lt;<span class="name">button</span>&gt;</span>1<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">            &lt;div&gt;<span class="xml"><span class="tag">&lt;<span class="name">button</span>&gt;</span>2<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">            &lt;div&gt;<span class="xml"><span class="tag">&lt;<span class="name">button</span>&gt;</span>3<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">            &lt;div&gt;<span class="xml"><span class="tag">&lt;<span class="name">button</span>&gt;</span>0<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">            &lt;div&gt;<span class="xml"><span class="tag">&lt;<span class="name">button</span>&gt;</span>.<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">            &lt;div&gt;<span class="xml"><span class="tag">&lt;<span class="name">button</span>&gt;</span>C<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">        &lt;div className='right-part'&gt;</span></span><br><span class="line"><span class="regexp">          &lt;div&gt;&lt;button&gt;&amp;divide;&lt;/</span>button&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">          &lt;div&gt;<span class="xml"><span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"equal"</span>&gt;</span>=<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">      &lt;/</span>div&gt;</span><br><span class="line">    &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">  </span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">ReactDOM.render(&lt;Calc /</span>&gt;, <span class="built_in">document</span>.getElementById(<span class="string">'app'</span>));</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2612,7 +2289,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">65</span>
+                    <span class="site-state-item-count">69</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2878,7 +2555,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">114</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">117</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

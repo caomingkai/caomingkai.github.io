@@ -332,6 +332,978 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/17/2-egg-Puzzle/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/17/2-egg-Puzzle/" itemprop="url">The Joy of Egg-Dropping(2-egg Puzzle)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-17T22:03:40-07:00">2018-05-17</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/17/2-egg-Puzzle/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/05/17/2-egg-Puzzle/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="I-Problem-statement"><a href="#I-Problem-statement" class="headerlink" title="I. Problem statement"></a>I. Problem statement</h3><p><strong>1. Easy version</strong></p>
+<blockquote>
+<p>Given infinite number of same eggs, try with minimun trials to find out  the highest floor where tossing the egg won’t result in egg crash. The building has 200 floors.</p>
+</blockquote>
+<ul>
+<li>变量：N=200</li>
+<li>目标：试验次数最小</li>
+<li>约束：none</li>
+</ul>
+<p><strong>2. Hard version</strong></p>
+<blockquote>
+<p>Only 2 eggs were given, try with minimun trials to find the highest floor where tossing the egg won’t result in egg crash. The building has 200 floors. (The egg can be reused as long as it is intact)</p>
+</blockquote>
+<ul>
+<li>变量：F=200, E=2</li>
+<li>目标：试验次数最小</li>
+<li>约束：</li>
+</ul>
+<h3 id="II-Solution-for-easy-version"><a href="#II-Solution-for-easy-version" class="headerlink" title="II. Solution for easy version"></a>II. Solution for easy version</h3><p>Since the number of eggs we can use is unlimited, we can use the <strong>fastest approach in the universe</strong> to find the unknown target in a list: <code>binary search</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">- left direction: break </span><br><span class="line">- right direction:intact</span><br><span class="line"></span><br><span class="line">0          100        200</span><br><span class="line">         /     \</span><br><span class="line">        50      150</span><br><span class="line">      /   \    /   \</span><br><span class="line">     25   75  125  175</span><br><span class="line">    / \  </span><br><span class="line">  ...   </span><br><span class="line"></span><br><span class="line">Toss an egg on floor 100:</span><br><span class="line">1. if egg break, toss another on floor 50;</span><br><span class="line">    1.1 if egg break, toss another on floor 25;</span><br><span class="line">        1.1.1 ...</span><br><span class="line">        1.1.2 ...</span><br><span class="line">    1.2 if doesn&apos;t break, toss another on floor 75;</span><br><span class="line">        1.2.1 ...</span><br><span class="line">        1.2.2 ...</span><br><span class="line">2. if doesn&apos;t break, toss another on floor 150;</span><br><span class="line">    2.1 if egg break, toss another on floor 125;</span><br><span class="line">        2.1.1 ...</span><br><span class="line">        2.1.2 ...</span><br><span class="line">    2.2 if doesn&apos;t break, toss another on floor 175;</span><br><span class="line">        2.2.1 ...</span><br><span class="line">        2.2.2 ...</span><br></pre></td></tr></table></figure>
+<h3 id="III-Solution-for-hard-version"><a href="#III-Solution-for-hard-version" class="headerlink" title="III. Solution for hard version"></a>III. Solution for hard version</h3><p>Since it is not so intuitive at first glance, we will take a few trials to get a deeper understanding of this problem.</p>
+<p>General idea:   </p>
+<blockquote>
+<p>egg-1 used to narrow down possible range<br>egg-2 used to sequentially find the target floor</p>
+</blockquote>
+<ol>
+<li><p><strong>[egg-1 with step=10]</strong> egg-1 tossed on floor 20,40,60,80,100,120,… with a step=20</p>
+<ul>
+<li>worst-case: 29 trials<ul>
+<li>egg-1 tossed on 200 and break: 10 trials</li>
+<li>egg-2 tossed on 199 (from 181), break: 19 trials</li>
+</ul>
+</li>
+<li>best-case: 2 trials<ul>
+<li>egg-1 tossed on 20 and break: 1 trials</li>
+<li>egg-2 tossed on 1: 1 trials</li>
+</ul>
+</li>
+<li>for this method, what is the min trials can we say?<ul>
+<li>29 trials(the worst case), no worse than it</li>
+<li>we cannot guarantee it is the best case</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>[edge case: BS]</strong> egg-1 tossed on floor 100, 200</p>
+<ul>
+<li>worst-case: 201 trials<ul>
+<li>egg-1 tossed on 200 and break: 2 trials</li>
+<li>egg-2 tossed on 199 (from 101), break: 199 trials</li>
+</ul>
+</li>
+<li>best-case: 2 trials<ul>
+<li>egg-1 tossed on 100 and break: 1 trials</li>
+<li>egg-2 tossed on 1: 1 trials</li>
+</ul>
+</li>
+<li>for this method, what is the min trials can we say?<ul>
+<li>201 trials(the worst case), no worse than it</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>[Solution 1]</strong> </p>
+<ul>
+<li><a href="https://www.zhihu.com/question/19690210/answer/22937826" target="_blank" rel="noopener">https://www.zhihu.com/question/19690210/answer/22937826</a></li>
+<li>the ‘step’ affect min-trial</li>
+<li>we want control ‘step’ to make the trials of worst case and best case as close as possible; This way it will divvy up the trial between worst and best cases</li>
+<li>Goal: worst case trials = best case trials</li>
+<li>egg-1 tossed on floor x, 2x-1, 3x-2, .. 1</li>
+<li>蛋一第一次扔在X层，第二次扔在比原来高 X-1层，… 高2， 高1，使得X+(X-1)+…+2+1=200</li>
+<li>最坏情况(=最好情况)总的次数就是：<ul>
+<li>如果在第X层就碎，那么蛋二最坏情况要扔X-1，所以总数是 1+X-1=X</li>
+<li>如果在X+(X-1)碎，那么蛋二最坏情况要扔 X-2，所以2+X-2=X</li>
+</ul>
+</li>
+<li><p>x = 20</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">|_|__</span><br><span class="line">|_|     x-2</span><br><span class="line">|_|__   </span><br><span class="line">|_|     x-1</span><br><span class="line">|_|___ </span><br><span class="line">|_|     x</span><br><span class="line">|_|</span><br><span class="line">|_|___</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>假设蛋一第一次扔在X层，第二次扔在比原来高 X-1层，… 高2， 高1，使得X+(X-1)+…+2+1=100，那么最坏情况总的次数就是：如果在第X层就碎，那么蛋二最坏情况要扔X-1，所以总数是 1+X-1=X如果在X+(X-1)碎，那么蛋二最坏情况要扔 X-2，所以2+X-2=X</p>
+</li>
+</ul>
+</li>
+</ol>
+<ol start="4">
+<li><p><strong>[Solution 2]</strong> </p>
+<ul>
+<li><p>链接：<a href="https://www.zhihu.com/question/19690210/answer/125713075" target="_blank" rel="noopener">https://www.zhihu.com/question/19690210/answer/125713075</a></p>
+</li>
+<li><p>子问题F[i, j]: H的可行范围为[0, i]，手上还有j个鸡蛋的时候，最坏情况下的最小试验次数是多少。我们的目标函数就是F[N, K]。</p>
+</li>
+<li>这个能够设立是基于这样一种想法，如果H的可能范围目前是[L, R]，那么其状态与[0, R-L]是完全一致的，所以我们仅仅记录有可行范围的宽度就可以了。</li>
+<li><code>F[i, j]=min{max{F[k-1, j-1], F[i-k, j]}}+1，</code><ul>
+<li>其中1&lt;=k&lt;=i。k表示这一次实验是从k楼把鸡蛋扔下去，扔下去有两种结果。</li>
+<li>一种是鸡蛋碎了，那么剩余的鸡蛋个数是j-1，H的可行范围变为[0, k-1]，那么需要的最少实验次数为F[k-1, j-1]。</li>
+<li>另一种是鸡蛋没碎，那么剩余的鸡蛋个数是j，H的可行范围是[k, i]，那么需要的最少实验次数是F[k-i, j]。</li>
+</ul>
+</li>
+<li>由于题目所求的是最坏情况下的最优策略，所以对每种k情况内取max，再对所有k取min。</li>
+<li>边界条件为<code>F[0, j]=0，F[i, 1]=i</code>。</li>
+<li>时间复杂度为O(NK^2)。</li>
+</ul>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/15/React-Router-v4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/15/React-Router-v4/" itemprop="url">React Router v4</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-15T21:21:05-07:00">2018-05-15</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/15/React-Router-v4/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/05/15/React-Router-v4/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="I-Three-types-of-Components："><a href="#I-Three-types-of-Components：" class="headerlink" title="I. Three types of Components："></a>I. Three types of Components：</h3><p><strong>1. router components</strong></p>
+<blockquote>
+<p>create a history object, 提供“前进”、“后退”</p>
+</blockquote>
+<ul>
+<li><strong><code>&lt;BrowserRouter&gt;</code></strong>: for server that responds to requests</li>
+<li><strong><code>&lt;HashRouter&gt;</code></strong>: for a static file server.</li>
+</ul>
+<p><strong>2. route matching components</strong></p>
+<blockquote>
+<p>comparing a <route>‘s path prop with the current location’s pathname<br>只要路由匹配，Route所在位置就会render相应的Component</route></p>
+</blockquote>
+<ul>
+<li><p><strong><code>&lt;Route&gt;</code> ：包容性路由</strong></p>
+<ul>
+<li>3个props： <ul>
+<li>path：匹配路径</li>
+<li>component：对应的组件</li>
+<li>render：没有可用组件时，直接render<ul>
+<li>1个state：</li>
+</ul>
+</li>
+<li>match</li>
+<li>match包含4个field：<code>isExact</code>,<code>params</code>,<code>path</code>,<code>url</code><ul>
+<li>1个context：</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>router obj</li>
+<li>router 包含 <code>history</code>,<code>routes</code></li>
+</ul>
+</li>
+<li><p><strong><code>&lt;Switch&gt;</code>：排他性路由</strong></p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;Switch&gt;</span><br><span class="line">    &lt;Route exact path=<span class="string">'/'</span> component=	&#123;Home&#125;/&gt;</span><br><span class="line">    &lt;Route path=<span class="string">'/about'</span> component=&#123;About&#125;/&gt;</span><br><span class="line">    &lt;Route path=<span class="string">'/contact'</span> component=&#123;Contact&#125;/&gt;</span><br><span class="line">    &lt;Route component=&#123;NoMatch&#125;/&gt;</span><br><span class="line">&lt;<span class="regexp">/Switch&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ when none of the above match, &lt;NoMatch&gt; will be rendered</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>How ？<br>iterate over all of its children <route> elements and only render the first one that matches the current location.</route></li>
+<li>Props: <code>component</code>, <code>render</code>, and <code>children</code></li>
+</ul>
+</li>
+</ul>
+<p><strong>3. navigation components</strong></p>
+<ul>
+<li><strong><code>&lt;Link&gt;</code></strong></li>
+<li><strong><code>&lt;NavLink&gt;</code></strong> :a special type of <link> that can style itself as “active” when its ‘to’ prop matches the current location.</li>
+<li><strong><code>&lt;Redirect&gt;</code></strong>: navigate using its ‘to’ prop<ul>
+<li>注意：不是 “函数”，而是“组件”，需要放在render中return</li>
+<li>没有路由解析时候，可以直接使用redirect，重定向到默认页面</li>
+</ul>
+</li>
+</ul>
+<h3 id="II-3种方式renders-Component"><a href="#II-3种方式renders-Component" class="headerlink" title="II. 3种方式renders Component"></a>II. 3种方式renders Component</h3><ul>
+<li><code>&lt;Route component&gt;</code></li>
+<li><code>&lt;Route render&gt;</code></li>
+<li><code>&lt;Route children&gt;</code></li>
+</ul>
+<h3 id="III-Route在render-component同时，传入3个量，作为component的props（不论3中方式的哪一种）"><a href="#III-Route在render-component同时，传入3个量，作为component的props（不论3中方式的哪一种）" class="headerlink" title="III. Route在render component同时，传入3个量，作为component的props（不论3中方式的哪一种）"></a>III. Route在render component同时，传入3个量，作为component的props（不论3中方式的哪一种）</h3><ul>
+<li>match</li>
+<li>history</li>
+<li>location</li>
+</ul>
+<p>比如render:func( )方式render conponent</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// eg1: </span></span><br><span class="line">  &lt;Route path=<span class="string">"/home"</span> render=&#123;() =&gt; <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>Home<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>&#125;/&gt;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// eg2: wrapping/composing</span></span><br><span class="line">  <span class="keyword">const</span> FadingRoute = <span class="function">(<span class="params">&#123; component: Component, ...rest &#125;</span>) =&gt;</span> (</span><br><span class="line">    &lt;Route &#123;...rest&#125; render=&#123;props =&gt; (</span><br><span class="line">      &lt;FadeIn&gt;</span><br><span class="line">        &lt;Component &#123;...props&#125;/&gt;</span><br><span class="line">      &lt;<span class="regexp">/FadeIn&gt;</span></span><br><span class="line"><span class="regexp">    )&#125;/</span>&gt;</span><br><span class="line">  )</span><br><span class="line">  </span><br><span class="line">  &lt;FadingRoute path=<span class="string">"/cool"</span> component=&#123;Something&#125;/&gt;<span class="string">"</span></span><br><span class="line"><span class="string">  - render props: path、children／render／component、</span></span><br><span class="line"><span class="string">  - render state：match</span></span><br><span class="line"><span class="string">  - component props(route所render): history、location、match</span></span><br><span class="line"><span class="string">    "</span>不论是哪种方式render，都会拿到这三个props<span class="string">"</span></span><br><span class="line"><span class="string">  - 因此，eg2中render:func方式，直接将props作为function component的参数传入</span></span><br><span class="line"><span class="string">    "</span>render=&#123; props =&gt; (</span><br><span class="line">        &lt;FadeIn&gt;</span><br><span class="line">          &lt;Component &#123;...props&#125;/&gt;</span><br><span class="line">        &lt;<span class="regexp">/FadeIn&gt;</span></span><br><span class="line"><span class="regexp">      )&#125;"</span></span><br></pre></td></tr></table></figure>
+<h3 id="IV-Route-vs-Component如何关联"><a href="#IV-Route-vs-Component如何关联" class="headerlink" title="IV. Route vs Component如何关联"></a>IV. Route vs Component如何关联</h3><ul>
+<li>Router 将路径 match上之后，会调用相应的 Route， 由Route 将相关的参数：match、location、history等传入到 Component中</li>
+<li>Route 的 state: match、location 传入到 Component的 props: match、location</li>
+<li>The Route will render <dashboard {...props}=""> , where props are some router specific things that look like { match, location, history }. </dashboard></li>
+<li>If the user is not at /dashboard then the Route will render null. That’s pretty much all there is to it.</li>
+</ul>
+<h3 id="V-match-url-vs-match-path"><a href="#V-match-url-vs-match-path" class="headerlink" title="V. match.url vs match.path"></a>V. <code>match.url</code> vs <code>match.path</code></h3><blockquote>
+<p>A match object contains information about how a <route path=""> matched the URL.</route></p>
+</blockquote>
+<ul>
+<li>match：是 <code>route</code>的<code>state</code>；是<code>component</code>的<code>props</code></li>
+<li>Eg: consider the route <code>/users/:userId</code><ul>
+<li><code>match.path</code> - (string) 用于匹配路径模式。用于构建嵌套的 <route>; <code>match.path</code> would be <code>/users/:userId</code></route></li>
+<li><code>match.url</code> - (string) URL 匹配的部分。 用于构建嵌套的 <link>; <code>match.url</code> would have the :userId value filled in, e.g. “users/5”.”</li>
+</ul>
+</li>
+</ul>
+<h3 id="VI-match-params-表示-url-匹配上的变量值"><a href="#VI-match-params-表示-url-匹配上的变量值" class="headerlink" title="VI. match.params 表示 url 匹配上的变量值"></a>VI. <code>match.params</code> 表示 url 匹配上的变量值</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;Route path=<span class="string">"/:id"</span> component=&#123;Child&#125; /&gt;</span><br><span class="line"></span><br><span class="line">&#123;match.params.id&#125;</span><br></pre></td></tr></table></figure>
+<p>URL 后半部分由变量 id 兜住，如果进来的url为<code>/abc</code>，那么 <code>match.params.id = abc</code></p>
+<h3 id="VII-Eg-Custom-Link"><a href="#VII-Eg-Custom-Link" class="headerlink" title="VII. Eg: Custom Link"></a>VII. Eg: Custom Link</h3><blockquote>
+<p>Route实际上是 Component 的买办，为Component办事！<br>Route放在哪个位置，那里就有可能render出它携带的component(只要url match)</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;Route path=<span class="string">"/abc"</span> component=&#123;Child_1&#125; /&gt;</span><br><span class="line">&lt;Route path=<span class="string">"/abc"</span> component=&#123;Child_2&#125; /&gt;</span><br><span class="line">&lt;Route path=<span class="string">"/abc"</span> component=&#123;Child_3&#125; /&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="VIII-lt-Prompt-gt-：防止中途跳转"><a href="#VIII-lt-Prompt-gt-：防止中途跳转" class="headerlink" title="VIII. &lt;Prompt&gt;：防止中途跳转"></a>VIII. <code>&lt;Prompt&gt;</code>：防止中途跳转</h3><blockquote>
+<p>适用情况：用户在填表过程中，点击了“后退”或“跳转链接”，需弹窗询问<br><code>&lt;Prompt&gt;</code>是保留tag，跟<code>&lt;Link&gt;</code>一样</p>
+</blockquote>
+<ul>
+<li>创建一个wrapper，包含<code>&lt;form&gt;</code>, <code>&lt;Prompt&gt;</code></li>
+<li>wrapper中设置<code>state.inMiddle</code>，来决定是否render<code>&lt;Prompt&gt;</code></li>
+<li>改变<code>state.inMiddle</code>的根源：<code>form</code>中的<code>input</code>输入框；<ul>
+<li>只要有任何输入值，就将<code>state.inMiddle</code>置为<code>true</code></li>
+<li>提交form后，将form reset()之后，需要将<code>state.inMiddle</code>置为<code>false</code></li>
+</ul>
+</li>
+<li><code>Prompt</code>的props:<ul>
+<li><code>when</code>：检查<code>state.inMiddle</code></li>
+<li><code>message</code>: 决定弹窗的显示信息</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Form</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  state = &#123;</span><br><span class="line">    isBlocking: <span class="literal">false</span></span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; isBlocking &#125; = <span class="keyword">this</span>.state;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        &lt;form</span><br><span class="line">        onSubmit=&#123;event =&gt; &#123;</span><br><span class="line">          event.preventDefault();</span><br><span class="line">          event.target.reset();</span><br><span class="line">          <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">            isBlocking: <span class="literal">false</span></span><br><span class="line">          &#125;);</span><br><span class="line">        &#125;&#125;</span><br><span class="line">        &gt;</span><br><span class="line">        </span><br><span class="line">        &lt;Prompt</span><br><span class="line">          when=&#123;isBlocking&#125;</span><br><span class="line">          message=&#123;location =&gt;</span><br><span class="line">            <span class="string">`Are you sure you want to go to <span class="subst">$&#123;location.pathname&#125;</span>`</span></span><br><span class="line">          &#125;</span><br><span class="line">        /&gt;</span><br><span class="line"></span><br><span class="line">        &lt;input</span><br><span class="line">        placeholder=<span class="string">"type something"</span></span><br><span class="line">        onChange=&#123;event =&gt; &#123;</span><br><span class="line">          <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">            isBlocking: event.target.value.length &gt; <span class="number">0</span></span><br><span class="line">          &#125;);</span><br><span class="line">        &#125;&#125;</span><br><span class="line">        /&gt;</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        &lt;button&gt;Submit&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">      &lt;/</span>form&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ul>
+<li>Official API: <a href="https://reacttraining.com/react-router/web/guides/philosophy" target="_blank" rel="noopener">https://reacttraining.com/react-router/web/guides/philosophy</a></li>
+<li>中文版API：<a href="https://www.jianshu.com/p/e3adc9b5f75c" target="_blank" rel="noopener">https://www.jianshu.com/p/e3adc9b5f75c</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/14/Node-MySQL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/14/Node-MySQL/" itemprop="url">Node+MySQL</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-14T21:30:13-07:00">2018-05-14</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/14/Node-MySQL/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/05/14/Node-MySQL/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h3><p>This is a Node.js module, install:<br><code>npm install mysql --save</code></p>
+<h3 id="Connect"><a href="#Connect" class="headerlink" title="Connect"></a>Connect</h3><p>Before connecting to databases, make sure MySQL database is turned on.</p>
+<p>【注意】：</p>
+<ul>
+<li>先执行 <code>connect()</code>,让connection object与数据库建立连接。</li>
+<li>然后，在对该connection执行<code>.query(MySQL_Command, callback_func)</code></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> mysql      = <span class="built_in">require</span>(<span class="string">'mysql'</span>);</span><br><span class="line"><span class="keyword">var</span> connection = mysql.createConnection(&#123;</span><br><span class="line">  host     : <span class="string">'example.org'</span>,</span><br><span class="line">  user     : <span class="string">'bob'</span>,</span><br><span class="line">  password : <span class="string">'secret'</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">connection.query(<span class="string">'SELECT 1'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">error, results, fields</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (error) <span class="keyword">throw</span> error;</span><br><span class="line">  <span class="comment">// connected!</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="Disconnect"><a href="#Disconnect" class="headerlink" title="Disconnect"></a>Disconnect</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">connection.end(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// Callback function</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="Escaping-query-values"><a href="#Escaping-query-values" class="headerlink" title="Escaping query values"></a>Escaping query values</h3><p>Three ways to avoid <strong>SQL injection</strong></p>
+<ul>
+<li>mysql.escape()</li>
+<li>connection.escape() </li>
+<li>pool.escape()</li>
+<li><code>?</code>placeholder</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1 -connection.escape()</span></span><br><span class="line"><span class="keyword">var</span> userId = <span class="string">'some user provided value'</span>;</span><br><span class="line"><span class="keyword">var</span> sql    = <span class="string">'SELECT * FROM users WHERE id = '</span> + connection.escape(userId);</span><br><span class="line">connection.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">error, results, fields</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (error) <span class="keyword">throw</span> error;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2 - ? placeholder</span></span><br><span class="line"><span class="keyword">var</span> adr = <span class="string">'Mountain 21'</span>;</span><br><span class="line"><span class="keyword">var</span> sql = <span class="string">'SELECT * FROM customers WHERE address = ?'</span>;</span><br><span class="line">con.query(sql, [adr], <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">  <span class="built_in">console</span>.log(result);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="Creating-a-Database"><a href="#Creating-a-Database" class="headerlink" title="Creating a Database"></a>Creating a Database</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">connection.query(<span class="string">"CREATE DATABASE mydb"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Database created"</span>);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="Creating-a-Table"><a href="#Creating-a-Table" class="headerlink" title="Creating a Table"></a>Creating a Table</h3><p>Two ways:</p>
+<ul>
+<li>create database and table simultenously</li>
+<li>first create database, and connect it; then create table with the connection</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// approach 1</span></span><br><span class="line"></span><br><span class="line">connection.query(<span class="string">"CREATE DATABASE db"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">error, rows, fields</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (error) <span class="keyword">throw</span> error;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">connection.query(<span class="string">"USE db"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">error, rows, fields</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (error) <span class="keyword">throw</span> error;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">connection.query(<span class="string">"CREATE TABLE tb(id INT, name VARCHAR(50))"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">error, rows, fields</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (error) <span class="keyword">throw</span> error;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//-----------------------</span></span><br><span class="line"><span class="comment">// approach 2</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> con = mysql.createConnection(&#123;</span><br><span class="line">  host: <span class="string">"localhost"</span>,</span><br><span class="line">  user: <span class="string">"yourusername"</span>,</span><br><span class="line">  password: <span class="string">"yourpassword"</span>,</span><br><span class="line">  database: <span class="string">"mydb"</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">con.connect(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> sql = <span class="string">"CREATE TABLE customers (name VARCHAR(255), address VARCHAR(255))"</span>;</span><br><span class="line"></span><br><span class="line">con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line"><span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Table created"</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="Selecting-From-a-Table"><a href="#Selecting-From-a-Table" class="headerlink" title="Selecting From a Table"></a>Selecting From a Table</h3><p>To select data from a table in MySQL, use the <code>SELECT</code> statement.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"SELECT * FROM customers WHERE address = 'Park Lane 38'"</span>;</span><br><span class="line"></span><br><span class="line">con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="built_in">console</span>.log(result);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><strong>Wildcard Characters</strong><code>%</code>: represent zero, one or multiple characters:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"SELECT * FROM customers WHERE address LIKE 'S%'"</span></span><br></pre></td></tr></table></figure>
+<h3 id="Insert-Into-Table"><a href="#Insert-Into-Table" class="headerlink" title="Insert Into Table"></a>Insert Into Table</h3><p>To fill a table in MySQL, use the <code>INSERT INTO</code> statement.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"INSERT INTO customers (name, address) VALUES ('Company Inc', 'Highway 37')"</span>;</span><br><span class="line"></span><br><span class="line">con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line"><span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"1 record inserted"</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="Update-Table"><a href="#Update-Table" class="headerlink" title="Update Table"></a>Update Table</h3><p>You can update existing records in a table by using the <code>UPDATE</code> statement:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"UPDATE customers SET address = 'Canyon 123' WHERE address = 'Valley 345'"</span>;</span><br><span class="line"></span><br><span class="line">  con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="built_in">console</span>.log(result.affectedRows + <span class="string">" record(s) updated"</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="Sort-the-Result"><a href="#Sort-the-Result" class="headerlink" title="Sort the Result"></a>Sort the Result</h3><p>Use the <code>ORDER BY</code> statement to sort the result in ascending or descending order.</p>
+<p>The <code>ORDER BY</code> keyword sorts the result ascending by default. To sort the result in descending order, use the <code>DESC</code> keyword.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"SELECT * FROM customers ORDER BY name DESC"</span>;</span><br><span class="line"></span><br><span class="line">con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="built_in">console</span>.log(result);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="Delete-Record"><a href="#Delete-Record" class="headerlink" title="Delete Record"></a>Delete Record</h3><p>You can delete records from an existing table by using the <code>DELETE FROM</code> statement:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"DELETE FROM customers WHERE address = 'Mountain 21'"</span>;</span><br><span class="line"></span><br><span class="line">con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Number of records deleted: "</span> + result.affectedRows);</span><br></pre></td></tr></table></figure>
+<h3 id="Limit-the-Result"><a href="#Limit-the-Result" class="headerlink" title="Limit the Result"></a>Limit the Result</h3><p>You can limit the number of records returned from the query, by using the <code>LIMIT</code> statement:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"SELECT * FROM customers LIMIT 5"</span>;</span><br><span class="line"></span><br><span class="line">con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line"><span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line"><span class="built_in">console</span>.log(result);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="Join-Two-or-More-Tables"><a href="#Join-Two-or-More-Tables" class="headerlink" title="Join Two or More Tables"></a>Join Two or More Tables</h3><p>Combine rows from two or more tables, based on a related column between them, by using a <code>JOIN</code> statement.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//users</span><br><span class="line"></span><br><span class="line">[</span><br><span class="line">  &#123; id: 1, name: &apos;John&apos;, favorite_product: 154&#125;,</span><br><span class="line">  &#123; id: 2, name: &apos;Peter&apos;, favorite_product: 154&#125;,</span><br><span class="line">  &#123; id: 3, name: &apos;Amy&apos;, favorite_product: 155&#125;,</span><br><span class="line">  &#123; id: 4, name: &apos;Hannah&apos;, favorite_product:&#125;,</span><br><span class="line">  &#123; id: 5, name: &apos;Michael&apos;, favorite_product:&#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// products</span><br><span class="line">[</span><br><span class="line">  &#123; id: 154, name: &apos;Chocolate Heaven&apos; &#125;,</span><br><span class="line">  &#123; id: 155, name: &apos;Tasty Lemons&apos; &#125;,</span><br><span class="line">  &#123; id: 156, name: &apos;Vanilla Dreams&apos; &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p><strong>1. Inner join</strong></p>
+<p>These two tables can be combined by using users’ favorite_product field and products’ id field.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"SELECT users.name AS user, products.name AS favorite FROM users JOIN products ON users.favorite_product = products.id"</span>;</span><br><span class="line">    </span><br><span class="line">con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line"><span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line"><span class="built_in">console</span>.log(result);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><strong>2. Left Join</strong><br>If you want to return all users, no matter if they have a favorite product or not, use the LEFT JOIN statement:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT users.name AS user,</span><br><span class="line">products.name AS favorite</span><br><span class="line">FROM users</span><br><span class="line">LEFT JOIN products ON users.favorite_product = products.id</span><br></pre></td></tr></table></figure>
+<p><strong>3. Right Join</strong><br>If you want to return <strong>all products</strong>, and the users who have them as their favorite, even if no user have them as their favorite, use the RIGHT JOIN statement:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT users.name AS user,</span><br><span class="line">products.name AS favorite</span><br><span class="line">FROM users</span><br><span class="line">RIGHT JOIN products ON users.favorite_product = products.id</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/23/React-Expense-Tracking-app/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/23/React-Expense-Tracking-app/" itemprop="url">React: Expense Tracking app</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-23T11:47:10-07:00">2018-04-23</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Portfolios/" itemprop="url" rel="index"><span itemprop="name">Portfolios</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/23/React-Expense-Tracking-app/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/23/React-Expense-Tracking-app/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="I-About"><a href="#I-About" class="headerlink" title="I. About"></a>I. About</h2><ul>
+<li>An expense tracking application proving CRUD using React.</li>
+<li>Github: <ul>
+<li><a href="https://github.com/caomingkai/Expense-Tracking.git" target="_blank" rel="noopener">https://github.com/caomingkai/Expense-Tracking.git</a></li>
+</ul>
+</li>
+<li><p><strong>Chart1: Create</strong></p>
+  <img src="/2018/04/23/React-Expense-Tracking-app/create.gif">
+</li>
+<li><p>**Chart2: Update</p>
+  <img src="/2018/04/23/React-Expense-Tracking-app/update.gif">
+</li>
+<li><p><strong>Chart3: Delete</strong></p>
+  <img src="/2018/04/23/React-Expense-Tracking-app/delete.gif">
+</li>
+</ul>
+<h2 id="II-Structure"><a href="#II-Structure" class="headerlink" title="II. Structure"></a>II. Structure</h2><h3 id="1-Components-Structure"><a href="#1-Components-Structure" class="headerlink" title="1. Components Structure"></a>1. Components Structure</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">App</span><br><span class="line"> |___ Summary</span><br><span class="line"> |___ Form _ _ _ _ RecordsAPI</span><br><span class="line"> |                    |</span><br><span class="line"> |___ Table           |</span><br><span class="line">         |_______ TableRow</span><br><span class="line">                      |____ TableDisplay</span><br><span class="line">                      |____ TableEdit</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>App Component:</strong> is the data hub<ul>
+<li>state: <code>records</code> for entries in Table component</li>
+<li>state: <code>isLoaded</code> show loading info, before showing Table</li>
+<li>state: <code>error</code> </li>
+<li>method: <code>componentDidMount()</code> get data from database</li>
+<li>method: <code>addRecord()</code> passed to Form</li>
+<li>method: <code>deleteRecord()</code> passed to Table and TableRow</li>
+<li>method: <code>updateRecord()</code> passed to Table and TableRow</li>
+<li>method: <code>credits()</code> passed to Summary</li>
+<li>method: <code>debits()</code> passed to Summary</li>
+<li>method: <code>balance()</code> passed to Summary</li>
+</ul>
+</li>
+<li><strong>Summary Component:</strong> displays negative/ positive summation for the <code>records</code></li>
+<li><strong>Form Component:</strong> add <code>record</code> into <code>records</code>, updating Table</li>
+<li><strong>Table Component:</strong> just pass <code>records</code> to <strong>TableRow</strong></li>
+<li><strong>TableRow Component:</strong> display each <code>record</code> in <code>records</code></li>
+<li><strong>RecordsAPI:</strong> utility providing interface to make RESTful API call</li>
+</ul>
+<h3 id="2-File-Structure"><a href="#2-File-Structure" class="headerlink" title="2. File Structure"></a>2. File Structure</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">|__node_modules</span><br><span class="line">|</span><br><span class="line">|__public  </span><br><span class="line">|    |___ index.html</span><br><span class="line">|</span><br><span class="line">|__ src</span><br><span class="line">     |___ utils: RecordsAPI.js</span><br><span class="line">     |</span><br><span class="line">     |___ components:</span><br><span class="line">              |___ App.js</span><br><span class="line">              |___ Form.js</span><br><span class="line">              |___ Summary.js</span><br><span class="line">              |___ Table.js</span><br><span class="line">              |___ TableRow.js</span><br></pre></td></tr></table></figure>
+<h2 id="III-Ajax-request"><a href="#III-Ajax-request" class="headerlink" title="III. Ajax request"></a>III. Ajax request</h2><h3 id="Several-Ways"><a href="#Several-Ways" class="headerlink" title="Several Ways:"></a>Several Ways:</h3><ol>
+<li>Ajax Libraries<ul>
+<li>Axios<ul>
+<li>axios.get(url[, config])</li>
+<li>axios.delete(url[, config])</li>
+<li>axios.head(url[, config])</li>
+<li>axios.options(url[, config])</li>
+<li>axios.post(url[, data[, config]])</li>
+<li>axios.put(url[, data[, config]])</li>
+</ul>
+</li>
+<li>jQuery AJAX</li>
+</ul>
+</li>
+<li><p>Browser built-in <code>window.fetch</code></p>
+<p> No need to prepend “window” before <code>fetch()</code>: default obj</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">## No need to prepend "window" before fetch, this is the default obj</span><br><span class="line"></span><br><span class="line">  fetch(<span class="string">'http://example.com/movies.json'</span>)</span><br><span class="line">    .then(<span class="function"><span class="keyword">function</span>(<span class="params">response</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> response.json();</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function"><span class="keyword">function</span>(<span class="params">myJson</span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(myJson);</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="When-and-where-to-initiate-Ajax-call"><a href="#When-and-where-to-initiate-Ajax-call" class="headerlink" title="When and where to initiate Ajax call?"></a>When and where to initiate Ajax call?</h3><p>Do it in <code>componentDidMount</code> lifecycle method. So you can use setState to update your component when the data is retrieved.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">componentDidMount() &#123;</span><br><span class="line">  fetch(<span class="string">"https://api.example.com/items"</span>)</span><br><span class="line">    .then(<span class="function"><span class="params">res</span> =&gt;</span> res.json())</span><br><span class="line">    .then(</span><br><span class="line">      (result) =&gt; &#123;</span><br><span class="line">        <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">          isLoaded: <span class="literal">true</span>,</span><br><span class="line">          items: result.items</span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="comment">// Note: it's important to handle errors here</span></span><br><span class="line">      <span class="comment">// instead of a catch() block so that we don't swallow</span></span><br><span class="line">      <span class="comment">// exceptions from actual bugs in components.</span></span><br><span class="line">      (error) =&gt; &#123;</span><br><span class="line">        <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">          isLoaded: <span class="literal">true</span>,</span><br><span class="line">          error</span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="IV-Concept"><a href="#IV-Concept" class="headerlink" title="IV. Concept"></a>IV. Concept</h2><h3 id="1-组件数据流-Model-gt-View"><a href="#1-组件数据流-Model-gt-View" class="headerlink" title="1. 组件数据流: Model -&gt; View"></a>1. 组件数据流: Model -&gt; View</h3><ul>
+<li><p>父组件M -&gt; 子组件V</p>
+<ul>
+<li>父组件prop 之间传给 子组件 prop</li>
+</ul>
+</li>
+<li><p>子组件M -&gt; 父组件V</p>
+<ul>
+<li>回调函数<ul>
+<li>父组件向子组件传递回调函数</li>
+<li>JS中，function是一等公民，因此传入的值会作为自身field保存起来；与C／Java不同。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>sibling 组件间传值 M-&gt;V<ul>
+<li>必须依靠二者共同父组件来传递<ul>
+<li>但等组件之间的关系越来越复杂时候，这种依靠父组件作为中间人传值方式 would be a mess！</li>
+<li>Redux comes into picture</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-双向绑定-Model-View"><a href="#2-双向绑定-Model-View" class="headerlink" title="2. 双向绑定: Model  View"></a>2. 双向绑定: Model <-> View</-></h3><ul>
+<li>通过绑定<code>&lt;input&gt;</code>的 <code>onChange()</code> 监视 View的变换</li>
+<li>在 onChange Handler中更新组件的值，完成 View =&gt; Model 的数据流。</li>
+</ul>
+<h3 id="3-React-生命周期"><a href="#3-React-生命周期" class="headerlink" title="3. React 生命周期"></a>3. React 生命周期</h3><ul>
+<li><strong>Mount</strong><ul>
+<li>constructor()</li>
+<li>componentWillMount()</li>
+<li>render()</li>
+<li>componentDidMount()</li>
+</ul>
+</li>
+<li><strong>Update</strong><ul>
+<li>componentWillReceiveProps(): 将接收新的props</li>
+<li>shouldComponentUpdate(): 是否应该被更新？</li>
+<li>componentWillUpdate(): 组件即将更新</li>
+<li>render(): 组件被渲染</li>
+<li>componentDidUpdate(): 组件完成更新</li>
+</ul>
+</li>
+<li><strong>Unmount</strong><ul>
+<li>componentWillUnmount(): 组件被卸载前做一些数据清除</li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/18/VM-Page-Table-Page-Fault-Hander/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1673,1188 +2645,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/Union-Find-to-achieve-max-tasks/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/08/Union-Find-to-achieve-max-tasks/" itemprop="url">Union Find to achieve max tasks</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-08T12:47:03-07:00">2018-04-08</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/08/Union-Find-to-achieve-max-tasks/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/08/Union-Find-to-achieve-max-tasks/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="1-题意："><a href="#1-题意：" class="headerlink" title="1. 题意："></a>1. 题意：</h3><ul>
-<li>给n个任务 1～k；</li>
-<li>以及 task dependency array A、B；其中 [Ai,Bi] - bi先完成，才能做ai；</li>
-<li>同时规定：每个task顶多只能依赖一个task</li>
-<li>问：最多可以完成的任务数</li>
-</ul>
-<h3 id="2-分析"><a href="#2-分析" class="headerlink" title="2. 分析"></a>2. 分析</h3><p>虽然任务的dependency可能成环(1-2-3-4-1),但有第三条可知：<br>每个任务最多出现在1个“环”里，表明该“环”上的任务有一个不可能完成，但可以完成(环任务数-1)的任务<br>对于没有出现在环中的任务，这些任务都能够执行完</p>
-<p>因此，相当于根据 A、B，找 number of dependency cycle，<br>那么最多可以完成的任务数就是：<code>总任务数 - 环数</code></p>
-<h3 id="3-Union-Find-Class"><a href="#3-Union-Find-Class" class="headerlink" title="3. Union Find Class"></a>3. Union Find Class</h3><p><strong>Union Find Summary</strong>: <a href="https://workflowy.com/s/HdnT.nwWuWS1F7W" target="_blank" rel="noopener">https://workflowy.com/s/HdnT.nwWuWS1F7W</a></p>
-<p><strong>如何找有多少环？:<code>Union-Find.isConnected()</code></strong></p>
-<ul>
-<li>对每个 task dependency 进行 union</li>
-<li>union 之前调用 isConnected() 检查是否已连通(表明该[ai,bi]会导致“环”)</li>
-<li>累加 每次isConnected() 结果为 True 的情况</li>
-<li>isConnected() 有几次为 True，就存在几个“环”</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// weighted quick UF</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UnionFind</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> [] p;</span><br><span class="line">	<span class="keyword">int</span> [] w;</span><br><span class="line">	<span class="keyword">int</span> numOfCycles ;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">UnionFind</span><span class="params">(<span class="keyword">int</span> N)</span></span>&#123;</span><br><span class="line">		p = <span class="keyword">new</span> <span class="keyword">int</span>[N];</span><br><span class="line">		w = <span class="keyword">new</span> <span class="keyword">int</span>[N];</span><br><span class="line">		numOfCycles = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++ )</span><br><span class="line">			p[i] = i;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">union</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b )</span></span>&#123;</span><br><span class="line">		<span class="keyword">int</span> pa = find(a);</span><br><span class="line">		<span class="keyword">int</span> pb = find(b);</span><br><span class="line">		<span class="keyword">if</span>( pa == pb )&#123;</span><br><span class="line">			numOfCycles++;</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			<span class="keyword">if</span>( w[pa] &lt; w[pb] )&#123;</span><br><span class="line">				p[pb] = pa;</span><br><span class="line">				w[pa] += w[pb];</span><br><span class="line">			&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">				p[pa] = pb;</span><br><span class="line">				w[pb] += w[pa];</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span> a)</span></span>&#123;</span><br><span class="line">		<span class="keyword">while</span>( p[a] != a )&#123;</span><br><span class="line">			p[a] = p[p[a]];</span><br><span class="line">			a = p[a];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> a;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="4-Solution"><a href="#4-Solution" class="headerlink" title="4. Solution"></a>4. Solution</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TaskMaster</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">maxTasks</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span>[] a, <span class="keyword">int</span>[] b )</span></span>&#123;</span><br><span class="line">		<span class="keyword">int</span> ret = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">int</span> size = a.length;</span><br><span class="line">		UnionFind UF = <span class="keyword">new</span> UnionFind(n);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++ )&#123;</span><br><span class="line">			UF.union(a[i]-<span class="number">1</span>,b[i]-<span class="number">1</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">int</span> numOfCycles = UF.numOfCycles;</span><br><span class="line">		ret = n - numOfCycles;</span><br><span class="line">		<span class="keyword">return</span> ret;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">( String[] args )</span></span>&#123;</span><br><span class="line">		<span class="comment">// int n = 8;</span></span><br><span class="line">		<span class="comment">// int[] a = &#123;2,3,4,1,5,8,7&#125;;</span></span><br><span class="line">		<span class="comment">// int[] b = &#123;1,2,3,4,6,7,8&#125;;</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">// int n = 4;</span></span><br><span class="line">		<span class="comment">// int[] a = &#123;2,3,4,1&#125;;</span></span><br><span class="line">		<span class="comment">// int[] b = &#123;1,2,3,4&#125;;</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">// int n = 2;</span></span><br><span class="line">		<span class="comment">// int[] a = &#123;&#125;;</span></span><br><span class="line">		<span class="comment">// int[] b = &#123;&#125;;</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">int</span> n = <span class="number">2</span>;</span><br><span class="line">		<span class="keyword">int</span>[] a = &#123;<span class="number">2</span>&#125;;</span><br><span class="line">		<span class="keyword">int</span>[] b = &#123;<span class="number">1</span>&#125;;</span><br><span class="line"></span><br><span class="line">		System.out.println(maxTasks(n, a, b ));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/07/239-Sliding-Window-Maximum/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/07/239-Sliding-Window-Maximum/" itemprop="url">239.Sliding Window Maximum</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-07T16:30:20-07:00">2018-04-07</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/07/239-Sliding-Window-Maximum/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/07/239-Sliding-Window-Maximum/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="方法一：Priority-Queue"><a href="#方法一：Priority-Queue" class="headerlink" title="方法一：Priority Queue"></a>方法一：Priority Queue</h2><ol start="0">
-<li>O(nlogn)</li>
-<li>前后两个窗口差别只有两个数，尽量用到上一个窗口的信息</li>
-<li>上一个窗口的头部元素从窗口元素集剔出，加入下一个窗口的尾部元素；形成新的窗口元素集</li>
-<li>想办法从“窗口元素集”中找最大值==&gt; priority queue 最合适</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] maxSlidingWindow(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> k) &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>( nums == <span class="keyword">null</span> || nums.length == <span class="number">0</span> )</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">0</span>];</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> len = nums.length;</span><br><span class="line">        <span class="keyword">int</span>[] ret = <span class="keyword">new</span> <span class="keyword">int</span>[len-k+<span class="number">1</span>];</span><br><span class="line">        PriorityQueue&lt;Integer&gt; pq = <span class="keyword">new</span> PriorityQueue&lt;&gt;(k, Collections.reverseOrder());</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++ )&#123;</span><br><span class="line">            <span class="keyword">if</span>( i &gt;= k )&#123;</span><br><span class="line">                ret[i-k] = pq.peek();</span><br><span class="line">                pq.remove(nums[i-k]);</span><br><span class="line">            &#125;</span><br><span class="line">            pq.add(nums[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        ret[len-k] = pq.peek();</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="方法二：单调队列-Monotonic-Queue-Deque"><a href="#方法二：单调队列-Monotonic-Queue-Deque" class="headerlink" title="方法二：单调队列 / Monotonic Queue / Deque"></a>方法二：单调队列 / Monotonic Queue / Deque</h2><ol start="0">
-<li>O(n)  - 每个元素顶多 add to／remove from queue，共2次</li>
-<li>上一个方法在从窗口元素集找最大 O(logn),继续优化只能为 O(1)</li>
-<li>想办法维护一个与窗口区对应的“有序数据结构”</li>
-<li>进入下一个窗口前，上一个窗口对应的 potential_max queue 是有序的</li>
-<li>进入下一个窗口后，<ul>
-<li>如果第一个 potential_max 仍然在新窗口范围内；<br>该peotential_max不需要从 queue中删除，仍然有可能是后边窗口的max</li>
-<li>如果第一个 potential_max 不在新窗口范围内；<br>该value就不是potential max了，而是 definitely_not_possible_max for later windows</li>
-</ul>
-</li>
-<li><p>窗口末尾新加入的元素：</p>
-<ul>
-<li>如果值比 potential_max_queue 中的最后一个 potential_max_value 小，<br>那么该值与之前的值都有可能是后边窗口的max</li>
-<li>如果值比后边的“某一段”potential_max values 都大，<br>表明“那一段”potential values 因为更大新元素的加入，由 potential 变为 never_possible_max</li>
-<li>直接删除“那一段” potential values，并将该值插入到 queue之后</li>
-</ul>
-</li>
-<li><p>【小结】：potential_max_queue 的维护有4点：</p>
-<ul>
-<li>维护这么一个“单调队列”目的：某个window的max，就是其对应 petential_max_queue 中的第一个元素</li>
-<li>头部 potential_max_value 在当前window下是否valid，是否需要删除；</li>
-<li>头部 potential_max_value 是否valid，实际是根据其 index来判断的，因此在queue中维护的实际是 index</li>
-<li>新加入的元素是否应该加入potential max queue，加入到哪里</li>
-</ul>
-</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] maxSlidingWindow(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> k) &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>( nums == <span class="keyword">null</span> || nums.length == <span class="number">0</span> )</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">0</span>];</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> len = nums.length;</span><br><span class="line">        <span class="keyword">int</span>[] ret = <span class="keyword">new</span> <span class="keyword">int</span>[len-k+<span class="number">1</span>];</span><br><span class="line">        Deque&lt;Integer&gt; dq = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++ )&#123;</span><br><span class="line">            <span class="comment">// check head items of the potential_max_queue</span></span><br><span class="line">            <span class="keyword">if</span>( !dq.isEmpty() &amp;&amp; dq.peekFirst() &lt; i-k+<span class="number">1</span> )</span><br><span class="line">                dq.removeFirst();</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// handle new item</span></span><br><span class="line">            <span class="keyword">while</span>( !dq.isEmpty() &amp;&amp; nums[dq.peekLast()] &lt; nums[i] )&#123;</span><br><span class="line">                dq.removeLast();</span><br><span class="line">            &#125;</span><br><span class="line">            dq.addLast(i);</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// update ret values</span></span><br><span class="line">            <span class="keyword">if</span>(i-k+<span class="number">1</span> &gt;= <span class="number">0</span>)</span><br><span class="line">                ret[i-k+<span class="number">1</span>] = nums[dq.peekFirst()];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/02/TEST-File-System/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/02/TEST-File-System/" itemprop="url">FS - TEST: File System</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-02T22:10:48-07:00">2018-04-02</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Courses/" itemprop="url" rel="index"><span itemprop="name">Courses</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/02/TEST-File-System/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/02/TEST-File-System/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h2><ol>
-<li>dir_namev() 没有处理如下情况：<ul>
-<li>extra slashes： paths_equal(“1/2/3”, “1///2///3///“);</li>
-</ul>
-</li>
-</ol>
-<h2 id="vfstest-main"><a href="#vfstest-main" class="headerlink" title="vfstest_main"></a>vfstest_main</h2><ol>
-<li><p>int makedirs(const char *dir)</p>
-<ul>
-<li>对传入的 绝对路径：dir，逐级建立相应的directory</li>
-</ul>
-</li>
-<li><p>int getdent(const char *dir, dirent_t *dirent)</p>
-<ul>
-<li>what： 读取 dir 下的第一个非 ./.. 的entry<ul>
-<li>有的话，存到 dirent，返回 1</li>
-<li>没有的话， 返回 0</li>
-</ul>
-</li>
-<li>先调用open(dir) 得到 fd</li>
-<li>然后调用getdents(fd, dirent)依次读取该dir 下的 entries</li>
-<li>将该dir下：除了”.”以及”..”的第一个entry读出来，读到dirent<ul>
-<li>如果有其它 entry，那么关闭fd，返回 1</li>
-<li>如果只有 “.” “..”， 那么关闭fd，返回 0</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>int removeall(const char *dir)</p>
-<ul>
-<li>what: <ul>
-<li>将 dir 下的所有 files 以及 sub-files 全部unlink</li>
-<li>删除 本 dir</li>
-<li>将cur_proc 置为 “..”</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>void vfstest_start(void)</p>
-<ul>
-<li>what<ul>
-<li>随机生成 root_dir 的名字，并mkdir 该dir</li>
-<li>注意这只是 vfs_test 的root dir</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>void vfstest_term(void)</p>
-<ul>
-<li>what：Terminates the testing environment</li>
-<li>调用 removeall (root_dir) 将vfstest 过程中所有文件／目录（包括 root_dir 自己)删除</li>
-</ul>
-</li>
-<li><p>宏函数：test_assert(expr, fmt, args…)</p>
-<ul>
-<li>what: <ul>
-<li>expr应该是 true；</li>
-<li>otherwise，打印format信息，以及后续的参数</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>宏函数：syscall_success(expr)</p>
-<ul>
-<li>what：<ul>
-<li>expr所对应的测试的代码 should fail；</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>宏函数：syscall_fail(expr, err)</p>
-<ul>
-<li>what：<ul>
-<li>expr所对应的测试的代码 should fail；即 -1 == (expr)</li>
-<li>并且，返回的错误代码应该跟此处传入的err一致</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>宏函数：create_file(file)</p>
-<ul>
-<li>what:<ul>
-<li>用于测试“成功打开open”、“成功关闭close” file;</li>
-<li>【注意】创建 file，不是 dir</li>
-<li>调用 open(file, O_RDONLY|O_CREAT)</li>
-<li>生成相应 fd</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>宏函数：read_fd(fd, size, goal)  </p>
-<ul>
-<li>what： <ul>
-<li>用于测试 read() 是否能够从文件fd：</li>
-<li>1-读取指定 size 的内容到buf</li>
-<li>2-读取的内容无误： buf与goal 一致</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>宏函数：test_fpos(fd, exp)    </p>
-<ul>
-<li>what：<ul>
-<li>用于测试 fd 对应 f_pos 目前应该出在 exp 指示的位置</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>vfstest_stat()</p>
-<ul>
-<li>what : 测试 do_stat()</li>
-<li>涉及函数：<ul>
-<li>mkdir</li>
-<li>chdir</li>
-<li>open</li>
-<li>write</li>
-<li>close</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>vfstest_mkdir()</p>
-<ul>
-<li>what : 测试 mkdir()</li>
-<li>涉及函数：<ul>
-<li>mkdir</li>
-<li>chdir</li>
-<li>rmdir</li>
-<li>unlink</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>vfstest_chdir()</p>
-<ul>
-<li>what : 测试 mkdir()</li>
-<li>涉及函数：<ul>
-<li>mkdir</li>
-<li>chdir</li>
-<li>stat</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>vfstest_paths()</p>
-<ul>
-<li><p>what : </p>
-<ul>
-<li>测试 directory path 的各种 “edge cases”</li>
-<li>主要函数paths_equal(p1,p2) </li>
-</ul>
-</li>
-<li><p>paths_equal(p1,p2) </p>
-<ul>
-<li>传入的 char* str，满足 p1 == p2</li>
-<li>首先调用 makedirs(p1)，逐级创建 二者对应的 dir</li>
-<li>调用 stat(p1) 、stat(p2) 比对二者的信息</li>
-</ul>
-</li>
-<li>涉及函数：<ul>
-<li>mkdir</li>
-<li>chdir</li>
-<li>stat</li>
-<li>open</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<ol start="16">
-<li>vfstest_fd()<ul>
-<li>what : 测试 fd：file descriptor</li>
-<li>how:<ul>
-<li>read/write/close/getdents/dup nonexistent file descriptors</li>
-<li>dup2 has some extra cases since it takes a second fd</li>
-<li>if the fds are equal, but the first is invalid or out of the  allowed range</li>
-<li>dup works properly in normal usage</li>
-<li>dup2 works properly in normal usage</li>
-<li>dup2-ing a file to itself works</li>
-<li>dup2 closes previous file</li>
-<li>如果dup2传入的fd是已在使用中的,<br>会首先关闭该fd对应的open_conn，<br>然后将该fd赋给新的 open_conn</li>
-</ul>
-</li>
-<li>涉及函数：<ul>
-<li>mkdir</li>
-<li>open</li>
-<li>read</li>
-<li>write</li>
-<li>lseek</li>
-<li>getdents</li>
-<li>dup</li>
-<li>dup2</li>
-<li>close</li>
-<li>chdir</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<ol start="17">
-<li>vfstest_memdev()<ul>
-<li>what : <ul>
-<li>测试 /dev/null 以及 /dev/zero 的读写</li>
-</ul>
-</li>
-<li>/dev/null，或称空设备，被称为比特桶或者黑洞。<br>是一个特殊的设备文件，它丢弃一切写入其中的数据<br>但报告写入操作成功；读取它则会立即得到一个EOF</li>
-<li>/dev/zero，当你读它的时候，它会提供无限的空字符(NULL)<br>可以将数据写入 /dev/zero 文件，但实际上不会有任何影响；<br>不过一般我们还是使用 /dev/null 来做这件事</li>
-<li>涉及函数：<ul>
-<li>mkdir</li>
-<li>chdir</li>
-<li>rmdir</li>
-<li>unlink</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<ol start="18">
-<li>vfstest_write()<ul>
-<li>what : <ul>
-<li>测试 在不同位置 f_pos 的 write() 操作</li>
-<li>测试 lseek()</li>
-</ul>
-</li>
-<li>test_assert(lseek(fd, 0, SEEK_END) == (NUM_CHUNKS-1) * CHUNK_SIZE + (int)strlen(str)<ul>
-<li>返回的 f_pos在文件尾，但并不是 (NUM_CHUNKS) * CHUNK_SIZE</li>
-<li>因为每个chunk中，内容只占strlen(str)部分，应该为：</li>
-<li>(NUM_CHUNKS-1) * CHUNK_SIZE + (int)strlen(str)</li>
-</ul>
-</li>
-<li>涉及函数：<ul>
-<li>mkdir</li>
-<li>chdir</li>
-<li>lseek</li>
-<li>write</li>
-<li>close</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<ol start="19">
-<li>vfstest_infinite()<ul>
-<li>what : <ul>
-<li>申请一个 很大的 buf空间</li>
-<li>持续向 dev/null 中写，一直写到爆；<br>即写入字节数的返回值&lt;= 0 </li>
-<li>持续从 dev/zeor 中读NULL，一直读到爆；<br>即读入字节数的返回值&lt;= 0 </li>
-</ul>
-</li>
-<li>涉及函数：<ul>
-<li>mkdir</li>
-<li>open</li>
-<li>read</li>
-<li>write</li>
-<li>close</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<ol start="20">
-<li>vfstest_open()<ul>
-<li>what : <ul>
-<li>测试 open()</li>
-<li>测试 close()</li>
-<li>测试 unlink()</li>
-</ul>
-</li>
-<li>how:<ul>
-<li>Accepts only valid combinations of flags</li>
-<li>Cannot open nonexistent file without O_CREAT</li>
-<li>Cannot write to readonly file</li>
-<li>Cannot read from writeonly file</li>
-<li>Cannot close non-existent file descriptor</li>
-<li>Lowest file descriptor is always selected</li>
-<li>Cannot unlink a directory</li>
-<li>Cannot unlink a non-existent file</li>
-<li>Cannot open a directory for writing</li>
-<li>File descriptors are correctly released when a proc exits</li>
-</ul>
-</li>
-<li>涉及函数：<ul>
-<li>mkdir</li>
-<li>chdir</li>
-<li>open</li>
-<li>write</li>
-<li>unlink</li>
-<li>stat</li>
-<li>close</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<ol start="21">
-<li>vfstest_read()<ul>
-<li>what : 测试 do_read()</li>
-<li>how:<ul>
-<li>Can read and write to a file</li>
-<li>cannot read from a directory</li>
-<li>Can seek to beginning, middle, and end of file</li>
-<li>O_APPEND works properly</li>
-</ul>
-</li>
-<li>涉及函数：<ul>
-<li>mkdir</li>
-<li>chdir</li>
-<li>open</li>
-<li>read</li>
-<li>write</li>
-<li>lseek</li>
-<li>close</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<ol start="22">
-<li><p>vfstest_getdents()</p>
-<ul>
-<li>what : <ul>
-<li>测试 do_getdent() 读取dir目录的entries的情况</li>
-</ul>
-</li>
-<li><p>涉及函数：</p>
-<ul>
-<li>mkdir</li>
-<li>chdir</li>
-<li>open</li>
-<li>close</li>
-<li>do_getdent</li>
-</ul>
-</li>
-<li><p>问题：vfstest_getdents()这个函数：<br>在dir01中建立了一个目录、一个文件，<br>为啥getdents(fd, dirents, 4 <em> sizeof(dirent_t))<br>返回值是4 </em> sizeof(dirent_t)呀？</p>
-</li>
-<li>答案：<ul>
-<li>每个目录下还有 ‘.’ 以及 ‘..’ ，所以是4个！</li>
-</ul>
-</li>
-<li>会调用 user process 的 getdents()</li>
-<li>继而调用 ksys_getdents(fd, *dirp, count)：  <ul>
-<li>将fd代表的directory目录下所有的entries读取出来，  </li>
-<li>结果按顺序放到dir中，直到读入的信息达到指定的count</li>
-<li>返回实际读到的字节数(就是所有entries构成的dir)</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<h2 id="faber-fs-thread-test"><a href="#faber-fs-thread-test" class="headerlink" title="faber_fs_thread_test"></a>faber_fs_thread_test</h2><ol>
-<li><p>检查 argc， 要求在执行faber_fs_thread_test()的时候，必须带参数</p>
-<ul>
-<li>if ( argc == 1 ) { //  打印错误 }</li>
-</ul>
-</li>
-<li><p>如果满足，即 argc&gt;1；再检查输入的参数:n</p>
-<ul>
-<li>if sscanf() != 1, 表明argv中的参数没有输入正确，<ul>
-<li>lim = 1</li>
-</ul>
-</li>
-<li>if sscanf() == 1，表明argv中的参数正确输入了<ul>
-<li>即告知该程序：我想要开辟几个进程／线程</li>
-<li>然后只需要检测一下，lim不超过上下限即可</li>
-</ul>
-</li>
-<li>sscanf()<ul>
-<li>dtm =”Saturday March 25 1989” );</li>
-<li>int n = sscanf( dtm, “%s %s %d  %d”, weekday, month, &amp;day, &amp;year )</li>
-<li>将dtm的data，按照format的形式，赋值给后边的变量</li>
-<li>返回值：一共赋值了几个变量。此处 n = 4<ul>
-<li>snprintf()</li>
-</ul>
-</li>
-<li>BUFLEN = 256</li>
-<li>char tname[BUFLEN]; 定义了一个字符数组，最大程度256</li>
-<li>snprintf(tname, BUFLEN, “thread%03d”, i);</li>
-<li>会将”thread%03d”与i 构成的字符串写道 tname 中</li>
-<li>snprintf 中 BUFLEN 指定了tname接受的最大字符数</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>开辟 lim 个进程／线程 make_dir</p>
-<ul>
-<li>name：” thread k “ </li>
-<li>每个进程／线程 执行：make_dir_thread()</li>
-</ul>
-</li>
-<li>do_waitpid()等待所有的线程结束<ul>
-<li>if rv&lt;0 : 打印 pid + rv + err_info</li>
-<li>else    : 打印 pid + rv</li>
-<li>至此所有的 make_dir_thread 进程／线程 终结了</li>
-</ul>
-</li>
-<li>再开辟 lim 个进程／线程 clean_dir<ul>
-<li>name: “ clean_dir_thread k “</li>
-<li>每个进程／线程 执行 clean_dir_thread()<ul>
-<li>如果上次 all passed，kthread_create最后参数为：NULL</li>
-<li>如果上次有未  passed，kthread_create最后参数为：1</li>
-</ul>
-</li>
-<li>do_waitpid()等待当前线程结束，打印信息</li>
-</ul>
-</li>
-<li>最后删除所有的 lim 个dir<ul>
-<li>根据前几次的 pass 值</li>
-<li>如果全部删除成功， 打印成功</li>
-<li>如果有未删除的，打印失败</li>
-</ul>
-</li>
-</ol>
-<h4 id="make-dir-thread"><a href="#make-dir-thread" class="headerlink" title="make_dir_thread"></a>make_dir_thread</h4><ol>
-<li>该线程创建一个目录： /dir00k</li>
-<li>然后在每个目录中创建 20 个file： <ul>
-<li>/dir00n/test000 ～ /dir00n/test019</li>
-<li>调用 do_open(O_CREAT)的方式创建新文件<ul>
-<li>如果有错误，直接返回 err_val</li>
-</ul>
-</li>
-<li>调用 do_write()向每个文件中写 “look！”</li>
-<li>调用 do_close()关闭该文件</li>
-</ul>
-</li>
-</ol>
-<h4 id="clean-dir-thread"><a href="#clean-dir-thread" class="headerlink" title="clean_dir_thread"></a>clean_dir_thread</h4><ol>
-<li>该线程会删除 arg1 指定的目录(/dir00k)下的所有files</li>
-<li>arg2的值由 make_dir_thread的执行结果确定<ul>
-<li>Arg2 == 0 means directory should exist.</li>
-<li>Arg2 == 1 means if directory does not exist,<br>don’t treat it as error. <ul>
-<li>尝试性的删除 make_dir_thread 创建的 file</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>调用 f=do_open()打开 该 dir<ul>
-<li>如果该dir未打开，并且 Arg2 == 1，该线程退出 with rv=0</li>
-<li>如果 Arg2 == 0，该线程退出 with rv=f</li>
-</ul>
-</li>
-<li>调用 do_getdent() 挨个handle 每个 entry<ul>
-<li>跳过 “.” , “..” entry</li>
-<li>拼接其要删除的file 的绝对路径</li>
-<li>调用 do_unlink(file_path) 删除该file 的连接<ul>
-<li>如果删除成功， 置got_one = 1; 跳出</li>
-<li>关闭该 fd 的open_conn</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<h2 id="faber-directory-test"><a href="#faber-directory-test" class="headerlink" title="faber_directory_test"></a>faber_directory_test</h2><ol start="0">
-<li>与faber_fs_thread_test区别在于：<ul>
-<li>第一个<br>所有mk_dir_threads成功之后，回收threads；<br>再创建rm_dir_threads，成功后，回收threads</li>
-<li>第二个<br>mk_dir_thread 与 rm_dir_thread 混合执行<br>然后同时等待这两类thread的终结</li>
-</ul>
-</li>
-<li>该函数创造“成对的进程／线程”<ul>
-<li>proc_1 name: “ thread k “</li>
-<li>proc_2 name: “ rmthread k “</li>
-</ul>
-</li>
-<li>每次 iteration<ul>
-<li>创建一个 thread， 并运行之</li>
-<li>创建一个 rmthread，并运行之</li>
-</ul>
-</li>
-<li><p>调用 do_waitpid() 等待所有子进程结束</p>
-<ul>
-<li>如果某个进程返回rv &lt; 0 , 打印：pid  + rv + err_info</li>
-<li>如果某个进程返回rv ==0 , 打印：pid  + rv </li>
-</ul>
-</li>
-<li><p>循环删除所有 directory </p>
-<ul>
-<li>do_rmdir(tname)</li>
-</ul>
-</li>
-</ol>
-<h4 id="rm-dir-thread"><a href="#rm-dir-thread" class="headerlink" title="rm_dir_thread"></a>rm_dir_thread</h4><ol>
-<li>该线程创建一个目录： /dir00k</li>
-<li>然后删除目录中名字为：“/dir00n/test000” 的file<ul>
-<li>/dir00n/test000 ～ /dir00n/test019</li>
-<li>调用 do_open(O_CREAT)的方式创建新文件<ul>
-<li>如果有错误，直接返回 err_val</li>
-</ul>
-</li>
-<li>调用 do_write()向每个文件中写 “look！”</li>
-<li>调用 do_close()关闭该文件</li>
-</ul>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/01/How-does-OS-load-File-System/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/01/How-does-OS-load-File-System/" itemprop="url">FS - How does OS load File System</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-01T16:04:24-07:00">2018-04-01</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Courses/" itemprop="url" rel="index"><span itemprop="name">Courses</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/01/How-does-OS-load-File-System/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/01/How-does-OS-load-File-System/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="BIOS-code-stored-on-ROM"><a href="#BIOS-code-stored-on-ROM" class="headerlink" title="BIOS(code stored on ROM)"></a>BIOS(code stored on ROM)</h2><p>At BIOS session, several tasks are executed: </p>
-<ol>
-<li>Power-on self test (POST), making suring: <strong>memory, disk,screen,ect.</strong> are in good condition<ul>
-<li>so it knows where to load the boot program( on <strong>DISK</strong>)</li>
-<li>also prepare <strong>memory(run process)</strong> and  <strong>disk(boot program)</strong></li>
-</ul>
-</li>
-<li>Load and transfer control to boot program</li>
-<li>Provide drivers for all devices,</li>
-</ol>
-<h2 id="Boot-code-stored-on-DISK"><a href="#Boot-code-stored-on-DISK" class="headerlink" title="Boot(code stored on DISK)"></a>Boot(code stored on DISK)</h2><ol>
-<li><p>Set up stack, clear BSS, uncompress kernel, then transfer control to Kernel</p>
-</li>
-<li><p><strong>Idle process(pid=0)</strong> is created; set up initial page tables, turn on address translation</p>
-</li>
-<li><p>Initialize rest of kernel</p>
-<ul>
-<li>create vfs_root_vnode</li>
-<li>set the “cwd” of idle/init process</li>
-<li>make the null, zero, and tty devices using “mknod”<ul>
-<li>“/dev” </li>
-<li>“/dev/null”   “/dev/zero”, </li>
-<li>“/dev/tty0”   “/dev/tty1”</li>
-</ul>
-</li>
-<li>create the <strong>“init” process(pid=1)</strong>,<br>which is the ancestor of all other user processes </li>
-<li>invoke the scheduler</li>
-</ul>
-</li>
-</ol>
-<h2 id="Kernel-code-stored-on-disk"><a href="#Kernel-code-stored-on-disk" class="headerlink" title="Kernel(code stored on disk)"></a>Kernel(code stored on disk)</h2><ol>
-<li>Now the File System is ready to use</li>
-<li>Also need to execute other configuration</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2906,7 +2696,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">65</span>
+                    <span class="site-state-item-count">69</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -3172,7 +2962,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">114</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">117</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

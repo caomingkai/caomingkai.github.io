@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.6" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.6">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.6" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.6',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="I. Ways to improve website performance Minimize HTTP Requests Too many external files in &amp;lt;head&amp;gt; will cause slow loading, we can  combine all *.js to a file, *.css to a file use css spirit   CDN,">
+<meta name="keywords" content="Algorithm,Houzz,Web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Houzz front end interview prep">
+<meta property="og:url" content="http://yoursite.com/2018/12/15/Houzz Front End Interview preps/index.html">
+<meta property="og:site_name" content="CMK">
+<meta property="og:description" content="I. Ways to improve website performance Minimize HTTP Requests Too many external files in &amp;lt;head&amp;gt; will cause slow loading, we can  combine all *.js to a file, *.css to a file use css spirit   CDN,">
+<meta property="og:updated_time" content="2018-12-17T22:07:01.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Houzz front end interview prep">
+<meta name="twitter:description" content="I. Ways to improve website performance Minimize HTTP Requests Too many external files in &amp;lt;head&amp;gt; will cause slow loading, we can  combine all *.js to a file, *.css to a file use css spirit   CDN,">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/12/15/Houzz Front End Interview preps/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Houzz front end interview prep | CMK</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-116541729-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-116541729-1');
+</script>
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> 
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">CMK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Let's create something!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+          
+  <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+</li>
+
+      
+
+      
+    </ul>
+  
+
+  
+    
+
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/15/Houzz Front End Interview preps/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Houzz front end interview prep</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-15T19:39:43-05:00">2018-12-15</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/12/15/Houzz Front End Interview preps/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/12/15/Houzz Front End Interview preps/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views: 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="I-Ways-to-improve-website-performance"><a href="#I-Ways-to-improve-website-performance" class="headerlink" title="I. Ways to improve website performance"></a>I. Ways to improve website performance</h3><ul>
+<li><p>Minimize HTTP Requests</p>
+<p>Too many external files in <code>&lt;head&gt;</code> will cause slow loading, we can</p>
+<ul>
+<li>combine all <code>*.js</code> to a file, <code>*.css</code> to a file</li>
+<li>use <strong>css spirit</strong></li>
+</ul>
+</li>
+<li><p>CDN, putting static files over the world</p>
+</li>
+<li><p>Reduce image size</p>
+<ol>
+<li>change resolution</li>
+<li>compress the image</li>
+<li>crop the picture</li>
+</ol>
+</li>
+<li><p>Put <code>&lt;script&gt;</code> on bottom</p>
+</li>
+<li><p>use <code>async</code> and <code>defer</code> keywords to load js script</p>
+</li>
+<li><p>Add <code>expires</code> and <code>Cache-control</code> in response Header</p>
+</li>
+<li><p>Gzip</p>
+</li>
+<li><p>Put <code>&lt;style&gt;</code> on top, for progressive rendering</p>
+</li>
+<li><p>Minify JavaScript and CSS</p>
+</li>
+<li><p>Avoid Redirects</p>
+</li>
+<li><p>Reduce the Number of DOM Elements</p>
+</li>
+<li><p>Minimize DOM Access</p>
+</li>
+<li><p>Avoid Empty Image src</p>
+</li>
+</ul>
+<h3 id="II-Cookie"><a href="#II-Cookie" class="headerlink" title="II.  Cookie"></a>II.  Cookie</h3><p>HTTP is stateless. The server cannot recognize a visitor after he visits. But we have needs to be able to know the visitor when he visits next time:</p>
+<ol>
+<li><strong><u>Personalization:</u></strong> next time we show him related info, based on his first visits</li>
+<li><strong><u>Session management</u></strong>: after user login, we don’t let him keep logging in when access sensitive data</li>
+<li><u><strong>Tracking:</strong></u> analyzing user behavior, like how many time clicks on which section on the page</li>
+</ol>
+<h3 id="III-Session"><a href="#III-Session" class="headerlink" title="III. Session"></a>III. Session</h3><p>Session is <u>server-side</u> storage, used to store recent user information, in order to keep a live conversation. Work with </p>
+<ol>
+<li>Cookie: store the <code>sessionId</code> in cookie. Every browser bring this ID card when converse with server</li>
+<li>Database: if there is too much info, need to store info in Database, like <strong><u>Redis</u></strong></li>
+</ol>
+<h3 id="VI-Cache-vs-Cookie"><a href="#VI-Cache-vs-Cookie" class="headerlink" title="VI. Cache vs Cookie"></a>VI. Cache vs Cookie</h3><p>Although cookies and cache are two ways to store data on client’s machine, but there are difference between cache and cookies and they serve different purposes.</p>
+<ol>
+<li>Cookie is used to store information to track different characteristics related to user, while cache is used to make the loading of web pages faster.</li>
+<li>Cookies stores information such as user preferences, while cache will keep resource files such as audio, video or flash files.</li>
+<li>Typically, <u>cookies expire</u> after some time, but cache is kept in the client’s machine until they are removed manually by the user.</li>
+</ol>
+<h3 id="V-What-happens-when-we-visit-Google-com"><a href="#V-What-happens-when-we-visit-Google-com" class="headerlink" title="V. What happens when we visit Google.com?"></a>V. What happens when we visit Google.com?</h3><ol>
+<li>Check if cached already, if so, reload cache content directly</li>
+<li>If no cache, then convert the domain name to IP, recursive DNS look up:<ul>
+<li>browser cache</li>
+<li>OS cache</li>
+<li>router cache</li>
+<li>ISP cache</li>
+<li>recursive DNS lookup</li>
+</ul>
+</li>
+<li>Browser get the IP, and wrap http payload inside TCP packet, and then to even lower layer, pass to router to the Server</li>
+<li>Build up the TCP connect</li>
+<li>Browser sends HTTP request to Server</li>
+<li>Server send HTTP response with meta info in header to Browser</li>
+<li>Browser receives the response header and content<ul>
+<li>store cookie, and cache css or js</li>
+<li>render the DoOM tree, CSS-OMTree</li>
+<li>run JavaScript</li>
+<li>Create Render tree</li>
+<li>generate Layout</li>
+<li>painting</li>
+</ul>
+</li>
+<li>Browser keep request external js/ css file from Server, keeps render</li>
+</ol>
+<h3 id="VI-Positioning-of-Elements"><a href="#VI-Positioning-of-Elements" class="headerlink" title="VI. Positioning of Elements"></a>VI. Positioning of Elements</h3><p><a href="https://juejin.im/post/5b52dec0f265da0fa21a8242" target="_blank" rel="noopener">https://juejin.im/post/5b52dec0f265da0fa21a8242</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/25455672" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/25455672</a></p>
+<ol>
+<li>offsetTop</li>
+<li>scrollTop</li>
+<li>clientHeight</li>
+<li></li>
+</ol>
+<h3 id="VII-Throttle-amp-Debounce"><a href="#VII-Throttle-amp-Debounce" class="headerlink" title="VII. Throttle &amp; Debounce"></a>VII. Throttle &amp; Debounce</h3><p><a href="https://juejin.im/post/5b52dec0f265da0fa21a8242" target="_blank" rel="noopener">https://juejin.im/post/5b52dec0f265da0fa21a8242</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/25455672" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/25455672</a></p>
+<h3 id="VIII-Algorithm"><a href="#VIII-Algorithm" class="headerlink" title="VIII. Algorithm"></a>VIII. Algorithm</h3><ol>
+<li><p><strong><u>分解质因数，比如给一个数20</u></strong><br>输出：<br>20 = 2 <em> 2 </em> 5<br>11 = 11<br>followup：<br>输出 20 = 2^2 <em> 5<br>followup2：<br>反过来输出： 20 = 5 </em> 2^2</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> t1 = <span class="number">20</span></span><br><span class="line"><span class="keyword">let</span> t2 = <span class="number">7</span></span><br><span class="line"><span class="keyword">let</span> t3 = <span class="number">81</span></span><br><span class="line"><span class="keyword">let</span> t4 = <span class="number">0</span></span><br><span class="line"><span class="built_in">console</span>.log(factors(t1))</span><br><span class="line"><span class="built_in">console</span>.log(factors(t2))</span><br><span class="line"><span class="built_in">console</span>.log(factors(t3))</span><br><span class="line"><span class="built_in">console</span>.log(factors(t4))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">factors</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n===<span class="literal">null</span> || <span class="built_in">isNaN</span>(n) || n===<span class="number">0</span> || !<span class="built_in">Number</span>.isInteger(n)) </span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Error</span>(<span class="string">"Valid Expected"</span>)</span><br><span class="line">    <span class="keyword">if</span>( n === <span class="number">1</span> ) <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> res = []</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span>( n%<span class="number">2</span> === <span class="number">0</span> )&#123;</span><br><span class="line">        res.push(<span class="number">2</span>)</span><br><span class="line">        n /= <span class="number">2</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">3</span>; i*i&lt;=n; i+=<span class="number">2</span> )&#123;</span><br><span class="line">        <span class="keyword">while</span>(n%i===<span class="number">0</span>)&#123;</span><br><span class="line">            res.push(i)</span><br><span class="line">            n /= i</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(n&gt;<span class="number">1</span>) res.push(n)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> str = <span class="string">''</span></span><br><span class="line">    <span class="keyword">let</span> cnt = <span class="number">1</span></span><br><span class="line">    <span class="keyword">let</span> prev = res[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">1</span>; i &lt; res.length; i++ )&#123;</span><br><span class="line">        <span class="keyword">if</span>(res[i] !== prev)&#123;</span><br><span class="line">            <span class="keyword">if</span>(cnt&gt;<span class="number">1</span>) str += prev+<span class="string">'^'</span>+cnt+<span class="string">'*'</span></span><br><span class="line">            <span class="keyword">else</span>      str += prev+<span class="string">'*'</span></span><br><span class="line">            cnt=<span class="number">1</span></span><br><span class="line">            prev = res[i]</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            cnt++</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(cnt&gt;<span class="number">1</span>) str += prev+<span class="string">'^'</span>+cnt</span><br><span class="line">    <span class="keyword">else</span>      str += prev</span><br><span class="line">    <span class="keyword">return</span> str</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>一个字符串的list，输出其中有<strong>anagram</strong>的字符串。类似leetcode 49，很快最好一遍编译过</p>
+<p>Followup: Print lists according to the input order</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> test1 = [<span class="string">"eat"</span>, <span class="string">"tea"</span>, <span class="string">"tan"</span>, <span class="string">"ate"</span>, <span class="string">"nat"</span>, <span class="string">"bat"</span>]</span><br><span class="line"><span class="keyword">let</span> test2 = [<span class="string">"eat"</span>, <span class="string">"tan"</span>, <span class="string">"bat"</span>]</span><br><span class="line"><span class="keyword">let</span> test3 = []</span><br><span class="line"><span class="built_in">console</span>.log(anagrams(test1))</span><br><span class="line"><span class="built_in">console</span>.log(anagrams(test2))</span><br><span class="line"><span class="built_in">console</span>.log(anagrams(test3))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">anagrams</span>(<span class="params">arr</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>()</span><br><span class="line">    arr.forEach(<span class="function"><span class="params">item</span>=&gt;</span>&#123;</span><br><span class="line">        <span class="keyword">let</span> p = mapping(item)</span><br><span class="line">        <span class="keyword">if</span>(!map.has(p))&#123;</span><br><span class="line">            map.set(p,[])</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">let</span> list = map.get(p)</span><br><span class="line">        list.push(item)</span><br><span class="line">        map.set(p, list)</span><br><span class="line">    &#125;)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> res = []</span><br><span class="line">    map.forEach(<span class="function"><span class="params">val</span>=&gt;</span>&#123;</span><br><span class="line">        res.push(val)</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mapping</span>(<span class="params">str</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> res = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">256</span>).fill(<span class="string">"-"</span>)</span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">0</span>; i &lt; str.length; i++ )&#123;</span><br><span class="line">        <span class="keyword">let</span> index = str.charCodeAt(i)</span><br><span class="line">        res[index] = <span class="string">'+'</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res.join(<span class="string">''</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Largest rectangle in histogram</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;number[]&#125; heights</span></span><br><span class="line"><span class="comment"> * @return &#123;number&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> largestRectangleArea = <span class="function"><span class="keyword">function</span>(<span class="params">heights</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(heights === <span class="literal">null</span> || heights.length === <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span>(heights.length === <span class="number">1</span>) <span class="keyword">return</span> heights[<span class="number">0</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> rightFirstSmallerIndices = FirstSmallerIndices(heights, <span class="literal">true</span>)</span><br><span class="line">    <span class="keyword">let</span> leftFirstSmallerIndices = FirstSmallerIndices(heights, <span class="literal">false</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> res = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; heights.length; i++)&#123;</span><br><span class="line">        <span class="keyword">let</span> idLeft = leftFirstSmallerIndices[i]</span><br><span class="line">        <span class="keyword">let</span> idRight = rightFirstSmallerIndices[i]</span><br><span class="line">        res = <span class="built_in">Math</span>.max(res, heights[i]*(idRight-idLeft<span class="number">-1</span>))</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">FirstSmallerIndices</span>(<span class="params">arr, right</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> res = <span class="keyword">new</span> <span class="built_in">Array</span>(arr.length).fill(arr.length)</span><br><span class="line">    <span class="keyword">let</span> ids = <span class="keyword">new</span> <span class="built_in">Array</span>(arr.length).fill(<span class="number">0</span>).map(<span class="function">(<span class="params">_,id</span>)=&gt;</span>id)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(!right)&#123; </span><br><span class="line">        res = <span class="keyword">new</span> <span class="built_in">Array</span>(arr.length).fill(<span class="number">-1</span>)</span><br><span class="line">        ids = ids.map(<span class="function">(<span class="params">_,id</span>)=&gt;</span>arr.length-id<span class="number">-1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> stack = []</span><br><span class="line">    stack.push(ids[<span class="number">0</span>])</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">1</span>; i&lt;ids.length; i++ )&#123;</span><br><span class="line">        <span class="keyword">let</span> id = ids[i]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(arr[stack[stack.length<span class="number">-1</span>]] &gt; arr[id])&#123;</span><br><span class="line">            <span class="keyword">let</span> topId = stack.pop()</span><br><span class="line">            res[topId] = id</span><br><span class="line">        &#125;</span><br><span class="line">        stack.push(id)                                                  </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>LC 85/ 845</p>
+<p>不一样的是in addition要给出长方形的坐标，例如左上角点的坐标 </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;character[][]&#125; matrix</span></span><br><span class="line"><span class="comment"> * @return &#123;number&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> maximalRectangle = <span class="function"><span class="keyword">function</span>(<span class="params">matrix</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(matrix === <span class="literal">null</span> || matrix.length === <span class="number">0</span> || matrix[<span class="number">0</span>].length === <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> res = <span class="number">0</span></span><br><span class="line">    <span class="keyword">let</span> r = matrix.length</span><br><span class="line">    <span class="keyword">let</span> c = matrix[<span class="number">0</span>].length</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; r; i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>( <span class="keyword">let</span> j = <span class="number">0</span>; j &lt; c; j++ )&#123;</span><br><span class="line">            <span class="keyword">if</span>(i<span class="number">-1</span>&gt;=<span class="number">0</span> &amp;&amp; matrix[i][j]===<span class="string">"1"</span> ) &#123;</span><br><span class="line">                matrix[i][j] = <span class="built_in">Number</span>(matrix[i][j])+<span class="built_in">Number</span>(matrix[i<span class="number">-1</span>][j])</span><br><span class="line">            &#125;<span class="keyword">else</span> </span><br><span class="line">                matrix[i][j] = <span class="built_in">Number</span>(matrix[i][j])</span><br><span class="line">        &#125;</span><br><span class="line">        res = <span class="built_in">Math</span>.max(res, largestRectangleArea(matrix[i]))</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">largestRectangleArea</span>(<span class="params">heights</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(heights === <span class="literal">null</span> || heights.length === <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span>(heights.length === <span class="number">1</span>) <span class="keyword">return</span> heights[<span class="number">0</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> rightFirstSmallerIndices = FirstSmallerIndices(heights, <span class="literal">true</span>)</span><br><span class="line">    <span class="keyword">let</span> leftFirstSmallerIndices = FirstSmallerIndices(heights, <span class="literal">false</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> res = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; heights.length; i++)&#123;</span><br><span class="line">        <span class="keyword">let</span> idLeft = leftFirstSmallerIndices[i]</span><br><span class="line">        <span class="keyword">let</span> idRight = rightFirstSmallerIndices[i]</span><br><span class="line">        res = <span class="built_in">Math</span>.max(res, heights[i]*(idRight-idLeft<span class="number">-1</span>))</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">FirstSmallerIndices</span>(<span class="params">arr, right</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> res = <span class="keyword">new</span> <span class="built_in">Array</span>(arr.length).fill(arr.length)</span><br><span class="line">    <span class="keyword">let</span> ids = <span class="keyword">new</span> <span class="built_in">Array</span>(arr.length).fill(<span class="number">0</span>).map(<span class="function">(<span class="params">_,id</span>)=&gt;</span>id)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(!right)&#123; </span><br><span class="line">        res = <span class="keyword">new</span> <span class="built_in">Array</span>(arr.length).fill(<span class="number">-1</span>)</span><br><span class="line">        ids = ids.map(<span class="function">(<span class="params">_,id</span>)=&gt;</span>arr.length-id<span class="number">-1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> stack = []</span><br><span class="line">    stack.push(ids[<span class="number">0</span>])</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">1</span>; i&lt;ids.length; i++ )&#123;</span><br><span class="line">        <span class="keyword">let</span> id = ids[i]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(arr[stack[stack.length<span class="number">-1</span>]] &gt; arr[id])&#123;</span><br><span class="line">            <span class="keyword">let</span> topId = stack.pop()</span><br><span class="line">            res[topId] = id</span><br><span class="line">        &#125;</span><br><span class="line">        stack.push(id)                                                  </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>fisher-yates shuffle</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">shuffle</span>(<span class="params">arr</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> n = arr.length</span><br><span class="line">    <span class="keyword">while</span>(n&gt;<span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">let</span> randId = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * n)</span><br><span class="line">        <span class="keyword">let</span> temp = arr[randId]</span><br><span class="line">        arr[randId] = arr[n<span class="number">-1</span>]</span><br><span class="line">        arr[n<span class="number">-1</span>] = temp</span><br><span class="line">        n--</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">shuffle([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>])</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>LC 304 range sum query - immutab</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NumMatrix</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[][] dp;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">NumMatrix</span><span class="params">(<span class="keyword">int</span>[][] matrix)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(   matrix           == <span class="keyword">null</span></span><br><span class="line">           || matrix.length    == <span class="number">0</span></span><br><span class="line">           || matrix[<span class="number">0</span>].length == <span class="number">0</span>   )&#123;</span><br><span class="line">            <span class="keyword">return</span>;   </span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> m = matrix.length;</span><br><span class="line">        <span class="keyword">int</span> n = matrix[<span class="number">0</span>].length;</span><br><span class="line"></span><br><span class="line">        dp = <span class="keyword">new</span> <span class="keyword">int</span>[m + <span class="number">1</span>][n + <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= m; i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; j++)&#123;</span><br><span class="line">                dp[i][j] = dp[i - <span class="number">1</span>][j] + dp[i][j - <span class="number">1</span>] -dp[i - <span class="number">1</span>][j - <span class="number">1</span>] + matrix[i - <span class="number">1</span>][j - <span class="number">1</span>] ;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">sumRegion</span><span class="params">(<span class="keyword">int</span> row1, <span class="keyword">int</span> col1, <span class="keyword">int</span> row2, <span class="keyword">int</span> col2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> iMin = Math.min(row1, row2);</span><br><span class="line">        <span class="keyword">int</span> iMax = Math.max(row1, row2);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> jMin = Math.min(col1, col2);</span><br><span class="line">        <span class="keyword">int</span> jMax = Math.max(col1, col2);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> dp[iMax + <span class="number">1</span>][jMax + <span class="number">1</span>] - dp[iMax + <span class="number">1</span>][jMin] - dp[iMin][jMax + <span class="number">1</span>] + dp[iMin][jMin];    </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Your NumMatrix object will be instantiated and called as such:</span></span><br><span class="line"><span class="comment"> * NumMatrix obj = new NumMatrix(matrix);</span></span><br><span class="line"><span class="comment"> * int param_1 = obj.sumRegion(row1,col1,row2,col2);</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>LC 380 insertDeleteGetRandomO(1)</p>
+</li>
+<li><p>LC 162 find peak element</p>
+</li>
+<li><p>// Given multiple lists, each list contains few integer numbers</p>
+<p>// We want to get all the possible combinations within those lists, with the following condition:</p>
+<p>// <strong><em> one combination should contain one and at MOST one element from each list </em></strong></p>
+</li>
+</ol>
+<p>   // Example: input =&gt; [[1,2], [3,4]]</p>
+<p>   // output = [[1, 3], [1, 4], [2, 3], [2, 4]]  // 8</p>
+<p>   要求用两种方法，都先排序，一个是用Index判断去重，还有一个是用set判断去重</p>
+<p>   问了时间空间复杂度，最好和最坏情况</p>
+<ol start="10">
+<li><p><strong>输入”rft567.908kih000000hh890jug678gtff567”这样包含字母和数字的字符串，找到出线次数最多的数字，print “567 shows two time”。</strong></p>
+</li>
+<li><p><strong>asdbf-12.456.1asdf12.343.232这样的话，应该返回什么呢？</strong></p>
+</li>
+<li><p>matrix binary search 用两个二分和一个二分分别实现了下，时间复杂度都是O(logm + logn),</p>
+</li>
+<li><p>打印树，给一个节点，打印出树的graph</p>
+</li>
+<li><p>longest increasing subsequence</p>
+</li>
+<li><p><strong>(2019) Minimum window subsequence</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;string&#125; S</span></span><br><span class="line"><span class="comment"> * @param &#123;string&#125; T</span></span><br><span class="line"><span class="comment"> * @return &#123;string&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> minWindow = <span class="function"><span class="keyword">function</span>(<span class="params">S, T</span>) </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> minLen = S.length + <span class="number">1</span></span><br><span class="line">    <span class="keyword">let</span> minLeft = <span class="number">0</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> i = <span class="number">0</span>, j = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span>( i &lt; S.length )&#123;</span><br><span class="line">        <span class="keyword">if</span>( S[i] === T[j] )&#123;</span><br><span class="line">            <span class="keyword">if</span>( j===T.length<span class="number">-1</span> )&#123;</span><br><span class="line">                <span class="keyword">let</span> end = i</span><br><span class="line">                <span class="keyword">while</span>( j &gt;= <span class="number">0</span> )&#123;</span><br><span class="line">                    <span class="keyword">while</span>( S[i] !== T[j] ) i--</span><br><span class="line">                    i--</span><br><span class="line">                    j--</span><br><span class="line">                &#125;</span><br><span class="line">                i++</span><br><span class="line">                <span class="keyword">if</span>(minLen &gt; end-i+<span class="number">1</span>)&#123;</span><br><span class="line">                    minLen = end-i+<span class="number">1</span></span><br><span class="line">                    minLeft = i</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            j++</span><br><span class="line">        &#125;</span><br><span class="line">        i++</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> minLen===S.length + <span class="number">1</span> ? <span class="string">''</span> : S.slice(minLeft, minLeft+minLen)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>LCA of deepest leaf nodes in a binary tree</p>
+</li>
+<li><p><strong>8位String的生成器，要求在A-Z，a-z，0-9，%$&amp;#里挑，每组至少选一个</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">	1. which digit use which group of character</span></span><br><span class="line"><span class="comment">	2. a method to randomly get a char from its group</span></span><br><span class="line"><span class="comment">	3. fasher-yate shuffle</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> UPPERCASE = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">26</span>).fill(<span class="number">0</span>).map(<span class="function">(<span class="params">_,index</span>)=&gt;</span><span class="built_in">String</span>.fromCharCode(index+<span class="number">65</span>))</span><br><span class="line"><span class="keyword">const</span> LOWERCASE = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">26</span>).fill(<span class="number">0</span>).map(<span class="function">(<span class="params">_,index</span>)=&gt;</span><span class="built_in">String</span>.fromCharCode(index+<span class="number">97</span>))</span><br><span class="line"><span class="keyword">const</span> NUMBER = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">10</span>).fill(<span class="number">0</span>).map(<span class="function">(<span class="params">_,index</span>)=&gt;</span>index)</span><br><span class="line"><span class="keyword">const</span> SYMBOL = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">14</span>).fill(<span class="number">0</span>).map(<span class="function">(<span class="params">_,index</span>)=&gt;</span><span class="built_in">String</span>.fromCharCode(index+<span class="number">33</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> ARRAY = [UPPERCASE, LOWERCASE, NUMBER, SYMBOL]</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">generate</span> (<span class="params">n</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> res = []</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; ARRAY.length; i++)</span><br><span class="line">        res.push(getOne(ARRAY, i))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">0</span>; i &lt; n-ARRAY.length; i++ )&#123;</span><br><span class="line">        <span class="keyword">let</span> type = <span class="built_in">Math</span>.floor( (<span class="built_in">Math</span>.random() * ARRAY.length) )</span><br><span class="line">        res.push(getOne(ARRAY, type))</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> shuffle(res).join(<span class="string">''</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getOne</span>(<span class="params">ARRAY, type</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> len = ARRAY[type].length</span><br><span class="line">    <span class="keyword">let</span> rand = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random()*len)</span><br><span class="line">    <span class="keyword">return</span> ARRAY[type][rand]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">shuffle</span>(<span class="params">arr</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> n = arr.length</span><br><span class="line">    <span class="keyword">while</span>(n&gt;<span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">let</span> rand = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random*n)</span><br><span class="line">        <span class="keyword">let</span> temp = arr[rand]</span><br><span class="line">        arr[rand] = arr[n<span class="number">-1</span>]</span><br><span class="line">        arr[n<span class="number">-1</span>] = temp</span><br><span class="line">        n--</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(generate(<span class="number">8</span>))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>(2019)列车时刻表</strong><br><strong>A B 1000 1130 （A 到 B，10：00出发， 11：30到达 ）</strong><br><strong>B C 1200 1230</strong><br><strong>A C 1100 1250</strong></p>
+<p><strong>求 A 到 C: 1) 最早到达的时间，输出大概是“A C 1000 1230”。 2)若有多条线路同时到达，求最晚出发的列车schedule，输出格式和第一问一样。</strong></p>
+<p><a href="https://www.1point3acres.com/bbs/thread-460017-1-1.html" target="_blank" rel="noopener">https://www.1point3acres.com/bbs/thread-460017-1-1.html</a></p>
+</li>
+<li><p>基本上跟 LC 上面 <u>walls and gates</u> 很像，但是有一个agent （起点）和 several goals (终点) 问能不能从一个起点到达所有终点。<br>矩阵类似这样：<br>0 0 0 1 1 1<br>A 1 0 1 G 1<br>1 0 G 0 1 1<br>1 0 0 1 0 1</p>
+<p>我用recursion写出来然后各种检查typo。最后还是被白人小哥嘲笑worlds打成world。<br>还有我更改了矩阵内容0-&gt;1，被不允许</p>
+</li>
+<li><p>(<em>2018-12-6</em>) sqrt(n)，最开始我说用brute-force从0到result找，然后刚想说优化用binary search，面试官就表示，如果我的输入是double，怎么办？所以最终的问题变成sqrt(double n, double delta)，需要输出一个在[result-delta, result+delta]范围内的任意一个值，然后其实还是binary search来做。最后还有个bug，这里处理得不是很好，感觉面试官有点儿不高兴，唉。。。然后分析了下时间复杂度，问了问问题，就结束了。。</p>
+</li>
+<li><p>(<em>2018-12-6</em>)题目是，给两个二叉树s和t，需要判断t是否是s的某一个subtree。<br>先说了brute-force的方法，然后分析了一下时间复杂度，然后开始优化，当时直觉是用inorder-traverse转化成string来做，但是最开始中间还是有bug，例如<br>​       1               2<br>​     /   \               \<br>   2     3  和          1，  如果仅仅考虑inorder的情况，显然是不对了。</p>
+<p>幸好大哥给了点提示，然后顺利写出代码，中间有些小bug，在跑了俩test case后就知道问题所在，然后改完就ok了。大哥人真的很nice，面试体验很棒，后面还跟我介绍了很多他们组的情况以及houzz。</p>
+</li>
+<li><p>top k visited website this day </p>
+<p>this is typical  top k . you  can create a list of  {3, [web1, web2] } , { 2, [web 3 , web 4] }  3 stands for the visited time and  web 1 &amp; web 2 stands for the websites . and then you can do the traversal to find the  proper results. thanks</p>
+</li>
+<li><p>完全背包， 刚开始理解成了01背包，后来发现他想要完全背包， 反正两种都写了</p>
+</li>
+<li><p>给出一个arr, 如[0,1,0,1,0]，每个1就是一个发电厂，然后给出一个range，比如是2，就是说每个发电厂能cover前后range为2的距离，然后求需要的发电厂的最少数。e.g. [1,1,0], range 为 1 -&gt; [0,1,0]</p>
+<p>给的arr里面有1和0，但是最后输出的arr 要把其中某些1变成0，（不知0能否变成1？）从而达到最少数的发电厂</p>
+<p><a href="http://www.cs.toronto.edu/~jepson/csc373/tutNotes/cellTower.pdf" target="_blank" rel="noopener">http://www.cs.toronto.edu/~jepson/csc373/tutNotes/cellTower.pdf</a></p>
+<p>Course Schedule III</p>
+<p><a href="https://leetcode.com/problems/heaters/description/" target="_blank" rel="noopener">https://leetcode.com/problems/heaters/description/</a> </p>
+</li>
+<li><p><strong>LC 65 Valid Number</strong></p>
+<p><strong>valid number那道题</strong><br><strong>“12.3459” -&gt; 12.3459</strong><br><strong>“   12.3459   “ -&gt; 12.3459</strong><br><strong>“12.3  459” -&gt; Exception</strong><br><strong>“1 2.3459” -&gt; Exception</strong><br><strong>“12.34x59” -&gt; Exception</strong><br><strong>“12.34.59” -&gt; Exception</strong><br>e.g. “+.34” -&gt; 0.34<br>e.g. “-1.234” -&gt; -1.234这题感觉之前面经没一个说明白详细的。第一，只能扫一遍，trim都不可以用，第二，不能用valueOf这种函数，parse转化不可以。也就是说，只能硬扫记录硬来，不能用stringbuilder去存去做。这题面之前就写了，但没想到限制的这么硬，虽然和lc65差了个e，但难度基本一样。</p>
+</li>
+<li><p>design calendar class  有 day year month  实现 add (days) return  calendar、、</p>
+</li>
+<li><p>add(num1, num2) 不能用加号。</p>
+</li>
+<li><p>Merge k sorted arrays</p>
+</li>
+<li><p>Design Twitter</p>
+</li>
+<li><p>find median of two sorted array,</p>
+</li>
+<li><p><strong>LC 85 Maximal Rectangle</strong>，一个变化是要求最后返回一个maximal rectangle的identifier。 (需要给用到stack的那个解法 )</p>
+</li>
+<li><p><strong>设计题，要求返回twitter在过去24小时里最popular的10个单词（任何string）</strong></p>
+</li>
+<li><p>String Permutation I, Follow Up String Permutation II.<br>都秒了，</p>
+</li>
+<li><p>Longest Incresing Subsequence.</p>
+</li>
+<li><p>强制用JavaScript写一个方法，把一句话中所有的word转换成第一个字符大写的word</p>
+</li>
+<li><p>LC 227 但是有括号也要考虑。</p>
+</li>
+<li><p>print a given source to a destination</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> adjList = [</span><br><span class="line">    [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],</span><br><span class="line">    [<span class="number">3</span>],</span><br><span class="line">    [<span class="number">0</span>,<span class="number">1</span>],</span><br><span class="line">    []</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> s = <span class="number">2</span>, t = <span class="number">3</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getAllPaths</span>(<span class="params">adjList, s, t</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> res = []</span><br><span class="line">    <span class="keyword">let</span> visited = <span class="keyword">new</span> <span class="built_in">Set</span>()</span><br><span class="line">    dfs(s, [])</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">dfs</span>(<span class="params">nodeId, prefix</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(nodeId === t)&#123;</span><br><span class="line">            res.push([...prefix, nodeId])</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">let</span> children = adjList[nodeId]</span><br><span class="line">        visited.add(nodeId)</span><br><span class="line">        children.forEach(<span class="function"><span class="params">item</span>=&gt;</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(!visited.has(item))</span><br><span class="line">            	dfs(item, [...prefix, nodeId])</span><br><span class="line">        &#125;)</span><br><span class="line">        visited.delete(nodeId)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(getAllPaths(adjList, s, t))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>traverse the graph</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> adjList = [</span><br><span class="line">    [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],</span><br><span class="line">    [<span class="number">3</span>],</span><br><span class="line">    [<span class="number">0</span>,<span class="number">1</span>],</span><br><span class="line">    []</span><br><span class="line">]</span><br><span class="line"><span class="keyword">let</span> s1 = <span class="number">0</span></span><br><span class="line"><span class="comment">// console.log(traverse(adjList, s1))</span></span><br><span class="line"><span class="keyword">let</span> s2 = <span class="number">2</span></span><br><span class="line"><span class="comment">// console.log(traverse(adjList, s2))</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">traverse</span>(<span class="params">adjList, s</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> visited = <span class="keyword">new</span> <span class="built_in">Set</span>()</span><br><span class="line">    <span class="keyword">let</span> res = []</span><br><span class="line">    dfs(s)</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">dfs</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">        res.push(n)</span><br><span class="line">        visited.add(n)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">let</span> children = adjList[n]</span><br><span class="line">        children.forEach(<span class="function"><span class="params">item</span>=&gt;</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(!visited.has(item))&#123;</span><br><span class="line">                dfs(item)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>数字恩，假设这是一个 恩乘恩 的正方形单元网格，给一个圆，半径以及圆心点坐标，求有多少小格子完全在园内？  不依不饶： 有没有 欧恩的解法？</p>
+<p>根据圆的坐标很容易找到第一个格子，其部分顶点包含在园内，部分在圆外。以这个格子为起始做dfs，找出所有类似的格子，（这些格子全在圆的边界上）。那么所有有相同x坐标的格子，y坐标差减一就是这两个格子之间一定在园内的格子数。这样traverse by x坐标，累积的y坐标差应该就是在园内的格子数。<br>欢迎大家补充更优解！！</p>
+<p>圆心，半径都是浮点数。我觉得楼上那位同学说的比我的解法好。扫描经过圆心的直径，根据纵坐标算夹在圆内的格子，这样应该是O(n)，  比如，圆心是x = 3.4， y = - 3   半径  5.5， 那么从， Math.max(0, ceilling(x - r)) 一直扫描到  Math.min(n - 1, floor(x + r)).   对每个 x’,  x’ + 1  算有多少格子在园内，格子数的和即为最后园内格子数。   </p>
+<p>(x - 3.4)^2 + (y + 3)^2 = 5.5^2   带入 x’  以及 x’ + 1, 得到y的上界yUp y’Up，下界 ydown, y’down， 格子数就是，Floor(Math.min(yUp, y’Up, n)) - ceilling(Math.max(ydown, y’down, 0)),       </p>
+<p><a href="https://www.1point3acres.com/bbs/forum.php?mod=redirect&amp;goto=findpost&amp;pid=3435264&amp;ptid=314884" target="_blank" rel="noopener">Shell_Smith 发表于 2018-1-18 09:01</a><br>不是，如果说n是1的话，那么就有（0，0）（0，1）（1，0）（1，1）四个点围成一个正方形，这个正方形所有 …<br>假设圆心是(x0, y0)，半径是r的话，把圆分成左右两半分别计算即可：<br>对于右边一半，遍历 x = x0 + 1, …, x0 + r，对每个x，计算对应的圆上的y值 yt 和 yb，那么横坐标是x且在圆内的点的个数是 floor(yt) - floor(yb)，一旦x到网格外了就停止<br>对于左边一半同样计算<br>复杂度是 O(N)</p>
+</li>
+<li><p>quicksort &amp; merge sort</p>
+</li>
+<li><p>graph是不是bipartite的，bfs解完了，接下来问时间复杂度，可不可以优化。<br>  <a href="https://www.1point3acres.com/bbs/thread-286531-1-1.html" target="_blank" rel="noopener">https://www.1point3acres.com/bbs/thread-286531-1-1.html</a></p>
+</li>
+<li><p>一个unfair coin，怎么disign一个process可以返回同样几率的0和1.</p>
+</li>
+<li><p>Calculate the distance of bits between two integers.<br>For example: 1 -&gt; 01; 2 -&gt; 10; dist = 2;</p>
+</li>
+<li><p>Fibonacci, recursive + non recursive;</p>
+</li>
+<li><p>file path “/home/./../user/file/.././“大概这样   .表示不动，..表示去上层，要求返回简化的路径，”/user”,stack做</p>
+</li>
+<li><p><u><strong>calendar add day</strong></u></p>
+<p>Calendar class（有三个field，year，month，day）和一个数N，实现一个函数，返回N天之后的calendar，譬如说输入是{2017， 3，20}和12， 那么返回的是{2017，4， 1}</p>
+</li>
+<li><p>excel implementation</p>
+</li>
+<li><p>Given a DAG, a source, a target, and number n, 找出从source到target的长度为n的路径的个数。</p>
+</li>
+<li><p>given a undirectd and acyclic graph, 一个source和一个target，找出source到target的最长path</p>
+</li>
+<li><p>是之前面经里有过的一个二维数组最后一个格子是个moving block的那题。应该要用a star算法。。我刷面经的时候就想说要是考到这题我就放弃。。因为之前研究了半天还是觉得太复杂，搞懂了感觉一个小时也写不出来。。结果好死不死的考到了＝。 ＝当然我是没有放弃的，强行用DFS解了下，但是空间复杂度会很高，小姐姐说最多只能跑个2*2的试试，DFS的话就是你每走一步就把当前棋盘的状态存到一个hashset里，然后要是走到相同状态就不再走下去。反正最后写了100多行跑了个最简单的用例但是感觉有loop，也没时间debug了。</p>
+</li>
+<li><p>find max number of points in one line  + 系统设计（设计一个topic ranking 系统）</p>
+</li>
+<li><p>有向有环图中 找source 到 target 的距离为n的可能性</p>
+</li>
+<li><p>wordbreak 2 (follow up : NLP problems)</p>
+</li>
+</ol>
+<h3 id="XI-SQL"><a href="#XI-SQL" class="headerlink" title="XI. SQL"></a>XI. SQL</h3><ol>
+<li><p>select count distinct</p>
+</li>
+<li><p>query要用group by, 然后让我写一个方法，输入income和taxTable可以得出tax. 不是算法题，当时我都震惊了，就是分段函数求和。小哥说就想看下我会不会写code。。估计前面的问答让他对我的能力深感怀疑。。</p>
+</li>
+<li><p>给了个实际例子 要我写了个简单的3个entity的table（one to many &amp; many to many）一个USER有很多ALBUM, 很多PHOTO对应很多album<br>写SQL<strong>: 给一个用户，这个用户有几张照片？</strong><br><strong>每个相册分开呢？</strong></p>
+</li>
+</ol>
+<p>   最后问了几个SQL的问题：</p>
+<ol>
+<li>有user，user有photo，怎么建表，大概写一下</li>
+<li>写一个SQL查每个user有多少照片</li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Algorithm/" rel="tag"># Algorithm</a>
+          
+            <a href="/tags/Houzz/" rel="tag"># Houzz</a>
+          
+            <a href="/tags/Web/" rel="tag"># Web</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/10/Counting-holes-in-number/" rel="next" title="Counting holes in number">
+                <i class="fa fa-chevron-left"></i> Counting holes in number
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/20/Vigenere-Cipher-React/" rel="prev" title="Vigenere Cipher - [React]">
+                Vigenere Cipher - [React] <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/sea.jpg"
+                alt="Mingkai Cao" />
+            
+              <p class="site-author-name" itemprop="name">Mingkai Cao</p>
+              <p class="site-description motion-element" itemprop="description">All-trade Jack, loves full-stack</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">72</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">120</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/caomingkai" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:mingkaic@usc.edu" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#I-Ways-to-improve-website-performance"><span class="nav-number">1.</span> <span class="nav-text">I. Ways to improve website performance</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#II-Cookie"><span class="nav-number">2.</span> <span class="nav-text">II.  Cookie</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#III-Session"><span class="nav-number">3.</span> <span class="nav-text">III. Session</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VI-Cache-vs-Cookie"><span class="nav-number">4.</span> <span class="nav-text">VI. Cache vs Cookie</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#V-What-happens-when-we-visit-Google-com"><span class="nav-number">5.</span> <span class="nav-text">V. What happens when we visit Google.com?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VI-Positioning-of-Elements"><span class="nav-number">6.</span> <span class="nav-text">VI. Positioning of Elements</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VII-Throttle-amp-Debounce"><span class="nav-number">7.</span> <span class="nav-text">VII. Throttle &amp; Debounce</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VIII-Algorithm"><span class="nav-number">8.</span> <span class="nav-text">VIII. Algorithm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XI-SQL"><span class="nav-number">9.</span> <span class="nav-text">XI. SQL</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate"> 
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mingkai Cao</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.6</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.6"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.6"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.6"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.6"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.6"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'hG8fgggWL7hK1jsXsRoVCNWv-MdYXbMMI',
+        appKey: 'VRAYsgwdkRyyb8bAFQ5uii6o',
+        placeholder: 'Any comment?',
+        avatar:'',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+    // 新增以下代码即可，可以移除.info下所有子节点
+    var infoEle = document.querySelector('#comments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0){
+      infoEle.childNodes.forEach(function(item) {
+        item.parentNode.removeChild(item);
+      });
+    }
+
+
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+<style>
+    #comments .vempty{
+        display: none;
+    }
+</style>
+
+</body>
+</html>

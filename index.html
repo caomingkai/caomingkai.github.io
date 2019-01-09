@@ -589,6 +589,413 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/21/Vigenere-Cipher-Vanilla-JS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/21/Vigenere-Cipher-Vanilla-JS/" itemprop="url">Vigenere Cipher - [Vanilla JS]</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-21T10:39:01-08:00">2018-12-21</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Portfolios/" itemprop="url" rel="index"><span itemprop="name">Portfolios</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/12/21/Vigenere-Cipher-Vanilla-JS/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/12/21/Vigenere-Cipher-Vanilla-JS/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>Vigenere Cipher is used to encode original string to random string, with a given keyword.</p>
+<img src="/2018/12/21/Vigenere-Cipher-Vanilla-JS/demo.gif">
+<h1 id="Components"><a href="#Components" class="headerlink" title="Components"></a>Components</h1><ol>
+<li>Keyword Input Component</li>
+<li>Keywords Display Component</li>
+<li>Source Text Input Component</li>
+<li>Source Text Display Component</li>
+<li>Cipher Text Display Component</li>
+</ol>
+<h1 id="Model-amp-Events"><a href="#Model-amp-Events" class="headerlink" title="Model &amp; Events"></a>Model &amp; Events</h1><ol>
+<li><p>Model</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> valid = <span class="literal">true</span></span><br><span class="line"><span class="keyword">let</span> kw_to_be = []</span><br><span class="line"><span class="keyword">let</span> kw = []</span><br><span class="line"><span class="keyword">let</span> kw_idx = <span class="number">0</span></span><br><span class="line"><span class="keyword">let</span> kw_char_row = []</span><br><span class="line"><span class="keyword">let</span> kw_num_row  = []</span><br><span class="line"><span class="keyword">let</span> ciph_row  = []</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Events</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 2.1 keyword input event handler</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">inputHandler</span>(<span class="params">e</span>)</span>&#123;&#125; </span><br><span class="line">    </span><br><span class="line"><span class="comment">// 2.2 source click button event handler</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">clickHandler</span>(<span class="params">id</span>)</span>&#123;&#125;</span><br><span class="line">   </span><br><span class="line"><span class="comment">// 2.3 update button event handler</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">updateBtnHandler</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">   </span><br><span class="line"><span class="comment">// 2.4 clear button event handler</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">clearBtnHandler</span>(<span class="params"></span>)</span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="Layout-amp-Logic"><a href="#Layout-amp-Logic" class="headerlink" title="Layout &amp; Logic"></a>Layout &amp; Logic</h1><img src="/2018/12/21/Vigenere-Cipher-Vanilla-JS/Layout&Logic.jpg">
+<h1 id="Code-Implementation"><a href="#Code-Implementation" class="headerlink" title="Code Implementation"></a>Code Implementation</h1><ol>
+<li><p>HTML</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"style.css"</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">&lt;!-- 1. Keyword Input Component --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span>Configuration<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">h1</span>&gt;</span> <span class="tag">&lt;<span class="name">p</span>&gt;</span>Keyword<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">"comp"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">"inputBox"</span> <span class="attr">type</span>=<span class="string">"text"</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"updateBtn"</span> &gt;</span>Update<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">"validation"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>Length of keyword should be in range: 3~8 <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>Characters should be uppercase<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">&lt;!-- 2. Keyword Display Component --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">table</span> <span class="attr">class</span>=<span class="string">"comp"</span>&gt;</span><span class="tag">&lt;<span class="name">tbody</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">tr</span> <span class="attr">id</span>=<span class="string">"kwCharRow"</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">tr</span> <span class="attr">id</span>=<span class="string">"kwNumRow"</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tbody</span>&gt;</span><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">&lt;!-- 3. Source Text Input Component --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span>Encoding<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">h1</span>&gt;</span> <span class="tag">&lt;<span class="name">p</span>&gt;</span>Source Text<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">table</span> <span class="attr">class</span>=<span class="string">"comp"</span>&gt;</span><span class="tag">&lt;<span class="name">tbody</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">tr</span> <span class="attr">id</span>=<span class="string">"srcTextRow"</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">tr</span> <span class="attr">id</span>=<span class="string">"ciphTextRow"</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tbody</span>&gt;</span><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">&lt;!-- 4. Source Text Display Component --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"comp"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span>  <span class="attr">id</span>=<span class="string">"srcText"</span> <span class="attr">type</span>=<span class="string">"text"</span>  <span class="attr">disabled</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"clearBtn"</span>&gt;</span>Clear<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  </span><br><span class="line">    <span class="comment">&lt;!-- 5. Cipher Text Display Component --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"comp"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">p</span>&gt;</span>Cipher Text<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">"ciphText"</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">disabled</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"script.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>JS</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 0.1 const</span></span><br><span class="line">  <span class="keyword">const</span> CHAR_NUM = <span class="number">26</span></span><br><span class="line">  <span class="keyword">const</span> CHAR_CODE_A = <span class="number">65</span></span><br><span class="line">  <span class="keyword">const</span> CHAR_CODE_Z = <span class="number">90</span></span><br><span class="line">  <span class="keyword">const</span> CHAR_CODE_ALL = <span class="keyword">new</span> <span class="built_in">Array</span>(CHAR_NUM).fill(<span class="number">1</span>).map( <span class="function">(<span class="params"> _, i </span>) =&gt;</span> (CHAR_CODE_A+i) )</span><br><span class="line">  <span class="keyword">const</span> CHAR_ALL = CHAR_CODE_ALL.map(<span class="function"><span class="params">item</span>=&gt;</span><span class="built_in">String</span>.fromCharCode(item))</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 0.2 helper functions</span></span><br><span class="line">  <span class="keyword">const</span> getEle = <span class="function">(<span class="params">id</span>) =&gt;</span> <span class="built_in">document</span>.getElementById(id)</span><br><span class="line">  <span class="keyword">const</span> setEleVal = <span class="function">(<span class="params">ele, val</span>)=&gt;</span> &#123;ele.value = val&#125;</span><br><span class="line">  <span class="keyword">const</span> creatEle = <span class="function">(<span class="params">tag</span>) =&gt;</span> <span class="built_in">document</span>.createElement(tag)</span><br><span class="line">  <span class="keyword">const</span> creatText = <span class="function">(<span class="params">str</span>) =&gt;</span> <span class="built_in">document</span>.createTextNode(str)</span><br><span class="line">  <span class="keyword">const</span> generateEle = <span class="function">(<span class="params"> tag, data, parent </span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> tempNode = <span class="built_in">document</span>.createDocumentFragment()</span><br><span class="line">    data.forEach(<span class="function">(<span class="params">item, index</span>)=&gt;</span>&#123;</span><br><span class="line">      <span class="keyword">const</span> td = creatEle(<span class="string">'TD'</span>)</span><br><span class="line">      <span class="keyword">const</span> text = creatText(item)</span><br><span class="line">      <span class="keyword">if</span>( tag === <span class="string">'srcTextRow'</span> )&#123;</span><br><span class="line">        <span class="keyword">const</span> btn = creatEle(<span class="string">'BUTTON'</span>)</span><br><span class="line">        btn.appendChild(text)</span><br><span class="line">        btn.onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;clickHandler(index)&#125;</span><br><span class="line">        td.appendChild(btn)</span><br><span class="line">      &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        td.appendChild(text)</span><br><span class="line">      &#125;</span><br><span class="line">      tempNode.appendChild(td)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (parent.firstChild) &#123; parent.removeChild(parent.firstChild) &#125;</span><br><span class="line">    parent.appendChild(tempNode)</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">const</span> updateCiphTextRow = <span class="function">(<span class="params">kw_idx</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> offset = kw[kw_idx].charCodeAt(<span class="number">0</span>) - CHAR_CODE_A</span><br><span class="line">    <span class="keyword">return</span> CHAR_CODE_ALL.map(<span class="function"><span class="params">item</span>=&gt;</span>&#123;</span><br><span class="line">      <span class="keyword">const</span> code = (item+offset &lt;= CHAR_CODE_Z) ? (item+offset) : (item+offset-CHAR_NUM)</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">String</span>.fromCharCode(code)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">const</span> updateHighlightIndex = <span class="function">(<span class="params">id</span>)=&gt;</span>&#123;</span><br><span class="line">    kwCharRow.childNodes.forEach( <span class="function"><span class="keyword">function</span>(<span class="params">item, index</span>)</span>&#123;</span><br><span class="line">      item.className = id===index ? <span class="string">"highlight"</span> : <span class="string">""</span></span><br><span class="line">    &#125;)</span><br><span class="line">    kwNumRow.childNodes.forEach( <span class="function"><span class="keyword">function</span>(<span class="params">item, index</span>)</span>&#123;</span><br><span class="line">      item.className = id===index ? <span class="string">"highlight"</span> : <span class="string">""</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 0.3 DOM Elements</span></span><br><span class="line">  <span class="keyword">const</span> inputBox = getEle(<span class="string">"inputBox"</span>)</span><br><span class="line">  <span class="keyword">const</span> errorHint = getEle(<span class="string">"validation"</span>)</span><br><span class="line">  <span class="keyword">const</span> updatBtn = getEle(<span class="string">"updatBtn"</span>)</span><br><span class="line">  <span class="keyword">const</span> kwCharRow = getEle(<span class="string">"kwCharRow"</span>)</span><br><span class="line">  <span class="keyword">const</span> kwNumRow = getEle(<span class="string">"kwNumRow"</span>)</span><br><span class="line">  <span class="keyword">const</span> srcTextRow = getEle(<span class="string">"srcTextRow"</span>)</span><br><span class="line">  <span class="keyword">const</span> ciphTextRow = getEle(<span class="string">"ciphTextRow"</span>)</span><br><span class="line">  <span class="keyword">const</span> srcText = getEle(<span class="string">"srcText"</span>)</span><br><span class="line">  <span class="keyword">const</span> clearBtn = getEle(<span class="string">"clearBtn"</span>)</span><br><span class="line">  <span class="keyword">const</span> ciphText = getEle(<span class="string">"ciphText"</span>)</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  <span class="comment">/* </span></span><br><span class="line"><span class="comment">    1. models</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="keyword">let</span> valid = <span class="literal">true</span></span><br><span class="line">  <span class="keyword">let</span> kw_to_be = []</span><br><span class="line">  <span class="keyword">let</span> kw = []</span><br><span class="line">  <span class="keyword">let</span> kw_idx = <span class="number">0</span></span><br><span class="line">  <span class="keyword">let</span> kw_char_row = []</span><br><span class="line">  <span class="keyword">let</span> kw_num_row  = []</span><br><span class="line">  <span class="keyword">let</span> ciph_row  = []</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="comment">/* </span></span><br><span class="line"><span class="comment">    2. event handlers &amp; DOM manipulation</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 2.1 keyword input event handler</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">inputHandler</span>(<span class="params">e</span>)</span>&#123; </span><br><span class="line">    kw_to_be = e.target.value.split(<span class="string">""</span>)</span><br><span class="line">    <span class="keyword">const</span> len = kw_to_be.length</span><br><span class="line">    <span class="keyword">const</span> lenValid = (len&gt;=<span class="number">3</span> &amp;&amp; len&lt;=<span class="number">8</span>)</span><br><span class="line">    <span class="keyword">const</span> caseValid = kw_to_be.every(</span><br><span class="line">      item =&gt; item==item.toUpperCase()</span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">const</span> validNew = lenValid &amp;&amp; caseValid</span><br><span class="line">    <span class="keyword">if</span>(valid!==validNew)&#123;</span><br><span class="line">      valid = validNew</span><br><span class="line">      errorHint.classList.toggle(<span class="string">"invalid"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  inputBox.oninput=inputHandler</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 2.2 source click button event handler</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">clickHandler</span>(<span class="params">id</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(kw.length === <span class="number">0</span> ) <span class="keyword">return</span> </span><br><span class="line">    srcText.value = srcText.value + CHAR_ALL[id]</span><br><span class="line">    ciphText.value = ciphText.value + ciph_row[id]</span><br><span class="line">    kw_idx = kw_idx+<span class="number">1</span> &lt; kw.length ? kw_idx+<span class="number">1</span> : kw_idx+<span class="number">1</span>-kw.length</span><br><span class="line">    ciph_row = updateCiphTextRow(kw_idx)</span><br><span class="line">    generateEle(<span class="string">"ciphTextRow"</span>, ciph_row, ciphTextRow)</span><br><span class="line">    updateHighlightIndex(kw_idx)</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 2.3 update button event handler</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">updateBtnHandler</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!valid) <span class="keyword">return</span></span><br><span class="line">    kw = kw_to_be</span><br><span class="line">    kw_idx = <span class="number">0</span></span><br><span class="line">    <span class="keyword">const</span> kw_num = kw.map(<span class="function"><span class="params">item</span>=&gt;</span>item.charCodeAt(<span class="number">0</span>)-CHAR_CODE_A)</span><br><span class="line">    ciph_row = kw.length===<span class="number">0</span> ? [] : updateCiphTextRow(kw_idx)</span><br><span class="line">    generateEle(<span class="string">"kwCharRow"</span>, kw, kwCharRow)</span><br><span class="line">    generateEle(<span class="string">"kwNumRow"</span>, kw_num, kwNumRow)</span><br><span class="line">    generateEle(<span class="string">"ciphTextRow"</span>, ciph_row, ciphTextRow)</span><br><span class="line">    updateHighlightIndex(kw_idx)</span><br><span class="line">    srcText.value = <span class="string">""</span></span><br><span class="line">    ciphText.value = <span class="string">""</span></span><br><span class="line">  &#125;</span><br><span class="line">  updateBtn.onclick=updateBtnHandler</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 2.4 clear button event handler</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">clearBtnHandler</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    kw_idx = <span class="number">0</span></span><br><span class="line">    ciph_row = updateCiphTextRow(kw_idx)</span><br><span class="line">    updateHighlightIndex(kw_idx)</span><br><span class="line">    generateEle(<span class="string">"ciphTextRow"</span>, ciph_row, ciphTextRow)</span><br><span class="line">    srcText.value = <span class="string">""</span></span><br><span class="line">    ciphText.value = <span class="string">""</span></span><br><span class="line">  &#125;</span><br><span class="line">  clearBtn.onclick=clearBtnHandler</span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">  </span><br><span class="line">  <span class="comment">// populate 'A'~'Z' in srcTextRow</span></span><br><span class="line">  <span class="keyword">let</span> tempNode = <span class="built_in">document</span>.createDocumentFragment()</span><br><span class="line">  generateEle(<span class="string">"srcTextRow"</span>, CHAR_ALL, srcTextRow)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>CSS</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">table</span>&#123;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">1px</span> solid black;</span><br><span class="line">  <span class="attribute">border-collapse</span>:collapse;</span><br><span class="line">  <span class="attribute">text-align</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">table</span> <span class="selector-tag">td</span> &#123;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">1px</span> solid black;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">5px</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">20px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">20px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">h1</span>&#123;</span><br><span class="line">  <span class="attribute">margin-top</span>: <span class="number">30px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">h1</span> <span class="selector-tag">span</span>&#123;</span><br><span class="line">  <span class="attribute">color</span>: grey;</span><br><span class="line">  <span class="attribute">border-bottom</span>: <span class="number">1px</span> solid ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">input</span><span class="selector-attr">[disabled]</span>&#123;</span><br><span class="line">  <span class="attribute">background-color</span>:<span class="number">#F5F5DC</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="selector-tag">ul</span>&#123;</span><br><span class="line">  <span class="attribute">display</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.invalid</span>&#123;</span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">  <span class="attribute">color</span>: red;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.highlight</span>&#123;</span><br><span class="line">  <span class="attribute">background-color</span>: yellow;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.comp</span>&#123;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">5px</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/20/Vigenere-Cipher-React/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/20/Vigenere-Cipher-React/" itemprop="url">Vigenere Cipher - [React]</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-20T10:38:35-08:00">2018-12-20</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Portfolios/" itemprop="url" rel="index"><span itemprop="name">Portfolios</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/12/20/Vigenere-Cipher-React/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/12/20/Vigenere-Cipher-React/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>Vigenere Cipher is used to encode original string to random string, with a given keyword.</p>
+<img src="/2018/12/20/Vigenere-Cipher-React/demo.gif">
+<h1 id="Components"><a href="#Components" class="headerlink" title="Components"></a>Components</h1><ol>
+<li>App (main component)</li>
+<li>KeywordInputComp </li>
+<li>KeywordsDisplayComp</li>
+<li>SourceTextInputComp</li>
+<li>SourceTextDisplayComp</li>
+<li>CipherTextDisplayComp</li>
+</ol>
+<h1 id="Layout"><a href="#Layout" class="headerlink" title="Layout"></a>Layout</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">App Comp </span><br><span class="line"> |</span><br><span class="line"> |__Keyword Input Comp </span><br><span class="line"> |</span><br><span class="line"> |__Keyword Display Comp</span><br><span class="line"> |</span><br><span class="line"> |__Source Text Input Comp</span><br><span class="line"> |</span><br><span class="line"> |__Source Text Display Comp</span><br><span class="line"> |</span><br><span class="line"> |__Cipher Text Display Comp</span><br></pre></td></tr></table></figure>
+<h1 id="Model-amp-Actions"><a href="#Model-amp-Actions" class="headerlink" title="Model &amp; Actions"></a>Model &amp; Actions</h1><ol>
+<li><p>App state:</p>
+<ul>
+<li>1.1 keyword</li>
+<li>1.2 keyword_index</li>
+<li>1.3 cipher_array</li>
+<li>1.4 source_text</li>
+<li><p>1.5 cipher_text</p>
+</li>
+<li><p>1.6 keyword_input</p>
+</li>
+<li>1.7 update</li>
+<li>1.8 sourceClick</li>
+<li>1.9 clear</li>
+</ul>
+</li>
+<li><p>KeywordInputComp props:</p>
+<ul>
+<li><p>keep keyword_to_be as App’s instance variable</p>
+</li>
+<li><p>1.6</p>
+</li>
+<li>1.7</li>
+</ul>
+</li>
+<li><p>KeywordsDisplayComp props:</p>
+<ul>
+<li>1.1</li>
+<li>1.2</li>
+</ul>
+</li>
+<li><p>SourceTextInputComp props:</p>
+<ul>
+<li><p>1.3</p>
+</li>
+<li><p>1.8</p>
+</li>
+</ul>
+</li>
+<li><p>SourceTextDisplayComp props:</p>
+<ul>
+<li><p>1.4</p>
+</li>
+<li><p>1.9</p>
+</li>
+</ul>
+</li>
+<li><p>CipherTextDisplayComp props:</p>
+<ul>
+<li>1.5</li>
+</ul>
+</li>
+</ol>
+<h1 id="Layout-amp-Logic"><a href="#Layout-amp-Logic" class="headerlink" title="Layout &amp; Logic"></a>Layout &amp; Logic</h1><img src="/2018/12/20/Vigenere-Cipher-React/Layout&Logic.jpg">
+<h1 id="Code-Implementation"><a href="#Code-Implementation" class="headerlink" title="Code Implementation"></a>Code Implementation</h1><ol>
+<li><p>HTML</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://unpkg.com/babel-standalone@6/babel.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">data-require</span>=<span class="string">"react@*"</span> <span class="attr">data-semver</span>=<span class="string">"0.14.0"</span> <span class="attr">src</span>=<span class="string">"https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">data-require</span>=<span class="string">"react@*"</span> <span class="attr">data-semver</span>=<span class="string">"0.14.0"</span> <span class="attr">src</span>=<span class="string">"https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react-dom.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"style.css"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"root"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"script.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>JSX</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Component = React.Component</span><br><span class="line"><span class="keyword">const</span> CHAR_CODE_A = <span class="number">65</span></span><br><span class="line"><span class="keyword">const</span> CHAR_CODE_Z = <span class="number">90</span></span><br><span class="line"><span class="keyword">const</span> CHAR_CODE_ALL = <span class="keyword">new</span> <span class="built_in">Array</span>( <span class="number">26</span> ).fill(<span class="number">1</span>).map( <span class="function">(<span class="params"> _, i </span>) =&gt;</span> (<span class="number">65</span>+i) )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 1. Keyword Input Component</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">KeywordInputComp</span> <span class="keyword">extends</span> <span class="title">Component</span></span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(props)&#123;</span><br><span class="line">    <span class="keyword">super</span>(props)</span><br><span class="line">    <span class="keyword">this</span>.state=&#123; <span class="attr">valid</span>: <span class="literal">true</span> &#125;</span><br><span class="line">    <span class="keyword">this</span>.inputHandler = <span class="keyword">this</span>.inputHandler.bind(<span class="keyword">this</span>)</span><br><span class="line">    <span class="keyword">this</span>.updateHandler = <span class="keyword">this</span>.updateHandler.bind(<span class="keyword">this</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  inputHandler(e)&#123;</span><br><span class="line">    <span class="keyword">const</span> valid = <span class="keyword">this</span>.props.keywordInput(e)</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;valid&#125;)</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  updateHandler()&#123;</span><br><span class="line">    <span class="keyword">if</span>( <span class="keyword">this</span>.state.valid ) <span class="keyword">this</span>.props.update()</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  render()&#123;</span><br><span class="line">    <span class="keyword">return</span>(</span><br><span class="line">      &lt;div className=<span class="string">"comp"</span>&gt;</span><br><span class="line">        &lt;input onInput=&#123;<span class="keyword">this</span>.inputHandler&#125; type=<span class="string">"text"</span> /&gt;</span><br><span class="line">        &lt;button onClick=&#123;<span class="keyword">this</span>.updateHandler&#125;&gt;Update&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">        &lt;ul className=&#123;this.state.valid ? "valid":"invalid"&#125;&gt;</span></span><br><span class="line"><span class="regexp">          &lt;li&gt;Length of keyword should be in range: 3~8 &lt;/</span>li&gt;</span><br><span class="line">          &lt;li&gt;Characters should be uppercase&lt;<span class="regexp">/li&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/u</span>l&gt;</span><br><span class="line">      &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ 2. Keyword Display Component</span></span><br><span class="line"><span class="regexp">const KeywordDisplayComp = (props)=&gt;&#123;</span></span><br><span class="line"><span class="regexp">  const &#123;keyword, keyword_index&#125; = props</span></span><br><span class="line"><span class="regexp">  const td_char_arr = keyword.map((item,id)=&gt;(</span></span><br><span class="line"><span class="regexp">    &lt;td className=&#123;id===keyword_index?'highlight':''&#125; key=&#123;id&#125;&gt;&#123;item&#125;&lt;/</span>td&gt;)</span><br><span class="line">  )</span><br><span class="line">  <span class="keyword">const</span> td_offset_arr = keyword.map(<span class="function">(<span class="params">item,id</span>)=&gt;</span>(</span><br><span class="line">    &lt;td className=&#123;id===keyword_index?<span class="string">'highlight'</span>:<span class="string">''</span>&#125; key=&#123;id&#125;&gt;</span><br><span class="line">      &#123;item.charCodeAt(<span class="number">0</span>)-CHAR_CODE_A&#125;</span><br><span class="line">    &lt;<span class="regexp">/td&gt;)</span></span><br><span class="line"><span class="regexp">  )</span></span><br><span class="line"><span class="regexp">  </span></span><br><span class="line"><span class="regexp">  return (</span></span><br><span class="line"><span class="regexp">    &lt;table className="comp"&gt;&lt;tbody&gt;</span></span><br><span class="line"><span class="regexp">      &lt;tr&gt;&#123;td_char_arr&#125;&lt;/</span>tr&gt;</span><br><span class="line">      &lt;tr&gt;&#123;td_offset_arr&#125;&lt;<span class="regexp">/tr&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>tbody&gt;<span class="xml"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. Source Text Input Component</span></span><br><span class="line"><span class="keyword">const</span> SourceTextInputComp = <span class="function">(<span class="params">props</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="keyword">const</span> &#123;cipher_array, sourceClick&#125; = props</span><br><span class="line">  <span class="keyword">const</span> td_source_arr = CHAR_CODE_ALL.map(<span class="function">(<span class="params">item,id</span>)=&gt;</span>(</span><br><span class="line">      &lt;td key=&#123;item&#125;&gt;</span><br><span class="line">        &lt;button onClick=&#123;<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;sourceClick(id)&#125;&#125; &gt;</span><br><span class="line">          &#123;<span class="built_in">String</span>.fromCharCode(item)&#125;</span><br><span class="line">        &lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">      &lt;/</span>td&gt;)</span><br><span class="line">  )</span><br><span class="line">  <span class="keyword">const</span> td_cipher_arr = cipher_array.map(<span class="function">(<span class="params">item,id</span>)=&gt;</span><span class="xml"><span class="tag">&lt;<span class="name">td</span> <span class="attr">key</span>=<span class="string">&#123;id&#125;</span>&gt;</span>&#123;item&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span>)</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span>(</span><br><span class="line">    &lt;table className=<span class="string">"comp"</span>&gt;<span class="xml"><span class="tag">&lt;<span class="name">tbody</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">tr</span>&gt;</span>&#123;td_source_arr&#125;<span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">tr</span>&gt;</span>&#123;td_cipher_arr&#125;<span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">tbody</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 4. Source Text Display Component</span></span><br><span class="line"><span class="keyword">const</span> SourceTextDisplayComp = <span class="function">(<span class="params">props</span>)=&gt;</span>(</span><br><span class="line">  &lt;div className=<span class="string">"comp"</span>&gt;</span><br><span class="line">    &lt;input type=<span class="string">"text"</span> value=&#123;props.source_text&#125; disabled /&gt;</span><br><span class="line">    &lt;button onClick=&#123;props.clear&#125;&gt;Clear&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">  &lt;/</span>div&gt;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 5. Cipher Text Display Component</span></span><br><span class="line"><span class="keyword">const</span> CipherTextDisplayComp = <span class="function">(<span class="params">props</span>)=&gt;</span>(</span><br><span class="line">  &lt;div className=<span class="string">"comp"</span>&gt;</span><br><span class="line">    &lt;p&gt;Cipher Text&lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">    &lt;input type="text" value=&#123;props.cipher_text&#125; disabled /</span>&gt;</span><br><span class="line">  &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">)</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ 6. Main Component</span></span><br><span class="line"><span class="regexp">class App extends Component&#123;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  constructor()&#123;</span></span><br><span class="line"><span class="regexp">    super()</span></span><br><span class="line"><span class="regexp">    this.state=&#123;</span></span><br><span class="line"><span class="regexp">      keyword:        [],</span></span><br><span class="line"><span class="regexp">      keyword_index:  0,</span></span><br><span class="line"><span class="regexp">      cipher_array:   [],</span></span><br><span class="line"><span class="regexp">      source_text:    "",</span></span><br><span class="line"><span class="regexp">      cipher_text:    "",</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">    this.keyword_to_be = []</span></span><br><span class="line"><span class="regexp">    this.keywordInput = this.keywordInput.bind(this)</span></span><br><span class="line"><span class="regexp">    this.update = this.update.bind(this)</span></span><br><span class="line"><span class="regexp">    this.sourceClick = this.sourceClick.bind(this)</span></span><br><span class="line"><span class="regexp">    this.clear = this.clear.bind(this)</span></span><br><span class="line"><span class="regexp">    this.calc_cipher_array = this.calc_cipher_array.bind(this)</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">  </span></span><br><span class="line"><span class="regexp">  </span></span><br><span class="line"><span class="regexp">  /</span><span class="regexp">/ keyword input handler</span></span><br><span class="line"><span class="regexp">  keywordInput(e)&#123;</span></span><br><span class="line"><span class="regexp">    this.keyword_to_be = e.target.value.split("")</span></span><br><span class="line"><span class="regexp">    const len = this.keyword_to_be.length</span></span><br><span class="line"><span class="regexp">    const lenValid = (len&gt;=3 &amp;&amp; len&lt;=8)</span></span><br><span class="line"><span class="regexp">    const caseValid = this.keyword_to_be.every(</span></span><br><span class="line"><span class="regexp">      item =&gt; item==item.toUpperCase()</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">    return (lenValid &amp;&amp; caseValid)</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">  </span></span><br><span class="line"><span class="regexp">  /</span><span class="regexp">/ helper function:</span></span><br><span class="line"><span class="regexp">  /</span><span class="regexp">/ calc cipher chars on source text input interface</span></span><br><span class="line"><span class="regexp">  calc_cipher_array(kw, id)&#123;</span></span><br><span class="line"><span class="regexp">    if(kw.length===0) return []</span></span><br><span class="line"><span class="regexp">    const offset = kw[id].charCodeAt(0) - CHAR_CODE_A</span></span><br><span class="line"><span class="regexp">    return CHAR_CODE_ALL.map(function(item,index)&#123;</span></span><br><span class="line"><span class="regexp">      const code = (item+offset) &lt;= CHAR_CODE_Z ? </span></span><br><span class="line"><span class="regexp">                   (item+offset) :</span></span><br><span class="line"><span class="regexp">                   (item+offset-CHAR_CODE_Z+CHAR_CODE_A-1)</span></span><br><span class="line"><span class="regexp">      return String.fromCharCode(code)</span></span><br><span class="line"><span class="regexp">    &#125;)</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">  </span></span><br><span class="line"><span class="regexp">  /</span><span class="regexp">/ update handler</span></span><br><span class="line"><span class="regexp">  update()&#123;</span></span><br><span class="line"><span class="regexp">    const &#123;keyword, keyword_index &#125; = this.state</span></span><br><span class="line"><span class="regexp">    const cipher_array = this.calc_cipher_array(this.keyword_to_be, 0)</span></span><br><span class="line"><span class="regexp">    this.setState(&#123;</span></span><br><span class="line"><span class="regexp">      keyword: this.keyword_to_be,</span></span><br><span class="line"><span class="regexp">      keyword_index: 0,</span></span><br><span class="line"><span class="regexp">      cipher_array,</span></span><br><span class="line"><span class="regexp">      source_text:"",</span></span><br><span class="line"><span class="regexp">      cipher_text:"",</span></span><br><span class="line"><span class="regexp">    &#125;)</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">  </span></span><br><span class="line"><span class="regexp">  /</span><span class="regexp">/ click handler for source text input interface</span></span><br><span class="line"><span class="regexp">  sourceClick(id)&#123;</span></span><br><span class="line"><span class="regexp">    let &#123;</span></span><br><span class="line"><span class="regexp">      keyword, keyword_index, </span></span><br><span class="line"><span class="regexp">      cipher_array, source_text, cipher_text </span></span><br><span class="line"><span class="regexp">    &#125; = this.state</span></span><br><span class="line"><span class="regexp">    if(keyword.length===0) return</span></span><br><span class="line"><span class="regexp">    </span></span><br><span class="line"><span class="regexp">    keyword_index = (keyword_index+1) &lt; keyword.length ? </span></span><br><span class="line"><span class="regexp">                    (keyword_index+1) : (keyword_index+1-keyword.length)</span></span><br><span class="line"><span class="regexp">    const cipher_array_new = this.calc_cipher_array(keyword, keyword_index)</span></span><br><span class="line"><span class="regexp">    this.setState(&#123;</span></span><br><span class="line"><span class="regexp">      keyword_index,</span></span><br><span class="line"><span class="regexp">      cipher_array:cipher_array_new,</span></span><br><span class="line"><span class="regexp">      source_text:source_text+String.fromCharCode(id+CHAR_CODE_A),</span></span><br><span class="line"><span class="regexp">      cipher_text:cipher_text+cipher_array[id],</span></span><br><span class="line"><span class="regexp">    &#125;)</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">  </span></span><br><span class="line"><span class="regexp">  </span></span><br><span class="line"><span class="regexp">  /</span><span class="regexp">/ clear handler</span></span><br><span class="line"><span class="regexp">  clear()&#123;</span></span><br><span class="line"><span class="regexp">    const &#123;keyword&#125; = this.state</span></span><br><span class="line"><span class="regexp">    const cipher_array_new = this.calc_cipher_array(keyword, 0)</span></span><br><span class="line"><span class="regexp">    this.setState(&#123;</span></span><br><span class="line"><span class="regexp">      keyword_index: 0,</span></span><br><span class="line"><span class="regexp">      cipher_array:cipher_array_new,</span></span><br><span class="line"><span class="regexp">      source_text: "",</span></span><br><span class="line"><span class="regexp">      cipher_text: "",</span></span><br><span class="line"><span class="regexp">    &#125;)</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  </span></span><br><span class="line"><span class="regexp">  render()&#123;</span></span><br><span class="line"><span class="regexp">    const &#123;</span></span><br><span class="line"><span class="regexp">      keyword, keyword_index, cipher_array, </span></span><br><span class="line"><span class="regexp">      source_text, cipher_text, </span></span><br><span class="line"><span class="regexp">    &#125; = this.state</span></span><br><span class="line"><span class="regexp">    </span></span><br><span class="line"><span class="regexp">    return (</span></span><br><span class="line"><span class="regexp">      &lt;div&gt;</span></span><br><span class="line"><span class="regexp">        &lt;h1&gt;&lt;span&gt;Configuration&lt;/</span>span&gt;<span class="xml"><span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span> &lt;p&gt;Keyword&lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">        </span></span><br><span class="line"><span class="regexp">        &lt;KeywordInputComp </span></span><br><span class="line"><span class="regexp">          keywordInput=&#123;this.keywordInput&#125; </span></span><br><span class="line"><span class="regexp">          update=&#123;this.update&#125; </span></span><br><span class="line"><span class="regexp">        /</span>&gt;</span><br><span class="line">        </span><br><span class="line">        &lt;KeywordDisplayComp</span><br><span class="line">          keyword=&#123;keyword&#125;</span><br><span class="line">          keyword_index=&#123;keyword_index&#125;</span><br><span class="line">        /&gt;</span><br><span class="line">        </span><br><span class="line">        &lt;h1&gt;<span class="xml"><span class="tag">&lt;<span class="name">span</span>&gt;</span>Encoding<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span> &lt;p&gt;Source Text&lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">        </span></span><br><span class="line"><span class="regexp">        &lt;SourceTextInputComp </span></span><br><span class="line"><span class="regexp">          cipher_array=&#123;cipher_array&#125;</span></span><br><span class="line"><span class="regexp">          sourceClick=&#123;this.sourceClick&#125;</span></span><br><span class="line"><span class="regexp">        /</span>&gt;</span><br><span class="line">        </span><br><span class="line">        &lt;SourceTextDisplayComp </span><br><span class="line">          source_text=&#123;source_text&#125; </span><br><span class="line">          clear=&#123;<span class="keyword">this</span>.clear&#125;</span><br><span class="line">        /&gt;</span><br><span class="line">        </span><br><span class="line">        &lt;CipherTextDisplayComp </span><br><span class="line">          cipher_text=&#123;cipher_text&#125; </span><br><span class="line">        /&gt;</span><br><span class="line">      &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">ReactDOM.render( &lt;App /</span> &gt; ,</span><br><span class="line">  <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>CSS</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">table</span>&#123;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">1px</span> solid black;</span><br><span class="line">  <span class="attribute">border-collapse</span>:collapse;</span><br><span class="line">  <span class="attribute">text-align</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">table</span> <span class="selector-tag">td</span> &#123;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">1px</span> solid black;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">5px</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">20px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">20px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">h1</span>&#123;</span><br><span class="line">  <span class="attribute">margin-top</span>: <span class="number">30px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">h1</span> <span class="selector-tag">span</span>&#123;</span><br><span class="line">  <span class="attribute">color</span>: grey;</span><br><span class="line">  <span class="attribute">border-bottom</span>: <span class="number">1px</span> solid ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">input</span><span class="selector-attr">[disabled]</span>&#123;</span><br><span class="line">  <span class="attribute">background-color</span>:<span class="number">#F5F5DC</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.valid</span>&#123;</span><br><span class="line">  <span class="attribute">display</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.invalid</span>&#123;</span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">  <span class="attribute">color</span>: red;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.highlight</span>&#123;</span><br><span class="line">  <span class="attribute">background-color</span>: yellow;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.comp</span>&#123;</span><br><span class="line">  <span class="attribute">margin-bottom</span>: <span class="number">5px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/10/Counting-holes-in-number/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1828,454 +2235,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/15/CSS-Notes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/15/CSS-Notes/" itemprop="url">CSS Notes</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-15T19:00:58-08:00">2018-11-15</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/11/15/CSS-Notes/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/11/15/CSS-Notes/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="I-Inherit-height-of-outer-div"><a href="#I-Inherit-height-of-outer-div" class="headerlink" title="I. Inherit height of outer div"></a>I. Inherit <code>height</code> of outer <code>div</code></h2><p><strong><u>Problem:</u></strong> how to make an inner div to inherit the <u>height</u> of its containing div ?</p>
-<ol>
-<li><p>If containing div already specified <code>height</code></p>
-<p>use <code>height: 100%</code> to inherit the outer div</p>
-</li>
-<li><p>if containing div doesn’t specify <code>height</code></p>
-<p>cannot use <code>height: 100%</code> to inherit the containing div. The computed height for the inner one will become <code>auto</code>, which means its height depends on its content</p>
-<blockquote>
-<p>If the height of the containing block is not specified explicitly (i.e., it depends on content height), and this element is not absolutely positioned, the value computes to <code>auto</code></p>
-<p><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/height" target="_blank" rel="noopener">https://developer.mozilla.org/en-US/docs/Web/CSS/height</a></p>
-</blockquote>
-<p><strong><u>Right way</u></strong>: containing div set <code>position:relative</code>; inner div set <code>position: absolute</code> and <code>top:0</code> &amp; <code>bottom:0</code></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"> </span></span><br><span class="line"><span class="undefined">    #container&#123;</span></span><br><span class="line"><span class="undefined">        border: 1px solid red;</span></span><br><span class="line"><span class="undefined">        position: relative;</span></span><br><span class="line"><span class="undefined">    &#125; </span></span><br><span class="line"><span class="undefined">    #fullHeight&#123;</span></span><br><span class="line"><span class="undefined">        border: 1px solid green;</span></span><br><span class="line"><span class="undefined">        position: absolute;</span></span><br><span class="line"><span class="undefined">        top: 0;</span></span><br><span class="line"><span class="undefined">        bottom: 0;</span></span><br><span class="line"><span class="undefined">        width:100%;</span></span><br><span class="line"><span class="undefined">        background-color: grey;</span></span><br><span class="line"><span class="undefined">   	 	opacity: 0.5;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    #noHeight&#123;</span></span><br><span class="line"><span class="undefined">        height: 100%;</span></span><br><span class="line"><span class="undefined">        width: 100%;</span></span><br><span class="line"><span class="undefined">        border: 1px solid blue;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"noHeight"</span> &gt;</span>ads <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"fullHeight"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>Dummy text. Dummy text. Dummy text. Dummy text. <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="II-Set-mask-to-a-div-to-disable-it"><a href="#II-Set-mask-to-a-div-to-disable-it" class="headerlink" title="II. Set mask to a div to disable it"></a>II. Set mask to a <code>div</code> to disable it</h2><p><u><strong>Problem:</strong></u> set a mask layer to cover its outer div</p>
-<p><strong><u>Solution:</u></strong> use <code>position: absolute</code> &amp; <code>top: 0</code> &amp; <code>bottom: 0</code> to cover the whole <code>height</code> or its containing div, which set <code>position: relative</code> </p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"> </span></span><br><span class="line"><span class="undefined">    #container&#123;</span></span><br><span class="line"><span class="undefined">        border: 1px solid red;</span></span><br><span class="line"><span class="undefined">        position: relative;</span></span><br><span class="line"><span class="undefined">    &#125; </span></span><br><span class="line"><span class="undefined">    #inner &#123;</span></span><br><span class="line"><span class="undefined">        background-color: coral;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    #mask&#123;</span></span><br><span class="line"><span class="undefined">        border: 1px solid green;</span></span><br><span class="line"><span class="undefined">        position: absolute;</span></span><br><span class="line"><span class="undefined">        top: 0;</span></span><br><span class="line"><span class="undefined">        bottom: 0;</span></span><br><span class="line"><span class="undefined">        width: 100%;</span></span><br><span class="line"><span class="undefined">        height: 100%;</span></span><br><span class="line"><span class="undefined">        background-color: grey;</span></span><br><span class="line"><span class="undefined">        opacity: 0.5;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"inner"</span> &gt;</span>myBox<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"mask"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>Dummy text. Dummy text. Dummy text. Dummy text. <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> inner = <span class="built_in">document</span>.getElementById(<span class="string">"inner"</span>)</span></span><br><span class="line"><span class="javascript">        inner.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;alert(<span class="string">"inner"</span>)&#125;)</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> mask = <span class="built_in">document</span>.getElementById(<span class="string">"mask"</span>)</span></span><br><span class="line"><span class="javascript">        mask.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;alert(<span class="string">"mask"</span>)&#125;)</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> container = <span class="built_in">document</span>.getElementById(<span class="string">"container"</span>)</span></span><br><span class="line"><span class="javascript">        container.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;alert(<span class="string">"container"</span>)&#125;)</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/02/Write-Our-Own-Promise/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/02/Write-Our-Own-Promise/" itemprop="url">Write A Promise</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-02T13:25:27-07:00">2018-11-02</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/11/02/Write-Our-Own-Promise/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/11/02/Write-Our-Own-Promise/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="I-Why-do-we-need-Promise-“callback-hell”"><a href="#I-Why-do-we-need-Promise-“callback-hell”" class="headerlink" title="I. Why do we need Promise  - “callback hell”"></a>I. Why do we need <code>Promise</code>  - “callback hell”</h2><ol>
-<li><p><strong><u>Asynchronous call</u></strong> is the core of JavaScript across browser and Node.js. </p>
-</li>
-<li><p><u>JavsScript runtime thread</u> use <code>callback</code> to execute result of asynchronous task handled by <u>other threads</u> (<strong>Ajax thread</strong>, <strong>Timer thread</strong>, <strong>Rendering Thread</strong>)</p>
-</li>
-<li><p>Example below are callback hell , which is a headache for programmer. For </p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// when the nesting level exceeds 3, people will get crazy!!</span></span><br><span class="line">getData(<span class="function"><span class="keyword">function</span>(<span class="params">x</span>)</span>&#123;				<span class="comment">// getData of x</span></span><br><span class="line">    getMoreData(x, <span class="function"><span class="keyword">function</span>(<span class="params">y</span>)</span>&#123;   	<span class="comment">// getMoreData of y, using x</span></span><br><span class="line">        getMoreData(y, <span class="function"><span class="keyword">function</span>(<span class="params">z</span>)</span>&#123; <span class="comment">// getMoreData of x, using y</span></span><br><span class="line">            ...</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Is there a way to <strong><u>flatten</u></strong> the nesting callbacks, in a chainable way?  =&gt; <code>Node</code></p>
-<ul>
-<li>Consider the <code>Node</code> data structure, it contains child node in itself, similar to our requirement!!</li>
-<li><code>Promise</code> is such a <strong><u>stateful utility object</u></strong>, which can be chained to implement nested callbacks</li>
-</ul>
-</li>
-</ol>
-<h2 id="II-Promise-Usage"><a href="#II-Promise-Usage" class="headerlink" title="II. Promise Usage"></a>II. Promise Usage</h2><ol>
-<li><p><strong>executer</strong>: </p>
-<ul>
-<li><p>execute asynchronous action, generating result</p>
-</li>
-<li><p>when create new Promise, need to pass in pre-defined executer</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// executer: a function with parameters: `resolve` and `reject`</span></span><br><span class="line"><span class="keyword">let</span> p = <span class="keyword">new</span> <span class="built_in">Promise</span>( <span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>)</span>&#123;</span><br><span class="line">    ajaxGet( url, <span class="function"><span class="keyword">function</span>(<span class="params">res</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(res.status == <span class="number">200</span>)  </span><br><span class="line">            resolve(res.data)</span><br><span class="line">        <span class="keyword">else</span>     			   </span><br><span class="line">            reject(res.error)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><strong>callbacks</strong> in <code>then</code>:</p>
-<ul>
-<li><p><code>onFulfilled</code> &amp; <code>onRejected</code> specify how to handle the result of asynchronous action</p>
-</li>
-<li><p><strong>use case 1:</strong> <u>multiple callbacks on a promise</u></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Assume executor will: resolve(1)</span></span><br><span class="line"><span class="keyword">let</span> callback1 = <span class="function"><span class="keyword">function</span>(<span class="params">res</span>)</span>&#123; <span class="built_in">console</span>.log(<span class="string">"This is from callback1: "</span> + res*<span class="number">1</span>) &#125;</span><br><span class="line"><span class="keyword">let</span> callback2 = <span class="function"><span class="keyword">function</span>(<span class="params">res</span>)</span>&#123; <span class="built_in">console</span>.log(<span class="string">"This is from callback2: "</span> + res*<span class="number">2</span>)&#125;</span><br><span class="line">p.then(callback1)  <span class="comment">// This is from callback1: 1</span></span><br><span class="line">p.then(callback2)  <span class="comment">// This is from callback1: 2</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>use case 2:</strong> <u>chaining callbacks</u></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Assume executor will: resolve(1)</span></span><br><span class="line"><span class="keyword">let</span> callback1 = <span class="function"><span class="keyword">function</span>(<span class="params">res</span>)</span>&#123; <span class="keyword">return</span> res+<span class="number">1</span> &#125;</span><br><span class="line"><span class="keyword">let</span> callback2 = <span class="function"><span class="keyword">function</span>(<span class="params">res</span>)</span>&#123; <span class="keyword">return</span> res+<span class="number">1</span> &#125;</span><br><span class="line"><span class="keyword">let</span> callback3 = <span class="function"><span class="keyword">function</span>(<span class="params">res</span>)</span>&#123; <span class="built_in">console</span>.log(<span class="string">"The final res will be 3: "</span> + res) &#125;</span><br><span class="line">p.then(callback1).then(callback1).then(callback3)  <span class="comment">// The final res will be 3: 3</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ol>
-<h2 id="III-Promise-stateful-utility-object"><a href="#III-Promise-stateful-utility-object" class="headerlink" title="III. Promise: stateful utility object"></a>III. Promise: stateful utility object</h2><ol>
-<li><p><strong>“Stateful”</strong></p>
-<ul>
-<li><p>Promise is an object, its properties are <strong><u>stateful</u></strong>, ie. property value can <u>change dynamially</u> </p>
-</li>
-<li><p>state can only change in 2 ways: <code>pending =&gt; fulfilled</code>,  <code>pending =&gt; rejected</code></p>
-</li>
-<li><p>the cause of stateful is: <u>asynchronous actions</u> inside the <strong><u>executor</u></strong>. Once instantiated to promise object, the executor will be executed inside promise object, and will update <code>state</code>,  <code>value</code>, <code>consumers</code></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">MyPromise</span>(<span class="params"> executor </span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.state = <span class="string">"pending"</span>  <span class="comment">// keep record of the state update</span></span><br><span class="line">	<span class="keyword">this</span>.value = <span class="literal">undefined</span>  <span class="comment">// store the result of asynchronous action</span></span><br><span class="line">	<span class="keyword">this</span>.consumers = []     <span class="comment">// place to store callbacks (actually child promises)</span></span><br><span class="line">    </span><br><span class="line">    executor(<span class="keyword">this</span>.resolve.bind(<span class="keyword">this</span>), <span class="keyword">this</span>.reject.bind(<span class="keyword">this</span>)) <span class="comment">// run executor </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><code>resolve</code> &amp; <code>reject</code>: hooks to receive asynchronous result. </p>
-<ul>
-<li>The asynchronous function <code>executor</code> , will pass its result to Promise using its hooks: <code>resolve</code> and <code>reject</code></li>
-</ul>
-</li>
-<li><p><code>then</code>: hooks to receive passed in callbacks  <code>onFulfilled</code> &amp; <code>onRejected</code></p>
-<ul>
-<li>the callbacks are passed to Promise using <code>then</code> hook</li>
-<li>Promise will take care of executing callback, when asynchronous result is ready</li>
-</ul>
-</li>
-<li><p>How to it chainable</p>
-<ul>
-<li>In fact, <code>then()</code> method can <strong><u>not only receive callbacks</u></strong>, </li>
-<li><strong><u>but also can return a new Promise</u></strong>, which can be chained by using another <code>then</code>, …., and so on</li>
-<li><code>then()</code> create a new Promise, then put the callbacks inside the newly created Promise, then put into the <code>consumers</code> array to consume the asynchronous result when its ready </li>
-</ul>
-</li>
-</ol>
-<h2 id="VI-Write-One"><a href="#VI-Write-One" class="headerlink" title="VI. Write One!"></a>VI. Write One!</h2><ol>
-<li><p><strong><u>Promise state:</u></strong></p>
-<p>There are only 2 state transitions allowed: from pending to fulfilled, and from pending to rejected. No other transition should be possible, and once a transition has been performed, the promise value (or rejection reason) should not change.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">MyPromise</span>(<span class="params">executor</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.state = <span class="string">'pending'</span>;</span><br><span class="line">    <span class="keyword">this</span>.value = <span class="literal">undefined</span>;</span><br><span class="line">    executor(<span class="keyword">this</span>.resolve.bind(<span class="keyword">this</span>), <span class="keyword">this</span>.reject.bind(<span class="keyword">this</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// provide only two ways to transition</span></span><br><span class="line">MyPromise.prototype.resolve = <span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.state !== <span class="string">'pending'</span>) <span class="keyword">return</span>; <span class="comment">// cannot transition anymore</span></span><br><span class="line">    <span class="keyword">this</span>.state = <span class="string">'fulfilled'</span>; 		      <span class="comment">// can transition</span></span><br><span class="line">    <span class="keyword">this</span>.value = value; 				  <span class="comment">// must have a value</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">MyPromise.prototype.reject = <span class="function"><span class="keyword">function</span> (<span class="params">reason</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.state !== <span class="string">'pending'</span>) <span class="keyword">return</span>; <span class="comment">// cannot transition anymore</span></span><br><span class="line">    <span class="keyword">this</span>.state = <span class="string">'rejected'</span>; 			  <span class="comment">// can transition</span></span><br><span class="line">    <span class="keyword">this</span>.value = reason; 				  <span class="comment">// must have a reason</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><u><strong><code>then</code> method: the core of chaining</strong></u></p>
-<ul>
-<li><p><strong>[Note 1]:</strong> each <code>then()</code> will return a new Promise!</p>
-</li>
-<li><p>The <code>then</code> method is the core to Promise, which can be chained using <code>then</code>. It has two tasks:</p>
-<ul>
-<li>receive callbacks, and store them for later use when asynchorous result is ready</li>
-<li>create new promise, to make promise chainable</li>
-</ul>
-</li>
-<li><p>In fact, we put callbacks of the current promise, into the newly created child promises. Each callback will correspond a new Promise creation</p>
-</li>
-<li><p>This way, we can also easily consume the <code>outcome</code> of the <code>callback(result)</code>, to <code>resolve(outcome)</code>for the child promises</p>
-</li>
-<li><p><strong>[Note 2]:</strong> </p>
-<ul>
-<li>child promise execute its parent’s callback ; </li>
-<li>and resolve outcome of that callback, pass the outcome to promise created by next <code>then</code></li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// For each then(), create a new Promise to embody this callback pair</span></span><br><span class="line">MyPromise.prototype.then = <span class="function"><span class="keyword">function</span>(<span class="params">onFulfilled, onRejected</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> consumer = <span class="keyword">new</span> MyPromise(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// ignore onFulfilled/onRejected if not a function</span></span><br><span class="line">    consumer.onFulfilled = <span class="keyword">typeof</span> onFulfilled === <span class="string">'function'</span> ? onFulfilled : <span class="literal">null</span>;</span><br><span class="line">    consumer.onRejected  = <span class="keyword">typeof</span> onRejected  === <span class="string">'function'</span> ? onRejected  : <span class="literal">null</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// put the consumer with parent's callbacks onto `this.consumers`</span></span><br><span class="line">    <span class="keyword">this</span>.consumers.push(consumer);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// It's possible that the promise was already resolved, </span></span><br><span class="line">    <span class="comment">// so, try to consume the resolved result </span></span><br><span class="line">    <span class="keyword">this</span>.broadcast();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// must return a promise to make it chainable</span></span><br><span class="line">    <span class="comment">// used by next potential `then()` in the chain</span></span><br><span class="line">    <span class="keyword">return</span> consumer;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>broadcase()</code>: Consume the asynchorous result</p>
-<p>After the asynchronous action return a result, we need to</p>
-<ul>
-<li><p>first, update the state to <code>fulfilled</code> or <code>rejected</code></p>
-</li>
-<li><p>execute the each callback of  <code>onFulfilled</code>, <code>onRejected</code> (in child promise) collected by <code>then</code></p>
-</li>
-<li><p><code>onFulfilled</code>, <code>onRejected</code> must be called asynchronously</p>
-<p>for example, <code>new Promise(executor).then(callback)</code>, callback execution must happen after executor. Thus, we can correctly get result even if executor is synchorous</p>
-</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">MyPromise.prototype.broadcast = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> promise = <span class="keyword">this</span>;</span><br><span class="line">    <span class="comment">// only get called after promise is resolved</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.state === <span class="string">'pending'</span>) <span class="keyword">return</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// callback must be executed by its corresponding promise</span></span><br><span class="line">    <span class="keyword">var</span> callbackName = <span class="keyword">this</span>.state == <span class="string">'fulfilled'</span> ? <span class="string">'onFulfilled'</span> : <span class="string">'onRejected'</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// when no callback specified in then(), still need to resolve/reject it</span></span><br><span class="line">    <span class="keyword">var</span> resolver = <span class="keyword">this</span>.state == <span class="string">'fulfilled'</span> ? <span class="string">'resolve'</span> : <span class="string">'reject'</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// onFulfilled/onRejected must be called asynchronously</span></span><br><span class="line">    setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="comment">// traverse in order &amp; call only once, using `splice(0)` for deletion</span></span><br><span class="line">        promise.consumers.splice(<span class="number">0</span>).forEach(<span class="function"><span class="keyword">function</span>(<span class="params">consumer</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">var</span> callback = consumer[callbackName];</span><br><span class="line">                <span class="comment">// if a functon, call callback as plain function</span></span><br><span class="line">                <span class="comment">// else, ignore callback</span></span><br><span class="line">                <span class="keyword">if</span> (callback) &#123;</span><br><span class="line">                    <span class="comment">// child promise resolve outcome of callback(value)</span></span><br><span class="line">                    consumer.resolve(callback(promise.value)); </span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="comment">// child promise resolve value without callback</span></span><br><span class="line">                    consumer[resolver](promise.value);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">                consumer.reject(e);</span><br><span class="line">            &#125;;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;, <span class="number">0</span> );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>[Note 2]:</strong> the current <code>then</code> can only handle chainable promise when callback is pure function; Cannot handle when callback return a new Promise.</p>
-</li>
-</ul>
-</li>
-<li><p><u><strong>[TODO]: make <code>then</code> can response another Promise</strong></u></p>
-</li>
-</ol>
-<h2 id="V-Test-Our-Own-Promise"><a href="#V-Test-Our-Own-Promise" class="headerlink" title="V. Test Our Own Promise"></a>V. Test Our Own Promise</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">MyPromise</span>(<span class="params">executor</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.state = <span class="string">'pending'</span>;</span><br><span class="line">    <span class="keyword">this</span>.value = <span class="literal">undefined</span>;</span><br><span class="line">    <span class="keyword">this</span>.consumers = [];</span><br><span class="line">    executor(<span class="keyword">this</span>.resolve.bind(<span class="keyword">this</span>), <span class="keyword">this</span>.reject.bind(<span class="keyword">this</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// provide only two ways to transition</span></span><br><span class="line">MyPromise.prototype.resolve = <span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.state !== <span class="string">'pending'</span>) <span class="keyword">return</span>; </span><br><span class="line">    <span class="keyword">this</span>.state = <span class="string">'fulfilled'</span>;</span><br><span class="line">    <span class="keyword">this</span>.value = value;</span><br><span class="line">    <span class="keyword">this</span>.broadcast();</span><br><span class="line">&#125;    </span><br><span class="line"></span><br><span class="line">MyPromise.prototype.reject = <span class="function"><span class="keyword">function</span> (<span class="params">reason</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.state !== <span class="string">'pending'</span>) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">this</span>.state = <span class="string">'rejected'</span>; </span><br><span class="line">    <span class="keyword">this</span>.value = reason; </span><br><span class="line">    <span class="keyword">this</span>.broadcast();</span><br><span class="line">&#125;    </span><br><span class="line"></span><br><span class="line"><span class="comment">// A promise’s then method accepts two arguments:</span></span><br><span class="line">MyPromise.prototype.then = <span class="function"><span class="keyword">function</span>(<span class="params">onFulfilled, onRejected</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> consumer = <span class="keyword">new</span> MyPromise(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;);</span><br><span class="line">    consumer.onFulfilled = <span class="keyword">typeof</span> onFulfilled === <span class="string">'function'</span> ? onFulfilled : <span class="literal">null</span>;</span><br><span class="line">    consumer.onRejected = <span class="keyword">typeof</span> onRejected === <span class="string">'function'</span> ? onRejected : <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">this</span>.consumers.push(consumer);</span><br><span class="line">    <span class="keyword">this</span>.broadcast();</span><br><span class="line">    <span class="keyword">return</span> consumer;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">MyPromise.prototype.broadcast = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> promise = <span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.state === <span class="string">'pending'</span>) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">var</span> callbackName = <span class="keyword">this</span>.state == <span class="string">'fulfilled'</span> ? <span class="string">'onFulfilled'</span> : <span class="string">'onRejected'</span>;</span><br><span class="line">    <span class="keyword">var</span> resolver = <span class="keyword">this</span>.state == <span class="string">'fulfilled'</span> ? <span class="string">'resolve'</span> : <span class="string">'reject'</span>;</span><br><span class="line">    setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        promise.consumers.splice(<span class="number">0</span>).forEach(<span class="function"><span class="keyword">function</span>(<span class="params">consumer</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">var</span> callback = consumer[callbackName];</span><br><span class="line">                <span class="keyword">if</span> (callback) &#123;</span><br><span class="line">                    consumer.resolve(callback(promise.value)); </span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    consumer[resolver](promise.value);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">                consumer.reject(e);</span><br><span class="line">            &#125;;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// ------------------ TEST ------------------ </span></span><br><span class="line"><span class="keyword">let</span> p0 = <span class="keyword">new</span> MyPromise(<span class="function">(<span class="params">resolve, reject</span>)=&gt;</span>&#123;</span><br><span class="line">    setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123; resolve(<span class="number">0</span>) &#125;,<span class="number">1000</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> p1 = p0.then(<span class="function">(<span class="params">res</span>)=&gt;</span>&#123; </span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"p1 get result from p0, value should be 0: "</span> + res)</span><br><span class="line">    <span class="keyword">return</span> res+<span class="number">1</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> p2 = p0.then(<span class="function">(<span class="params">res</span>)=&gt;</span>&#123; </span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"p2 get result from p0, value should be 0: "</span> + res)</span><br><span class="line">    <span class="keyword">return</span> res+<span class="number">2</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> p3 = p0.then(<span class="function">(<span class="params">res</span>)=&gt;</span>&#123; </span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"p3 get result from p0, value should be 0: "</span> + res)</span><br><span class="line">    <span class="keyword">return</span> res+<span class="number">3</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"This should be an array of 3 Promises: "</span> + p0.consumers)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> p4 = p1.then(<span class="function"><span class="params">res</span>=&gt;</span>&#123; <span class="built_in">console</span>.log(<span class="string">"p4 get result from p1, value should be 1: "</span> + res)&#125;)</span><br><span class="line"><span class="keyword">let</span> p5 = p2.then(<span class="function"><span class="params">res</span>=&gt;</span>&#123; <span class="built_in">console</span>.log(<span class="string">"p5 get result from p2, value should be 2: "</span> + res)&#125;)</span><br><span class="line"><span class="keyword">let</span> p6 = p3.then(<span class="function"><span class="params">res</span>=&gt;</span>&#123; <span class="built_in">console</span>.log(<span class="string">"p6 get result from p3, value should be 3: "</span> + res)&#125;)</span><br></pre></td></tr></table></figure>
-<h2 id="Credits-to"><a href="#Credits-to" class="headerlink" title="Credits to:"></a>Credits to:</h2><ol>
-<li><a href="https://stackoverflow.com/questions/23772801/basic-javascript-promise-implementation-attempt/42057900#42057900" target="_blank" rel="noopener">https://stackoverflow.com/questions/23772801/basic-javascript-promise-implementation-attempt/42057900#42057900</a></li>
-<li><a href="https://www.promisejs.org/implementing/" target="_blank" rel="noopener">https://www.promisejs.org/implementing/</a></li>
-<li><a href="https://javascript.info/promise-chaining" target="_blank" rel="noopener">https://javascript.info/promise-chaining</a></li>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" target="_blank" rel="noopener">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise</a></li>
-<li><a href="http://thecodebarbarian.com/write-your-own-node-js-promise-library-from-scratch.html" target="_blank" rel="noopener">http://thecodebarbarian.com/write-your-own-node-js-promise-library-from-scratch.html</a></li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -2322,7 +2286,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">70</span>
+                    <span class="site-state-item-count">72</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2608,7 +2572,7 @@
                     
                       
                     
-                    <span class="site-state-item-count">122</span>
+                    <span class="site-state-item-count">123</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

@@ -199,7 +199,7 @@
       </a>
     </div>
       
-        <p class="site-subtitle">Let's create something!</p>
+        <h1 class="site-subtitle" itemprop="description">Let's create something!</h1>
       
   </div>
 
@@ -332,6 +332,149 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/10/Coding-Problem-find-the-1st-Bad-Version/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/10/Coding-Problem-find-the-1st-Bad-Version/" itemprop="url">Coding Problem: Find 1st Bad Version</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-10T22:19:23-07:00">2018-09-10</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="I-problem"><a href="#I-problem" class="headerlink" title="I. problem"></a>I. problem</h2><p>given 500 revisions of programs,  write a program that will find and return the FIRST bad revision given a <code>isBad(revision i)</code> function.</p>
+<h2 id="II-Code"><a href="#II-Code" class="headerlink" title="II. Code"></a>II. Code</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isBad</span>(<span class="params"> version </span>)</span>&#123; <span class="keyword">return</span> version === <span class="number">0</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">firstBadVersion</span>(<span class="params"> versions </span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>( <span class="keyword">typeof</span> versions === <span class="string">'undefined'</span> || versions.length === <span class="number">0</span> ) </span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> left = <span class="number">0</span>, right = versions.length<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">while</span>( left &lt; right )&#123;</span><br><span class="line">        <span class="keyword">let</span> mid = left + <span class="built_in">Math</span>.floor((right-left)/<span class="number">2</span>)</span><br><span class="line">        <span class="keyword">if</span>( isBad(versions[mid]) )&#123;</span><br><span class="line">            right = mid</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            left = mid+<span class="number">1</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> versions[left]===<span class="number">0</span> ? left : <span class="number">-1</span></span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Testing		  0 1 2 3 4 5 6  should return index: 4</span></span><br><span class="line"><span class="keyword">let</span> versions = [<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>]</span><br><span class="line"><span class="built_in">console</span>.log(firstBadVersion(versions))  <span class="comment">// 4</span></span><br><span class="line"></span><br><span class="line">versions = [<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>]</span><br><span class="line"><span class="built_in">console</span>.log(firstBadVersion(versions))  <span class="comment">// 5</span></span><br><span class="line"></span><br><span class="line">versions = [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]</span><br><span class="line"><span class="built_in">console</span>.log(firstBadVersion(versions))  <span class="comment">// 0</span></span><br><span class="line"></span><br><span class="line">versions = [<span class="number">0</span>]</span><br><span class="line"><span class="built_in">console</span>.log(firstBadVersion(versions))  <span class="comment">// 0</span></span><br><span class="line"></span><br><span class="line">versions = [<span class="number">1</span>]</span><br><span class="line"><span class="built_in">console</span>.log(firstBadVersion(versions))  <span class="comment">// -1</span></span><br><span class="line"></span><br><span class="line">versions = [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>]</span><br><span class="line"><span class="built_in">console</span>.log(firstBadVersion(versions))  <span class="comment">// -1</span></span><br><span class="line"></span><br><span class="line">versions = []</span><br><span class="line"><span class="built_in">console</span>.log(firstBadVersion(versions))  <span class="comment">// -1</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(firstBadVersion())  		<span class="comment">// -1</span></span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/05/this-arrow-function/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -349,9 +492,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/09/05/this-arrow-function/" itemprop="url">'this' & arrow function</a></h1>
+                <a class="post-title-link" href="/2018/09/05/this-arrow-function/" itemprop="url">'this' & arrow function</a></h2>
         
 
         <div class="post-meta">
@@ -653,9 +796,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/08/31/Trie/" itemprop="url">Trie</a></h1>
+                <a class="post-title-link" href="/2018/08/31/Trie/" itemprop="url">Trie</a></h2>
         
 
         <div class="post-meta">
@@ -862,9 +1005,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/08/12/Web-Worker-no-interfer-with-UI-thread/" itemprop="url">Web Worker - not interfer with UI thread</a></h1>
+                <a class="post-title-link" href="/2018/08/12/Web-Worker-no-interfer-with-UI-thread/" itemprop="url">Web Worker - not interfer with UI thread</a></h2>
         
 
         <div class="post-meta">
@@ -1004,9 +1147,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/08/11/How-to-Make-Animation-using-JS/" itemprop="url">How to Make Animation using JS</a></h1>
+                <a class="post-title-link" href="/2018/08/11/How-to-Make-Animation-using-JS/" itemprop="url">How to Make Animation using JS</a></h2>
         
 
         <div class="post-meta">
@@ -1154,9 +1297,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/01/Node-js/" itemprop="url">Node.js</a></h1>
+                <a class="post-title-link" href="/2018/06/01/Node-js/" itemprop="url">Node.js</a></h2>
         
 
         <div class="post-meta">
@@ -1596,9 +1739,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/01/Express-Framework/" itemprop="url">Express Framework</a></h1>
+                <a class="post-title-link" href="/2018/06/01/Express-Framework/" itemprop="url">Express Framework</a></h2>
         
 
         <div class="post-meta">
@@ -2013,9 +2156,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/05/21/Authetication-JWT-vs-Session/" itemprop="url">Authetication: JWT vs Session</a></h1>
+                <a class="post-title-link" href="/2018/05/21/Authetication-JWT-vs-Session/" itemprop="url">Authetication: JWT vs Session</a></h2>
         
 
         <div class="post-meta">
@@ -2335,9 +2478,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/05/17/2-egg-Puzzle/" itemprop="url">The Joy of Egg-Dropping(2-egg Puzzle)</a></h1>
+                <a class="post-title-link" href="/2018/05/17/2-egg-Puzzle/" itemprop="url">The Joy of Egg-Dropping(2-egg Puzzle)</a></h2>
         
 
         <div class="post-meta">
@@ -2580,9 +2723,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/05/15/React-Router-v4/" itemprop="url">React Router v4</a></h1>
+                <a class="post-title-link" href="/2018/05/15/React-Router-v4/" itemprop="url">React Router v4</a></h2>
         
 
         <div class="post-meta">
@@ -2797,195 +2940,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/14/Node-MySQL/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/14/Node-MySQL/" itemprop="url">Node+MySQL</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-14T21:30:13-07:00">2018-05-14</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h3><p>This is a Node.js module, install:<br><code>npm install mysql --save</code></p>
-<h3 id="Connect"><a href="#Connect" class="headerlink" title="Connect"></a>Connect</h3><p>Before connecting to databases, make sure MySQL database is turned on.</p>
-<p>【注意】：</p>
-<ul>
-<li>先执行 <code>connect()</code>,让connection object与数据库建立连接。</li>
-<li>然后，在对该connection执行<code>.query(MySQL_Command, callback_func)</code></li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> mysql      = <span class="built_in">require</span>(<span class="string">'mysql'</span>);</span><br><span class="line"><span class="keyword">var</span> connection = mysql.createConnection(&#123;</span><br><span class="line">  host     : <span class="string">'example.org'</span>,</span><br><span class="line">  user     : <span class="string">'bob'</span>,</span><br><span class="line">  password : <span class="string">'secret'</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">connection.query(<span class="string">'SELECT 1'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">error, results, fields</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (error) <span class="keyword">throw</span> error;</span><br><span class="line">  <span class="comment">// connected!</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="Disconnect"><a href="#Disconnect" class="headerlink" title="Disconnect"></a>Disconnect</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">connection.end(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// Callback function</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="Escaping-query-values"><a href="#Escaping-query-values" class="headerlink" title="Escaping query values"></a>Escaping query values</h3><p>Three ways to avoid <strong>SQL injection</strong></p>
-<ul>
-<li>mysql.escape()</li>
-<li>connection.escape() </li>
-<li>pool.escape()</li>
-<li><code>?</code>placeholder</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1 -connection.escape()</span></span><br><span class="line"><span class="keyword">var</span> userId = <span class="string">'some user provided value'</span>;</span><br><span class="line"><span class="keyword">var</span> sql    = <span class="string">'SELECT * FROM users WHERE id = '</span> + connection.escape(userId);</span><br><span class="line">connection.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">error, results, fields</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (error) <span class="keyword">throw</span> error;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2 - ? placeholder</span></span><br><span class="line"><span class="keyword">var</span> adr = <span class="string">'Mountain 21'</span>;</span><br><span class="line"><span class="keyword">var</span> sql = <span class="string">'SELECT * FROM customers WHERE address = ?'</span>;</span><br><span class="line">con.query(sql, [adr], <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">  <span class="built_in">console</span>.log(result);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="Creating-a-Database"><a href="#Creating-a-Database" class="headerlink" title="Creating a Database"></a>Creating a Database</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">connection.query(<span class="string">"CREATE DATABASE mydb"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Database created"</span>);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="Creating-a-Table"><a href="#Creating-a-Table" class="headerlink" title="Creating a Table"></a>Creating a Table</h3><p>Two ways:</p>
-<ul>
-<li>create database and table simultenously</li>
-<li>first create database, and connect it; then create table with the connection</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// approach 1</span></span><br><span class="line"></span><br><span class="line">connection.query(<span class="string">"CREATE DATABASE db"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">error, rows, fields</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (error) <span class="keyword">throw</span> error;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">connection.query(<span class="string">"USE db"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">error, rows, fields</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (error) <span class="keyword">throw</span> error;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">connection.query(<span class="string">"CREATE TABLE tb(id INT, name VARCHAR(50))"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">error, rows, fields</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (error) <span class="keyword">throw</span> error;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//-----------------------</span></span><br><span class="line"><span class="comment">// approach 2</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> con = mysql.createConnection(&#123;</span><br><span class="line">  host: <span class="string">"localhost"</span>,</span><br><span class="line">  user: <span class="string">"yourusername"</span>,</span><br><span class="line">  password: <span class="string">"yourpassword"</span>,</span><br><span class="line">  database: <span class="string">"mydb"</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">con.connect(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> sql = <span class="string">"CREATE TABLE customers (name VARCHAR(255), address VARCHAR(255))"</span>;</span><br><span class="line"></span><br><span class="line">con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line"><span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Table created"</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="Selecting-From-a-Table"><a href="#Selecting-From-a-Table" class="headerlink" title="Selecting From a Table"></a>Selecting From a Table</h3><p>To select data from a table in MySQL, use the <code>SELECT</code> statement.</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"SELECT * FROM customers WHERE address = 'Park Lane 38'"</span>;</span><br><span class="line"></span><br><span class="line">con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="built_in">console</span>.log(result);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p><strong>Wildcard Characters</strong><code>%</code>: represent zero, one or multiple characters:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"SELECT * FROM customers WHERE address LIKE 'S%'"</span></span><br></pre></td></tr></table></figure>
-<h3 id="Insert-Into-Table"><a href="#Insert-Into-Table" class="headerlink" title="Insert Into Table"></a>Insert Into Table</h3><p>To fill a table in MySQL, use the <code>INSERT INTO</code> statement.</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"INSERT INTO customers (name, address) VALUES ('Company Inc', 'Highway 37')"</span>;</span><br><span class="line"></span><br><span class="line">con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line"><span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"1 record inserted"</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="Update-Table"><a href="#Update-Table" class="headerlink" title="Update Table"></a>Update Table</h3><p>You can update existing records in a table by using the <code>UPDATE</code> statement:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"UPDATE customers SET address = 'Canyon 123' WHERE address = 'Valley 345'"</span>;</span><br><span class="line"></span><br><span class="line">  con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="built_in">console</span>.log(result.affectedRows + <span class="string">" record(s) updated"</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="Sort-the-Result"><a href="#Sort-the-Result" class="headerlink" title="Sort the Result"></a>Sort the Result</h3><p>Use the <code>ORDER BY</code> statement to sort the result in ascending or descending order.</p>
-<p>The <code>ORDER BY</code> keyword sorts the result ascending by default. To sort the result in descending order, use the <code>DESC</code> keyword.</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"SELECT * FROM customers ORDER BY name DESC"</span>;</span><br><span class="line"></span><br><span class="line">con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="built_in">console</span>.log(result);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="Delete-Record"><a href="#Delete-Record" class="headerlink" title="Delete Record"></a>Delete Record</h3><p>You can delete records from an existing table by using the <code>DELETE FROM</code> statement:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"DELETE FROM customers WHERE address = 'Mountain 21'"</span>;</span><br><span class="line"></span><br><span class="line">con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Number of records deleted: "</span> + result.affectedRows);</span><br></pre></td></tr></table></figure>
-<h3 id="Limit-the-Result"><a href="#Limit-the-Result" class="headerlink" title="Limit the Result"></a>Limit the Result</h3><p>You can limit the number of records returned from the query, by using the <code>LIMIT</code> statement:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"SELECT * FROM customers LIMIT 5"</span>;</span><br><span class="line"></span><br><span class="line">con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line"><span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line"><span class="built_in">console</span>.log(result);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="Join-Two-or-More-Tables"><a href="#Join-Two-or-More-Tables" class="headerlink" title="Join Two or More Tables"></a>Join Two or More Tables</h3><p>Combine rows from two or more tables, based on a related column between them, by using a <code>JOIN</code> statement.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//users</span><br><span class="line"></span><br><span class="line">[</span><br><span class="line">  &#123; id: 1, name: &apos;John&apos;, favorite_product: 154&#125;,</span><br><span class="line">  &#123; id: 2, name: &apos;Peter&apos;, favorite_product: 154&#125;,</span><br><span class="line">  &#123; id: 3, name: &apos;Amy&apos;, favorite_product: 155&#125;,</span><br><span class="line">  &#123; id: 4, name: &apos;Hannah&apos;, favorite_product:&#125;,</span><br><span class="line">  &#123; id: 5, name: &apos;Michael&apos;, favorite_product:&#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// products</span><br><span class="line">[</span><br><span class="line">  &#123; id: 154, name: &apos;Chocolate Heaven&apos; &#125;,</span><br><span class="line">  &#123; id: 155, name: &apos;Tasty Lemons&apos; &#125;,</span><br><span class="line">  &#123; id: 156, name: &apos;Vanilla Dreams&apos; &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-<p><strong>1. Inner join</strong></p>
-<p>These two tables can be combined by using users’ favorite_product field and products’ id field.</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sql = <span class="string">"SELECT users.name AS user, products.name AS favorite FROM users JOIN products ON users.favorite_product = products.id"</span>;</span><br><span class="line">    </span><br><span class="line">con.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line"><span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line"><span class="built_in">console</span>.log(result);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p><strong>2. Left Join</strong><br>If you want to return all users, no matter if they have a favorite product or not, use the LEFT JOIN statement:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT users.name AS user,</span><br><span class="line">products.name AS favorite</span><br><span class="line">FROM users</span><br><span class="line">LEFT JOIN products ON users.favorite_product = products.id</span><br></pre></td></tr></table></figure>
-<p><strong>3. Right Join</strong><br>If you want to return <strong>all products</strong>, and the users who have them as their favorite, even if no user have them as their favorite, use the RIGHT JOIN statement:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT users.name AS user,</span><br><span class="line">products.name AS favorite</span><br><span class="line">FROM users</span><br><span class="line">RIGHT JOIN products ON users.favorite_product = products.id</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3037,7 +2991,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">76</span>
+                    <span class="site-state-item-count">77</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -3347,12 +3301,12 @@
             <div class="links-of-author motion-element">
               
                 <span class="links-of-author-item">
-                  <a href="https://github.com/caomingkai" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  <a href="https://github.com/caomingkai" target="_blank" title="GitHub" rel="external nofollow"><i class="fa fa-fw fa-github"></i>GitHub</a>
                   
                 </span>
               
                 <span class="links-of-author-item">
-                  <a href="mailto:mingkaic@usc.edu" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  <a href="mailto:mingkaic@usc.edu" target="_blank" title="E-Mail" rel="external nofollow"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
                   
                 </span>
               
@@ -3399,9 +3353,11 @@
 </div>
 
 
+  
 
 
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" rel="external nofollow" href="https://hexo.io">Hexo</a></div>
 
 
 
@@ -3409,7 +3365,7 @@
 
 
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.6</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" rel="external nofollow" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.6</div>
 
 
 

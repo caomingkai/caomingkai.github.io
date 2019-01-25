@@ -199,7 +199,7 @@
       </a>
     </div>
       
-        <p class="site-subtitle">Let's create something!</p>
+        <h1 class="site-subtitle" itemprop="description">Let's create something!</h1>
       
   </div>
 
@@ -332,6 +332,150 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/25/Diagonally-Print-a-Square-Array/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/01/25/Diagonally-Print-a-Square-Array/" itemprop="url">Diagonally Print a Square Array</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-25T11:21:52-08:00">2019-01-25</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p>Given an sqaure array (n*n) of integers, print elements diagonally .</p>
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">let nums = [</span><br><span class="line">	[1,2,3],</span><br><span class="line">	[4,5,6],</span><br><span class="line">	[7,8,9]</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">should print the following:</span><br><span class="line">1</span><br><span class="line">2 4</span><br><span class="line">3 5 7</span><br><span class="line">6 8</span><br><span class="line">9</span><br></pre></td></tr></table></figure>
+<h2 id="Solution-O-n-2"><a href="#Solution-O-n-2" class="headerlink" title="Solution: O(n^2)"></a>Solution: O(n^2)</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">printDiagnally</span>(<span class="params">input</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">let</span> n = input.length       <span class="comment">// 3</span></span><br><span class="line">	<span class="keyword">let</span> lines = <span class="number">2</span>*(n<span class="number">-1</span>) + <span class="number">1</span>   	<span class="comment">// 5</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// determine how many diagonal lines</span></span><br><span class="line">	<span class="keyword">for</span>( <span class="keyword">let</span> sum = <span class="number">0</span>; sum &lt; lines; sum++ )&#123;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// determine the starting x-coord, and starting y-coord</span></span><br><span class="line">		<span class="keyword">let</span> x0 = sum &lt; n ? sum : n<span class="number">-1</span></span><br><span class="line">		<span class="keyword">let</span> y0 = sum - x0</span><br><span class="line">		<span class="keyword">let</span> num = <span class="built_in">Math</span>.abs(x0 - y0) +<span class="number">1</span>   <span class="comment">// how many elements in this line</span></span><br><span class="line">		<span class="keyword">let</span> str = <span class="string">""</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">// concat all elements in this line</span></span><br><span class="line">		<span class="keyword">for</span>( <span class="keyword">let</span> x = x0; x &gt; x0-num; x-- )&#123;</span><br><span class="line">			<span class="keyword">let</span> y = sum - x</span><br><span class="line">			str = input[x][y] + <span class="string">" "</span>+str</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">console</span>.log(str)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ---------- Testing: ------------</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Test1: "</span>)</span><br><span class="line"><span class="keyword">let</span> input = [[<span class="number">1</span>]]</span><br><span class="line">printDiagnally(input)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Test2: "</span>)</span><br><span class="line">input = [</span><br><span class="line">	[<span class="number">1</span>,  <span class="number">2</span>],</span><br><span class="line">	[<span class="number">3</span>,  <span class="number">4</span>]</span><br><span class="line">]</span><br><span class="line">printDiagnally(input)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Test3: "</span>)</span><br><span class="line">input = [</span><br><span class="line">	[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>],</span><br><span class="line">	[<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>],</span><br><span class="line">	[<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>],</span><br><span class="line">]</span><br><span class="line">printDiagnally(input)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Test4: "</span>)</span><br><span class="line">input = [</span><br><span class="line">	[<span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>,  <span class="number">4</span> ],</span><br><span class="line">	[<span class="number">5</span>,  <span class="number">6</span>,  <span class="number">7</span>,  <span class="number">8</span> ],</span><br><span class="line">	[<span class="number">9</span>,  <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>],</span><br><span class="line">	[<span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>, <span class="number">16</span>],</span><br><span class="line">]</span><br><span class="line">printDiagnally(input)</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/12/560-Subarray-Sum-Equals-K-JS/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -349,9 +493,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/01/12/560-Subarray-Sum-Equals-K-JS/" itemprop="url">560. Subarray Sum Equals K - JS</a></h1>
+                <a class="post-title-link" href="/2019/01/12/560-Subarray-Sum-Equals-K-JS/" itemprop="url">560. Subarray Sum Equals K - JS</a></h2>
         
 
         <div class="post-meta">
@@ -521,9 +665,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/01/12/437-Path-Sum-III-JS/" itemprop="url">437. Path Sum III - JS</a></h1>
+                <a class="post-title-link" href="/2019/01/12/437-Path-Sum-III-JS/" itemprop="url">437. Path Sum III - JS</a></h2>
         
 
         <div class="post-meta">
@@ -686,9 +830,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/01/11/3-Longest-Substring-Without-Repeating-Characters-JS/" itemprop="url">3. Longest Substring Without Repeating Characters - JS</a></h1>
+                <a class="post-title-link" href="/2019/01/11/3-Longest-Substring-Without-Repeating-Characters-JS/" itemprop="url">3. Longest Substring Without Repeating Characters - JS</a></h2>
         
 
         <div class="post-meta">
@@ -830,9 +974,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/01/11/LRU-in-JS/" itemprop="url">146. LRU Cache - JS</a></h1>
+                <a class="post-title-link" href="/2019/01/11/LRU-in-JS/" itemprop="url">146. LRU Cache - JS</a></h2>
         
 
         <div class="post-meta">
@@ -976,9 +1120,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/12/28/Cryptography-PKI-public-key-infrastructure/" itemprop="url">Cryptography: PKI (public key infrastructure)</a></h1>
+                <a class="post-title-link" href="/2018/12/28/Cryptography-PKI-public-key-infrastructure/" itemprop="url">Cryptography: PKI (public key infrastructure)</a></h2>
         
 
         <div class="post-meta">
@@ -1223,9 +1367,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/12/21/Vigenere-Cipher-Vanilla-JS/" itemprop="url">Vigenere Cipher - [Vanilla JS]</a></h1>
+                <a class="post-title-link" href="/2018/12/21/Vigenere-Cipher-Vanilla-JS/" itemprop="url">Vigenere Cipher - [Vanilla JS]</a></h2>
         
 
         <div class="post-meta">
@@ -1393,9 +1537,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/12/20/Vigenere-Cipher-React/" itemprop="url">Vigenere Cipher - [React]</a></h1>
+                <a class="post-title-link" href="/2018/12/20/Vigenere-Cipher-React/" itemprop="url">Vigenere Cipher - [React]</a></h2>
         
 
         <div class="post-meta">
@@ -1610,9 +1754,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/12/10/Counting-holes-in-number/" itemprop="url">Counting holes in number</a></h1>
+                <a class="post-title-link" href="/2018/12/10/Counting-holes-in-number/" itemprop="url">Counting holes in number</a></h2>
         
 
         <div class="post-meta">
@@ -1769,9 +1913,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/12/10/Trailing-zeros-of-n！/" itemprop="url">Trailing zeros of n！</a></h1>
+                <a class="post-title-link" href="/2018/12/10/Trailing-zeros-of-n！/" itemprop="url">Trailing zeros of n！</a></h2>
         
 
         <div class="post-meta">
@@ -1886,154 +2030,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/10/Sort-a-Map/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/12/10/Sort-a-Map/" itemprop="url">Sort a Map</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-10T16:29:27-08:00">2018-12-10</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="I-Problem"><a href="#I-Problem" class="headerlink" title="I. Problem"></a>I. Problem</h2><p>Given a map, whose key are integer, sort map entries by the order of its key</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Map</span>:[</span><br><span class="line">    [<span class="number">2</span>, <span class="string">'c'</span>],</span><br><span class="line">    [<span class="number">1</span>, <span class="string">'a'</span>],   </span><br><span class="line">    [<span class="number">4</span>, <span class="string">'a'</span>],</span><br><span class="line">    [<span class="number">3</span>, <span class="string">'e'</span>],</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">res: [</span><br><span class="line">    [<span class="number">1</span>, <span class="string">'a'</span>],    </span><br><span class="line">    [<span class="number">2</span>, <span class="string">'c'</span>],</span><br><span class="line">    [<span class="number">3</span>, <span class="string">'e'</span>],</span><br><span class="line">    [<span class="number">4</span>, <span class="string">'a'</span>],</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-<h2 id="II-Solution"><a href="#II-Solution" class="headerlink" title="II. Solution"></a>II. Solution</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Test</span></span><br><span class="line"><span class="keyword">let</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>([[<span class="number">2</span>, <span class="string">'c'</span>], [<span class="number">1</span>, <span class="string">'a'</span>], [<span class="number">4</span>, <span class="string">'a'</span>], [<span class="number">3</span>, <span class="string">'e'</span>]])</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sortMap</span>(<span class="params">map</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> resKey = []</span><br><span class="line">    map.forEach(<span class="function">(<span class="params">val, key</span>)=&gt;</span>&#123;</span><br><span class="line">        resKey.push(key)</span><br><span class="line">    &#125;)</span><br><span class="line">    resKey.sort()</span><br><span class="line">    <span class="keyword">return</span> resKey.map(<span class="function"><span class="params">item</span>=&gt;</span> [item, map.get(item)])</span><br><span class="line">&#125;</span><br><span class="line">                   </span><br><span class="line"><span class="built_in">console</span>.log(sortMap(map))</span><br></pre></td></tr></table></figure>
-<h2 id="III-Complexity"><a href="#III-Complexity" class="headerlink" title="III. Complexity"></a>III. Complexity</h2><ol>
-<li>Time: O(N*logN) </li>
-<li>Space: O(N)</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2085,7 +2081,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">76</span>
+                    <span class="site-state-item-count">77</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2395,12 +2391,12 @@
             <div class="links-of-author motion-element">
               
                 <span class="links-of-author-item">
-                  <a href="https://github.com/caomingkai" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  <a href="https://github.com/caomingkai" target="_blank" title="GitHub" rel="external nofollow"><i class="fa fa-fw fa-github"></i>GitHub</a>
                   
                 </span>
               
                 <span class="links-of-author-item">
-                  <a href="mailto:mingkaic@usc.edu" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  <a href="mailto:mingkaic@usc.edu" target="_blank" title="E-Mail" rel="external nofollow"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
                   
                 </span>
               
@@ -2447,9 +2443,11 @@
 </div>
 
 
+  
 
 
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" rel="external nofollow" href="https://hexo.io">Hexo</a></div>
 
 
 
@@ -2457,7 +2455,7 @@
 
 
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.6</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" rel="external nofollow" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.6</div>
 
 
 

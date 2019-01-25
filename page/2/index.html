@@ -199,7 +199,7 @@
       </a>
     </div>
       
-        <p class="site-subtitle">Let's create something!</p>
+        <h1 class="site-subtitle" itemprop="description">Let's create something!</h1>
       
   </div>
 
@@ -332,6 +332,154 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/10/Sort-a-Map/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/sea.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/10/Sort-a-Map/" itemprop="url">Sort a Map</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-10T16:29:27-08:00">2018-12-10</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="I-Problem"><a href="#I-Problem" class="headerlink" title="I. Problem"></a>I. Problem</h2><p>Given a map, whose key are integer, sort map entries by the order of its key</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Map</span>:[</span><br><span class="line">    [<span class="number">2</span>, <span class="string">'c'</span>],</span><br><span class="line">    [<span class="number">1</span>, <span class="string">'a'</span>],   </span><br><span class="line">    [<span class="number">4</span>, <span class="string">'a'</span>],</span><br><span class="line">    [<span class="number">3</span>, <span class="string">'e'</span>],</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">res: [</span><br><span class="line">    [<span class="number">1</span>, <span class="string">'a'</span>],    </span><br><span class="line">    [<span class="number">2</span>, <span class="string">'c'</span>],</span><br><span class="line">    [<span class="number">3</span>, <span class="string">'e'</span>],</span><br><span class="line">    [<span class="number">4</span>, <span class="string">'a'</span>],</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<h2 id="II-Solution"><a href="#II-Solution" class="headerlink" title="II. Solution"></a>II. Solution</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Test</span></span><br><span class="line"><span class="keyword">let</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>([[<span class="number">2</span>, <span class="string">'c'</span>], [<span class="number">1</span>, <span class="string">'a'</span>], [<span class="number">4</span>, <span class="string">'a'</span>], [<span class="number">3</span>, <span class="string">'e'</span>]])</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sortMap</span>(<span class="params">map</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> resKey = []</span><br><span class="line">    map.forEach(<span class="function">(<span class="params">val, key</span>)=&gt;</span>&#123;</span><br><span class="line">        resKey.push(key)</span><br><span class="line">    &#125;)</span><br><span class="line">    resKey.sort()</span><br><span class="line">    <span class="keyword">return</span> resKey.map(<span class="function"><span class="params">item</span>=&gt;</span> [item, map.get(item)])</span><br><span class="line">&#125;</span><br><span class="line">                   </span><br><span class="line"><span class="built_in">console</span>.log(sortMap(map))</span><br></pre></td></tr></table></figure>
+<h2 id="III-Complexity"><a href="#III-Complexity" class="headerlink" title="III. Complexity"></a>III. Complexity</h2><ol>
+<li>Time: O(N*logN) </li>
+<li>Space: O(N)</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/10/Reverse-all-words-in-a-string/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -349,9 +497,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/12/10/Reverse-all-words-in-a-string/" itemprop="url">Reverse all words in a string</a></h1>
+                <a class="post-title-link" href="/2018/12/10/Reverse-all-words-in-a-string/" itemprop="url">Reverse all words in a string</a></h2>
         
 
         <div class="post-meta">
@@ -502,9 +650,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/12/09/How-to-Check-Data-Types-in-JS/" itemprop="url">How to Check Data Types in JS?</a></h1>
+                <a class="post-title-link" href="/2018/12/09/How-to-Check-Data-Types-in-JS/" itemprop="url">How to Check Data Types in JS?</a></h2>
         
 
         <div class="post-meta">
@@ -677,9 +825,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/12/09/Trie-Tree-Implementation-using-JS/" itemprop="url">Trie Tree Implementation using JS</a></h1>
+                <a class="post-title-link" href="/2018/12/09/Trie-Tree-Implementation-using-JS/" itemprop="url">Trie Tree Implementation using JS</a></h2>
         
 
         <div class="post-meta">
@@ -831,9 +979,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/12/05/JS-common-interview-problems/" itemprop="url">JS common interview problems</a></h1>
+                <a class="post-title-link" href="/2018/12/05/JS-common-interview-problems/" itemprop="url">JS common interview problems</a></h2>
         
 
         <div class="post-meta">
@@ -1082,9 +1230,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/11/15/CSS-Notes/" itemprop="url">CSS Notes</a></h1>
+                <a class="post-title-link" href="/2018/11/15/CSS-Notes/" itemprop="url">CSS Notes</a></h2>
         
 
         <div class="post-meta">
@@ -1241,9 +1389,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/11/02/Write-Our-Own-Promise/" itemprop="url">Write A Promise</a></h1>
+                <a class="post-title-link" href="/2018/11/02/Write-Our-Own-Promise/" itemprop="url">Write A Promise</a></h2>
         
 
         <div class="post-meta">
@@ -1505,9 +1653,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/11/01/Sorting-Algorithms-in-JS/" itemprop="url">Sorting Algorithms in JS</a></h1>
+                <a class="post-title-link" href="/2018/11/01/Sorting-Algorithms-in-JS/" itemprop="url">Sorting Algorithms in JS</a></h2>
         
 
         <div class="post-meta">
@@ -1719,9 +1867,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/10/31/setTimeout-vs-setInterval/" itemprop="url">setTimeout vs setInterval</a></h1>
+                <a class="post-title-link" href="/2018/10/31/setTimeout-vs-setInterval/" itemprop="url">setTimeout vs setInterval</a></h2>
         
 
         <div class="post-meta">
@@ -2046,9 +2194,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/10/30/Negative-Margin-in-Layout/" itemprop="url">Negative Margin in Layout</a></h1>
+                <a class="post-title-link" href="/2018/10/30/Negative-Margin-in-Layout/" itemprop="url">Negative Margin in Layout</a></h2>
         
 
         <div class="post-meta">
@@ -2281,186 +2429,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/23/Specifio-Work-Summary/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/sea.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/23/Specifio-Work-Summary/" itemprop="url">Specifio Work Summary</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-23T20:04:05-07:00">2018-10-23</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Portfolios/" itemprop="url" rel="index"><span itemprop="name">Portfolios</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="I-PHP-legacy-website-to-React"><a href="#I-PHP-legacy-website-to-React" class="headerlink" title="I. PHP legacy website to React"></a>I. PHP legacy website to React</h2><h4 id="1-Current-website-PHP"><a href="#1-Current-website-PHP" class="headerlink" title="1. Current website (PHP)"></a>1. Current website (PHP)</h4><p>The company website in use is the old one at <a href="https://specif.io/" target="_blank" rel="noopener">https://specif.io/</a>.<br>Hopefully, Our new website will be put into use by October, 2018.</p>
-<h4 id="2-New-website-React-Gatsby-Sass"><a href="#2-New-website-React-Gatsby-Sass" class="headerlink" title="2. New website (React, Gatsby, Sass)"></a>2. New website (React, Gatsby, Sass)</h4><p>The new website is currently on staging, but you can still visit it through this link: <a href="https://publicdocker.specif.io/" target="_blank" rel="noopener">https://publicdocker.specif.io/</a></p>
-<p><strong>New features:</strong></p>
-<ul>
-<li>Static webpage auto generating from Markdown file <strong>(Gatsby.js)</strong></li>
-<li>better layout &amp; color scheme <strong>(React)</strong></li>
-<li>more user friendly</li>
-<li>more intuitive</li>
-<li>convey more information</li>
-</ul>
-<h2 id="II-Admin-Panel"><a href="#II-Admin-Panel" class="headerlink" title="II. Admin Panel"></a>II. Admin Panel</h2><p>Developped Admin Panel for both internal and external use, with 3-level privileged access.</p>
-<p><img src="https://github.com/caomingkai/specifio_projects/raw/master/Admin%20Panel/docPlan.png" alt="Admin Panel"></p>
-<h4 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction:"></a>1. Introduction:</h4><ol>
-<li><p>With Specifio’s Doc Plans feature, practitioners can control how Specifio creates draft applications so they consistently meet the preferences and requirements of clients and reviewers.</p>
-</li>
-<li><p>A practitioner’s “active” Doc Plan controls the appearance, content, and structure of the auto-drafts created by Specifio.</p>
-</li>
-<li><p>Practitioners can design a collection of different Doc Plans for different clients, technologies, or reviewers.</p>
-</li>
-<li><p>Doc Plans can be shared among registered users within your firm.</p>
-</li>
-</ol>
-<h4 id="2-Snapshots-for-key-features"><a href="#2-Snapshots-for-key-features" class="headerlink" title="2. Snapshots for key features"></a>2. Snapshots for key features</h4><ul>
-<li><p><strong>Video: Live demo page for setting like layout, format and content of their Doc Plans</strong></p>
-<p>  <a href="http://www.youtube.com/watch?feature=player_embedded&v=Gl8TfGINxko" target="_blank"><img src="http://img.youtube.com/vi/Gl8TfGINxko/0.jpg" alt="Doc Editor" width="400" height="300" border="8"></a></p>
-</li>
-<li><p><strong>Dashboard</strong></p>
-<p>  <img width="400" alt="auth0" src="https://github.com/caomingkai/specifio_projects/raw/master/Admin%20Panel/dashboard1.png"><br>  <br><br>  <img width="400" alt="auth0" src="https://github.com/caomingkai/specifio_projects/raw/master/Admin%20Panel/dashboard2.png"></p>
-</li>
-<li><p><strong>Auth0 integration</strong></p>
-<p>  <img width="400" alt="auth0" src="https://github.com/caomingkai/specifio_projects/raw/master/Admin%20Panel/auth0.png"></p>
-</li>
-<li><p><strong>Manage doc plans</strong></p>
-<p>  <img width="400" alt="docPlan.png" src="https://github.com/caomingkai/specifio_projects/raw/master/Admin%20Panel/docPlan.png"></p>
-</li>
-<li><p><strong>Manage profile</strong></p>
-<p>   <img width="400" alt="profile.png" src="https://github.com/caomingkai/specifio_projects/raw/master/Admin%20Panel/profile.png"></p>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2512,7 +2480,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">76</span>
+                    <span class="site-state-item-count">77</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2822,12 +2790,12 @@
             <div class="links-of-author motion-element">
               
                 <span class="links-of-author-item">
-                  <a href="https://github.com/caomingkai" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  <a href="https://github.com/caomingkai" target="_blank" title="GitHub" rel="external nofollow"><i class="fa fa-fw fa-github"></i>GitHub</a>
                   
                 </span>
               
                 <span class="links-of-author-item">
-                  <a href="mailto:mingkaic@usc.edu" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  <a href="mailto:mingkaic@usc.edu" target="_blank" title="E-Mail" rel="external nofollow"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
                   
                 </span>
               
@@ -2874,9 +2842,11 @@
 </div>
 
 
+  
 
 
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" rel="external nofollow" href="https://hexo.io">Hexo</a></div>
 
 
 
@@ -2884,7 +2854,7 @@
 
 
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.6</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" rel="external nofollow" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.6</div>
 
 
 

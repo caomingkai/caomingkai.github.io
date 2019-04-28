@@ -332,6 +332,273 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/30/Negative-Margin-in-Layout/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/mingkai.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/30/Negative-Margin-in-Layout/" itemprop="url">Negative Margin in Layout</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-30T17:41:46-07:00">2018-10-30</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Credits-to"><a href="#Credits-to" class="headerlink" title="Credits to:"></a>Credits to:</h2><ol>
+<li><a href="http://icewind-blog.com/2014/05/27/css-negative-margin/" target="_blank" rel="noopener">http://icewind-blog.com/2014/05/27/css-negative-margin/</a></li>
+<li><a href="https://blog.csdn.net/zhoulei1995/article/details/80161240" target="_blank" rel="noopener">https://blog.csdn.net/zhoulei1995/article/details/80161240</a></li>
+<li><a href="https://github.com/rccoder/blog/issues/6" target="_blank" rel="noopener">https://github.com/rccoder/blog/issues/6</a></li>
+<li><a href="https://www.jianshu.com/p/487d131537b4" target="_blank" rel="noopener">https://www.jianshu.com/p/487d131537b4</a></li>
+<li><a href="https://alistapart.com/article/holygrail" target="_blank" rel="noopener">https://alistapart.com/article/holygrail</a></li>
+</ol>
+<h2 id="Document-flow"><a href="#Document-flow" class="headerlink" title="Document flow"></a>Document flow</h2><p>All block elements like boxes (block/inline) flowing on water; The water push them to left, and to top</p>
+<ol>
+<li>inline elements are only push to left; When there is no space in a row, it will automatically switch to next line <strong><u>without new line generated</u></strong></li>
+<li><code>float</code> will make element escape from normal document flow</li>
+<li><u>inline element</u> <code>float</code> will make it to be <u>block element</u></li>
+<li><code>position: absolute</code> &amp; <code>position: fixed</code> will also make escape</li>
+</ol>
+<h2 id="Margin-Used-in-Domcument-FLow"><a href="#Margin-Used-in-Domcument-FLow" class="headerlink" title="Margin Used in Domcument FLow"></a>Margin Used in Domcument FLow</h2><ul>
+<li><p><strong><code>margin</code></strong> determine the <u>hidden outer border</u> (not <code>border</code>) for all elements. </p>
+</li>
+<li><p>All elements have a hidden outer border used by browser to arrange elements.</p>
+</li>
+</ul>
+<h2 id="Positive-Margin"><a href="#Positive-Margin" class="headerlink" title="Positive Margin"></a>Positive Margin</h2><ol>
+<li>block element:  will make margins on 4 directions have a gap between its <u>parents</u> or its <u>siblings</u></li>
+<li>inline element:  will only respect <code>left-margin</code> and <code>right-margin</code></li>
+</ol>
+<h2 id="Negative-Margin"><a href="#Negative-Margin" class="headerlink" title="Negative Margin"></a>Negative Margin</h2><ol>
+<li><p><u>normal document flow</u></p>
+<ul>
+<li><strong>positive</strong>: margin will separate boxes by a gap</li>
+<li><strong>negative</strong>:<ul>
+<li><code>margin-left</code> 和 <code>margin-top</code>：affect itself, move to its left/top by value</li>
+<li><code>margin-right</code> 和 <code>margin-bottom</code>：affect adjacent elements, pull them to its right/bottom by value</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><u>escape document flow</u>:  <strong>absolute position</strong></p>
+<ul>
+<li><code>margin-left</code> 和 <code>margin-top</code>：can affect itself, move to its left/top by value</li>
+<li><code>margin-right</code> 和 <code>margin-bottom</code>：won’t affect adjacent, since it out of normal document flow</li>
+</ul>
+</li>
+<li><p><u>escape document flow</u>:  <strong>float</strong></p>
+<p>determined by <code>float</code> direction (like normal doc flow)</p>
+<ul>
+<li><p>when <code>float: left</code>: </p>
+<ul>
+<li><code>margin-left: -5px</code> will move itself to left by 5px</li>
+<li><code>margin-right: -5px</code> will move adjacent element to its right by 5px</li>
+<li><code>margin-top</code>：can affect itself, move to its top by value</li>
+<li><code>margin-bottom</code>：will move adjacent element to its bottom by value</li>
+</ul>
+</li>
+<li><p>when <code>float: right</code>: </p>
+<ul>
+<li><code>margin-right: -5px</code> will move adjacent element to its right by 5px</li>
+<li><code>margin-left: -5px</code> will move itself to left by 5px</li>
+<li><code>margin-top</code>：can affect itself, move to its top by value</li>
+<li><code>margin-bottom</code>：will move adjacent element to its bottom by value</li>
+</ul>
+</li>
+<li><p><strong><u>[NOTE]：</u></strong> <code>margin-left:-100%</code> in <code>float</code> document flow</p>
+<ul>
+<li><p>since <code>float</code> flow is like inline elements, no new line between lines, even though they are in different lines</p>
+</li>
+<li><p>For example below: even though at first <code>left</code> is on bottom of <code>main</code>, does not mean it break off from <code>main</code>, it still adjacent to <code>main</code></p>
+</li>
+<li><p><code>margin-left: -100%;</code> moves itself to its left by 100% width of its parent</p>
+</li>
+<li><p>Example</p>
+<ul>
+<li><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"main"</span> &gt;</span>  main <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"left"</span> &gt;</span>  left <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"right"</span>&gt;</span> right <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">    <span class="selector-class">.main</span>&#123;</span></span><br><span class="line"><span class="undefined">        float: left;</span></span><br><span class="line"><span class="undefined">        width: 100%;   // occupy whole width</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="css">    <span class="selector-class">.left</span>&#123;</span></span><br><span class="line"><span class="undefined">        float: left;</span></span><br><span class="line"><span class="undefined">        width: 50px;   // its own width</span></span><br><span class="line"><span class="undefined">        margin-left: -100%; </span></span><br><span class="line"><span class="undefined">        // even though at first it is on bottom of</span></span><br><span class="line"><span class="undefined">        // main, does not mean break off from main</span></span><br><span class="line"><span class="undefined">        // when '-100%' negative margin,</span></span><br><span class="line"><span class="undefined">        // it move itself to its left by </span></span><br><span class="line"><span class="undefined">        // 100% width of parent</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="css">    <span class="selector-class">.right</span>&#123;</span></span><br><span class="line"><span class="undefined">        float: left;</span></span><br><span class="line"><span class="undefined">        width: 50px;</span></span><br><span class="line"><span class="undefined">        margin-left: -50px;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="Use-case-of-negative-margin"><a href="#Use-case-of-negative-margin" class="headerlink" title="Use case of negative margin"></a>Use case of negative margin</h2><ol>
+<li><p><strong>Layout Difference: <u>Holy Grail</u> vs <u>Double wings</u></strong></p>
+<ul>
+<li><u>Holy Grail</u>: background won’t affect two sides, even it’s higher than two sides</li>
+<li><u>Double wings</u>: background affects parts below two sides, when it’s higher than two sides</li>
+</ul>
+</li>
+<li><p><strong>Layout of Holy Grail (圣杯布局) </strong> </p>
+<ul>
+<li><p><a href="https://blog.csdn.net/zhoulei1995/article/details/80161240" target="_blank" rel="noopener">https://blog.csdn.net/zhoulei1995/article/details/80161240</a></p>
+</li>
+<li><p>container set aside <code>left/right padding</code> padding for left/right section</p>
+</li>
+<li><p>move left/right section onto main using <code>negative margin</code></p>
+</li>
+<li><p>move left/right section to padding place using <code>position:relative</code></p>
+<ul>
+<li><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">        	<span class="selector-class">.container</span> &#123;</span></span><br><span class="line"><span class="undefined">                padding: 0 300px 0 200px;</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="css">            <span class="selector-class">.content</span> &#123;</span></span><br><span class="line"><span class="undefined">                float: left;</span></span><br><span class="line"><span class="undefined">                width: 100%;</span></span><br><span class="line"><span class="css">                <span class="selector-tag">background</span>: <span class="selector-id">#f00</span>;</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="css">            <span class="selector-class">.left</span> &#123;</span></span><br><span class="line"><span class="undefined">                position: relative;</span></span><br><span class="line"><span class="undefined">                left: -200px;</span></span><br><span class="line"><span class="undefined">                float: left;</span></span><br><span class="line"><span class="undefined">                width: 200px;</span></span><br><span class="line"><span class="undefined">                margin-left: -100%;</span></span><br><span class="line"><span class="css">                <span class="selector-tag">background</span>: <span class="selector-id">#0f0</span>;</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="css">            <span class="selector-class">.right</span> &#123;</span></span><br><span class="line"><span class="undefined">                position: relative;</span></span><br><span class="line"><span class="undefined">                right: -300px;</span></span><br><span class="line"><span class="undefined">                float: left;</span></span><br><span class="line"><span class="undefined">                width: 300px;</span></span><br><span class="line"><span class="undefined">                margin-left: -300px;</span></span><br><span class="line"><span class="css">                <span class="selector-tag">background</span>: <span class="selector-id">#00f</span>;</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="undefined">        </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"content"</span>&gt;</span></span><br><span class="line">                中间内容区域 中间内容区域 中间内容区域 </span><br><span class="line">                中间内容区域 中间内容区域 中间内容区域 </span><br><span class="line">                中间内容区域 中间内容区域 中间内容区域 </span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"left"</span>&gt;</span>左侧边栏区域<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"right"</span>&gt;</span>右侧边栏区域<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Double Wings layout (双飞翼布局)</strong></p>
+<ul>
+<li><p><a href="https://blog.csdn.net/zhoulei1995/article/details/80161240" target="_blank" rel="noopener">https://blog.csdn.net/zhoulei1995/article/details/80161240</a></p>
+</li>
+<li><p>move left/right section onto wrapper using <code>negative margin</code></p>
+</li>
+<li><p>set <code>margin left/right</code> to main, to make it won’t hidden by two sides</p>
+<ul>
+<li><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">        	<span class="selector-class">.wrapper</span> &#123;</span></span><br><span class="line"><span class="undefined">                float: left;</span></span><br><span class="line"><span class="undefined">                width: 100%;</span></span><br><span class="line"><span class="css">                <span class="selector-tag">background</span>: <span class="selector-id">#f00</span>;</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="css">            <span class="selector-class">.content</span> &#123;</span></span><br><span class="line"><span class="undefined">                margin-left: 200px;</span></span><br><span class="line"><span class="undefined">                margin-right: 300px;</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="css">            <span class="selector-class">.left</span> &#123;</span></span><br><span class="line"><span class="undefined">                float: left;</span></span><br><span class="line"><span class="undefined">                width: 200px;</span></span><br><span class="line"><span class="undefined">                margin-left: -100%;</span></span><br><span class="line"><span class="css">                <span class="selector-tag">background</span>: <span class="selector-id">#0f0</span>;</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="css">            <span class="selector-class">.right</span> &#123;</span></span><br><span class="line"><span class="undefined">                float: left;</span></span><br><span class="line"><span class="undefined">                width: 300px;</span></span><br><span class="line"><span class="undefined">                margin-left: -300px;</span></span><br><span class="line"><span class="css">                <span class="selector-tag">background</span>: <span class="selector-id">#00f</span>;</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="undefined">        </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"wrapper"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"content"</span>&gt;</span></span><br><span class="line">                中间内容区域 中间内容区域 中间内容区域 </span><br><span class="line">                中间内容区域 中间内容区域 中间内容区域 </span><br><span class="line">                中间内容区域 中间内容区域 中间内容区域			<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"left"</span>&gt;</span>左侧边栏区域<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"right"</span>&gt;</span>右侧边栏区域<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Horizontal &amp; Vertical Center</p>
+<ul>
+<li><p>For <code>position: absolute</code>, even thought it out of the normal document flow, the negative left/top still affect itself, moving to its left/top by value</p>
+<ul>
+<li><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE HTML&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span> Center <span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">     <span class="selector-tag">body</span>&#123; <span class="attribute">margin</span>:<span class="number">0</span>;<span class="attribute">padding</span>:<span class="number">0</span>;&#125;</span></span><br><span class="line"><span class="css">     <span class="selector-id">#test</span>&#123;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">width</span><span class="selector-pseudo">:200px</span>;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">height</span><span class="selector-pseudo">:200px</span>;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">background</span>:<span class="selector-id">#F60</span>;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">position</span><span class="selector-pseudo">:absolute</span>;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">left</span><span class="selector-pseudo">:50</span>%;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">top</span><span class="selector-pseudo">:50</span>%;</span></span><br><span class="line"><span class="undefined">        margin-left: -100px;</span></span><br><span class="line"><span class="undefined">        margin-top: -100px;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"test"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/23/Specifio-Work-Summary/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1937,163 +2204,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/07/Search-for-a-Symmetric-Node/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/mingkai.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/07/Search-for-a-Symmetric-Node/" itemprop="url">Search for a Symmetric Node</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-07T20:34:30-07:00">2018-10-07</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h2><p>Given two DOM trees with the same structure, and one node in tree1, try to find its symmetric node in tree2</p>
-<h2 id="Solution-1"><a href="#Solution-1" class="headerlink" title="Solution 1"></a>Solution 1</h2><p>If we are not so familiar with DOM API, we might forget there is an attribute for each DOM element: <code>parentNode</code>. Then we might just traverse both trees at the same time, when we encounter the node in tree1, the node in tree2 is what we want.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getSymmetricNode</span>(<span class="params">target, root1, root2</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>( target === root1 ) <span class="keyword">return</span> root2</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">0</span>; i &lt; root1.childNodes.length; i++ )&#123;</span><br><span class="line">        <span class="keyword">let</span> node1 = root1.childNodes[i]     </span><br><span class="line">        <span class="keyword">let</span> node2 = root2.childNodes[i]</span><br><span class="line">        <span class="keyword">if</span>( node1 === target ) <span class="keyword">return</span> node2</span><br><span class="line">		getSymmetricNode(target, node1, node2 )</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol>
-<li>Time Complexity: <strong>O(b^d)  [d: depth, b: branches]</strong>, which is BAD!</li>
-</ol>
-<h2 id="Solution-2-Improved"><a href="#Solution-2-Improved" class="headerlink" title="Solution 2 [Improved ]"></a>Solution 2 [Improved ]</h2><p>Actually there is an convenient attribute we could utilize, that is <code>parentNode</code></p>
-<ol>
-<li>First, we could go up to find that <u><strong>path</strong> from root1 to target</u><ul>
-<li>The path is consist of indices of node on that path</li>
-</ul>
-</li>
-<li>Using that path of indices, we could go downwards from root2 to find the desired node</li>
-</ol>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> getSymmetricNode = <span class="function">(<span class="params">target, root1, root2</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> path = getIndexPath( target, root1 )</span><br><span class="line">    <span class="keyword">return</span> getNode( path, root2 )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> getIndexPath = <span class="function">(<span class="params">target, root1</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> path = []</span><br><span class="line">    <span class="keyword">let</span> curNode = target</span><br><span class="line">    <span class="keyword">while</span>( curNode &amp;&amp; curNode.parentNode )&#123;</span><br><span class="line">        <span class="keyword">let</span> index = curNode.parentNode.indexOf(curNode)</span><br><span class="line">        path.push(index)</span><br><span class="line">        curNode = curNode.parentNode</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> path</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> getNode =<span class="function">(<span class="params">path, root</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> node</span><br><span class="line">    <span class="keyword">while</span>( path.length &gt; <span class="number">0</span> )&#123;</span><br><span class="line">        node = root.childNodes[path.pop()]</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> node</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Testing"><a href="#Testing" class="headerlink" title="Testing"></a>Testing</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line">// Testing</span><br><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Hello World<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"root1"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"node1"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"root2"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"node2"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="javascript">      <span class="comment">// --------------- 1: O(b^d) --------------</span></span></span><br><span class="line"><span class="javascript">      <span class="function"><span class="keyword">function</span> <span class="title">getSymmetricNode1</span>(<span class="params">target, root1, root2</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">if</span>( target === root1 ) <span class="keyword">return</span> root2</span></span><br><span class="line"><span class="javascript">          <span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">0</span>; i &lt; root1.childNodes.length; i++ )&#123;</span></span><br><span class="line"><span class="javascript">              <span class="keyword">let</span> node1 = root1.childNodes[i]     </span></span><br><span class="line"><span class="javascript">              <span class="keyword">let</span> node2 = root2.childNodes[i]</span></span><br><span class="line"><span class="javascript">              <span class="keyword">let</span> res = getSymmetricNode1(target, node1, node2)</span></span><br><span class="line"><span class="javascript">              <span class="keyword">if</span>( <span class="literal">null</span> !== res ) <span class="keyword">return</span> res</span></span><br><span class="line"><span class="undefined">                </span></span><br><span class="line"><span class="undefined">          &#125;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">return</span> <span class="literal">null</span></span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="javascript">      <span class="comment">// -------------- 2: O(b*d) ---------------</span></span></span><br><span class="line"><span class="javascript">      <span class="function"><span class="keyword">function</span> <span class="title">getSymmetricNode</span>(<span class="params">target, root1, root2</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">let</span> path = getIndexPath( target, root1 )</span></span><br><span class="line"><span class="javascript">          <span class="keyword">return</span> getNode( path, root2 )</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">      <span class="function"><span class="keyword">function</span> <span class="title">getChildNodesArray</span>(<span class="params">node</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> <span class="built_in">Array</span>.prototype.slice.call(node.childNodes)</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="javascript">      <span class="function"><span class="keyword">function</span> <span class="title">getIndexPath</span>(<span class="params">target, root1</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">let</span> path = []</span></span><br><span class="line"><span class="javascript">          <span class="keyword">let</span> curNode = target</span></span><br><span class="line"><span class="javascript">          <span class="keyword">while</span>( curNode !==root1 &amp;&amp; curNode &amp;&amp; curNode.parentNode )&#123;</span></span><br><span class="line"><span class="javascript">              <span class="keyword">let</span> index = getChildNodesArray(curNode.parentNode).indexOf(curNode)</span></span><br><span class="line"><span class="undefined">              path.push(index)</span></span><br><span class="line"><span class="undefined">              curNode = curNode.parentNode</span></span><br><span class="line"><span class="undefined">          &#125;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">return</span> path</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="javascript">      <span class="function"><span class="keyword">function</span> <span class="title">getNode</span>(<span class="params">path, root</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">let</span> node = root</span></span><br><span class="line"><span class="javascript">          <span class="keyword">while</span>( path.length &gt; <span class="number">0</span> )&#123;</span></span><br><span class="line"><span class="undefined">              node = getChildNodesArray(node)[path.pop()]</span></span><br><span class="line"><span class="undefined">          &#125;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">return</span> node</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">      <span class="keyword">const</span> root1 = <span class="built_in">document</span>.getElementById(<span class="string">'root1'</span>);</span></span><br><span class="line"><span class="javascript">      <span class="keyword">const</span> root2 = <span class="built_in">document</span>.getElementById(<span class="string">'root2'</span>);</span></span><br><span class="line"><span class="javascript">      <span class="keyword">const</span> node1 = <span class="built_in">document</span>.getElementById(<span class="string">'node1'</span>);</span></span><br><span class="line"><span class="javascript">      <span class="keyword">const</span> node2 = <span class="built_in">document</span>.getElementById(<span class="string">'node2'</span>);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">      <span class="keyword">const</span> nodeX = getSymmetricNode(node1, root1, root2 );</span></span><br><span class="line"><span class="javascript">      <span class="built_in">console</span>.log(nodeX)</span></span><br><span class="line"><span class="javascript">      <span class="built_in">console</span>.log(nodeX === node2); <span class="comment">// true</span></span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2145,7 +2255,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">77</span>
+                    <span class="site-state-item-count">78</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2441,7 +2551,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">129</span>
+                      
+                    
+                    <span class="site-state-item-count">130</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

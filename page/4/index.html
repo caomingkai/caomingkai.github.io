@@ -332,6 +332,163 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/07/Search-for-a-Symmetric-Node/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/mingkai.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/07/Search-for-a-Symmetric-Node/" itemprop="url">Search for a Symmetric Node</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-07T20:34:30-07:00">2018-10-07</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h2><p>Given two DOM trees with the same structure, and one node in tree1, try to find its symmetric node in tree2</p>
+<h2 id="Solution-1"><a href="#Solution-1" class="headerlink" title="Solution 1"></a>Solution 1</h2><p>If we are not so familiar with DOM API, we might forget there is an attribute for each DOM element: <code>parentNode</code>. Then we might just traverse both trees at the same time, when we encounter the node in tree1, the node in tree2 is what we want.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getSymmetricNode</span>(<span class="params">target, root1, root2</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>( target === root1 ) <span class="keyword">return</span> root2</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">0</span>; i &lt; root1.childNodes.length; i++ )&#123;</span><br><span class="line">        <span class="keyword">let</span> node1 = root1.childNodes[i]     </span><br><span class="line">        <span class="keyword">let</span> node2 = root2.childNodes[i]</span><br><span class="line">        <span class="keyword">if</span>( node1 === target ) <span class="keyword">return</span> node2</span><br><span class="line">		getSymmetricNode(target, node1, node2 )</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>Time Complexity: <strong>O(b^d)  [d: depth, b: branches]</strong>, which is BAD!</li>
+</ol>
+<h2 id="Solution-2-Improved"><a href="#Solution-2-Improved" class="headerlink" title="Solution 2 [Improved ]"></a>Solution 2 [Improved ]</h2><p>Actually there is an convenient attribute we could utilize, that is <code>parentNode</code></p>
+<ol>
+<li>First, we could go up to find that <u><strong>path</strong> from root1 to target</u><ul>
+<li>The path is consist of indices of node on that path</li>
+</ul>
+</li>
+<li>Using that path of indices, we could go downwards from root2 to find the desired node</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> getSymmetricNode = <span class="function">(<span class="params">target, root1, root2</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> path = getIndexPath( target, root1 )</span><br><span class="line">    <span class="keyword">return</span> getNode( path, root2 )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> getIndexPath = <span class="function">(<span class="params">target, root1</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> path = []</span><br><span class="line">    <span class="keyword">let</span> curNode = target</span><br><span class="line">    <span class="keyword">while</span>( curNode &amp;&amp; curNode.parentNode )&#123;</span><br><span class="line">        <span class="keyword">let</span> index = curNode.parentNode.indexOf(curNode)</span><br><span class="line">        path.push(index)</span><br><span class="line">        curNode = curNode.parentNode</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> path</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> getNode =<span class="function">(<span class="params">path, root</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> node</span><br><span class="line">    <span class="keyword">while</span>( path.length &gt; <span class="number">0</span> )&#123;</span><br><span class="line">        node = root.childNodes[path.pop()]</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> node</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Testing"><a href="#Testing" class="headerlink" title="Testing"></a>Testing</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line">// Testing</span><br><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Hello World<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"root1"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"node1"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"root2"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"node2"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="javascript">      <span class="comment">// --------------- 1: O(b^d) --------------</span></span></span><br><span class="line"><span class="javascript">      <span class="function"><span class="keyword">function</span> <span class="title">getSymmetricNode1</span>(<span class="params">target, root1, root2</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">if</span>( target === root1 ) <span class="keyword">return</span> root2</span></span><br><span class="line"><span class="javascript">          <span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">0</span>; i &lt; root1.childNodes.length; i++ )&#123;</span></span><br><span class="line"><span class="javascript">              <span class="keyword">let</span> node1 = root1.childNodes[i]     </span></span><br><span class="line"><span class="javascript">              <span class="keyword">let</span> node2 = root2.childNodes[i]</span></span><br><span class="line"><span class="javascript">              <span class="keyword">let</span> res = getSymmetricNode1(target, node1, node2)</span></span><br><span class="line"><span class="javascript">              <span class="keyword">if</span>( <span class="literal">null</span> !== res ) <span class="keyword">return</span> res</span></span><br><span class="line"><span class="undefined">                </span></span><br><span class="line"><span class="undefined">          &#125;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">return</span> <span class="literal">null</span></span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="javascript">      <span class="comment">// -------------- 2: O(b*d) ---------------</span></span></span><br><span class="line"><span class="javascript">      <span class="function"><span class="keyword">function</span> <span class="title">getSymmetricNode</span>(<span class="params">target, root1, root2</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">let</span> path = getIndexPath( target, root1 )</span></span><br><span class="line"><span class="javascript">          <span class="keyword">return</span> getNode( path, root2 )</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">      <span class="function"><span class="keyword">function</span> <span class="title">getChildNodesArray</span>(<span class="params">node</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> <span class="built_in">Array</span>.prototype.slice.call(node.childNodes)</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="javascript">      <span class="function"><span class="keyword">function</span> <span class="title">getIndexPath</span>(<span class="params">target, root1</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">let</span> path = []</span></span><br><span class="line"><span class="javascript">          <span class="keyword">let</span> curNode = target</span></span><br><span class="line"><span class="javascript">          <span class="keyword">while</span>( curNode !==root1 &amp;&amp; curNode &amp;&amp; curNode.parentNode )&#123;</span></span><br><span class="line"><span class="javascript">              <span class="keyword">let</span> index = getChildNodesArray(curNode.parentNode).indexOf(curNode)</span></span><br><span class="line"><span class="undefined">              path.push(index)</span></span><br><span class="line"><span class="undefined">              curNode = curNode.parentNode</span></span><br><span class="line"><span class="undefined">          &#125;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">return</span> path</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="javascript">      <span class="function"><span class="keyword">function</span> <span class="title">getNode</span>(<span class="params">path, root</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">let</span> node = root</span></span><br><span class="line"><span class="javascript">          <span class="keyword">while</span>( path.length &gt; <span class="number">0</span> )&#123;</span></span><br><span class="line"><span class="undefined">              node = getChildNodesArray(node)[path.pop()]</span></span><br><span class="line"><span class="undefined">          &#125;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">return</span> node</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">      <span class="keyword">const</span> root1 = <span class="built_in">document</span>.getElementById(<span class="string">'root1'</span>);</span></span><br><span class="line"><span class="javascript">      <span class="keyword">const</span> root2 = <span class="built_in">document</span>.getElementById(<span class="string">'root2'</span>);</span></span><br><span class="line"><span class="javascript">      <span class="keyword">const</span> node1 = <span class="built_in">document</span>.getElementById(<span class="string">'node1'</span>);</span></span><br><span class="line"><span class="javascript">      <span class="keyword">const</span> node2 = <span class="built_in">document</span>.getElementById(<span class="string">'node2'</span>);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">      <span class="keyword">const</span> nodeX = getSymmetricNode(node1, root1, root2 );</span></span><br><span class="line"><span class="javascript">      <span class="built_in">console</span>.log(nodeX)</span></span><br><span class="line"><span class="javascript">      <span class="built_in">console</span>.log(nodeX === node2); <span class="comment">// true</span></span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/07/Design-Pattern-JS/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -3571,195 +3728,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/20/CSS-element-positioning/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/mingkai.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/20/CSS-element-positioning/" itemprop="url">CSS: element positioning</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-20T11:46:43-07:00">2018-09-20</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="0-Credit-to"><a href="#0-Credit-to" class="headerlink" title="0. Credit to:"></a>0. Credit to:</h2><ol>
-<li><p><a href="http://javascript.info/coordinates" target="_blank" rel="noopener">http://javascript.info/coordinates</a></p>
-</li>
-<li><p><a href="https://msdn.microsoft.com/en-us/library/hh781509(VS.85).aspx" target="_blank" rel="noopener">https://msdn.microsoft.com/en-us/library/hh781509(VS.85).aspx</a></p>
-</li>
-</ol>
-<h2 id="I-mouse-event-positon"><a href="#I-mouse-event-positon" class="headerlink" title="I. mouse event positon"></a>I. <code>mouse event</code> positon</h2><ol>
-<li><a href="https://www.w3schools.com/jsref/event_clientx.asp" target="_blank" rel="noopener">https://www.w3schools.com/jsref/event_clientx.asp</a><ul>
-<li><code>event.clientX</code>: distance to the left border of <strong><u>viewport (position:fixed)</u></strong></li>
-<li><code>event.screenX</code>: distance to the left border of <strong><u>browser</u></strong></li>
-<li><code>event.pageX</code>: distance to the left border of <strong><u>document area(position: absolute)</u></strong></li>
-</ul>
-</li>
-</ol>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">div &#123;</span></span><br><span class="line"><span class="undefined">    width: 500px;</span></span><br><span class="line"><span class="undefined">    height: 300px;</span></span><br><span class="line"><span class="undefined">    border: 1px solid black;</span></span><br><span class="line"><span class="undefined">    text-align: center;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined">#demo2&#123;width: 500px;</span></span><br><span class="line"><span class="undefined">    height: 300px;</span></span><br><span class="line"><span class="undefined">    border: 1px solid red;</span></span><br><span class="line"><span class="undefined">    text-align: center;&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">onclick</span>=<span class="string">"showCoords(event)"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"pp"</span>&gt;</span>Click in the div element below to get the x (horizontal) and y (vertical) coordinates of the mouse pointer, when it is clicked.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> &gt;</span><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"demo"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"demo2"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">strong</span>&gt;</span>Tip:<span class="tag">&lt;/<span class="name">strong</span>&gt;</span> Try to click different places in the div.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">showCoords</span>(<span class="params">event</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> cX = event.clientX;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> cY = event.clientY;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> sX = event.screenX;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> sY = event.screenY;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> pX = event.pageX;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> pY = event.pageY;</span></span><br><span class="line"><span class="undefined">    </span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> slX = scrollX;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> slY = scrollY;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> pOffX = pageXOffset;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> pOffY = pageYOffset;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> coords1 = <span class="string">"client - X: "</span> + cX + <span class="string">", Y coords: "</span> + cY;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> coords2 = <span class="string">"screen - X: "</span> + sX + <span class="string">", Y coords: "</span> + sY;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> coords3 = <span class="string">"page - X: "</span>   + pX + <span class="string">", Y coords: "</span> + pY;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> coords4 = <span class="string">"sroll - X: "</span>  + slX + <span class="string">", Y coords: "</span> + slY;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> coords5 = <span class="string">"pageOffset - X: "</span>  + pOffX + <span class="string">", Y coords: "</span> + pOffY;</span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.getElementById(<span class="string">"demo2"</span>).innerHTML = coords1 + <span class="string">"&lt;br&gt;"</span> + coords2 + <span class="string">"&lt;br&gt;"</span> + coords3 + <span class="string">"&lt;br&gt;"</span> + coords4 + <span class="string">"&lt;br&gt;"</span> + coords5 + <span class="string">"&lt;br&gt;"</span>;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="II-element-position"><a href="#II-element-position" class="headerlink" title="II. element position"></a>II. element position</h2><ol>
-<li><code>getBoundingClientRect()</code>: <ul>
-<li><code>top</code> – Y-coordinate for the top element edge,</li>
-<li><code>left</code> – X-coordinate for the left element edge,</li>
-<li><code>right</code> – X-coordinate for the right element edge,</li>
-<li><code>bottom</code> – Y-coordinate for the bottom element edge.</li>
-</ul>
-</li>
-<li><code>clientHeight</code>: the height of the element</li>
-<li><code>offsetTop</code>:  returns the top position (in pixels) relative to the top of the offsetParent element. The returned value includes:<ul>
-<li>the top position, and margin of the element</li>
-<li>the top padding, scrollbar and border of the offsetParent element</li>
-<li>The <a href="https://www.w3schools.com/jsref/prop_element_offsetparent.asp" target="_blank" rel="noopener">offsetParent</a> element is the nearest ancestor that has a position other than static.</li>
-</ul>
-</li>
-<li><code>(clientX,clientY)</code>: window coordinates, correspond to <code>position:fixed</code>, </li>
-<li><p><code>(pageX,pageY)</code>: document coordinates ,  correspond to <code>position:absolute</code></p>
-</li>
-<li><p>formular: </p>
-<ul>
-<li><code>pageY</code> = <code>clientY</code> + height of the scrolled-out vertical part of the document.</li>
-<li><code>pageX</code> = <code>clientX</code> + width of the scrolled-out horizontal part of the document.</li>
-</ul>
-</li>
-</ol>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// get document coordinates of the element</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getCoords</span>(<span class="params">elem</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> box = elem.getBoundingClientRect();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    top: box.top + pageYOffset,</span><br><span class="line">    left: box.left + pageXOffset</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="III-Summary"><a href="#III-Summary" class="headerlink" title="III. Summary"></a>III. Summary</h2><p>Any point on the page has coordinates:</p>
-<ol>
-<li>Relative to the window – <code>elem.getBoundingClientRect()</code>.</li>
-<li>Relative to the document – <code>elem.getBoundingClientRect()</code> plus the current page scroll.</li>
-</ol>
-<p>Window coordinates are great to use with <code>position:fixed</code>, and document coordinates do well with <code>position:absolute</code>.</p>
-<p>Both coordinate systems have their “pro” and “contra”, there are times we need one or the other one, just like CSS <code>position</code> <code>absolute</code> and <code>fixed</code>.</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3811,7 +3779,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">77</span>
+                    <span class="site-state-item-count">78</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -4107,7 +4075,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">129</span>
+                      
+                    
+                    <span class="site-state-item-count">130</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

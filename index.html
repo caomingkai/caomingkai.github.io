@@ -332,6 +332,151 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/29/Priority-Queue-Binary-Heap-Implementation-in-JS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/mingkai.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/07/29/Priority-Queue-Binary-Heap-Implementation-in-JS/" itemprop="url">Priority Queue/Binary Heap Implementation in JS</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-29T22:54:01-07:00">2019-07-29</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="I-Why"><a href="#I-Why" class="headerlink" title="I. Why?"></a>I. Why?</h1><p>Because in JS, there is no such build-in data structure…….</p>
+<p><strong>[<u>Great Links</u>]</strong>: <a href="https://www.cs.usfca.edu/~galles/visualization/Heap.html" target="_blank" rel="noopener">https://www.cs.usfca.edu/~galles/visualization/Heap.html</a></p>
+<h1 id="II-Time-Complexity"><a href="#II-Time-Complexity" class="headerlink" title="II. Time Complexity"></a>II. Time Complexity</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">__________  |  Binary Heap | amortized</span><br><span class="line">peek		 	  |		O(1)					O(1)</span><br><span class="line">offer		    |		O(lgn)				O(1)</span><br><span class="line">poll			  |		O(lgn)				O(1)</span><br><span class="line">construct	  |		O(n)					O(n)</span><br></pre></td></tr></table></figure>
+<h1 id="III-Implementation"><a href="#III-Implementation" class="headerlink" title="III. Implementation"></a>III. Implementation</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Priority Queue</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Binary Heap implementation</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * clear: Removes all of the elements from this priority queue.</span></span><br><span class="line"><span class="comment"> * offer: Inserts the specified element into this priority queue.</span></span><br><span class="line"><span class="comment"> * peek: Retrieves, but does not remove, the head of this queue, or returns null if this queue is empty.</span></span><br><span class="line"><span class="comment"> * poll: Retrieves and removes the head of this queue, or returns null if this queue is empty.</span></span><br><span class="line"><span class="comment"> * size: Returns the number of elements in this collection.</span></span><br><span class="line"><span class="comment"> * toArray: Returns an array containing all of the elements in this queue.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BinomialHeap</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(&#123;</span><br><span class="line">    comparator = <span class="function">(<span class="params">a, b</span>) =&gt;</span> a - b, </span><br><span class="line">    initialValues = [] </span><br><span class="line">  &#125; = &#123;&#125;) &#123;</span><br><span class="line">    <span class="keyword">this</span>.comparator = comparator;</span><br><span class="line">    <span class="keyword">this</span>.data = initialValues;</span><br><span class="line">    <span class="keyword">this</span>.heapify();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line">  heapify() &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.isEmpty()) &#123;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">1</span>; i &lt; <span class="keyword">this</span>.size(); i++) &#123;</span><br><span class="line">      <span class="keyword">this</span>.bubbleUp(i);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  offer(newNode) &#123;</span><br><span class="line">    <span class="keyword">this</span>.data.push(newNode);</span><br><span class="line">    <span class="keyword">this</span>.bubbleUp(<span class="keyword">this</span>.size() - <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  poll() &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.isEmpty()) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> res = <span class="keyword">this</span>.data[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">let</span> last = <span class="keyword">this</span>.data.pop();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="keyword">this</span>.data[<span class="number">0</span>] = last;</span><br><span class="line">      <span class="keyword">this</span>.sinkDown(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  peek() &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.isEmpty()) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.data[<span class="number">0</span>];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  isEmpty() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.size() === <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  size() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.data.length;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  toArray() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.data.slice();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  clear() &#123;</span><br><span class="line">    <span class="keyword">this</span>.data = [];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  bubbleUp(pos) &#123;</span><br><span class="line">    <span class="keyword">while</span> (pos &gt; <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="keyword">let</span> parentIndex = (pos - <span class="number">1</span>) &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>.comparator(<span class="keyword">this</span>.data[parentIndex], <span class="keyword">this</span>.data[pos]) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        [<span class="keyword">this</span>.data[parentIndex], <span class="keyword">this</span>.data[pos]] = [<span class="keyword">this</span>.data[pos], <span class="keyword">this</span>.data[parentIndex]];</span><br><span class="line">        pos = parentIndex;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  sinkDown(pos) &#123;</span><br><span class="line">    <span class="keyword">let</span> size = <span class="keyword">this</span>.size();</span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">      <span class="keyword">let</span> left = (pos &lt;&lt; <span class="number">1</span>) + <span class="number">1</span>;</span><br><span class="line">      <span class="keyword">let</span> right = left + <span class="number">1</span>;</span><br><span class="line">      <span class="keyword">let</span> minIndex = pos;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (left &lt; size &amp;&amp; <span class="keyword">this</span>.comparator(<span class="keyword">this</span>.data[left], <span class="keyword">this</span>.data[minIndex]) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        minIndex = left;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (right &lt; size &amp;&amp; <span class="keyword">this</span>.comparator(<span class="keyword">this</span>.data[right], <span class="keyword">this</span>.data[minIndex]) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        minIndex = right;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (minIndex !== pos) &#123;</span><br><span class="line">        [<span class="keyword">this</span>.data[minIndex], <span class="keyword">this</span>.data[pos]] = [<span class="keyword">this</span>.data[pos], <span class="keyword">this</span>.data[minIndex]];</span><br><span class="line">        pos = minIndex;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// TEST cases:</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(k, v) &#123;</span><br><span class="line">    <span class="keyword">this</span>.k = k;</span><br><span class="line">    <span class="keyword">this</span>.v = v;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> pq = <span class="keyword">new</span> BinomialHeap(&#123;</span><br><span class="line">  comparator: <span class="function">(<span class="params">n1, n2</span>) =&gt;</span> n1.v - n2.v,</span><br><span class="line">  initialValues: [</span><br><span class="line">    <span class="keyword">new</span> Node(<span class="string">'c'</span>, <span class="number">3</span>), </span><br><span class="line">    <span class="keyword">new</span> Node(<span class="string">'f'</span>, <span class="number">6</span>), </span><br><span class="line">    <span class="keyword">new</span> Node(<span class="string">'b'</span>, <span class="number">2</span>), </span><br><span class="line">    <span class="keyword">new</span> Node(<span class="string">'d'</span>, <span class="number">4</span>), </span><br><span class="line">    <span class="keyword">new</span> Node(<span class="string">'a'</span>, <span class="number">1</span>), </span><br><span class="line">    <span class="keyword">new</span> Node(<span class="string">'e'</span>, <span class="number">5</span>),</span><br><span class="line">    <span class="keyword">new</span> Node(<span class="string">'g'</span>, <span class="number">7</span>),</span><br><span class="line">  ]</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"toArray(): should be [1, 2, 3, 6, 4, 5, 7]    "</span>, pq.toArray());</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"smallest should be: Node &#123;k: 'a', v: 1&#125;   "</span>, pq.peek());</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size should be 7   "</span>, pq.size());</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> smallest = pq.poll();</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"smallest should be: Node &#123;k: 'a', v: 1&#125;   "</span>, smallest);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size should be 6   "</span>, pq.size());</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"toArray(): should be [2, 4, 3, 6, 7, 5]    "</span>, pq.toArray());</span><br><span class="line"></span><br><span class="line">pq.offer(<span class="keyword">new</span> Node(<span class="string">'aa'</span>, <span class="number">1</span>));</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"toArray(): should be [1, 4, 2, 6, 7, 5, 3]    "</span>, pq.toArray());</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size should be 7   "</span>, pq.size());</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/27/JS-Inheritance-Insights/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1921,165 +2066,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/10/Counting-holes-in-number/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/mingkai.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/12/10/Counting-holes-in-number/" itemprop="url">Counting holes in number</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-10T16:32:18-08:00">2018-12-10</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="I-Problem"><a href="#I-Problem" class="headerlink" title="I. Problem"></a>I. Problem</h2><p>Given a random number, count how many holes in total. Note: the holes for each digits are listed below</p>
-<ul>
-<li>0: 1hole</li>
-<li>1: 0 hole</li>
-<li>2: 0 hole</li>
-<li>3: 0 hole</li>
-<li>4: 1 hole</li>
-<li>5: 0 hole</li>
-<li>6: 1 hole</li>
-<li>7: 0 hole</li>
-<li>8: 2 holes</li>
-<li>9: 1 hole</li>
-</ul>
-<h2 id="II-Solution"><a href="#II-Solution" class="headerlink" title="II. Solution"></a>II. Solution</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Test</span></span><br><span class="line"><span class="keyword">let</span> n = getHoles(<span class="number">1234567</span>)    </span><br><span class="line"><span class="built_in">console</span>.log(n)			<span class="comment">// 2</span></span><br><span class="line"></span><br><span class="line">n = getHoles(<span class="number">1</span>)    </span><br><span class="line"><span class="built_in">console</span>.log(n)			<span class="comment">// 0</span></span><br><span class="line"></span><br><span class="line">n = getHoles(<span class="number">0</span>)    </span><br><span class="line"><span class="built_in">console</span>.log(n)			<span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line">n = getHoles(<span class="number">9</span>)    </span><br><span class="line"><span class="built_in">console</span>.log(n)			<span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line">n = getHoles(<span class="number">12</span>)    </span><br><span class="line"><span class="built_in">console</span>.log(n)			<span class="comment">// 0</span></span><br><span class="line"></span><br><span class="line">n = getHoles(<span class="number">-14</span>)    </span><br><span class="line"><span class="built_in">console</span>.log(n)			<span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getHoles</span>(<span class="params"> num </span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(num === <span class="number">0</span>) <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>([[<span class="number">0</span>,<span class="number">1</span>],[<span class="number">1</span>,<span class="number">0</span>],[<span class="number">2</span>,<span class="number">0</span>],[<span class="number">3</span>,<span class="number">0</span>],[<span class="number">4</span>,<span class="number">1</span>],[<span class="number">5</span>,<span class="number">0</span>],[<span class="number">6</span>,<span class="number">1</span>],[<span class="number">7</span>,<span class="number">0</span>],[<span class="number">8</span>,<span class="number">2</span>],[<span class="number">9</span>,<span class="number">1</span>]])</span><br><span class="line">    <span class="keyword">let</span> res = <span class="number">0</span></span><br><span class="line">    num = <span class="built_in">Math</span>.abs(num)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span>( num &gt; <span class="number">0</span> )&#123;</span><br><span class="line">        <span class="keyword">let</span> lastDigit = num % <span class="number">10</span></span><br><span class="line">        res += map.get(lastDigit)</span><br><span class="line">        num = <span class="built_in">Math</span>.floor(num/<span class="number">10</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="III-Complexity"><a href="#III-Complexity" class="headerlink" title="III. Complexity"></a>III. Complexity</h2><ul>
-<li>Time: O(n)</li>
-<li>Space: O(1) </li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2131,7 +2117,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">77</span>
+                    <span class="site-state-item-count">78</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2425,7 +2411,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">128</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">130</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

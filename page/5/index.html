@@ -332,6 +332,188 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/01/Event-Emitter/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/mingkai.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/01/Event-Emitter/" itemprop="url">Event Emitter</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-01T20:21:44-07:00">2018-10-01</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="I-What-is-an-Event-Emitter"><a href="#I-What-is-an-Event-Emitter" class="headerlink" title="I. What is an Event Emitter?"></a>I. What is an Event Emitter?</h4><p>An <code>event emitter</code> is a <strong>utility object</strong>, which can be used to emit event, which can be subscribed by as many functions as we can. </p>
+<ol>
+<li><p>It is an event manager, manages differents event and its subscribers.</p>
+</li>
+<li><p>Also, we can see it as the <code>Redux</code>, which also dispatches(emits) actions, and handled by its reducers.</p>
+</li>
+<li>It widely used at Node.js ( asynchronous event-driven architecture)<ul>
+<li>certain kind of objects call emitters periodically to emit events that cause listener objects to be called.</li>
+<li>when a request comes requesting some resource, Node.js will register the subscriber: <code>responseToThisRequest()</code> on event: <code>thisTypeDataDone</code>. When data is obtained, will call <code>emitter.emit( thisTypeDataDone )</code>, to call the <code>responseToThisRequest()</code> corresponding all the requests.</li>
+</ul>
+</li>
+</ol>
+<h4 id="II-Why-and-when-do-we-need-it"><a href="#II-Why-and-when-do-we-need-it" class="headerlink" title="II. Why and when do we need it?"></a>II. Why and when do we need it?</h4><blockquote>
+<p>Whenever it makes sense for code to SUBSCRIBE to something rather than get a callback from something</p>
+<p><a href="https://stackoverflow.com/questions/38881170/when-should-i-use-eventemitter" target="_blank" rel="noopener">https://stackoverflow.com/questions/38881170/when-should-i-use-eventemitter</a></p>
+</blockquote>
+<p>If when a certain event happens, we have to deal many type of manipulation for that event’s result, then it is better to use the event emitter pattern. </p>
+<p>Instead put all functions inside an event callback, we subscribe all the function to that event, when the event happens, we emit the event!</p>
+<h4 id="III-How-to-use-it"><a href="#III-How-to-use-it" class="headerlink" title="III. How to use it?"></a>III. How to use it?</h4><p><strong>[Good Link]:</strong> <a href="https://netbasal.com/javascript-the-magic-behind-event-emitter-cce3abcbcef9" target="_blank" rel="noopener">https://netbasal.com/javascript-the-magic-behind-event-emitter-cce3abcbcef9</a></p>
+<p><strong>[Note]:  when pass in the callback function, we use arrow function, which already bind ‘this’ to the function, so that when the function be called, it knows what value it will update</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">let</span> input = <span class="built_in">document</span>.querySelector(<span class="string">'input[type="text"]'</span>);</span><br><span class="line"><span class="keyword">let</span> button = <span class="built_in">document</span>.querySelector(<span class="string">'button'</span>);</span><br><span class="line"><span class="keyword">let</span> h1 = <span class="built_in">document</span>.querySelector(<span class="string">'h1'</span>);</span><br><span class="line"></span><br><span class="line">button.addEventListener(<span class="string">'click'</span>, () =&gt; &#123;</span><br><span class="line">  emitter.emit(<span class="string">'event:name-changed'</span>, &#123;<span class="attr">name</span>: input.value&#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> emitter = <span class="keyword">new</span> EventEmitter();</span><br><span class="line">emitter.subscribe(<span class="string">'event:name-changed'</span>, data =&gt; &#123;</span><br><span class="line">  h1.innerHTML = <span class="string">`Your name is: <span class="subst">$&#123;data.name&#125;</span>`</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>create an emitter util object</p>
+</li>
+<li><p>subscribe the desired callback function, using <code>emitter.subscribe(event, function.bind(this))</code></p>
+</li>
+<li><p>call <code>emitter.emit()</code> when the event happen</p>
+</li>
+</ol>
+<h4 id="IV-Write-one"><a href="#IV-Write-one" class="headerlink" title="IV. Write one!"></a>IV. Write one!</h4><ol>
+<li><strong><u>object:</u></strong> we need an object (utility object)</li>
+<li><u><strong>data structure:</strong></u> inside it, we need a data structure to store the <code>event</code> and its <code>subscribers</code>(callbacks)</li>
+<li><strong><u>methods:</u></strong>  all the methods<ul>
+<li><code>subscribe(event, callback)</code>: we need the return value to be an <code>unsubscribe()</code>, so we won’t result in the memory leak!</li>
+<li><code>emit()</code></li>
+</ul>
+</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">EventEmitter</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="keyword">this</span>.events = &#123;&#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  on(event, listener) &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span>.events[event] !== <span class="string">'object'</span>) &#123;</span><br><span class="line">          <span class="keyword">this</span>.events[event] = [];</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">this</span>.events[event].push(listener);</span><br><span class="line">      <span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">this</span>.removeListener(event, listener);</span><br><span class="line">  &#125;</span><br><span class="line">    </span><br><span class="line">  removeListener(event, listener) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span>.events[event] === <span class="string">'object'</span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> idx = <span class="keyword">this</span>.events[event].indexOf(listener);</span><br><span class="line">        <span class="keyword">if</span> (idx &gt; <span class="number">-1</span>) &#123;</span><br><span class="line">          <span class="keyword">this</span>.events[event].splice(idx, <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  emit(event, ...args) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span>.events[event] === <span class="string">'object'</span>) &#123;</span><br><span class="line">      <span class="keyword">this</span>.events[event].forEach(</span><br><span class="line">        listener =&gt; &#123;<span class="keyword">if</span>(<span class="keyword">typeof</span> listener === <span class="string">'function'</span>) listener.apply(<span class="literal">null</span>, args)&#125;</span><br><span class="line">      );</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// register a wrapper function containing the listener on this event,</span></span><br><span class="line">  <span class="comment">// when get executed, </span></span><br><span class="line">  <span class="comment">//   - first remove it on this event;</span></span><br><span class="line">  <span class="comment">//   - then execute real listener</span></span><br><span class="line">  once(event, listener) &#123;</span><br><span class="line">    <span class="keyword">const</span> remove = <span class="keyword">this</span>.on(event, (...args) =&gt; &#123;</span><br><span class="line">        remove();</span><br><span class="line">        listener.apply(<span class="literal">null</span>, args);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> emitter = <span class="keyword">new</span> EventEmitter()</span><br><span class="line"><span class="comment">// Test 1: invalid callback function</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Test 1: Nothing should be print out"</span>)</span><br><span class="line">emitter.on(<span class="string">"a"</span>, <span class="number">1</span>);</span><br><span class="line">emitter.emit(<span class="string">"a"</span>);</span><br><span class="line"><span class="built_in">console</span>.log()</span><br><span class="line"></span><br><span class="line"><span class="comment">// Test 2: add mutilple callback function to an event</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Test 2: callback 1, 2, 3"</span>)</span><br><span class="line">emitter.on(<span class="string">"b"</span>, ()=&gt;&#123;<span class="built_in">console</span>.log(<span class="string">"event b callback 1"</span>)&#125;);</span><br><span class="line">emitter.on(<span class="string">"b"</span>, ()=&gt;&#123;<span class="built_in">console</span>.log(<span class="string">"event b callback 2"</span>)&#125;);</span><br><span class="line"><span class="keyword">let</span> off1 = emitter.on(<span class="string">"b"</span>, ()=&gt;&#123;<span class="built_in">console</span>.log(<span class="string">"event b callback 3"</span>)&#125;);</span><br><span class="line">emitter.emit(<span class="string">"b"</span>);</span><br><span class="line"><span class="built_in">console</span>.log()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Test 3: unsubscribe one callback from an event queue</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Test 3: callback 1, 2"</span>)</span><br><span class="line">off1();</span><br><span class="line">emitter.emit(<span class="string">"b"</span>); </span><br><span class="line"><span class="built_in">console</span>.log()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Test 4: subscribe other event &amp; callbacks at the same time</span></span><br><span class="line"><span class="keyword">let</span> data = &#123;<span class="attr">digit</span>: <span class="number">1</span>&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Test 4:  digit should be 11 &amp; 14 "</span>)</span><br><span class="line">emitter.on(<span class="string">"c"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123; data.digit+=<span class="number">1</span> &#125;);</span><br><span class="line">emitter.on(<span class="string">"c"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123; data.digit+=<span class="number">2</span> &#125;);</span><br><span class="line">emitter.on(<span class="string">"d"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123; data.digit+=<span class="number">3</span> &#125;);;</span><br><span class="line"><span class="keyword">let</span> off2 = emitter.on(<span class="string">"d"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123; data.digit+=<span class="number">4</span> &#125;);</span><br><span class="line"></span><br><span class="line">emitter.emit(<span class="string">"c"</span>, data); </span><br><span class="line">emitter.emit(<span class="string">"d"</span>, data);  </span><br><span class="line"><span class="built_in">console</span>.log(data.digit)</span><br><span class="line">      </span><br><span class="line">off2()</span><br><span class="line">emitter.emit(<span class="string">"d"</span>, data);  </span><br><span class="line"><span class="built_in">console</span>.log(data.digit)</span><br><span class="line"><span class="built_in">console</span>.log()</span><br><span class="line">      </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Test 5: subscribe other event &amp; callbacks</span></span><br><span class="line"><span class="keyword">let</span> data2 = &#123;<span class="attr">digit</span>: <span class="number">5</span>&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Test 5: digit should be 11"</span>)</span><br><span class="line">emitter.emit(<span class="string">"d"</span>, data2 ); </span><br><span class="line">emitter.emit(<span class="string">"c"</span>, data2 ); </span><br><span class="line"><span class="built_in">console</span>.log(data2.digit)   </span><br><span class="line"><span class="built_in">console</span>.log()</span><br><span class="line"></span><br><span class="line"><span class="comment">// Test 6: test once</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Test 6: should only print once"</span>)</span><br><span class="line">emitter.once(<span class="string">"test 6"</span>, ()=&gt;&#123;<span class="built_in">console</span>.log(<span class="string">"should only print once"</span>)&#125; ); </span><br><span class="line">emitter.emit(<span class="string">"test 6"</span> ); </span><br><span class="line">emitter.emit(<span class="string">"test 6"</span> ); </span><br><span class="line">emitter.emit(<span class="string">"test 6"</span> ); </span><br><span class="line"><span class="built_in">console</span>.log()</span><br></pre></td></tr></table></figure>
+<p><strong><em>FaceBook interview version</em></strong><br><a href="https://gist.github.com/kutyel/7d8f204a347840a6ee7220743957e504" target="_blank" rel="noopener">https://gist.github.com/kutyel/7d8f204a347840a6ee7220743957e504</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Create an event emitter that goes like this</span></span><br><span class="line"><span class="comment"> * emitter = new Emitter();</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Allows you to subscribe to some event</span></span><br><span class="line"><span class="comment"> * sub1 = emitter.subscribe('function_name', callback1);</span></span><br><span class="line"><span class="comment"> * (you can have multiple callbacks to the same event)</span></span><br><span class="line"><span class="comment"> * sub2 = emitter.subscribe('function_name', callback2);</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * You can emit the event you want with this api</span></span><br><span class="line"><span class="comment"> * (you can receive 'n' number of arguments)</span></span><br><span class="line"><span class="comment"> * sub1.emit('function_name', foo, bar);</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * And allows you to release the subscription like this</span></span><br><span class="line"><span class="comment"> * (but you should be able to still emit from sub2)</span></span><br><span class="line"><span class="comment"> * sub1.release();</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// facebook.js</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Emitter</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(events = &#123;&#125;) &#123;</span><br><span class="line">    <span class="keyword">this</span>.events = events</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  subscribe(name, cb) &#123;</span><br><span class="line">    (<span class="keyword">this</span>.events[name] || (<span class="keyword">this</span>.events[name] = [])).push(cb)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      release: <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">this</span>.events[name] &amp;&amp;</span><br><span class="line">        <span class="keyword">this</span>.events[name].splice(<span class="keyword">this</span>.events[name].indexOf(cb) &gt;&gt;&gt; <span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  emit(name, ...args) &#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">this</span>.events[name] || []).map(<span class="function"><span class="params">fn</span> =&gt;</span> fn(...args))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> Emitter</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// test.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> expect = <span class="built_in">require</span>(<span class="string">'expect'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Emitter = <span class="built_in">require</span>(<span class="string">'./facebook'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Step 1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> test = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> emitter = <span class="keyword">new</span> Emitter()</span><br><span class="line"></span><br><span class="line">emitter.emit(<span class="string">'sum'</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">expect(test).toBe(<span class="number">0</span>) <span class="comment">// should trigger nothing</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> sub1 = emitter.subscribe(<span class="string">'sum'</span>, num =&gt; (test = test + num))</span><br><span class="line"></span><br><span class="line">emitter.emit(<span class="string">'sum'</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">expect(test).toBe(<span class="number">1</span>) <span class="comment">// should trigger 1 callback</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> sub2 = emitter.subscribe(<span class="string">'sum'</span>, num =&gt; (test = test * num))</span><br><span class="line"></span><br><span class="line">emitter.emit(<span class="string">'sum'</span>, <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">expect(test).toBe(<span class="number">6</span>) <span class="comment">// should trigger 2 callbacks</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Step 2</span></span><br><span class="line"></span><br><span class="line">sub1.release()</span><br><span class="line"></span><br><span class="line">emitter.emit(<span class="string">'sum'</span>, <span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">expect(test).toBe(<span class="number">18</span>) <span class="comment">// should trigger 1 callback</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Step 3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> myEvent1 = emitter.subscribe(<span class="string">'myEvent'</span>, () =&gt; <span class="number">1</span>)</span><br><span class="line"><span class="keyword">const</span> myEvent2 = emitter.subscribe(<span class="string">'myEvent'</span>, () =&gt; <span class="number">2</span>)</span><br><span class="line"><span class="keyword">const</span> myEvent3 = emitter.subscribe(<span class="string">'myEvent'</span>, () =&gt; <span class="literal">true</span>)</span><br><span class="line"><span class="keyword">const</span> result = emitter.emit(<span class="string">'myEvent'</span>)</span><br><span class="line"></span><br><span class="line">expect(result).toEqual([<span class="number">1</span>, <span class="number">2</span>, <span class="literal">true</span>])</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.info(<span class="string">'You passed the test!!! 👏🏼 👏🏼 👏🏼'</span>)</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/20/CSS-element-positioning/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2635,251 +2817,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/17/2-egg-Puzzle/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/mingkai.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/17/2-egg-Puzzle/" itemprop="url">The Joy of Egg-Dropping(2-egg Puzzle)</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-17T22:03:40-07:00">2018-05-17</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="I-Problem-statement"><a href="#I-Problem-statement" class="headerlink" title="I. Problem statement"></a>I. Problem statement</h3><p><strong>1. Easy version</strong></p>
-<blockquote>
-<p>Given infinite number of same eggs, try with minimun trials to find out  the highest floor where tossing the egg won’t result in egg crash. The building has 200 floors.</p>
-</blockquote>
-<ul>
-<li>变量：N=200</li>
-<li>目标：试验次数最小</li>
-<li>约束：none</li>
-</ul>
-<p><strong>2. Hard version</strong></p>
-<blockquote>
-<p>Only 2 eggs were given, try with minimun trials to find the highest floor where tossing the egg won’t result in egg crash. The building has 200 floors. (The egg can be reused as long as it is intact)</p>
-</blockquote>
-<ul>
-<li>变量：F=200, E=2</li>
-<li>目标：试验次数最小</li>
-<li>约束：</li>
-</ul>
-<h3 id="II-Solution-for-easy-version"><a href="#II-Solution-for-easy-version" class="headerlink" title="II. Solution for easy version"></a>II. Solution for easy version</h3><p>Since the number of eggs we can use is unlimited, we can use the <strong>fastest approach in the universe</strong> to find the unknown target in a list: <code>binary search</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">- left direction: break </span><br><span class="line">- right direction:intact</span><br><span class="line"></span><br><span class="line">0          100        200</span><br><span class="line">         /     \</span><br><span class="line">        50      150</span><br><span class="line">      /   \    /   \</span><br><span class="line">     25   75  125  175</span><br><span class="line">    / \  </span><br><span class="line">  ...   </span><br><span class="line"></span><br><span class="line">Toss an egg on floor 100:</span><br><span class="line">1. if egg break, toss another on floor 50;</span><br><span class="line">    1.1 if egg break, toss another on floor 25;</span><br><span class="line">        1.1.1 ...</span><br><span class="line">        1.1.2 ...</span><br><span class="line">    1.2 if doesn&apos;t break, toss another on floor 75;</span><br><span class="line">        1.2.1 ...</span><br><span class="line">        1.2.2 ...</span><br><span class="line">2. if doesn&apos;t break, toss another on floor 150;</span><br><span class="line">    2.1 if egg break, toss another on floor 125;</span><br><span class="line">        2.1.1 ...</span><br><span class="line">        2.1.2 ...</span><br><span class="line">    2.2 if doesn&apos;t break, toss another on floor 175;</span><br><span class="line">        2.2.1 ...</span><br><span class="line">        2.2.2 ...</span><br></pre></td></tr></table></figure>
-<h3 id="III-Solution-for-hard-version"><a href="#III-Solution-for-hard-version" class="headerlink" title="III. Solution for hard version"></a>III. Solution for hard version</h3><p>Since it is not so intuitive at first glance, we will take a few trials to get a deeper understanding of this problem.</p>
-<p>General idea:   </p>
-<blockquote>
-<p>egg-1 used to narrow down possible range<br>egg-2 used to sequentially find the target floor</p>
-</blockquote>
-<ol>
-<li><p><strong>[egg-1 with step=10]</strong> egg-1 tossed on floor 20,40,60,80,100,120,… with a step=20</p>
-<ul>
-<li>worst-case: 29 trials<ul>
-<li>egg-1 tossed on 200 and break: 10 trials</li>
-<li>egg-2 tossed on 199 (from 181), break: 19 trials</li>
-</ul>
-</li>
-<li>best-case: 2 trials<ul>
-<li>egg-1 tossed on 20 and break: 1 trials</li>
-<li>egg-2 tossed on 1: 1 trials</li>
-</ul>
-</li>
-<li>for this method, what is the min trials can we say?<ul>
-<li>29 trials(the worst case), no worse than it</li>
-<li>we cannot guarantee it is the best case</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>[edge case: BS]</strong> egg-1 tossed on floor 100, 200</p>
-<ul>
-<li>worst-case: 201 trials<ul>
-<li>egg-1 tossed on 200 and break: 2 trials</li>
-<li>egg-2 tossed on 199 (from 101), break: 199 trials</li>
-</ul>
-</li>
-<li>best-case: 2 trials<ul>
-<li>egg-1 tossed on 100 and break: 1 trials</li>
-<li>egg-2 tossed on 1: 1 trials</li>
-</ul>
-</li>
-<li>for this method, what is the min trials can we say?<ul>
-<li>201 trials(the worst case), no worse than it</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>[Solution 1]</strong> </p>
-<ul>
-<li><a href="https://www.zhihu.com/question/19690210/answer/22937826" target="_blank" rel="noopener">https://www.zhihu.com/question/19690210/answer/22937826</a></li>
-<li>the ‘step’ affect min-trial</li>
-<li>we want control ‘step’ to make the trials of worst case and best case as close as possible; This way it will divvy up the trial between worst and best cases</li>
-<li>Goal: worst case trials = best case trials</li>
-<li>egg-1 tossed on floor x, 2x-1, 3x-2, .. 1</li>
-<li>蛋一第一次扔在X层，第二次扔在比原来高 X-1层，… 高2， 高1，使得X+(X-1)+…+2+1=200</li>
-<li>最坏情况(=最好情况)总的次数就是：<ul>
-<li>如果在第X层就碎，那么蛋二最坏情况要扔X-1，所以总数是 1+X-1=X</li>
-<li>如果在X+(X-1)碎，那么蛋二最坏情况要扔 X-2，所以2+X-2=X</li>
-</ul>
-</li>
-<li><p>x = 20</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">|_|__</span><br><span class="line">|_|     x-2</span><br><span class="line">|_|__   </span><br><span class="line">|_|     x-1</span><br><span class="line">|_|___ </span><br><span class="line">|_|     x</span><br><span class="line">|_|</span><br><span class="line">|_|___</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>假设蛋一第一次扔在X层，第二次扔在比原来高 X-1层，… 高2， 高1，使得X+(X-1)+…+2+1=100，那么最坏情况总的次数就是：如果在第X层就碎，那么蛋二最坏情况要扔X-1，所以总数是 1+X-1=X如果在X+(X-1)碎，那么蛋二最坏情况要扔 X-2，所以2+X-2=X</p>
-</li>
-</ul>
-</li>
-</ol>
-<ol start="4">
-<li><p><strong>[Solution 2]</strong> </p>
-<ul>
-<li><p>链接：<a href="https://www.zhihu.com/question/19690210/answer/125713075" target="_blank" rel="noopener">https://www.zhihu.com/question/19690210/answer/125713075</a></p>
-</li>
-<li><p>子问题F[i, j]: H的可行范围为[0, i]，手上还有j个鸡蛋的时候，最坏情况下的最小试验次数是多少。我们的目标函数就是F[N, K]。</p>
-</li>
-<li>这个能够设立是基于这样一种想法，如果H的可能范围目前是[L, R]，那么其状态与[0, R-L]是完全一致的，所以我们仅仅记录有可行范围的宽度就可以了。</li>
-<li><code>F[i, j]=min{max{F[k-1, j-1], F[i-k, j]}}+1，</code><ul>
-<li>其中1&lt;=k&lt;=i。k表示这一次实验是从k楼把鸡蛋扔下去，扔下去有两种结果。</li>
-<li>一种是鸡蛋碎了，那么剩余的鸡蛋个数是j-1，H的可行范围变为[0, k-1]，那么需要的最少实验次数为F[k-1, j-1]。</li>
-<li>另一种是鸡蛋没碎，那么剩余的鸡蛋个数是j，H的可行范围是[k, i]，那么需要的最少实验次数是F[k-i, j]。</li>
-</ul>
-</li>
-<li>由于题目所求的是最坏情况下的最优策略，所以对每种k情况内取max，再对所有k取min。</li>
-<li>边界条件为<code>F[0, j]=0，F[i, 1]=i</code>。</li>
-<li>时间复杂度为O(NK^2)。</li>
-</ul>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2931,7 +2868,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">78</span>
+                    <span class="site-state-item-count">79</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

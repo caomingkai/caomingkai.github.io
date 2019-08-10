@@ -332,6 +332,270 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/02/Write-Our-Own-Promise/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/mingkai.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/02/Write-Our-Own-Promise/" itemprop="url">Write A Promise</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-02T13:25:27-07:00">2018-11-02</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="I-Why-do-we-need-Promise-“callback-hell”"><a href="#I-Why-do-we-need-Promise-“callback-hell”" class="headerlink" title="I. Why do we need Promise  - “callback hell”"></a>I. Why do we need <code>Promise</code>  - “callback hell”</h2><ol>
+<li><p><strong><u>Asynchronous call</u></strong> is the core of JavaScript across browser and Node.js. </p>
+</li>
+<li><p><u>JavsScript runtime thread</u> use <code>callback</code> to execute result of asynchronous task handled by <u>other threads</u> (<strong>Ajax thread</strong>, <strong>Timer thread</strong>, <strong>Rendering Thread</strong>)</p>
+</li>
+<li><p>Example below are callback hell , which is a headache for programmer. For </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// when the nesting level exceeds 3, people will get crazy!!</span></span><br><span class="line">getData(<span class="function"><span class="keyword">function</span>(<span class="params">x</span>)</span>&#123;				<span class="comment">// getData of x</span></span><br><span class="line">    getMoreData(x, <span class="function"><span class="keyword">function</span>(<span class="params">y</span>)</span>&#123;   	<span class="comment">// getMoreData of y, using x</span></span><br><span class="line">        getMoreData(y, <span class="function"><span class="keyword">function</span>(<span class="params">z</span>)</span>&#123; <span class="comment">// getMoreData of x, using y</span></span><br><span class="line">            ...</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Is there a way to <strong><u>flatten</u></strong> the nesting callbacks, in a chainable way?  =&gt; <code>Node</code></p>
+<ul>
+<li>Consider the <code>Node</code> data structure, it contains child node in itself, similar to our requirement!!</li>
+<li><code>Promise</code> is such a <strong><u>stateful utility object</u></strong>, which can be chained to implement nested callbacks</li>
+</ul>
+</li>
+</ol>
+<h2 id="II-Promise-Usage"><a href="#II-Promise-Usage" class="headerlink" title="II. Promise Usage"></a>II. Promise Usage</h2><ol>
+<li><p><strong>executer</strong>: </p>
+<ul>
+<li><p>execute asynchronous action, generating result</p>
+</li>
+<li><p>when create new Promise, need to pass in pre-defined executer</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// executer: a function with parameters: `resolve` and `reject`</span></span><br><span class="line"><span class="keyword">let</span> p = <span class="keyword">new</span> <span class="built_in">Promise</span>( <span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>)</span>&#123;</span><br><span class="line">    ajaxGet( url, <span class="function"><span class="keyword">function</span>(<span class="params">res</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(res.status == <span class="number">200</span>)  </span><br><span class="line">            resolve(res.data)</span><br><span class="line">        <span class="keyword">else</span>     			   </span><br><span class="line">            reject(res.error)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><strong>callbacks</strong> in <code>then</code>:</p>
+<ul>
+<li><p><code>onFulfilled</code> &amp; <code>onRejected</code> specify how to handle the result of asynchronous action</p>
+</li>
+<li><p><strong>use case 1:</strong> <u>multiple callbacks on a promise</u></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Assume executor will: resolve(1)</span></span><br><span class="line"><span class="keyword">let</span> callback1 = <span class="function"><span class="keyword">function</span>(<span class="params">res</span>)</span>&#123; <span class="built_in">console</span>.log(<span class="string">"This is from callback1: "</span> + res*<span class="number">1</span>) &#125;</span><br><span class="line"><span class="keyword">let</span> callback2 = <span class="function"><span class="keyword">function</span>(<span class="params">res</span>)</span>&#123; <span class="built_in">console</span>.log(<span class="string">"This is from callback2: "</span> + res*<span class="number">2</span>)&#125;</span><br><span class="line">p.then(callback1)  <span class="comment">// This is from callback1: 1</span></span><br><span class="line">p.then(callback2)  <span class="comment">// This is from callback1: 2</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>use case 2:</strong> <u>chaining callbacks</u></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Assume executor will: resolve(1)</span></span><br><span class="line"><span class="keyword">let</span> callback1 = <span class="function"><span class="keyword">function</span>(<span class="params">res</span>)</span>&#123; <span class="keyword">return</span> res+<span class="number">1</span> &#125;</span><br><span class="line"><span class="keyword">let</span> callback2 = <span class="function"><span class="keyword">function</span>(<span class="params">res</span>)</span>&#123; <span class="keyword">return</span> res+<span class="number">1</span> &#125;</span><br><span class="line"><span class="keyword">let</span> callback3 = <span class="function"><span class="keyword">function</span>(<span class="params">res</span>)</span>&#123; <span class="built_in">console</span>.log(<span class="string">"The final res will be 3: "</span> + res) &#125;</span><br><span class="line">p.then(callback1).then(callback1).then(callback3)  <span class="comment">// The final res will be 3: 3</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="III-Promise-stateful-utility-object"><a href="#III-Promise-stateful-utility-object" class="headerlink" title="III. Promise: stateful utility object"></a>III. Promise: stateful utility object</h2><ol>
+<li><p><strong>“Stateful”</strong></p>
+<ul>
+<li><p>Promise is an object, its properties are <strong><u>stateful</u></strong>, ie. property value can <u>change dynamially</u> </p>
+</li>
+<li><p>state can only change in 2 ways: <code>pending =&gt; fulfilled</code>,  <code>pending =&gt; rejected</code></p>
+</li>
+<li><p>the cause of stateful is: <u>asynchronous actions</u> inside the <strong><u>executor</u></strong>. Once instantiated to promise object, the executor will be executed inside promise object, and will update <code>state</code>,  <code>value</code>, <code>consumers</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">MyPromise</span>(<span class="params"> executor </span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.state = <span class="string">"pending"</span>  <span class="comment">// keep record of the state update</span></span><br><span class="line">	<span class="keyword">this</span>.value = <span class="literal">undefined</span>  <span class="comment">// store the result of asynchronous action</span></span><br><span class="line">	<span class="keyword">this</span>.consumers = []     <span class="comment">// place to store callbacks (actually child promises)</span></span><br><span class="line">    </span><br><span class="line">    executor(<span class="keyword">this</span>.resolve.bind(<span class="keyword">this</span>), <span class="keyword">this</span>.reject.bind(<span class="keyword">this</span>)) <span class="comment">// run executor </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>resolve</code> &amp; <code>reject</code>: hooks to receive asynchronous result. </p>
+<ul>
+<li>The asynchronous function <code>executor</code> , will pass its result to Promise using its hooks: <code>resolve</code> and <code>reject</code></li>
+</ul>
+</li>
+<li><p><code>then</code>: hooks to receive passed in callbacks  <code>onFulfilled</code> &amp; <code>onRejected</code></p>
+<ul>
+<li>the callbacks are passed to Promise using <code>then</code> hook</li>
+<li>Promise will take care of executing callback, when asynchronous result is ready</li>
+</ul>
+</li>
+<li><p>How to it chainable</p>
+<ul>
+<li>In fact, <code>then()</code> method can <strong><u>not only receive callbacks</u></strong>, </li>
+<li><strong><u>but also can return a new Promise</u></strong>, which can be chained by using another <code>then</code>, …., and so on</li>
+<li><code>then()</code> create a new Promise, then put the callbacks inside the newly created Promise, then put into the <code>consumers</code> array to consume the asynchronous result when its ready </li>
+</ul>
+</li>
+</ol>
+<h2 id="VI-Write-One"><a href="#VI-Write-One" class="headerlink" title="VI. Write One!"></a>VI. Write One!</h2><ol>
+<li><p><strong><u>Promise state:</u></strong></p>
+<p>There are only 2 state transitions allowed: from pending to fulfilled, and from pending to rejected. No other transition should be possible, and once a transition has been performed, the promise value (or rejection reason) should not change.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">MyPromise</span>(<span class="params">executor</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.state = <span class="string">'pending'</span>;</span><br><span class="line">    <span class="keyword">this</span>.value = <span class="literal">undefined</span>;</span><br><span class="line">    executor(<span class="keyword">this</span>.resolve.bind(<span class="keyword">this</span>), <span class="keyword">this</span>.reject.bind(<span class="keyword">this</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// provide only two ways to transition</span></span><br><span class="line">MyPromise.prototype.resolve = <span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.state !== <span class="string">'pending'</span>) <span class="keyword">return</span>; <span class="comment">// cannot transition anymore</span></span><br><span class="line">    <span class="keyword">this</span>.state = <span class="string">'fulfilled'</span>; 		      <span class="comment">// can transition</span></span><br><span class="line">    <span class="keyword">this</span>.value = value; 				  <span class="comment">// must have a value</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">MyPromise.prototype.reject = <span class="function"><span class="keyword">function</span> (<span class="params">reason</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.state !== <span class="string">'pending'</span>) <span class="keyword">return</span>; <span class="comment">// cannot transition anymore</span></span><br><span class="line">    <span class="keyword">this</span>.state = <span class="string">'rejected'</span>; 			  <span class="comment">// can transition</span></span><br><span class="line">    <span class="keyword">this</span>.value = reason; 				  <span class="comment">// must have a reason</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><u><strong><code>then</code> method: the core of chaining</strong></u></p>
+<ul>
+<li><p><strong>[Note 1]:</strong> each <code>then()</code> will return a new Promise!</p>
+</li>
+<li><p>The <code>then</code> method is the core to Promise, which can be chained using <code>then</code>. It has two tasks:</p>
+<ul>
+<li>receive callbacks, and store them for later use when asynchorous result is ready</li>
+<li>create new promise, to make promise chainable</li>
+</ul>
+</li>
+<li><p>In fact, we put callbacks of the current promise, into the newly created child promises. Each callback will correspond a new Promise creation</p>
+</li>
+<li><p>This way, we can also easily consume the <code>outcome</code> of the <code>callback(result)</code>, to <code>resolve(outcome)</code>for the child promises</p>
+</li>
+<li><p><strong>[Note 2]:</strong> </p>
+<ul>
+<li>child promise execute its parent’s callback ; </li>
+<li>and resolve outcome of that callback, pass the outcome to promise created by next <code>then</code></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// For each then(), create a new Promise to embody this callback pair</span></span><br><span class="line">MyPromise.prototype.then = <span class="function"><span class="keyword">function</span>(<span class="params">onFulfilled, onRejected</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> consumer = <span class="keyword">new</span> MyPromise(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// ignore onFulfilled/onRejected if not a function</span></span><br><span class="line">    consumer.onFulfilled = <span class="keyword">typeof</span> onFulfilled === <span class="string">'function'</span> ? onFulfilled : <span class="literal">null</span>;</span><br><span class="line">    consumer.onRejected  = <span class="keyword">typeof</span> onRejected  === <span class="string">'function'</span> ? onRejected  : <span class="literal">null</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// put the consumer with parent's callbacks onto `this.consumers`</span></span><br><span class="line">    <span class="keyword">this</span>.consumers.push(consumer);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// It's possible that the promise was already resolved, </span></span><br><span class="line">    <span class="comment">// so, try to consume the resolved result </span></span><br><span class="line">    <span class="keyword">this</span>.broadcast();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// must return a promise to make it chainable</span></span><br><span class="line">    <span class="comment">// used by next potential `then()` in the chain</span></span><br><span class="line">    <span class="keyword">return</span> consumer;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>broadcase()</code>: Consume the asynchorous result</p>
+<p>After the asynchronous action return a result, we need to</p>
+<ul>
+<li><p>first, update the state to <code>fulfilled</code> or <code>rejected</code></p>
+</li>
+<li><p>execute the each callback of  <code>onFulfilled</code>, <code>onRejected</code> (in child promise) collected by <code>then</code></p>
+</li>
+<li><p><code>onFulfilled</code>, <code>onRejected</code> must be called asynchronously</p>
+<p>for example, <code>new Promise(executor).then(callback)</code>, callback execution must happen after executor. Thus, we can correctly get result even if executor is synchorous</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">MyPromise.prototype.broadcast = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> promise = <span class="keyword">this</span>;</span><br><span class="line">    <span class="comment">// only get called after promise is resolved</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.state === <span class="string">'pending'</span>) <span class="keyword">return</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// callback must be executed by its corresponding promise</span></span><br><span class="line">    <span class="keyword">var</span> callbackName = <span class="keyword">this</span>.state == <span class="string">'fulfilled'</span> ? <span class="string">'onFulfilled'</span> : <span class="string">'onRejected'</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// when no callback specified in then(), still need to resolve/reject it</span></span><br><span class="line">    <span class="keyword">var</span> resolver = <span class="keyword">this</span>.state == <span class="string">'fulfilled'</span> ? <span class="string">'resolve'</span> : <span class="string">'reject'</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// onFulfilled/onRejected must be called asynchronously</span></span><br><span class="line">    setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="comment">// traverse in order &amp; call only once, using `splice(0)` for deletion</span></span><br><span class="line">        promise.consumers.splice(<span class="number">0</span>).forEach(<span class="function"><span class="keyword">function</span>(<span class="params">consumer</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">var</span> callback = consumer[callbackName];</span><br><span class="line">                <span class="comment">// if a functon, call callback as plain function</span></span><br><span class="line">                <span class="comment">// else, ignore callback</span></span><br><span class="line">                <span class="keyword">if</span> (callback) &#123;</span><br><span class="line">                    <span class="comment">// child promise resolve outcome of callback(value)</span></span><br><span class="line">                    consumer.resolve(callback(promise.value)); </span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="comment">// child promise resolve value without callback</span></span><br><span class="line">                    consumer[resolver](promise.value);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">                consumer.reject(e);</span><br><span class="line">            &#125;;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;, <span class="number">0</span> );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>[Note 2]:</strong> the current <code>then</code> can only handle chainable promise when callback is pure function; Cannot handle when callback return a new Promise.</p>
+</li>
+</ul>
+</li>
+<li><p><u><strong>[TODO]: make <code>then</code> can response another Promise</strong></u></p>
+</li>
+</ol>
+<h2 id="V-Test-Our-Own-Promise"><a href="#V-Test-Our-Own-Promise" class="headerlink" title="V. Test Our Own Promise"></a>V. Test Our Own Promise</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">MyPromise</span>(<span class="params">executor</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.state = <span class="string">'pending'</span>;</span><br><span class="line">    <span class="keyword">this</span>.value = <span class="literal">undefined</span>;</span><br><span class="line">    <span class="keyword">this</span>.consumers = [];</span><br><span class="line">    executor(<span class="keyword">this</span>.resolve.bind(<span class="keyword">this</span>), <span class="keyword">this</span>.reject.bind(<span class="keyword">this</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// provide only two ways to transition</span></span><br><span class="line">MyPromise.prototype.resolve = <span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.state !== <span class="string">'pending'</span>) <span class="keyword">return</span>; </span><br><span class="line">    <span class="keyword">this</span>.state = <span class="string">'fulfilled'</span>;</span><br><span class="line">    <span class="keyword">this</span>.value = value;</span><br><span class="line">    <span class="keyword">this</span>.broadcast();</span><br><span class="line">&#125;    </span><br><span class="line"></span><br><span class="line">MyPromise.prototype.reject = <span class="function"><span class="keyword">function</span> (<span class="params">reason</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.state !== <span class="string">'pending'</span>) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">this</span>.state = <span class="string">'rejected'</span>; </span><br><span class="line">    <span class="keyword">this</span>.value = reason; </span><br><span class="line">    <span class="keyword">this</span>.broadcast();</span><br><span class="line">&#125;    </span><br><span class="line"></span><br><span class="line"><span class="comment">// A promise’s then method accepts two arguments:</span></span><br><span class="line">MyPromise.prototype.then = <span class="function"><span class="keyword">function</span>(<span class="params">onFulfilled, onRejected</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> consumer = <span class="keyword">new</span> MyPromise(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;);</span><br><span class="line">    consumer.onFulfilled = <span class="keyword">typeof</span> onFulfilled === <span class="string">'function'</span> ? onFulfilled : <span class="literal">null</span>;</span><br><span class="line">    consumer.onRejected = <span class="keyword">typeof</span> onRejected === <span class="string">'function'</span> ? onRejected : <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">this</span>.consumers.push(consumer);</span><br><span class="line">    <span class="keyword">this</span>.broadcast();</span><br><span class="line">    <span class="keyword">return</span> consumer;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">MyPromise.prototype.broadcast = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> promise = <span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.state === <span class="string">'pending'</span>) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">var</span> callbackName = <span class="keyword">this</span>.state == <span class="string">'fulfilled'</span> ? <span class="string">'onFulfilled'</span> : <span class="string">'onRejected'</span>;</span><br><span class="line">    <span class="keyword">var</span> resolver = <span class="keyword">this</span>.state == <span class="string">'fulfilled'</span> ? <span class="string">'resolve'</span> : <span class="string">'reject'</span>;</span><br><span class="line">    setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        promise.consumers.splice(<span class="number">0</span>).forEach(<span class="function"><span class="keyword">function</span>(<span class="params">consumer</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">var</span> callback = consumer[callbackName];</span><br><span class="line">                <span class="keyword">if</span> (callback) &#123;</span><br><span class="line">                    consumer.resolve(callback(promise.value)); </span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    consumer[resolver](promise.value);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">                consumer.reject(e);</span><br><span class="line">            &#125;;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// ------------------ TEST ------------------ </span></span><br><span class="line"><span class="keyword">let</span> p0 = <span class="keyword">new</span> MyPromise(<span class="function">(<span class="params">resolve, reject</span>)=&gt;</span>&#123;</span><br><span class="line">    setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123; resolve(<span class="number">0</span>) &#125;,<span class="number">1000</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> p1 = p0.then(<span class="function">(<span class="params">res</span>)=&gt;</span>&#123; </span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"p1 get result from p0, value should be 0: "</span> + res)</span><br><span class="line">    <span class="keyword">return</span> res+<span class="number">1</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> p2 = p0.then(<span class="function">(<span class="params">res</span>)=&gt;</span>&#123; </span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"p2 get result from p0, value should be 0: "</span> + res)</span><br><span class="line">    <span class="keyword">return</span> res+<span class="number">2</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> p3 = p0.then(<span class="function">(<span class="params">res</span>)=&gt;</span>&#123; </span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"p3 get result from p0, value should be 0: "</span> + res)</span><br><span class="line">    <span class="keyword">return</span> res+<span class="number">3</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"This should be an array of 3 Promises: "</span> + p0.consumers)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> p4 = p1.then(<span class="function"><span class="params">res</span>=&gt;</span>&#123; <span class="built_in">console</span>.log(<span class="string">"p4 get result from p1, value should be 1: "</span> + res)&#125;)</span><br><span class="line"><span class="keyword">let</span> p5 = p2.then(<span class="function"><span class="params">res</span>=&gt;</span>&#123; <span class="built_in">console</span>.log(<span class="string">"p5 get result from p2, value should be 2: "</span> + res)&#125;)</span><br><span class="line"><span class="keyword">let</span> p6 = p3.then(<span class="function"><span class="params">res</span>=&gt;</span>&#123; <span class="built_in">console</span>.log(<span class="string">"p6 get result from p3, value should be 3: "</span> + res)&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="Credits-to"><a href="#Credits-to" class="headerlink" title="Credits to:"></a>Credits to:</h2><ol>
+<li><a href="https://stackoverflow.com/questions/23772801/basic-javascript-promise-implementation-attempt/42057900#42057900" target="_blank" rel="noopener">https://stackoverflow.com/questions/23772801/basic-javascript-promise-implementation-attempt/42057900#42057900</a></li>
+<li><a href="https://www.promisejs.org/implementing/" target="_blank" rel="noopener">https://www.promisejs.org/implementing/</a></li>
+<li><a href="https://javascript.info/promise-chaining" target="_blank" rel="noopener">https://javascript.info/promise-chaining</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" target="_blank" rel="noopener">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise</a></li>
+<li><a href="http://thecodebarbarian.com/write-your-own-node-js-promise-library-from-scratch.html" target="_blank" rel="noopener">http://thecodebarbarian.com/write-your-own-node-js-promise-library-from-scratch.html</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/01/Sorting-Algorithms-in-JS/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2238,183 +2502,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/08/Stack-Queue-Implementation-using-JS/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/mingkai.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/08/Stack-Queue-Implementation-using-JS/" itemprop="url">Stack & Queue Implementation using JS</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-08T22:08:58-07:00">2018-10-08</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Stack"><a href="#Stack" class="headerlink" title="Stack"></a>Stack</h2><ol>
-<li><p>interfaces:</p>
-<ul>
-<li><code>stack.size</code></li>
-<li><code>stack.peek()</code></li>
-<li><code>stack.push</code></li>
-<li><code>stack.pop()</code></li>
-<li><code>stack.isEmpty()</code></li>
-<li><code>stack.clear()</code></li>
-</ul>
-</li>
-<li><p>implementation: </p>
-<ol>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * Note: this version use `null` as Error symbol,</span></span><br><span class="line"><span class="comment"> *		 so you cannot push null into the stack</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Stack</span></span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>()&#123; <span class="keyword">this</span>.data = [] &#125;</span><br><span class="line">    </span><br><span class="line">    get size()&#123; <span class="keyword">return</span> <span class="keyword">this</span>.data.length &#125;</span><br><span class="line">    </span><br><span class="line">    isEmpty()&#123;  <span class="keyword">return</span> <span class="keyword">this</span>.data.length === <span class="number">0</span> &#125;</span><br><span class="line">    </span><br><span class="line">    peek()&#123; <span class="keyword">return</span> <span class="keyword">this</span>.data[<span class="keyword">this</span>.data.length<span class="number">-1</span>] &#125;</span><br><span class="line">    </span><br><span class="line">    push(item)&#123;</span><br><span class="line">        <span class="keyword">if</span>( <span class="keyword">typeof</span> item ===<span class="string">"undefined"</span> || item === <span class="literal">null</span> ) <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        <span class="keyword">this</span>.data.push(item)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    pop(item)&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>.data.length === <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.data.pop();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    clear()&#123; <span class="keyword">this</span>.data = [] &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* ---- Testing  ---- */</span></span><br><span class="line"><span class="keyword">let</span> s = <span class="keyword">new</span> Stack()</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>,s.size)  		<span class="comment">// 0</span></span><br><span class="line"><span class="built_in">console</span>.log(s.pop())  		<span class="comment">// null</span></span><br><span class="line"><span class="built_in">console</span>.log(s.push())  		<span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(s.push(<span class="literal">null</span>))  	<span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(s.push(<span class="number">1</span>))  	<span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(s.push(<span class="number">1</span>))  	<span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>,s.size)  		<span class="comment">// 2</span></span><br><span class="line"><span class="built_in">console</span>.log(s.push(<span class="number">2</span>))  	<span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>,s.size)  		<span class="comment">// 3</span></span><br><span class="line"><span class="built_in">console</span>.log(s.pop())  		<span class="comment">// 2</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>, s.size)  		<span class="comment">// 2</span></span><br><span class="line"><span class="built_in">console</span>.log(s.pop())  		<span class="comment">// 1</span></span><br><span class="line"><span class="built_in">console</span>.log(s.pop())  		<span class="comment">// 1</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>, s.size)  		<span class="comment">// 0</span></span><br><span class="line"><span class="built_in">console</span>.log(s.pop())  		<span class="comment">// null</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>, s.size)  		<span class="comment">// 0</span></span><br><span class="line"><span class="built_in">console</span>.log(s.isEmpty())   <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-</ol>
-<h2 id="Queue"><a href="#Queue" class="headerlink" title="Queue"></a>Queue</h2><ol>
-<li><p>interfaces:</p>
-<ul>
-<li><code>queue.size</code></li>
-<li><code>queue.peek()</code></li>
-<li><code>queue.push</code></li>
-<li><code>queue.pop()</code></li>
-<li><code>queue.isEmpty()</code></li>
-<li><code>queue.clear()</code></li>
-</ul>
-</li>
-<li><p>implementation:</p>
-<ol>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * Note: this version can add any object into Queue</span></span><br><span class="line"><span class="comment"> *		 But need to call `isEmpty()` when necessary</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Queue</span></span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>()&#123; <span class="keyword">this</span>.items = []  &#125;</span><br><span class="line">    </span><br><span class="line">    get size()&#123; <span class="keyword">return</span> <span class="keyword">this</span>.items.length; &#125;</span><br><span class="line">    </span><br><span class="line">    isEmpty()&#123; <span class="keyword">return</span> <span class="keyword">this</span>.items.length === <span class="number">0</span> &#125;</span><br><span class="line">    </span><br><span class="line">    offer(item)&#123; <span class="keyword">this</span>.items.push(item) &#125;</span><br><span class="line">    </span><br><span class="line">    poll()&#123; <span class="keyword">return</span> <span class="keyword">this</span>.items.shift() &#125;</span><br><span class="line">    </span><br><span class="line">    peek()&#123; <span class="keyword">return</span> <span class="keyword">this</span>.items[<span class="number">0</span>] &#125;</span><br><span class="line">    </span><br><span class="line">    clear()&#123; <span class="keyword">this</span>.items = [] &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* ---- Testing  ---- */</span></span><br><span class="line"><span class="keyword">let</span> q = <span class="keyword">new</span> Queue()</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>, q.size)<span class="comment">// 0</span></span><br><span class="line"><span class="built_in">console</span>.log(q.offer(<span class="literal">null</span>))  </span><br><span class="line"><span class="built_in">console</span>.log(q.offer(<span class="literal">null</span>))  </span><br><span class="line"><span class="built_in">console</span>.log(q.items)	  			<span class="comment">// [null, null]</span></span><br><span class="line"><span class="built_in">console</span>.log(q.offer(<span class="number">1</span>))  </span><br><span class="line"><span class="built_in">console</span>.log(q.items)	  			<span class="comment">// [null, null, 1]</span></span><br><span class="line"><span class="built_in">console</span>.log(q.poll())  		<span class="comment">// null</span></span><br><span class="line"><span class="built_in">console</span>.log(q.offer(<span class="number">2</span>))  	<span class="comment">// [null, 1, 2]</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>,q.size)<span class="comment">// 3</span></span><br><span class="line"><span class="built_in">console</span>.log(q.poll())  	</span><br><span class="line"><span class="built_in">console</span>.log(q.items)	  			<span class="comment">// [1, 2]</span></span><br><span class="line"><span class="built_in">console</span>.log(q.poll())  		<span class="comment">// 1</span></span><br><span class="line"><span class="built_in">console</span>.log(q.items)	  			<span class="comment">// [2]</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>, q.size)<span class="comment">// 1</span></span><br><span class="line"><span class="built_in">console</span>.log(q.poll())  		 <span class="comment">// 2</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>, q.size)<span class="comment">// 0</span></span><br><span class="line"><span class="built_in">console</span>.log(q.isEmpty())     <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2466,7 +2553,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">79</span>
+                    <span class="site-state-item-count">80</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2768,7 +2855,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">131</span>
+                      
+                    
+                    <span class="site-state-item-count">132</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

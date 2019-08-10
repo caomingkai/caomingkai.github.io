@@ -332,6 +332,180 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/10/Do-we-need-PureComponent-in-Redux-project/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/mingkai.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/08/10/Do-we-need-PureComponent-in-Redux-project/" itemprop="url">Do we need PureComponent in Redux project?</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-10T00:21:29-07:00">2019-08-10</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="I-What"><a href="#I-What" class="headerlink" title="I. What"></a>I. What</h2><p>I had such question when I first join my current company. We use <code>react-redux</code> lib, and let <code>redux</code> to manage nearly all data in frontend.</p>
+<ol>
+<li><u><strong>[Fact 1</strong></u>]: We all know that the parent re-render will trigger children component re-render by default (if no <code>shouldComponentUpdate</code> provided in child component, it will always default to <code>true</code>). This way, it might introduce unnecessary re-render for children component even though it should NOT.</li>
+<li><p><u><strong>[Fact 2]</strong></u>: Redux creating <strong><u>HoC Pure component</u></strong> for its corresponding UI components. That is, container components actually inherit <code>PureComponent</code> (by default, it implements <code>shouldComponentUpdate</code>  and return <code>false</code>). Thus, there is no need we use pure components for the UI components, as its container components already handle it</p>
+</li>
+<li><p><strong><u>[Question]</u></strong>: Does that means we don’t need <code>PureComponent</code> in <code>Redux</code> project? ——&gt;<u><strong>NO</strong></u></p>
+</li>
+</ol>
+<h2 id="II-Why"><a href="#II-Why" class="headerlink" title="II. Why?"></a>II. Why?</h2><ol>
+<li>Actually,  <strong>Redux</strong> uses <code>connect()</code> to create <strong><u>HoC Pure component</u></strong>, which actually inherits <code>PureComponent</code> (by default, it implements <code>shouldComponentUpdate</code>  and return <code>false</code>). All <u>UI components</u> now hide behind the <u>Container components</u>, which are <code>Pure.Components</code></li>
+<li>But, we cannot guarantee all the components have a corresponding container components created by redux. Still, there exist pure react component not plugging into redux store. In this case, it will trigger child component re-render if the parent component re-render</li>
+<li>So, we still need to inherit <code>PureComponent</code> in some case in redux project</li>
+</ol>
+<h2 id="III-Code"><a href="#III-Code" class="headerlink" title="III. Code"></a>III. Code</h2><p>Play with <strong>part_1</strong> and <strong>part_2</strong>, to see when:</p>
+<ul>
+<li><p>child plugging into redux;</p>
+</li>
+<li><p>child not plugging into redux;</p>
+</li>
+<li><p>child not plugging into redux, but with <code>shouldComponentUpdate()</code></p>
+</li>
+</ul>
+<ol>
+<li><p>App.jsx</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Provider &#125; <span class="keyword">from</span> <span class="string">"react-redux"</span>;</span><br><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">"react"</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">"react-dom"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> Parent <span class="keyword">from</span> <span class="string">"./Parent"</span>;</span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">"./store"</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;Provider store=&#123;store&#125;&gt;</span><br><span class="line">        &lt;div className=<span class="string">"App"</span>&gt;</span><br><span class="line">          &lt;Parent /&gt;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">      &lt;/</span>Provider&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> rootElement = <span class="built_in">document</span>.getElementById(<span class="string">"root"</span>);</span><br><span class="line">ReactDOM.render(<span class="xml"><span class="tag">&lt;<span class="name">App</span> /&gt;</span>, rootElement);</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Parent.jsx</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; connect &#125; <span class="keyword">from</span> <span class="string">"react-redux"</span>;</span><br><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">"react"</span>;</span><br><span class="line"><span class="keyword">import</span> Child <span class="keyword">from</span> <span class="string">"./Child"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> cnt_parent = <span class="number">0</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Parent</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="keyword">super</span>();</span><br><span class="line">    <span class="keyword">this</span>.state = &#123;</span><br><span class="line">      parentStr: <span class="string">"This is parent String"</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  clickHandler = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">      parentStr: <span class="string">"Parent String changed!"</span></span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"parent cnt: "</span>, cnt_parent++);</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div</span><br><span class="line">        onClick=&#123;() =&gt; &#123;</span><br><span class="line">          <span class="keyword">this</span>.clickHandler();</span><br><span class="line">        &#125;&#125;</span><br><span class="line">      &gt;</span><br><span class="line">        &#123;<span class="keyword">this</span>.state.parentStr&#125;</span><br><span class="line">        &lt;Child /&gt;</span><br><span class="line">      &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    );</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">export default Parent;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Child.jsx</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">"react"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; connect &#125; <span class="keyword">from</span> <span class="string">"react-redux"</span>;</span><br><span class="line"><span class="keyword">let</span> cnt_child = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Child</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">static</span> defaultProps = &#123; <span class="attr">childStr</span>: <span class="string">"This is child String"</span> &#125;;</span><br><span class="line">	<span class="comment">/* </span></span><br><span class="line"><span class="comment">		// Part_1</span></span><br><span class="line"><span class="comment">  	shouldComponentUpdate() &#123;</span></span><br><span class="line"><span class="comment">  		return false;</span></span><br><span class="line"><span class="comment">  	&#125;</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"child cnt:  "</span>, cnt_child++);</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;this.props.childStr&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">// Part_2</span></span><br><span class="line"><span class="comment">const mapStateToProps = state =&gt; (&#123;</span></span><br><span class="line"><span class="comment">  childStr: state.child</span></span><br><span class="line"><span class="comment">&#125;);</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">const mapDispatchToProps = dispatch =&gt; &#123;&#125;;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">export default connect(</span></span><br><span class="line"><span class="comment">  mapStateToProps,</span></span><br><span class="line"><span class="comment">  null</span></span><br><span class="line"><span class="comment">)(Child);</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> Child;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/03/Backtrack-Find-target-using/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1835,176 +2009,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/21/Vigenere-Cipher-Vanilla-JS/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/mingkai.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/12/21/Vigenere-Cipher-Vanilla-JS/" itemprop="url">Vigenere Cipher - [Vanilla JS]</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-21T10:39:01-08:00">2018-12-21</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Portfolios/" itemprop="url" rel="index"><span itemprop="name">Portfolios</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>Vigenere Cipher is used to encode original string to random string, with a given keyword.</p>
-<img src="/2018/12/21/Vigenere-Cipher-Vanilla-JS/demo.gif">
-<h1 id="Components"><a href="#Components" class="headerlink" title="Components"></a>Components</h1><ol>
-<li>Keyword Input Component</li>
-<li>Keywords Display Component</li>
-<li>Source Text Input Component</li>
-<li>Source Text Display Component</li>
-<li>Cipher Text Display Component</li>
-</ol>
-<h1 id="Model-amp-Events"><a href="#Model-amp-Events" class="headerlink" title="Model &amp; Events"></a>Model &amp; Events</h1><ol>
-<li><p>Model</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> valid = <span class="literal">true</span></span><br><span class="line"><span class="keyword">let</span> kw_to_be = []</span><br><span class="line"><span class="keyword">let</span> kw = []</span><br><span class="line"><span class="keyword">let</span> kw_idx = <span class="number">0</span></span><br><span class="line"><span class="keyword">let</span> kw_char_row = []</span><br><span class="line"><span class="keyword">let</span> kw_num_row  = []</span><br><span class="line"><span class="keyword">let</span> ciph_row  = []</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Events</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 2.1 keyword input event handler</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">inputHandler</span>(<span class="params">e</span>)</span>&#123;&#125; </span><br><span class="line">    </span><br><span class="line"><span class="comment">// 2.2 source click button event handler</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">clickHandler</span>(<span class="params">id</span>)</span>&#123;&#125;</span><br><span class="line">   </span><br><span class="line"><span class="comment">// 2.3 update button event handler</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">updateBtnHandler</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">   </span><br><span class="line"><span class="comment">// 2.4 clear button event handler</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">clearBtnHandler</span>(<span class="params"></span>)</span>&#123;&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h1 id="Layout-amp-Logic"><a href="#Layout-amp-Logic" class="headerlink" title="Layout &amp; Logic"></a>Layout &amp; Logic</h1><img src="/2018/12/21/Vigenere-Cipher-Vanilla-JS/Layout&Logic.jpg">
-<h1 id="Code-Implementation"><a href="#Code-Implementation" class="headerlink" title="Code Implementation"></a>Code Implementation</h1><ol>
-<li><p>HTML</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"style.css"</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">&lt;!-- 1. Keyword Input Component --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span>Configuration<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">h1</span>&gt;</span> <span class="tag">&lt;<span class="name">p</span>&gt;</span>Keyword<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">"comp"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">"inputBox"</span> <span class="attr">type</span>=<span class="string">"text"</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"updateBtn"</span> &gt;</span>Update<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">"validation"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>Length of keyword should be in range: 3~8 <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>Characters should be uppercase<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">&lt;!-- 2. Keyword Display Component --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">table</span> <span class="attr">class</span>=<span class="string">"comp"</span>&gt;</span><span class="tag">&lt;<span class="name">tbody</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">tr</span> <span class="attr">id</span>=<span class="string">"kwCharRow"</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">tr</span> <span class="attr">id</span>=<span class="string">"kwNumRow"</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tbody</span>&gt;</span><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">&lt;!-- 3. Source Text Input Component --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span>Encoding<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">h1</span>&gt;</span> <span class="tag">&lt;<span class="name">p</span>&gt;</span>Source Text<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">table</span> <span class="attr">class</span>=<span class="string">"comp"</span>&gt;</span><span class="tag">&lt;<span class="name">tbody</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">tr</span> <span class="attr">id</span>=<span class="string">"srcTextRow"</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">tr</span> <span class="attr">id</span>=<span class="string">"ciphTextRow"</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tbody</span>&gt;</span><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">&lt;!-- 4. Source Text Display Component --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"comp"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span>  <span class="attr">id</span>=<span class="string">"srcText"</span> <span class="attr">type</span>=<span class="string">"text"</span>  <span class="attr">disabled</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"clearBtn"</span>&gt;</span>Clear<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  </span><br><span class="line">    <span class="comment">&lt;!-- 5. Cipher Text Display Component --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"comp"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">p</span>&gt;</span>Cipher Text<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">"ciphText"</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">disabled</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"script.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>JS</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 0.1 const</span></span><br><span class="line">  <span class="keyword">const</span> CHAR_NUM = <span class="number">26</span></span><br><span class="line">  <span class="keyword">const</span> CHAR_CODE_A = <span class="number">65</span></span><br><span class="line">  <span class="keyword">const</span> CHAR_CODE_Z = <span class="number">90</span></span><br><span class="line">  <span class="keyword">const</span> CHAR_CODE_ALL = <span class="keyword">new</span> <span class="built_in">Array</span>(CHAR_NUM).fill(<span class="number">1</span>).map( <span class="function">(<span class="params"> _, i </span>) =&gt;</span> (CHAR_CODE_A+i) )</span><br><span class="line">  <span class="keyword">const</span> CHAR_ALL = CHAR_CODE_ALL.map(<span class="function"><span class="params">item</span>=&gt;</span><span class="built_in">String</span>.fromCharCode(item))</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 0.2 helper functions</span></span><br><span class="line">  <span class="keyword">const</span> getEle = <span class="function">(<span class="params">id</span>) =&gt;</span> <span class="built_in">document</span>.getElementById(id)</span><br><span class="line">  <span class="keyword">const</span> setEleVal = <span class="function">(<span class="params">ele, val</span>)=&gt;</span> &#123;ele.value = val&#125;</span><br><span class="line">  <span class="keyword">const</span> creatEle = <span class="function">(<span class="params">tag</span>) =&gt;</span> <span class="built_in">document</span>.createElement(tag)</span><br><span class="line">  <span class="keyword">const</span> creatText = <span class="function">(<span class="params">str</span>) =&gt;</span> <span class="built_in">document</span>.createTextNode(str)</span><br><span class="line">  <span class="keyword">const</span> generateEle = <span class="function">(<span class="params"> tag, data, parent </span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> tempNode = <span class="built_in">document</span>.createDocumentFragment()</span><br><span class="line">    data.forEach(<span class="function">(<span class="params">item, index</span>)=&gt;</span>&#123;</span><br><span class="line">      <span class="keyword">const</span> td = creatEle(<span class="string">'TD'</span>)</span><br><span class="line">      <span class="keyword">const</span> text = creatText(item)</span><br><span class="line">      <span class="keyword">if</span>( tag === <span class="string">'srcTextRow'</span> )&#123;</span><br><span class="line">        <span class="keyword">const</span> btn = creatEle(<span class="string">'BUTTON'</span>)</span><br><span class="line">        btn.appendChild(text)</span><br><span class="line">        btn.onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;clickHandler(index)&#125;</span><br><span class="line">        td.appendChild(btn)</span><br><span class="line">      &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        td.appendChild(text)</span><br><span class="line">      &#125;</span><br><span class="line">      tempNode.appendChild(td)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (parent.firstChild) &#123; parent.removeChild(parent.firstChild) &#125;</span><br><span class="line">    parent.appendChild(tempNode)</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">const</span> updateCiphTextRow = <span class="function">(<span class="params">kw_idx</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> offset = kw[kw_idx].charCodeAt(<span class="number">0</span>) - CHAR_CODE_A</span><br><span class="line">    <span class="keyword">return</span> CHAR_CODE_ALL.map(<span class="function"><span class="params">item</span>=&gt;</span>&#123;</span><br><span class="line">      <span class="keyword">const</span> code = (item+offset &lt;= CHAR_CODE_Z) ? (item+offset) : (item+offset-CHAR_NUM)</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">String</span>.fromCharCode(code)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">const</span> updateHighlightIndex = <span class="function">(<span class="params">id</span>)=&gt;</span>&#123;</span><br><span class="line">    kwCharRow.childNodes.forEach( <span class="function"><span class="keyword">function</span>(<span class="params">item, index</span>)</span>&#123;</span><br><span class="line">      item.className = id===index ? <span class="string">"highlight"</span> : <span class="string">""</span></span><br><span class="line">    &#125;)</span><br><span class="line">    kwNumRow.childNodes.forEach( <span class="function"><span class="keyword">function</span>(<span class="params">item, index</span>)</span>&#123;</span><br><span class="line">      item.className = id===index ? <span class="string">"highlight"</span> : <span class="string">""</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 0.3 DOM Elements</span></span><br><span class="line">  <span class="keyword">const</span> inputBox = getEle(<span class="string">"inputBox"</span>)</span><br><span class="line">  <span class="keyword">const</span> errorHint = getEle(<span class="string">"validation"</span>)</span><br><span class="line">  <span class="keyword">const</span> updatBtn = getEle(<span class="string">"updatBtn"</span>)</span><br><span class="line">  <span class="keyword">const</span> kwCharRow = getEle(<span class="string">"kwCharRow"</span>)</span><br><span class="line">  <span class="keyword">const</span> kwNumRow = getEle(<span class="string">"kwNumRow"</span>)</span><br><span class="line">  <span class="keyword">const</span> srcTextRow = getEle(<span class="string">"srcTextRow"</span>)</span><br><span class="line">  <span class="keyword">const</span> ciphTextRow = getEle(<span class="string">"ciphTextRow"</span>)</span><br><span class="line">  <span class="keyword">const</span> srcText = getEle(<span class="string">"srcText"</span>)</span><br><span class="line">  <span class="keyword">const</span> clearBtn = getEle(<span class="string">"clearBtn"</span>)</span><br><span class="line">  <span class="keyword">const</span> ciphText = getEle(<span class="string">"ciphText"</span>)</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  <span class="comment">/* </span></span><br><span class="line"><span class="comment">    1. models</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="keyword">let</span> valid = <span class="literal">true</span></span><br><span class="line">  <span class="keyword">let</span> kw_to_be = []</span><br><span class="line">  <span class="keyword">let</span> kw = []</span><br><span class="line">  <span class="keyword">let</span> kw_idx = <span class="number">0</span></span><br><span class="line">  <span class="keyword">let</span> kw_char_row = []</span><br><span class="line">  <span class="keyword">let</span> kw_num_row  = []</span><br><span class="line">  <span class="keyword">let</span> ciph_row  = []</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="comment">/* </span></span><br><span class="line"><span class="comment">    2. event handlers &amp; DOM manipulation</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 2.1 keyword input event handler</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">inputHandler</span>(<span class="params">e</span>)</span>&#123; </span><br><span class="line">    kw_to_be = e.target.value.split(<span class="string">""</span>)</span><br><span class="line">    <span class="keyword">const</span> len = kw_to_be.length</span><br><span class="line">    <span class="keyword">const</span> lenValid = (len&gt;=<span class="number">3</span> &amp;&amp; len&lt;=<span class="number">8</span>)</span><br><span class="line">    <span class="keyword">const</span> caseValid = kw_to_be.every(</span><br><span class="line">      item =&gt; item==item.toUpperCase()</span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">const</span> validNew = lenValid &amp;&amp; caseValid</span><br><span class="line">    <span class="keyword">if</span>(valid!==validNew)&#123;</span><br><span class="line">      valid = validNew</span><br><span class="line">      errorHint.classList.toggle(<span class="string">"invalid"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  inputBox.oninput=inputHandler</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 2.2 source click button event handler</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">clickHandler</span>(<span class="params">id</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(kw.length === <span class="number">0</span> ) <span class="keyword">return</span> </span><br><span class="line">    srcText.value = srcText.value + CHAR_ALL[id]</span><br><span class="line">    ciphText.value = ciphText.value + ciph_row[id]</span><br><span class="line">    kw_idx = kw_idx+<span class="number">1</span> &lt; kw.length ? kw_idx+<span class="number">1</span> : kw_idx+<span class="number">1</span>-kw.length</span><br><span class="line">    ciph_row = updateCiphTextRow(kw_idx)</span><br><span class="line">    generateEle(<span class="string">"ciphTextRow"</span>, ciph_row, ciphTextRow)</span><br><span class="line">    updateHighlightIndex(kw_idx)</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 2.3 update button event handler</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">updateBtnHandler</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!valid) <span class="keyword">return</span></span><br><span class="line">    kw = kw_to_be</span><br><span class="line">    kw_idx = <span class="number">0</span></span><br><span class="line">    <span class="keyword">const</span> kw_num = kw.map(<span class="function"><span class="params">item</span>=&gt;</span>item.charCodeAt(<span class="number">0</span>)-CHAR_CODE_A)</span><br><span class="line">    ciph_row = kw.length===<span class="number">0</span> ? [] : updateCiphTextRow(kw_idx)</span><br><span class="line">    generateEle(<span class="string">"kwCharRow"</span>, kw, kwCharRow)</span><br><span class="line">    generateEle(<span class="string">"kwNumRow"</span>, kw_num, kwNumRow)</span><br><span class="line">    generateEle(<span class="string">"ciphTextRow"</span>, ciph_row, ciphTextRow)</span><br><span class="line">    updateHighlightIndex(kw_idx)</span><br><span class="line">    srcText.value = <span class="string">""</span></span><br><span class="line">    ciphText.value = <span class="string">""</span></span><br><span class="line">  &#125;</span><br><span class="line">  updateBtn.onclick=updateBtnHandler</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 2.4 clear button event handler</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">clearBtnHandler</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    kw_idx = <span class="number">0</span></span><br><span class="line">    ciph_row = updateCiphTextRow(kw_idx)</span><br><span class="line">    updateHighlightIndex(kw_idx)</span><br><span class="line">    generateEle(<span class="string">"ciphTextRow"</span>, ciph_row, ciphTextRow)</span><br><span class="line">    srcText.value = <span class="string">""</span></span><br><span class="line">    ciphText.value = <span class="string">""</span></span><br><span class="line">  &#125;</span><br><span class="line">  clearBtn.onclick=clearBtnHandler</span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">  </span><br><span class="line">  <span class="comment">// populate 'A'~'Z' in srcTextRow</span></span><br><span class="line">  <span class="keyword">let</span> tempNode = <span class="built_in">document</span>.createDocumentFragment()</span><br><span class="line">  generateEle(<span class="string">"srcTextRow"</span>, CHAR_ALL, srcTextRow)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>CSS</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">table</span>&#123;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">1px</span> solid black;</span><br><span class="line">  <span class="attribute">border-collapse</span>:collapse;</span><br><span class="line">  <span class="attribute">text-align</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">table</span> <span class="selector-tag">td</span> &#123;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">1px</span> solid black;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">5px</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">20px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">20px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">h1</span>&#123;</span><br><span class="line">  <span class="attribute">margin-top</span>: <span class="number">30px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">h1</span> <span class="selector-tag">span</span>&#123;</span><br><span class="line">  <span class="attribute">color</span>: grey;</span><br><span class="line">  <span class="attribute">border-bottom</span>: <span class="number">1px</span> solid ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">input</span><span class="selector-attr">[disabled]</span>&#123;</span><br><span class="line">  <span class="attribute">background-color</span>:<span class="number">#F5F5DC</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="selector-tag">ul</span>&#123;</span><br><span class="line">  <span class="attribute">display</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.invalid</span>&#123;</span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">  <span class="attribute">color</span>: red;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.highlight</span>&#123;</span><br><span class="line">  <span class="attribute">background-color</span>: yellow;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.comp</span>&#123;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">5px</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2056,7 +2060,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">79</span>
+                    <span class="site-state-item-count">80</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2358,7 +2362,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">131</span>
+                      
+                    
+                    <span class="site-state-item-count">132</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

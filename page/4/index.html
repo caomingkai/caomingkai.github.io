@@ -332,6 +332,183 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/08/Stack-Queue-Implementation-using-JS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/mingkai.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/08/Stack-Queue-Implementation-using-JS/" itemprop="url">Stack & Queue Implementation using JS</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-08T22:08:58-07:00">2018-10-08</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Stack"><a href="#Stack" class="headerlink" title="Stack"></a>Stack</h2><ol>
+<li><p>interfaces:</p>
+<ul>
+<li><code>stack.size</code></li>
+<li><code>stack.peek()</code></li>
+<li><code>stack.push</code></li>
+<li><code>stack.pop()</code></li>
+<li><code>stack.isEmpty()</code></li>
+<li><code>stack.clear()</code></li>
+</ul>
+</li>
+<li><p>implementation: </p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * Note: this version use `null` as Error symbol,</span></span><br><span class="line"><span class="comment"> *		 so you cannot push null into the stack</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Stack</span></span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>()&#123; <span class="keyword">this</span>.data = [] &#125;</span><br><span class="line">    </span><br><span class="line">    get size()&#123; <span class="keyword">return</span> <span class="keyword">this</span>.data.length &#125;</span><br><span class="line">    </span><br><span class="line">    isEmpty()&#123;  <span class="keyword">return</span> <span class="keyword">this</span>.data.length === <span class="number">0</span> &#125;</span><br><span class="line">    </span><br><span class="line">    peek()&#123; <span class="keyword">return</span> <span class="keyword">this</span>.data[<span class="keyword">this</span>.data.length<span class="number">-1</span>] &#125;</span><br><span class="line">    </span><br><span class="line">    push(item)&#123;</span><br><span class="line">        <span class="keyword">if</span>( <span class="keyword">typeof</span> item ===<span class="string">"undefined"</span> || item === <span class="literal">null</span> ) <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        <span class="keyword">this</span>.data.push(item)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    pop(item)&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>.data.length === <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.data.pop();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    clear()&#123; <span class="keyword">this</span>.data = [] &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* ---- Testing  ---- */</span></span><br><span class="line"><span class="keyword">let</span> s = <span class="keyword">new</span> Stack()</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>,s.size)  		<span class="comment">// 0</span></span><br><span class="line"><span class="built_in">console</span>.log(s.pop())  		<span class="comment">// null</span></span><br><span class="line"><span class="built_in">console</span>.log(s.push())  		<span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(s.push(<span class="literal">null</span>))  	<span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(s.push(<span class="number">1</span>))  	<span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(s.push(<span class="number">1</span>))  	<span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>,s.size)  		<span class="comment">// 2</span></span><br><span class="line"><span class="built_in">console</span>.log(s.push(<span class="number">2</span>))  	<span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>,s.size)  		<span class="comment">// 3</span></span><br><span class="line"><span class="built_in">console</span>.log(s.pop())  		<span class="comment">// 2</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>, s.size)  		<span class="comment">// 2</span></span><br><span class="line"><span class="built_in">console</span>.log(s.pop())  		<span class="comment">// 1</span></span><br><span class="line"><span class="built_in">console</span>.log(s.pop())  		<span class="comment">// 1</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>, s.size)  		<span class="comment">// 0</span></span><br><span class="line"><span class="built_in">console</span>.log(s.pop())  		<span class="comment">// null</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>, s.size)  		<span class="comment">// 0</span></span><br><span class="line"><span class="built_in">console</span>.log(s.isEmpty())   <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="Queue"><a href="#Queue" class="headerlink" title="Queue"></a>Queue</h2><ol>
+<li><p>interfaces:</p>
+<ul>
+<li><code>queue.size</code></li>
+<li><code>queue.peek()</code></li>
+<li><code>queue.push</code></li>
+<li><code>queue.pop()</code></li>
+<li><code>queue.isEmpty()</code></li>
+<li><code>queue.clear()</code></li>
+</ul>
+</li>
+<li><p>implementation:</p>
+<ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * Note: this version can add any object into Queue</span></span><br><span class="line"><span class="comment"> *		 But need to call `isEmpty()` when necessary</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Queue</span></span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>()&#123; <span class="keyword">this</span>.items = []  &#125;</span><br><span class="line">    </span><br><span class="line">    get size()&#123; <span class="keyword">return</span> <span class="keyword">this</span>.items.length; &#125;</span><br><span class="line">    </span><br><span class="line">    isEmpty()&#123; <span class="keyword">return</span> <span class="keyword">this</span>.items.length === <span class="number">0</span> &#125;</span><br><span class="line">    </span><br><span class="line">    offer(item)&#123; <span class="keyword">this</span>.items.push(item) &#125;</span><br><span class="line">    </span><br><span class="line">    poll()&#123; <span class="keyword">return</span> <span class="keyword">this</span>.items.shift() &#125;</span><br><span class="line">    </span><br><span class="line">    peek()&#123; <span class="keyword">return</span> <span class="keyword">this</span>.items[<span class="number">0</span>] &#125;</span><br><span class="line">    </span><br><span class="line">    clear()&#123; <span class="keyword">this</span>.items = [] &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* ---- Testing  ---- */</span></span><br><span class="line"><span class="keyword">let</span> q = <span class="keyword">new</span> Queue()</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>, q.size)<span class="comment">// 0</span></span><br><span class="line"><span class="built_in">console</span>.log(q.offer(<span class="literal">null</span>))  </span><br><span class="line"><span class="built_in">console</span>.log(q.offer(<span class="literal">null</span>))  </span><br><span class="line"><span class="built_in">console</span>.log(q.items)	  			<span class="comment">// [null, null]</span></span><br><span class="line"><span class="built_in">console</span>.log(q.offer(<span class="number">1</span>))  </span><br><span class="line"><span class="built_in">console</span>.log(q.items)	  			<span class="comment">// [null, null, 1]</span></span><br><span class="line"><span class="built_in">console</span>.log(q.poll())  		<span class="comment">// null</span></span><br><span class="line"><span class="built_in">console</span>.log(q.offer(<span class="number">2</span>))  	<span class="comment">// [null, 1, 2]</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>,q.size)<span class="comment">// 3</span></span><br><span class="line"><span class="built_in">console</span>.log(q.poll())  	</span><br><span class="line"><span class="built_in">console</span>.log(q.items)	  			<span class="comment">// [1, 2]</span></span><br><span class="line"><span class="built_in">console</span>.log(q.poll())  		<span class="comment">// 1</span></span><br><span class="line"><span class="built_in">console</span>.log(q.items)	  			<span class="comment">// [2]</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>, q.size)<span class="comment">// 1</span></span><br><span class="line"><span class="built_in">console</span>.log(q.poll())  		 <span class="comment">// 2</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"size: "</span>, q.size)<span class="comment">// 0</span></span><br><span class="line"><span class="built_in">console</span>.log(q.isEmpty())     <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/08/How-to-implement-auto-complete/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -3532,170 +3709,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/02/Memory-Game/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/mingkai.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/02/Memory-Game/" itemprop="url">Memory Game</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-02T09:47:18-07:00">2018-10-02</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Portfolios/" itemprop="url" rel="index"><span itemprop="name">Portfolios</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Memory-Game"><a href="#Memory-Game" class="headerlink" title="Memory-Game"></a>Memory-Game</h1><h2 id="What"><a href="#What" class="headerlink" title="What?"></a>What?</h2><p>This is a memory game, developed using React, Ant Design, webpack, and CSS grid, etc.</p>
-<p><img width="600" alt="memory_game.png" src="https://github.com/caomingkai/Memory-Game/raw/master/memory_game.png"></p>
-<h2 id="How-to-run"><a href="#How-to-run" class="headerlink" title="How to run?"></a>How to run?</h2><ol>
-<li>git clone</li>
-<li>npm install</li>
-<li>npm start</li>
-</ol>
-<h2 id="Features"><a href="#Features" class="headerlink" title="Features"></a>Features</h2><ul>
-<li>Notify the user if they win or lose</li>
-<li>Hints assistance</li>
-<li>Allow the user to reset at any time</li>
-<li>Randomize the ‘cards’ layout every game</li>
-<li>Multi Player mode</li>
-<li>Tracking Scores</li>
-<li>Tracking Best Score</li>
-<li>Tracking time</li>
-<li>Adjustable number of cards in the game (difficulty levels)</li>
-</ul>
-<h2 id="To-do"><a href="#To-do" class="headerlink" title="To-do"></a>To-do</h2><ul>
-<li>Options &amp; Start UI substitute the game board UI at the beginning</li>
-<li>Hint feature: add keyboard press event</li>
-</ul>
-<h2 id="Layout-amp-Logic"><a href="#Layout-amp-Logic" class="headerlink" title="Layout &amp; Logic"></a>Layout &amp; Logic</h2><p><img width="600" alt="workflow.png" src="https://github.com/caomingkai/Memory-Game/raw/master/IMG_4519.JPG"></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3747,7 +3760,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">79</span>
+                    <span class="site-state-item-count">80</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -4049,7 +4062,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">131</span>
+                      
+                    
+                    <span class="site-state-item-count">132</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

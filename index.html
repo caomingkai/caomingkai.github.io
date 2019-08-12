@@ -332,6 +332,312 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/10/Front-end-Notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/mingkai.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/08/10/Front-end-Notes/" itemprop="url">Front-end Notes</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-10T15:34:04-07:00">2019-08-10</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1-Array-prototype-sort-cb"><a href="#1-Array-prototype-sort-cb" class="headerlink" title="1. Array.prototype.sort(cb)"></a>1. <code>Array.prototype.sort(cb)</code></h2><p><strong><u>Always</u></strong> pass in comparison callback, as the default of <code>sort()</code> behavior is:</p>
+<ul>
+<li>first convert to <code>string</code> type</li>
+<li>then, sort string array</li>
+</ul>
+<p>2 examples are given below:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> array1 = [<span class="number">1</span>, <span class="number">30</span>, <span class="number">4</span>, <span class="number">21</span>, <span class="number">100000</span>];</span><br><span class="line">array1.sort();</span><br><span class="line"><span class="built_in">console</span>.log(array1); <span class="comment">//BAD: Array [1, 100000, 21, 30, 4]</span></span><br><span class="line"></span><br><span class="line">array1.sort(<span class="function">(<span class="params">a, b</span>) =&gt;</span> a - b);</span><br><span class="line"><span class="built_in">console</span>.log(array1); <span class="comment">//GOOD: Array [1, 4, 21, 30, 100000]</span></span><br></pre></td></tr></table></figure>
+<h2 id="2-NO-map-or-forEach-on-String"><a href="#2-NO-map-or-forEach-on-String" class="headerlink" title="2. NO map or forEach on String"></a>2. NO <code>map</code> or <code>forEach</code> on String</h2><p>String type is <code>array-like</code> data type, and immutable, no prototype method like <code>map()</code>, <code>forEach()</code>, <code>filter()</code>, <code>reduce()</code>. BUT, like other <code>array-like</code> data type, we can use index to access element: <code>str[i]</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> str = <span class="string">"abcde"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// GOOD</span></span><br><span class="line">str[k]</span><br><span class="line"></span><br><span class="line"><span class="comment">// BAD</span></span><br><span class="line">str.map(<span class="function"><span class="params">c</span> =&gt;</span> c)</span><br><span class="line"></span><br><span class="line"><span class="comment">// GOOD</span></span><br><span class="line"><span class="built_in">Array</span>.from(str).map(<span class="function"><span class="params">c</span> =&gt;</span> <span class="string">'['</span> + c + <span class="string">']'</span>);</span><br><span class="line">str.split().map(<span class="function"><span class="params">c</span> =&gt;</span> <span class="string">'['</span> + c + <span class="string">']'</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="3-oninput-vs-onchange"><a href="#3-oninput-vs-onchange" class="headerlink" title="3. oninput vs onchange"></a>3. <code>oninput</code> vs <code>onchange</code></h2><ul>
+<li><code>oninput</code> will trigger every time there is a modification inside <code>&lt;input&gt;</code>, <code>textarea</code>, etc.</li>
+<li><code>onchange</code> won’t necessarily trigger for each modification; but will do when <code>Enter</code> pressed or focus lost</li>
+<li>inside <code>&lt;input&gt;</code>, <code>&lt;textarea&gt;</code>, holding non-whitespace key without release won’t result in letter repeatition, instead, there will be only one letter types in.</li>
+</ul>
+<h2 id="4-Don’t-use-a-number-returned-comparator-directly"><a href="#4-Don’t-use-a-number-returned-comparator-directly" class="headerlink" title="4. Don’t use a number returned comparator directly"></a>4. Don’t use a <code>number</code> returned comparator directly</h2><p>Because <strong><u><code>0</code> is <code>falsy</code></u></strong>, we should use a <code>boolean</code> returned comparator instead, as follow:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// BAD</span></span><br><span class="line"><span class="keyword">const</span> comparator = (a, b) = (a - b);</span><br><span class="line"><span class="keyword">if</span> (comparator) &#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line"><span class="comment">// GOOD</span></span><br><span class="line"><span class="keyword">const</span> comparator = (a, b) = (a - b &gt; <span class="number">0</span>);</span><br><span class="line"><span class="keyword">if</span> (comparator) &#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="5-Event"><a href="#5-Event" class="headerlink" title="5. Event"></a>5. Event</h2><ol>
+<li><p><strong>Event delegation</strong></p>
+<ol>
+<li><u>GOOD</u>: <ul>
+<li>Less memory to register event handlers, saving memory    </li>
+<li>Dynamically handle element event, eg.: newly added <code>&lt;li&gt;</code> can benefit from its parent <code>&lt;ul&gt;</code> to handle its own event</li>
+<li>no memory leak: no need to <code>removeEventListener()</code> from a deleted <code>&lt;li&gt;</code></li>
+</ul>
+</li>
+<li><u>BAD</u>:<ul>
+<li>Too long time for some event to be handled if the delegation process is too long</li>
+<li>Some event might be stopped by <code>event.stopPropagation()</code></li>
+<li>Some event like <code>onFocus</code>, <code>onBlur</code> don’t support event delegation</li>
+</ul>
+</li>
+<li><strong><u>NOTE</u></strong>: need to check if <code>event.target === desiredEle</code> to respond.</li>
+</ol>
+</li>
+<li><p><strong>Default actions</strong></p>
+<p><u>Event handlers</u> are called <strong><u>before</u></strong> the <u>default behavior</u> happens. Eg.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- </span></span><br><span class="line"><span class="comment">link tag &lt;a&gt; won't redirect, because </span></span><br><span class="line"><span class="comment">  1. event handler is called</span></span><br><span class="line"><span class="comment">  2. event handler prevent the default behavior of &lt;a&gt;</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://developer.mozilla.org/"</span>&gt;</span>MDN<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">  <span class="keyword">let</span> link = <span class="built_in">document</span>.querySelector(<span class="string">"a"</span>);</span></span><br><span class="line"><span class="javascript">  link.addEventListener(<span class="string">"click"</span>, event =&gt; &#123;</span></span><br><span class="line"><span class="javascript">    <span class="built_in">console</span>.log(<span class="string">"Nope."</span>);</span></span><br><span class="line"><span class="undefined">    event.preventDefault();</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Key events: <u><code>keydown</code> is enough)</u></p>
+<ul>
+<li><p>cover all keys, while <code>keyup</code> only cover part of keys. <code></code></p>
+</li>
+<li><p>has default action and is cancelable, by using <code>preventDefault</code>; While <code>keyup</code> has no default action, and is not cancelable.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. e.keyCode</span></span><br><span class="line"><span class="comment">// 2. document.activeElement: the focused Element within the DOM</span></span><br><span class="line"><span class="built_in">document</span>.onkeydown = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(e.keyCode === <span class="number">13</span>) &#123; <span class="comment">// The Enter/Return key</span></span><br><span class="line">    <span class="built_in">document</span>.activeElement.onclick(e);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><p>compatible for all browser</p>
+</li>
+<li><p>keep firing when key is held (use<code>event.repeat</code> to avoid) </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">'keydown'</span>, (event) =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span>(event.repeat) &#123;</span><br><span class="line">    <span class="comment">// key is being held down</span></span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// key is being pressed</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="6-How-does-new-work-when-instantiate-an-object"><a href="#6-How-does-new-work-when-instantiate-an-object" class="headerlink" title="6. How does new work when instantiate an object?"></a>6. How does <code>new</code> work when instantiate an object?</h2><p>credit_1: <a href="https://segmentfault.com/a/1190000017956545" target="_blank" rel="noopener">https://segmentfault.com/a/1190000017956545</a></p>
+<p>credit_2: <a href="https://medium.com/tech-tajawal/javascript-this-4-rules-7354abdb274c" target="_blank" rel="noopener">https://medium.com/tech-tajawal/javascript-this-4-rules-7354abdb274c</a></p>
+<p>The <code>new</code> operator is used before a function, like <code>new Foo(…)</code>. When the code  is executed, the following things happen:</p>
+<ul>
+<li><p>An empty object is created: <code>obj</code>;</p>
+</li>
+<li><p><code>Foo</code> is called on <code>obj</code>, so now <code>this</code> refer to <code>obj</code>;</p>
+</li>
+<li><p><code>obj</code> inherit from <code>Foo.prototype</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>) </span>&#123;        </span><br><span class="line">  <span class="keyword">this</span>.name = <span class="string">'Osama'</span>;</span><br><span class="line">  <span class="keyword">this</span>.say = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"I am "</span> + <span class="keyword">this</span>.name; </span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> obj = <span class="keyword">new</span> Foo();</span><br><span class="line"></span><br><span class="line"><span class="comment">// The statement above is equal to [1][2][3] below: </span></span><br><span class="line"><span class="comment">// [1] create a new object using the object literal </span></span><br><span class="line"><span class="comment">// let obj = &#123;&#125;;  </span></span><br><span class="line"></span><br><span class="line"><span class="comment">// [2] add instance properties and methods to `this`</span></span><br><span class="line"><span class="comment">// Foo.call(obj);  </span></span><br><span class="line"></span><br><span class="line"><span class="comment">// [3] add proto property to `this`</span></span><br><span class="line"><span class="comment">// obj._proto_ = Foo.prototype;  </span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(obj.name);  <span class="comment">//Osama  --- [3]</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="7-global-window-default-one-if-no-obj-set-to-this"><a href="#7-global-window-default-one-if-no-obj-set-to-this" class="headerlink" title="7. global/window: default one, if no obj set to this"></a>7. <code>global/window</code>: default one, if no obj set to <code>this</code></h2><p>If there is no calling context, <code>this</code> will be bound to <code>global</code> or <code>window</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> context = <span class="string">"global"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> obj = &#123;  </span><br><span class="line">    context: <span class="string">"object"</span>,</span><br><span class="line">    method: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;                  </span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> context = <span class="string">"function"</span>;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span> + <span class="string">":"</span> +<span class="keyword">this</span>.context; </span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">return</span> f(); <span class="comment">//invoked without context, so it will default to `window`</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(obj.method()); <span class="comment">//[object Window]:global</span></span><br></pre></td></tr></table></figure>
+<h2 id="8-Foo-prototype-method-vs-Foo-prototype"><a href="#8-Foo-prototype-method-vs-Foo-prototype" class="headerlink" title="8. Foo.prototype.method=... vs Foo.prototype={...}"></a>8. <code>Foo.prototype.method=...</code> vs <code>Foo.prototype={...}</code></h2><p>Use <code>Foo.prototype.method=function () {...}</code>, rather than <code>Foo.prototype={...}</code>.</p>
+<ul>
+<li>The 1st approach didn’t modify <code>Foo.prototype.constructor</code>, so it is still <code>Foo</code>;</li>
+<li>However, the 2nd one modify it to be <code>Object</code>, which is not disired.</li>
+<li>Example below can be </li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// [Credit]: https://stackoverflow.com/questions/8453887/why-is-it-necessary-to-set-the-prototype-constructor</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 1. define the Person Class  </span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Person.prototype.copy = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;  </span><br><span class="line">    <span class="comment">// return new Person(this.name); // just as bad</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">this</span>.constructor(<span class="keyword">this</span>.name);</span><br><span class="line">&#125;;  </span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. define the Student class  </span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Student</span>(<span class="params">name</span>) </span>&#123;  </span><br><span class="line">    Person.call(<span class="keyword">this</span>, name);</span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. inherit Person  </span></span><br><span class="line">Student.prototype = <span class="built_in">Object</span>.create(Person.prototype);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 4. Now what happens when we create a new Student and copy it?</span></span><br><span class="line"><span class="keyword">var</span> student1 = <span class="keyword">new</span> Student(<span class="string">"trinth"</span>);  </span><br><span class="line"><span class="built_in">console</span>.log(student1.copy() <span class="keyword">instanceof</span> Student); <span class="comment">// =&gt; false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 5. The copy is not an instance of Student. This is because (without explicit checks), we'd have no way to return a Student copy from the "base" class. We can only return a Person. However, if we had reset the constructor:</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 6. correct the constructor pointer because it points to Person  </span></span><br><span class="line">Student.prototype.constructor = Student;</span><br><span class="line"><span class="keyword">var</span> student1 = <span class="keyword">new</span> Student(<span class="string">"trinth"</span>);  </span><br><span class="line"><span class="built_in">console</span>.log(student1.copy() <span class="keyword">instanceof</span> Student); <span class="comment">// =&gt; true</span></span><br></pre></td></tr></table></figure>
+<h2 id="9-AMD-vs-CommonJS-vs-import-export"><a href="#9-AMD-vs-CommonJS-vs-import-export" class="headerlink" title="9. AMD vs. CommonJS vs import/export"></a>9. AMD vs. CommonJS vs <code>import/export</code></h2><p><a href="https://michelenasti.com/2018/10/02/let-s-write-a-simple-version-of-the-require-function.html" target="_blank" rel="noopener">credit</a>    <a href="https://caomingkai.github.io/2018/10/02/Note-of-Eloquent-JavaScript/" target="_blank" rel="noopener">relavant blog</a></p>
+<ol>
+<li><p>CommonJS: <code>require</code> &amp; <code>module.exports</code> (<code>exports</code>)  <a href="https://caomingkai.github.io/2018/10/02/Note-of-Eloquent-JavaScript/" target="_blank" rel="noopener"><strong>relavant blog</strong></a></p>
+<p><code>require</code> is a <strong><u>global utility function (obj)</u></strong>, with inner <code>cache</code> storing a <code>map &lt;filename, modulePublicAPI&gt;</code> , by firstly executing module functions, and then exporting module API with the help of <code>Closure</code></p>
+<ul>
+<li>get the <code>code string</code> of this module;</li>
+<li>create empty hooks to link potential public interface</li>
+<li>declare wrapper function</li>
+<li>call wrapper function to execute module, and expose public interface to <code>module</code></li>
+<li>store module public interface in require util obj</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// https://caomingkai.github.io/2018/10/02/Note-of-Eloquent-JavaScript/</span></span><br><span class="line"><span class="built_in">require</span>.cache = <span class="built_in">Object</span>.create(<span class="literal">null</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">require</span>(<span class="params">fileObj</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!<span class="built_in">require</span>.cache[fileObj.name]) &#123;</span><br><span class="line">    <span class="keyword">let</span> functionStr = fileObj.functionStr;  <span class="comment">// 1. get the `code string` of this module </span></span><br><span class="line">    <span class="keyword">let</span> <span class="built_in">module</span> = &#123;<span class="attr">exports</span>: <span class="literal">null</span>&#125;;   <span class="comment">// 2. create empty hooks to link potential public interface</span></span><br><span class="line">    <span class="keyword">const</span> wrapper = <span class="built_in">Function</span>(<span class="string">'require'</span>, <span class="string">'module'</span>, functionStr);  <span class="comment">// 3. declare wrapper function </span></span><br><span class="line">    wrapper(<span class="built_in">require</span>, <span class="built_in">module</span>);    <span class="comment">// 4. call wrapper function to execute module, and expose public interface to `module`</span></span><br><span class="line">    <span class="built_in">require</span>.cache[fileObj.name] = <span class="built_in">module</span>.exports; <span class="comment">// 5. store module public interface in require util obj</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">require</span>.cache[fileObj.name];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/* TEST: </span></span><br><span class="line"><span class="comment">	`fileObj` simulates a file with name as `a`, and content as `functionStr`</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">let</span> fileObj = &#123;</span><br><span class="line">  name: <span class="string">"a"</span>,</span><br><span class="line">  functionStr: <span class="string">"let a = 0; function increA() &#123;a += 1;&#125;; function getA()&#123;return a;&#125; module.exports=&#123;increA, getA&#125;;"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"require module for 1st time------&gt;"</span>);</span><br><span class="line">  <span class="keyword">let</span> <span class="built_in">module</span> = <span class="built_in">require</span>(fileObj);</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">module</span>.getA()); <span class="comment">// 0</span></span><br><span class="line">  <span class="built_in">module</span>.increA();</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">module</span>.getA()); <span class="comment">// 1</span></span><br><span class="line">  <span class="built_in">module</span>.increA();</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">module</span>.getA()); <span class="comment">// 2</span></span><br><span class="line">  <span class="built_in">module</span>.increA();</span><br><span class="line">  <span class="built_in">module</span>.increA();</span><br><span class="line">  <span class="built_in">module</span>.increA();</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">module</span>.getA()); <span class="comment">// 5</span></span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"require module for 2nd time------&gt;"</span>);</span><br><span class="line">  <span class="built_in">module</span> = <span class="built_in">require</span>(fileObj);</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">module</span>.getA()); <span class="comment">// 5</span></span><br><span class="line">  <span class="built_in">module</span>.increA();</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">module</span>.getA()); <span class="comment">// 6</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">test();</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="2">
+<li>AMD (Asynchronous Module Definition )</li>
+</ol>
+<p>[<strong>Credit_1</strong>] <a href="https://dojotoolkit.org/documentation/tutorials/1.10/modules/" target="_blank" rel="noopener">https://dojotoolkit.org/documentation/tutorials/1.10/modules/</a></p>
+<p><strong>[Credit_2:]</strong>: <a href="https://www.oreilly.com/library/view/learning-javascript-design/9781449334840/ch11s02.html" target="_blank" rel="noopener">https://www.oreilly.com/library/view/learning-javascript-design/9781449334840/ch11s02.html</a></p>
+<h2 id="10-When-to-use-document-write"><a href="#10-When-to-use-document-write" class="headerlink" title="10. When to use document.write ?"></a>10. When to use <code>document.write</code> ?</h2><p><code>document.write</code> only works while the page is loading; If you call it after the page is done loading, it will overwrite the whole page.</p>
+<p>The following is an legitimate use of <code>document.write</code> comes from the HTML5 Boilerplate <a href="https://github.com/h5bp/html5-boilerplate/blob/master/src/index.html" target="_blank" rel="noopener">index.html</a> example.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"//ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="xml">window.jQuery || document.write('<span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/libs/jquery-1.6.3.min.js"</span>&gt;</span><span class="xml"><span class="tag">&lt;<span class="name">\</span>/<span class="attr">script</span>&gt;</span>')</span></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="11-HTML-attribute-vs-DOM-property"><a href="#11-HTML-attribute-vs-DOM-property" class="headerlink" title="11. HTML attribute vs DOM property"></a>11. <code>HTML attribute</code> vs <code>DOM property</code></h2><p><strong>Attributes are defined by HTML. Properties are defined by the DOM (Document Object Model).</strong></p>
+<ul>
+<li>A few HTML attributes have 1:1 mapping to properties. <code>id</code> is one example.</li>
+<li>Some HTML attributes don’t have corresponding properties. <code>colspan</code> is one example.</li>
+<li>Some DOM properties don’t have corresponding attributes. <code>textContent</code> is one example.</li>
+<li>Many HTML attributes appear to map to properties … but not in the way you might think!</li>
+</ul>
+<p><strong>Attributes initialize DOM properties and then they are done. Property values can change; attribute values can’t.</strong></p>
+<p>For example, when the browser renders <code>&lt;input type=&quot;text&quot; value=&quot;Bob&quot;&gt;</code>, it creates a corresponding DOM node with a <code>value</code> property initialized to “Bob”.</p>
+<p>When the user enters “Sally” into the input box, the DOM element <code>value</code> <em>property</em> becomes “Sally”. But the HTML <code>value</code> <em>attribute</em> remains unchanged as you discover if you ask the input element about that attribute: <code>input.getAttribute(&#39;value&#39;)</code> returns “Bob”.</p>
+<p><strong>The HTML attribute <code>value</code> specifies the <em>initial</em> value; the DOM <code>value</code> property is the <em>current</em> value.</strong></p>
+<h2 id="12-document-load-vs-document-DOMContentLoaded"><a href="#12-document-load-vs-document-DOMContentLoaded" class="headerlink" title="12. document.load() vs document DOMContentLoaded()"></a>12. <code>document.load()</code> vs <code>document DOMContentLoaded()</code></h2><ul>
+<li><code>DomContentLoaded</code> fires after <code>domcument</code> is created; But css files，images and frame are not yet loaded</li>
+<li><code>load</code> fires after all resources are loaded.</li>
+</ul>
+<h2 id="13-When-to-usePromise-resolve"><a href="#13-When-to-usePromise-resolve" class="headerlink" title="13. When to usePromise.resolve() ?"></a>13. When to use<code>Promise.resolve()</code> ?</h2><p><a href="https://caomingkai.github.io/2018/11/02/Write-Our-Own-Promise/" target="_blank" rel="noopener">refer this article</a></p>
+<p><code>Promise.resolve()</code> will immediately <u>change the status and broadcast the value</u>, skipping the execution of executor. <u>The consumers</u> registered in <code>then()</code> will be invoked immediately.</p>
+<p>So, we can use <code>promise.resolve()</code> , if we wanted to invoke consumers registered in <code>then()</code>, and don’t care the executor.</p>
+<h2 id="14-CSS-preprocessor"><a href="#14-CSS-preprocessor" class="headerlink" title="14. CSS preprocessor"></a>14. CSS preprocessor</h2><p>Why use it?</p>
+<ul>
+<li><p>variables: </p>
+<p><code>font-size: $fontSize;</code></p>
+</li>
+<li><p>nested selector: clear structure and less redundant selectors</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">nav</span> &#123;</span><br><span class="line">  <span class="selector-tag">ul</span> &#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">list-style</span>: none;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="selector-tag">li</span> &#123; <span class="attribute">display</span>: inline-block; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>will be converted to CSS as follows:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">nav</span> <span class="selector-tag">ul</span> &#123;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">list-style</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">nav</span> <span class="selector-tag">li</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: inline-block;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>@mixin</code> and <code>@include</code>:  make groups of CSS declarations that you want to reuse throughout your site</p>
+<p>[<strong><u>Best Practice:</u></strong>] use a mixin to inject dynamic values into repeated constructs</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">mixin</span> transform(<span class="variable">$property</span>) &#123;</span><br><span class="line">  -webkit-<span class="attribute">transform</span>: <span class="variable">$property</span>;</span><br><span class="line">  -ms-<span class="attribute">transform</span>: <span class="variable">$property</span>;</span><br><span class="line">  <span class="attribute">transform</span>: <span class="variable">$property</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.box</span> &#123; @<span class="keyword">include</span> transform(rotate(<span class="number">30deg</span>)); &#125;</span><br></pre></td></tr></table></figure>
+<p>will be converted to CSS as follows:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.box</span> &#123;</span><br><span class="line">  <span class="attribute">-webkit-transform</span>: <span class="built_in">rotate</span>(30deg);</span><br><span class="line">  <span class="attribute">-ms-transform</span>: <span class="built_in">rotate</span>(30deg);</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">rotate</span>(30deg);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>inheritance selector:  <code>%name</code> and <code>@extend</code>: share a set of CSS properties from one selector to another;</p>
+<p>[<strong><u>Best Practice:</u></strong>] Only use <code>@extend</code> when the rulesets that you are trying to DRY out are <u><strong>inherently</strong></u> and <u><strong>thematically related</strong></u></p>
+</li>
+</ul>
+<h2 id="15-HTML-Accessibility"><a href="#15-HTML-Accessibility" class="headerlink" title="15. HTML Accessibility"></a>15. HTML Accessibility</h2><p><u><strong>[Why need it]</strong></u>: </p>
+<pre><code>- not only for &lt;u&gt;people with disability&lt;/u&gt; (better experience), 
+- but also for &lt;u&gt;device with disabilities&lt;/u&gt; (better render)
+</code></pre><ol>
+<li><a href="https://developer.mozilla.org/en-US/docs/Learn/Accessibility/HTML" target="_blank" rel="noopener">semantic HTML</a>. <a href="https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Cross_browser_testing/HTML_and_CSS#Validation" target="_blank" rel="noopener">Validating it</a> is a good start, as is using an <a href="https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Cross_browser_testing/Accessibility#Auditing_tools" target="_blank" rel="noopener">Auditing tool</a>.</li>
+<li>Check that your content makes sense when the CSS is turned off.</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Cross_browser_testing/Accessibility#Using_native_keyboard_accessibility" target="_blank" rel="noopener">keyboard accessible</a>. Test using Tab, Return/Enter, etc.</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Cross_browser_testing/Accessibility#Text_alternatives" target="_blank" rel="noopener">text alternatives</a>. <code>&lt;img alt=&quot;Mingkai Photo /&gt;&quot;</code></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Learn/Accessibility/HTML#Meaningful_text_labels" target="_blank" rel="noopener">element relationships</a>. <code>&lt;label for=&quot;name&quot;&gt;Fill in your name:&lt;/label&gt; &lt;input type=&quot;text&quot; name=&quot;name /&gt;&quot;</code></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Cross_browser_testing/Accessibility#Color_and_color_contrast" target="_blank" rel="noopener">color contrast</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Cross_browser_testing/Accessibility#Hiding_content" target="_blank" rel="noopener">hidden content</a> is visible by screenreaders: Use <code>z-index</code>, instead of <code>visibility: hiden;</code>and <code>display: none</code>.</li>
+<li><strong><u>client-side form validation</u></strong>: Make sure that functionality is usable without JavaScript wherever possible.</li>
+</ol>
+<h2 id="16-data-HTML-syntax-vs-JS-access-vs-CSS-access"><a href="#16-data-HTML-syntax-vs-JS-access-vs-CSS-access" class="headerlink" title="16.  data-*: HTML syntax vs. JS access vs. CSS access"></a>16.  <code>data-*</code>: HTML syntax vs. JS access vs. CSS access</h2><p><strong>credit</strong>: <a href="https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes" target="_blank" rel="noopener">MDN: Using data attributes</a></p>
+<p><code>data-*</code> allow us to store extra information on <u>standard, semantic</u> HTML elements.</p>
+<ul>
+<li><p>HTML syntax: <code>data-columns</code></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">article</span></span></span><br><span class="line"><span class="tag">  <span class="attr">id</span>=<span class="string">"electric-cars"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">data-columns</span>=<span class="string">"3"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">data-index-number</span>=<span class="string">"12314"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">data-parent</span>=<span class="string">"cars"</span>&gt;</span></span><br><span class="line">...</span><br><span class="line"><span class="tag">&lt;/<span class="name">article</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>JS access: <code>dataset</code> (<strong><u>NOTE</u></strong>: dashes are converted to <strong><u>camelCase</u></strong>)</p>
+<p><strong><u>[Read &amp; Write:]</u></strong> each property is a string and can be read and written. In the above case setting <code>article.dataset.columns = 5</code> would change that <u>attribute</u> to <code>&quot;5&quot;</code>.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1st approach: standard (Read &amp; Written)</span></span><br><span class="line"><span class="keyword">const</span> article = <span class="built_in">document</span>.querySelector(<span class="string">'#electric-cars'</span>);</span><br><span class="line">article.dataset.columns <span class="comment">// "3"</span></span><br><span class="line">article.dataset.indexNumber <span class="comment">// "12314"</span></span><br><span class="line">article.dataset.parent <span class="comment">// "cars"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2nd approach: getAttribute() (ONLY Read)</span></span><br><span class="line">article.getAttribute(<span class="string">'data-columns'</span>) <span class="comment">// "3"</span></span><br><span class="line">article.getAttribute(<span class="string">'data-index-number'</span>) <span class="comment">// "12314"</span></span><br><span class="line">article.getAttribute(<span class="string">'data-parent'</span>) <span class="comment">// "cars"</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>CSS access: <code>attr(name)</code> to get attribute value for <code>name</code></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// use case 1:</span><br><span class="line"><span class="selector-tag">article</span><span class="selector-pseudo">::before</span> &#123;</span><br><span class="line">  <span class="attribute">content</span>: <span class="built_in">attr</span>(data-parent);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// use case 2:</span><br><span class="line"><span class="selector-tag">article</span><span class="selector-attr">[data-columns='3']</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">400px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">article</span><span class="selector-attr">[data-columns='4']</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">600px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/10/Do-we-need-PureComponent-in-Redux-project/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1762,258 +2068,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/28/Cryptography-PKI-public-key-infrastructure/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/mingkai.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/12/28/Cryptography-PKI-public-key-infrastructure/" itemprop="url">Cryptography: PKI (public key infrastructure)</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-28T16:02:51-08:00">2018-12-28</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="I-Concepts"><a href="#I-Concepts" class="headerlink" title="I. Concepts"></a>I. Concepts</h2><p><strong><u>PKI:</u></strong> A security architecture that consists of several entities: Certificate Authority (CA), server, client; and covers following techs: public-private key pair, digital certificate, encryption algorithm, hash algorithm, asymmetric/ symmetric encryption</p>
-<p><strong><u>Encryption algorithm:</u></strong> paired with a key to encrypt original message; to decrypt already encrytped message to original message</p>
-<p><u><strong>symmetric encryption: </strong></u> use the same key for encryption/decryption</p>
-<p><strong><u>asymmetric encryption:</u></strong> use public key for encryption; use private key for decryption</p>
-<p><strong><u>hash algorithm:</u></strong> used to convert original message to a fixed length hashed string, which will be used as a unique fingerprint for this particular message. [data integrity]</p>
-<p><u><strong>digital certificate: </strong></u> a certificate like ID, issued  by CA, to prove the holder is the real one as it claims</p>
-<p><strong><u>CA:</u></strong> a well-known, trusted entity, issuing digital certificates/ID to web servers, in order to grant trust to them</p>
-<p><u><strong>server: </strong></u> web servers like amazon.com, being visited by consumers via client; also being issued digital certificate by CA</p>
-<p><u><strong>client: </strong></u> web browsers like Chrome, Firefox, make HTTP request to web server as the client for consumers</p>
-<h2 id="II-Why-do-we-need-PKI"><a href="#II-Why-do-we-need-PKI" class="headerlink" title="II. Why do we need PKI"></a>II. Why do we need PKI</h2><p>In many cases, like email transportation, money transaction, we want the sensitive information to be <strong>secure</strong>, <strong>intact</strong>; We also want the two entities involved to be <strong>authenticated</strong> to be the real ones. Thus we have 3 requirements:</p>
-<ul>
-<li><u>data security</u>: encryption algorithm</li>
-<li><u>data integrity</u>: hash algorithm</li>
-<li><u>identity authentication</u>: digital certificate / CA</li>
-</ul>
-<h2 id="III-Steps-to-evolve-PKI"><a href="#III-Steps-to-evolve-PKI" class="headerlink" title="III. Steps to evolve PKI"></a>III. Steps to evolve PKI</h2><p><strong>Senario</strong>: A customer using Chrome as <u>client</u>, want to make transaction with web <u>server</u> bank.com. To make sensitive info secure, we evolve our PKI to provide data security, then data integrity, and identity authentication.</p>
-<h2 id="IV-symmetric-encryption"><a href="#IV-symmetric-encryption" class="headerlink" title="IV. symmetric encryption"></a>IV. symmetric encryption</h2><ul>
-<li>client &amp; server use symmetric encryption with a same key to communicate</li>
-<li><u>drawback</u>: <ul>
-<li>Hackers can get the shared key when server sends the key to client</li>
-<li>Server cannot safely distribute the shared key to client</li>
-</ul>
-</li>
-</ul>
-<h2 id="V-asymmetric-encryption-RSA"><a href="#V-asymmetric-encryption-RSA" class="headerlink" title="V. asymmetric encryption (RSA)"></a>V. asymmetric encryption (RSA)</h2><ul>
-<li>RSA algorithm: use public key and private key to encrypt info<ul>
-<li>generated at server, </li>
-<li>beginning with 2 large prime numbers, results with 3 prime numbers: <code>n</code>, <code>a</code>, <code>b</code></li>
-<li>public key: <code>n</code>, <code>a</code></li>
-<li>private key: <code>n</code>, <code>b</code></li>
-<li>How to use RSA?<ul>
-<li>original message <code>om</code>, encrypted message <code>em</code></li>
-<li><code>em = om^a % n</code> for encryption using public key: <code>n</code>, <code>a</code></li>
-<li><code>om = em^b % n</code> for decryptin using private key: <code>n</code>, <code>b</code></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Feature: </p>
-<ul>
-<li>only private key can decrypt, public key can only used to encrypt info</li>
-<li>In fact, any one of the two keys can be used to encrypt, but only the other one can decrypt the encrypted message </li>
-<li>private key can also encrypt info, now only public key can decrypt info</li>
-</ul>
-</li>
-<li><p>Steps:</p>
-<ol>
-<li>client request public key from server</li>
-<li>server response the same public key to anyone who request it</li>
-<li>client encrypt original info with public key, send encrypted message to server. Even though intercepted by hacker, he doesn’t have private key, can’t decrypt</li>
-<li>server receive the encrypted info, use private key to decrypt</li>
-</ol>
-</li>
-<li>Solution to first problem: cannot distribute symmetric key securely<ol>
-<li>client &amp; server can use asymmetric encryption to distribute symmetric key</li>
-<li>client request public key from server</li>
-<li>server response the same public key to anyone who request it</li>
-<li>client encrypt <u>symmetric key (</u><strong>symmetric encryption</strong>) with <u>public key (</u><strong>asymmetric encryption</strong>), send encrypted message to server. Even though intercepted by hacker, he doesn’t have private key, can’t get symmetric key</li>
-<li>server receive the encrypted info (<u>symmetric key</u>), use private key to decrypt</li>
-<li>Now, only client (browser) and server know symmetric key, which can be used to communicate.</li>
-</ol>
-</li>
-</ul>
-<h2 id="VI-identity-authentication"><a href="#VI-identity-authentication" class="headerlink" title="VI. identity authentication"></a>VI. identity authentication</h2><ul>
-<li><u>Problem above:</u> client cannot assert the server is the real server it expect. If the conversation is hacked by hacker when client want to request public key from server, then the sensitive info of client will leak to hacker</li>
-<li>So, before we request public key from server, we first authenticate the server is the real one we expect</li>
-<li>How?<ul>
-<li>CA is the authority, trusted by browser/server. It signs certificate for server who apply for, by encrypting certificate info (subject+issuer+valid time+public key of subject) with its own private key. Then encrypted info is the signature </li>
-<li>web <u>server</u> has a digital certificate (ID) issued by <u>CA</u>, used for <u>client/browser</u> to check its identity. Server will first send its digital signature to client before sending its public key</li>
-<li>client/browser has a local list of CA and its public key. When request public key from server, it first check the validity of server’s digital certificate, using the public key of the issuer listed on the certificate. If the decrypted info matches, it trust the server. Otherwist, the server is bad!</li>
-</ul>
-</li>
-</ul>
-<h2 id="VII-data-integrity"><a href="#VII-data-integrity" class="headerlink" title="VII. data integrity"></a>VII. data integrity</h2><ul>
-<li>another problem: even though hackers cannot see the original info, they can still modify encrypted info, sometimes the modified info is still meaningful, but is not what we want</li>
-<li>Solution: <u><strong>fingerprint</strong></u><ul>
-<li>human kind uses <u>fingerprint</u> to uniquely identify a person, instead of all kinds of features of this person. It is short, and easy to check</li>
-<li>In fact, it is a way to convert massive info to unique short info</li>
-<li>For message, we use <u>hash algorithm</u> to get the fingerprint of that message. 4 features of hash algorithm:<ul>
-<li><u>fixed length</u>, short</li>
-<li><u>avalanche effect</u>: minor different in original message can lead to significant difference in fingerprints</li>
-<li><u>no collision</u>: two different messages shouldn’t share same fingerprint</li>
-<li><u>uniqueness</u>: two fingerprints shouldn’t be calculted by one message</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Steps:<ol>
-<li>server hashes message using a hash algorithm, then append the hashed fingerprint and hash algorithm. It then encryptes the 3 items using private key, and sends to clients</li>
-<li>clients receive message from server, decrypt message using public key, obtaining original message, hashed result, hash algorithm. Client use the same algorithm to hash original message, and compared the result with the hashed result calculated by server. If they are the same, the message is intact. </li>
-<li>Even though hacker can modify message, we can use hash result as fingerprint to check if the message is intact</li>
-</ol>
-</li>
-</ul>
-<h2 id="VIII-Summary"><a href="#VIII-Summary" class="headerlink" title="VIII. Summary"></a>VIII. Summary</h2><p>PKI provides secure information transfer, used in either <strong>SSL</strong>(Secure Socket Layer) or <strong>TLS</strong>(Transport Layer Security). It involves 3 technologies: </p>
-<ul>
-<li><u>symmetric/asymmetric encryption</u>: secured information transfer</li>
-<li><u>hash algorithm</u>: data integrity</li>
-<li><u>digital certificate</u>: server authentication, to prove the server is the authentic one</li>
-</ul>
-<p>When you request a HTTPS connection to a webpage, the website will initially send its SSL certificate to your browser. This certificate contains the public key needed to begin the secure session. Based on this initial exchange, your browser and the website then initiate the ‘SSL handshake’. The SSL handshake involves the generation of shared secrets to establish a uniquely secure connection between yourself and the website.</p>
-<p>When a trusted SSL Digital Certificate is used during a <a href="https://www.instantssl.com/https-tutorials/what-is-https.html?entryURL=https%3A//www.instantssl.com/ssl-certificate-products/https.html&amp;referrerURL=https%3A//www.google.com/" target="_blank" rel="noopener">HTTPS</a> connection, users will see a padlock icon in the browser address bar. When an Extended Validation Certificate is installed on a web site, the address bar will turn green.</p>
-<h2 id="IX-References"><a href="#IX-References" class="headerlink" title="IX. References"></a>IX. References</h2><ol>
-<li><a href="https://www.instantssl.com/ssl-certificate-products/https.html" target="_blank" rel="noopener">https://www.instantssl.com/ssl-certificate-products/https.html</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Public_key_infrastructure" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Public_key_infrastructure</a></li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -2060,7 +2119,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">80</span>
+                    <span class="site-state-item-count">81</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2364,7 +2423,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">132</span>
+                      
+                    
+                    <span class="site-state-item-count">133</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

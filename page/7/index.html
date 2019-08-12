@@ -332,6 +332,211 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/13/How-Does-Kernel-Handle-System-Calls/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/mingkai.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/13/How-Does-Kernel-Handle-System-Calls/" itemprop="url">How Does Kernel Handle System Calls</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-13T11:52:25-07:00">2018-04-13</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Courses/" itemprop="url" rel="index"><span itemprop="name">Courses</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="I-An-Example-read"><a href="#I-An-Example-read" class="headerlink" title="I. An Example: read( )"></a>I. An Example: read( )</h2><ol>
+<li><strong>User space:</strong> User process makes <code>read()</code> system call</li>
+<li><strong>Interrupt:</strong> This will <strong>trap</strong> into kernel by <strong>software interrupt</strong></li>
+<li><strong>System API:</strong> Kernel executes its <code>interrupt handler</code>, in which <code>sys_read() API</code> will be called<ul>
+<li><code>copy_from_user()</code> the read_args(fd/buff/…)</li>
+<li><code>page_alloc()</code> a temporary buffer</li>
+<li>call <code>do_read()</code>, and <code>copy_to_user()</code> the read bytes</li>
+<li><code>page_free()</code> that buffer</li>
+<li>return the number of bytes actually read, or if anything goes wrong</li>
+</ul>
+</li>
+<li><strong>File system API</strong>: Specific file system function <code>do_read()</code> will be executed.<ul>
+<li>注意：<code>do_read()</code>是 file system 的 system call</li>
+</ul>
+</li>
+</ol>
+<h2 id="II-System-API-for-file-operation"><a href="#II-System-API-for-file-operation" class="headerlink" title="II. System API for file operation"></a>II. System API for file operation</h2><h4 id="1-System-Read-API"><a href="#1-System-Read-API" class="headerlink" title="1. System Read API"></a>1. System Read API</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_read</span><span class="params">(<span class="keyword">read_args_t</span> *arg)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line">kernel “读”操作的API，自此由kernel执行一系列“读”相关的操作</span><br><span class="line"></span><br><span class="line">输入：arg，包含了user process read()的所有参数</span><br><span class="line">输出：实际读出的字节数</span><br></pre></td></tr></table></figure>
+<ol>
+<li>作为 interrupt routine 被调用；发生于 user process <code>read()</code> leading to <em>trap as software interrupt</em> into kernel 的时候</li>
+<li><code>copy_from_user()</code> 读取 user process <code>read()</code>的传入参数</li>
+<li>在 kernel address space 分配一块buffer，作为临时接收数据的区域</li>
+<li>调用 file system 的 <code>do_read()</code>，从 disk 中 读取数据到 buffer</li>
+<li><code>copy_to_user()</code>,将buffer 中读取到的数据 copy 到 user address space（低地址空间 0xc0000000 - 0xc0000000）</li>
+<li><code>page_free()</code>,将 buffer 释放</li>
+<li>根据 file system 读取的结果，返回ERROR 或者 读取的字节数</li>
+</ol>
+<h4 id="2-System-Write-API"><a href="#2-System-Write-API" class="headerlink" title="2. System Write API"></a>2. System Write API</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_write</span><span class="params">(<span class="keyword">write_args_t</span> *arg)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line">kernel “写”操作的API，自此由kernel执行一系列“写”相关的操作</span><br><span class="line"></span><br><span class="line">输入：arg，包含了user process write()的所有参数</span><br><span class="line">输出：实际写入的字节数</span><br></pre></td></tr></table></figure>
+<ol>
+<li>在kernel address space 开辟临时buffer，读取放置user 要写的数据</li>
+<li>从 user address space 拷贝 <code>read()</code> 输入参数，包括要写的数据</li>
+<li>调用 file system 的<code>do_write()</code>操作， write to disk</li>
+<li>释放 kernel address space 的临时 buffer</li>
+<li>返回ERROR 或者 写入的字符数</li>
+</ol>
+<h4 id="3-System-Get-Directory-Entry"><a href="#3-System-Get-Directory-Entry" class="headerlink" title="3. System Get Directory Entry"></a>3. System Get Directory Entry</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">do_getdent</span><span class="params">(<span class="keyword">int</span> fd, struct dirent *dirp)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line">对目录文件的操作，比如：</span><br><span class="line">- 获得位于指定字节数位置的子目录entry</span><br><span class="line">- 显示某个文件夹下所有子目录名称、大小等信息</span><br><span class="line"></span><br><span class="line">输入：fd(要读取的文件指针)、dirp(目标dir entry的容器)</span><br><span class="line">输出：count_bytes</span><br></pre></td></tr></table></figure>
+<ol>
+<li><code>copy_from_user()</code>从 user address space 读取参数到 kernel address space（从而知道用户都想干些啥？） </li>
+<li>循环调用 <code>do_getdent()</code> 以及 <code>copy_to_user()</code>，直到达到user process 指定的 字节数目<ul>
+<li><code>do_getdent()</code> 调用 file system API 读取目录，并将结果放在 dir 中</li>
+<li><code>copy_to_user()</code>将 dir 中的信息 copy 到 user address space 中去；这样就会在用户的 fd 下逐渐显示出读入的 sub dir entry 的名字、大小等信息</li>
+<li>读入的 count_bytes &gt;= user_args.count 时，跳出循环</li>
+</ul>
+</li>
+<li>返回实际读取到的目录所占字节数 count_bytes</li>
+</ol>
+<h4 id="4-Other-System-APIs-related-to-File-System"><a href="#4-Other-System-APIs-related-to-File-System" class="headerlink" title="4. Other System APIs related to File System"></a>4. Other System APIs related to File System</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_close</span><span class="params">(<span class="keyword">int</span> fd)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_dup</span><span class="params">(<span class="keyword">int</span> fd)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_dup2</span><span class="params">(<span class="keyword">const</span> <span class="keyword">dup2_args_t</span> *arg)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_mkdir</span><span class="params">(<span class="keyword">mkdir_args_t</span> *arg)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_rmdir</span><span class="params">(<span class="keyword">argstr_t</span> *arg)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_unlink</span><span class="params">(<span class="keyword">argstr_t</span> *arg)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_link</span><span class="params">(<span class="keyword">link_args_t</span> *arg)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_rename</span><span class="params">(<span class="keyword">rename_args_t</span> *arg)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_chdir</span><span class="params">(<span class="keyword">argstr_t</span> *arg)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_lseek</span><span class="params">(<span class="keyword">lseek_args_t</span> *args)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_open</span><span class="params">(<span class="keyword">open_args_t</span> *arg)</span></span></span><br></pre></td></tr></table></figure>
+<p>以上的 system API 都与 file system 有关。都经过以下过程：</p>
+<ol>
+<li>User process makes system call: <code>read()</code></li>
+<li>Traps into kernel as software interrupt: <code>interrupt handler</code></li>
+<li>Kernel execute corresponding API: <code>sys_read()</code></li>
+<li>Copy from user address space parameters into kernel address space</li>
+<li>Ask File System to complete relavent operation: <code>do_read()</code></li>
+<li>Copy to user address space with the result at kernel address space</li>
+</ol>
+<h2 id="III-Other-System-API-related-to-Virtual-Memory-System"><a href="#III-Other-System-API-related-to-Virtual-Memory-System" class="headerlink" title="III. Other System API related to Virtual Memory System"></a>III. Other System API related to Virtual Memory System</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_munmap</span><span class="params">(<span class="keyword">munmap_args_t</span> *args)</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">sys_mmap</span><span class="params">(<span class="keyword">mmap_args_t</span> *arg)</span></span></span><br><span class="line"><span class="function">pid_t <span class="title">sys_waitpid</span><span class="params">(<span class="keyword">waitpid_args_t</span> *args)</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">sys_brk</span><span class="params">(<span class="keyword">void</span> *addr)</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sys_sync</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_stat</span><span class="params">(<span class="keyword">stat_args_t</span> *arg)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_fork</span><span class="params">(<span class="keyword">regs_t</span> *regs)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_execve</span><span class="params">(<span class="keyword">execve_args_t</span> *args, <span class="keyword">regs_t</span> *regs)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sys_kshell</span><span class="params">(<span class="keyword">int</span> ttyid)</span></span></span><br></pre></td></tr></table></figure>
+<p>这些函数与“用户态” Process/ Thread/ Virtual Memory 的操作有关：</p>
+<ol>
+<li>由 user process 发起的 system call： <code>wait()</code></li>
+<li>经过software interrupt trap into kernel</li>
+<li>kernel 在调用相应的 system API，代替 user process 执行任务: <code>sys_waitpid()</code></li>
+<li>交给“进程系统” Process&amp; Memory System，来具体处理任务：<code>do_waitpid()</code></li>
+</ol>
+<h2 id="VI-Interrupt-handler-for-syscalls"><a href="#VI-Interrupt-handler-for-syscalls" class="headerlink" title="VI. Interrupt handler for syscalls"></a>VI. Interrupt handler for syscalls</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">syscall_handler</span><span class="params">(<span class="keyword">regs_t</span> *regs)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line">很重要的一个函数：</span><br><span class="line"><span class="number">1.</span> 使“用户态”程序在 make syscall 的时候，进入“内核态”</span><br><span class="line"><span class="number">2.</span> 根据 syscall_number，调用相应的 system API</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/12/page-frame/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2498,183 +2703,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/30/Tasks-assignment-Kernel-Virtual-File-System/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/mingkai.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/30/Tasks-assignment-Kernel-Virtual-File-System/" itemprop="url">Tasks assignment: Kernel Virtual File System</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-30T01:16:38-07:00">2018-03-30</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Courses/" itemprop="url" rel="index"><span itemprop="name">Courses</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Knowledge-frame"><a href="#Knowledge-frame" class="headerlink" title="Knowledge frame"></a>Knowledge frame</h2><p><a href="https://workflowy.com/s/HdnT.WkLWxpmsKu" target="_blank" rel="noopener">Useful Link 1 on <strong><em>Workflowy</em></strong></a> </p>
-<p><a href="https://www.usna.edu/Users/cs/wcbrown/courses/IC221/classes/L09/Class.html" target="_blank" rel="noopener">Useful Link 2 on <strong><em>USNA</em></strong></a>   </p>
-
-<img src="/2018/03/30/Tasks-assignment-Kernel-Virtual-File-System/3_tables.jpg">
-<img src="/2018/03/30/Tasks-assignment-Kernel-Virtual-File-System/OFT.jpg">
-<h2 id="Tasks-allocation"><a href="#Tasks-allocation" class="headerlink" title="Tasks allocation"></a>Tasks allocation</h2><h4 id="1-vnode-c"><a href="#1-vnode-c" class="headerlink" title="1. vnode.c"></a>1. vnode.c</h4><pre><code>A: special_file_read()
-A: special_file_write()
-</code></pre><h4 id="2-name-c"><a href="#2-name-c" class="headerlink" title="2. name.c"></a>2. name.c</h4><pre><code>A: lookup()
-A: dir_namev()
-A: open_namev()
-</code></pre><h4 id="3-open-c"><a href="#3-open-c" class="headerlink" title="3. open.c"></a>3. open.c</h4><pre><code>A: do_open()
-</code></pre><h4 id="4-vfs-syscall-c"><a href="#4-vfs-syscall-c" class="headerlink" title="4. vfs_syscall.c"></a>4. vfs_syscall.c</h4><pre><code>A: do_close()
-
-B: do_read()
-B: do_write()
-B: do_dup()
-B: do_dup2()
-
-C: do_mknod()
-C: do_mkdir()
-C: do_rmdir()
-C: do_unlink()
-C: do_link()
-
-D: do_rename()
-D: do_chdir()
-D: do_getdent()
-D: do_lseek()
-D: do_stat()
-</code></pre><h4 id="5-main-c"><a href="#5-main-c" class="headerlink" title="5. main.c"></a>5. main.c</h4><pre><code>idleproc_run() ：2 
-</code></pre><h4 id="6-proc-c"><a href="#6-proc-c" class="headerlink" title="6. proc.c"></a>6. proc.c</h4><pre><code>proc_create()
-</code></pre>
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -2721,7 +2754,7 @@ D: do_stat()
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">80</span>
+                    <span class="site-state-item-count">81</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -3025,7 +3058,9 @@ D: do_stat()
                     
                       
                     
-                    <span class="site-state-item-count">132</span>
+                      
+                    
+                    <span class="site-state-item-count">133</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

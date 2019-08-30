@@ -384,7 +384,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-Stack/" itemprop="url" rel="index"><span itemprop="name">Full Stack</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
 
                 
                 
@@ -891,6 +891,20 @@
 <li><h3 id="CSS-HTML"><a href="#CSS-HTML" class="headerlink" title="CSS + HTML"></a><u><strong>CSS + HTML</strong></u></h3><ol>
 <li><p>Accessibility: ARIA</p>
 <ol>
+<li><p>checklist:</p>
+<ol>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles" target="_blank" rel="noopener">Check ARIA roles here</a></li>
+<li><code>&lt;img alt=&quot;&quot; &gt;</code></li>
+<li><code>&lt;div tabindex=&#39;0&#39; &gt;</code> keyboard nav using <strong><u>tab</u></strong></li>
+<li><code>&lt;p tabindex=&#39;-1&#39;&gt;</code> keyboard focus using <strong><u>arrow</u></strong> (since children will also be tabable if parent is <code>tabindex=&#39;0&#39;</code> )</li>
+<li><code>&lt;label for=&#39;name input&#39;&gt;</code>  <code>&lt;div aria-labelledby=&#39;title&#39;&gt;</code></li>
+<li><code>&lt;div role=&#39;menu&#39;&gt;</code></li>
+<li><code>&lt;div aria-valuemax=&#39;100&#39;&gt;</code> <code>&lt;div aria-valuenow=&#39;78&#39;&gt;</code></li>
+<li><code>&lt;span aria-checked=&#39;false&#39;&gt;</code></li>
+<li><code>&lt;input aria-required=&#39;true&#39;&gt;</code></li>
+<li><code>&lt;span role=&#39;alert&#39;&gt;</code></li>
+</ol>
+</li>
 <li><p>In HTML5, all ARIA attributes validate. The new landmark elements (<code>&lt;main&gt;</code>, <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code> etc) have built-in ARIA roles, so <strong>there is no need to duplicate them</strong>.</p>
 </li>
 <li><p>温度计</p>
@@ -989,8 +1003,30 @@
 <li><p>AJAX</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">xhr.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (xhr.readyState = <span class="number">4</span> &amp;&amp; xhr.status == <span class="number">200</span>) &#123;</span><br><span class="line">    <span class="comment">// manipulate DOM</span></span><br><span class="line">    <span class="built_in">console</span>.log(xhr.responseText);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(xhr.status);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">xhr.open(<span class="string">"GET"</span>, url, <span class="literal">true</span>);</span><br><span class="line">xhr.send();</span><br></pre></td></tr></table></figure>
 </li>
+<li><p>How to lazy load <code>&lt;img&gt;</code> &amp; how to avoid unnecessary traffic?</p>
+<ol>
+<li><p>Browser first download, and then use image in document</p>
+</li>
+<li><p><code>new Image()</code>: The <strong>Image()</strong> constructor creates a new <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement" target="_blank" rel="noopener"><code>HTMLImageElement</code></a> instance. It is functionally equivalent to <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/createElement" target="_blank" rel="noopener"><code>document.createElement(&#39;img&#39;)</code></a>.</p>
+</li>
+<li><p><code>img.onload</code></p>
+</li>
+<li><p><code>data-imgSrc</code> &lt;=&gt; <code>e.dataset.imgSrc</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// Page is loaded</span></span><br><span class="line">  <span class="keyword">const</span> objects = <span class="built_in">document</span>.getElementsByClassName(<span class="string">'asyncImage'</span>);</span><br><span class="line">  <span class="built_in">Array</span>.from(objects).map(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// Start loading image</span></span><br><span class="line">    <span class="keyword">const</span> img = <span class="keyword">new</span> Image();</span><br><span class="line">    img.src = item.dataset.src;</span><br><span class="line">    <span class="comment">// Once image is loaded replace the src of the HTML element</span></span><br><span class="line">    img.onload = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      item.classList.remove(<span class="string">'asyncImage'</span>);</span><br><span class="line">      <span class="keyword">return</span> item.nodeName === <span class="string">'IMG'</span> ? </span><br><span class="line">        item.src = item.dataset.src :        </span><br><span class="line">        item.style.backgroundImage = <span class="string">`url(<span class="subst">$&#123;item.dataset.src&#125;</span>)`</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+</li>
 </ol>
-<ol start="3">
+</li>
+</ol>
+<pre><code>5. `onscroll` lazy load
+
+   <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> lazyImages= [...document.querySelectorAll(<span class="string">'.lazy-image'</span>)];</span><br><span class="line"><span class="keyword">let</span> inAdvance = <span class="number">300</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">lazyLoad</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	lazyImages.forEach(<span class="function"><span class="params">image</span> =&gt;</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> (image.offsetTop &lt; <span class="built_in">window</span>.innerHeight + <span class="built_in">window</span>.scrollY + inAdvance) &#123;</span><br><span class="line">			image.src = image.dataset.src;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">lazyLoad();</span><br><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'scroll'</span>, _.throttel(lazyLoad, <span class="number">50</span>));</span><br><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'resize'</span>, _.throttel(lazyLoad, <span class="number">50</span>));</span><br></pre></td></tr></table></figure>
+
+6. NEVER set `&lt;img src=&quot;&quot;&gt;`: will load this page 2nd time
+
+7. 
+
+   <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="</span> <span class="attr">data-src</span>=<span class="string">"https://images.unsplash.com/photo-1524654458049-e36be0721fa2?ixlib=rb-0.3.5&amp;q=85&amp;fm=jpg&amp;crop=entropy&amp;cs=srgb&amp;ixid=eyJhcHBfaWQiOjE0NTg5fQ&amp;s=1a6782be5cdb94b780ed9d4a79de7041"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">// These styles keep the aspect ratio of img.</span></span><br><span class="line"><span class="undefined">img &#123;</span></span><br><span class="line"><span class="undefined">  max-width: 100%;</span></span><br><span class="line"><span class="undefined">  height: auto;</span></span><br><span class="line"><span class="undefined">  margin: 0 0 1rem;</span></span><br><span class="line"><span class="undefined">  border: 4px solid orange;</span></span><br><span class="line"><span class="undefined">  box-sizing: border-box;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">  [...document.querySelectorAll(<span class="string">'[data-src]'</span>)]</span></span><br><span class="line"><span class="javascript">    .map(<span class="function"><span class="params">img</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">    img.addEventListener(<span class="string">'click'</span>, e =&gt; &#123;</span></span><br><span class="line"><span class="undefined">      img.src = img.dataset.src)</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">  &#125;)</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</code></pre><ol start="3">
 <li><h3 id="JS-Lib-scroll-API"><a href="#JS-Lib-scroll-API" class="headerlink" title="JS Lib: (scroll + API)"></a><u>JS Lib:</u> (scroll + API)</h3><ol>
 <li><p>Write a Promise (then, catch, finally)</p>
 </li>
@@ -2463,9 +2499,7 @@
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>

@@ -332,6 +332,240 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/18/VM-Virtual-memory-File-system-Memory-object-in-VM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/mingkai.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/18/VM-Virtual-memory-File-system-Memory-object-in-VM/" itemprop="url">VM: Virtual memory + File system = Memory object(in VM)</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-18T15:07:05-07:00">2018-04-18</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Courses/" itemprop="url" rel="index"><span itemprop="name">Courses</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="I-Virtual-memory-amp-File-system"><a href="#I-Virtual-memory-amp-File-system" class="headerlink" title="I. Virtual memory &amp; File system"></a>I. Virtual memory &amp; File system</h2><h4 id="1-file可以直接映射进memory，更快，但无cache。"><a href="#1-file可以直接映射进memory，更快，但无cache。" class="headerlink" title="1. file可以直接映射进memory，更快，但无cache。"></a>1. file可以直接映射进memory，更快，但无cache。</h4><h4 id="2-从disk读取文件有两种方法：read-and-mmap"><a href="#2-从disk读取文件有两种方法：read-and-mmap" class="headerlink" title="2. 从disk读取文件有两种方法：read() and mmap()"></a>2. 从disk读取文件有两种方法：<code>read()</code> and <code>mmap()</code></h4><ul>
+<li>read(): <ul>
+<li>user process： 系统调用<code>read()</code>，trap into kernel</li>
+<li>kernel： 执行interrupt handler，调用do_read()；继而调用 file system的 read() 指令</li>
+<li>kernel space：读入的内容放到 kernel address space</li>
+<li>user space： kernel 将内容copy到 user address space</li>
+</ul>
+</li>
+<li>mmap(): <ul>
+<li>user process：系统调用<code>mmap()</code>，trap into kernel</li>
+<li>kernel ：执行interrupt handler，调用 do_mmap()；继而调用 file system 的 mmap() 指令</li>
+<li>user space： kernel 直接将 file 映射到 user address space中</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-file-system-中的-vnode-结构体："><a href="#3-file-system-中的-vnode-结构体：" class="headerlink" title="3. file system 中的 vnode 结构体："></a>3. file system 中的 vnode 结构体：</h4><pre><code>- 对应一个电脑文件系统中的一个 file
+- 其中还有一个 mmobj vn_mmobj 结构体： 是该file到address space 中的映射。 mmobj 包含：
+    + mmo_operations
+        - lookuppage：根据[mmobj:page#], 找对应的 pframe
+        - fillpage：将 disk file 内容加载到 pframe
+        - dirtypage：将该 mmobj 指定的 pframe 设置为 dirty
+        - cleanpage：将该 mmobj指定的 pframe 清楚
+        - ref
+        - put
+    + mmo_refcount
+    + mmo_resident_pages
+- vnode 为抽象的 inode，来实现 polymophism。也有与file 相关的 operations：
+    + read
+    + write
+    + mmap(): 注意这个mmap 是vnode层面的function；**实际上返回的是 vnode-&gt;vn\_mmobj; 而这个vn\_mmobj则是通过上述的fillpage()实际将 disk 中的数据加载进 pframe**
+</code></pre><h2 id="II-vmmap-c"><a href="#II-vmmap-c" class="headerlink" title="II. vmmap.c"></a>II. vmmap.c</h2><h4 id="1-vmmap-lookup"><a href="#1-vmmap-lookup" class="headerlink" title="1. vmmap_lookup"></a>1. vmmap_lookup</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">vmarea_t</span> * vmmap_lookup(<span class="keyword">vmmap_t</span> *<span class="built_in">map</span>, <span class="keyword">uint32_t</span> vfn)</span><br><span class="line"></span><br><span class="line"><span class="function">Find the vm_area that <span class="title">vfn</span><span class="params">(<span class="keyword">virtual</span> frame number)</span> lies in</span></span><br></pre></td></tr></table></figure>
+<h4 id="2-vmmap-map"><a href="#2-vmmap-map" class="headerlink" title="2. vmmap_map"></a>2. vmmap_map</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">vmmap_map(<span class="keyword">vmmap_t</span> *<span class="built_in">map</span>, <span class="keyword">vnode_t</span> *file, </span><br><span class="line">          <span class="keyword">uint32_t</span> lopage, <span class="keyword">uint32_t</span> npages, </span><br><span class="line">          <span class="keyword">int</span> prot, <span class="keyword">int</span> flags, <span class="keyword">off_t</span> off, </span><br><span class="line">          <span class="keyword">int</span> dir, <span class="keyword">vmarea_t</span> **<span class="keyword">new</span>)</span><br><span class="line">- <span class="built_in">map</span> 为cur process 的地址空间</span><br><span class="line">- file 为被映射到虚拟内存的 vnode/shadow/anonymous obj</span><br><span class="line">- lopage、npages 指明从地址空间的什么具体位置开始映射、映射长度</span><br><span class="line">- prot、flag、off 指明 vmarea 的 read/write、<span class="keyword">public</span>/<span class="keyword">private</span>、 vmarea的起始地址</span><br><span class="line">- <span class="keyword">new</span> 为接收 映射file到虚拟内存的 mapped\_file\_obj 的指针</span><br><span class="line"></span><br><span class="line">【注意】该函数被 system API:do_mmap()调用；完成</span><br></pre></td></tr></table></figure>
+<p>将指定的 file(anonymous／shadow) 映射map到该进程的“地址空间”address space中；经历一下步骤：</p>
+<ol>
+<li><p>现在cur_proc的地址空间中开辟一块 vmarea </p>
+<ul>
+<li>if lopage=0: 开辟一个新的 vmarea</li>
+<li>if lopage!=0: 如果该位置已经被别的vmarea占用，那么删除就的vmarea</li>
+</ul>
+</li>
+<li><p>对刚获得的 vmarea 赋值：</p>
+<ul>
+<li>newvma-&gt;vma_start = lopage;</li>
+<li>newvma-&gt;vma_end = lopage + npages;</li>
+<li>newvma-&gt;vma_off = ADDR_TO_PN(off);</li>
+<li>newvma-&gt;vma_prot = prot;</li>
+<li>newvma-&gt;vma_flags = flags;</li>
+<li>list_link_init(&amp;newvma-&gt;vma_plink);</li>
+<li>list_link_init(&amp;newvma-&gt;vma_olink);</li>
+</ul>
+</li>
+<li><p>创建 mmobj（<strong>这是 vmarea 存在的意义</strong>）</p>
+<ul>
+<li>if file==NULL: mmobj为新创建的 anonymous obj;<br><code>mmobj = anon_create();</code></li>
+<li>if file!=NULL: mmobj为从vnode读入的 mmobj;<br><code>file-&gt;vn_ops-&gt;mmap(file, newvma, &amp;mmobj);</code></li>
+<li>判断是否需要创建 shadow obj<br><code>if MAP_PRIVATE &amp; flags != 0</code> 需要在 mmobj内部创建 shadow obj</li>
+</ul>
+</li>
+<li><p>将mmobj 链接到 vmarea上；<code>newvma-&gt;vma_obj = mmobj;</code></p>
+</li>
+<li><p>将vmarea 插入到 cur_proc 的 地址空间 map 中</p>
+</li>
+</ol>
+<h4 id="3-vmmap-remove"><a href="#3-vmmap-remove" class="headerlink" title="3. vmmap_remove()"></a>3. vmmap_remove()</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">vmmap_remove</span><span class="params">(<span class="keyword">vmmap_t</span> *<span class="built_in">map</span>, <span class="keyword">uint32_t</span> lopage, <span class="keyword">uint32_t</span> npages)</span></span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>删除虚拟内存/virtual address 中的对应的 mmobj</li>
+<li>并删除相应 page table entry，相当于释放物理内存</li>
+</ol>
+<h4 id="4-vmmap-is-range-empty"><a href="#4-vmmap-is-range-empty" class="headerlink" title="4. vmmap_is_range_empty"></a>4. vmmap_is_range_empty</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">vmmap_is_range_empty</span><span class="params">(<span class="keyword">vmmap_t</span> *<span class="built_in">map</span>, <span class="keyword">uint32_t</span> startvfn, <span class="keyword">uint32_t</span> npages)</span></span></span><br></pre></td></tr></table></figure>
+<p>判断指定的一段pages 在否在虚拟内存中未被占用</p>
+<h4 id="5-vmmap-read"><a href="#5-vmmap-read" class="headerlink" title="5. vmmap_read"></a>5. vmmap_read</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">vmmap_read</span><span class="params">(<span class="keyword">vmmap_t</span> *<span class="built_in">map</span>, <span class="keyword">const</span> <span class="keyword">void</span> *vaddr, <span class="keyword">void</span> *buf, <span class="keyword">size_t</span> count)</span></span></span><br></pre></td></tr></table></figure>
+<p>从 cur_proc 当前地址空间map中指定的vaddr开始，读取“内存”中大小为count的内容到指定的 “内存”buf 中（<strong>因为这里的“内存”是虚拟内存，必须要借助pframe_lookup()读取physical memory的值</strong>）</p>
+<ol>
+<li>循环执行以下步骤，直到读取字节数 达到count 数量；<ul>
+<li>注意：因为count 是字节数，而 address space 中以 page 为单位；并且page之间并非一直连续，是由 vmarea 链接而成；因此需要遍历 地址空间逐个vmarea、逐个page 读取</li>
+</ul>
+</li>
+<li>在 address space 中查找 start vaddr所属的 vmarea</li>
+<li>获得该 vmarea 中所包含的 pages</li>
+<li>循环读取所有 pages，memcpy到指定buf<ul>
+<li>调用<code>pframe_lookup()</code> 找到 virtual page 的 physical page </li>
+<li>注意1：如果之前并没有 mapped physical address；那么会调用<code>pframe_get()</code> 即刻map一个physical address</li>
+<li>注意2: 这里的 physical address 并非真正的，而依然是存在kernel address space 的 virtual address</li>
+<li>调用 <code>memcpy()</code>将对应的pframe中的内容copy到指定的buf中去</li>
+<li>注意3:因为<code>memcpy()</code>是C语言库函数，这里实际上还是“virtual address”之间的内容拷贝。很有可能在<code>memcpy()</code>实现了“virtual address to physical address”的转换</li>
+</ul>
+</li>
+<li>直到该vmarea所有pages都copy完<ul>
+<li>if count 未满足，则跳到下一个vmarea继续拷贝</li>
+<li>if count 满足，则退出</li>
+</ul>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/14/Virtual-Memory-Allocation-brk-and-mmap/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2471,236 +2705,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/01/File-System-Name-Resolution/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/mingkai.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/01/File-System-Name-Resolution/" itemprop="url">FS - File System: Name Resolution</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-01T12:21:30-07:00">2018-04-01</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Courses/" itemprop="url" rel="index"><span itemprop="name">Courses</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="lookup"><a href="#lookup" class="headerlink" title="lookup()"></a>lookup()</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int lookup(vnode_t *dir,  char *name, </span><br><span class="line">           size_t   len,  vnode_t **result)</span><br></pre></td></tr></table></figure>
-<h4 id="1-使-vnode-“活”起来"><a href="#1-使-vnode-“活”起来" class="headerlink" title="1. 使 vnode “活”起来"></a>1. 使 vnode “活”起来</h4><p>lookup()、vget()、ramfs_read_vnode() 一起使 vnode “活起来，成为完整 vnode”</p>
-<h4 id="2-lookup-流程："><a href="#2-lookup-流程：" class="headerlink" title="2. lookup 流程："></a>2. lookup 流程：</h4><p>在给定的 dir_vnode 下，查找是否存在名字是”name”的 vnode</p>
-<ul>
-<li>先调用 <strong><em>ramfs_lookup( )</em></strong> 查找 dir_vnode 下是否有相应 entry</li>
-<li>后根据 entry.ino，调用<strong><em>vget(fs,ino)</em></strong> 查找该 inode_num对应的 inode<ol>
-<li>if exist, 更新 refcount， 直接返回 vnode</li>
-<li>if none, 创建 new vnode，填充部分信息；传给ramfs_read_vnode()</li>
-</ol>
-</li>
-<li>调用 <strong><em>ramfs_read_vnode( )</em></strong> 获得完整vnode</li>
-</ul>
-<h4 id="3-name-resolution-虚实连接、递归查找"><a href="#3-name-resolution-虚实连接、递归查找" class="headerlink" title="3. name resolution: 虚实连接、递归查找"></a>3. name resolution: 虚实连接、递归查找</h4><ul>
-<li>lookup() 会调用 ramfs_lookup (a specific FS)，由AFS代为查找</li>
-<li>递归进行name resolution：查找到相应的inode之后，继续以得到的inode查找下一个那么，</li>
-</ul>
-<h2 id="dir-namev"><a href="#dir-namev" class="headerlink" title="dir_namev()"></a>dir_namev()</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int dir_namev(const char *pathname, size_t *namelen, </span><br><span class="line">              const char **name, vnode_t *base, </span><br><span class="line">              vnode_t **res_vnode)</span><br></pre></td></tr></table></figure>
-<h4 id="1-man-dirname"><a href="#1-man-dirname" class="headerlink" title="1. man dirname"></a>1. man dirname</h4><blockquote>
-<p>it deletes the filename portion, beginning with the last slash ‘/‘ character to the end of string (after first stripping trailing slashes), and writes the result to the standard output.</p>
-</blockquote>
-<ul>
-<li>提取 pathname 的 <strong>parent directory inode</strong>；  </li>
-<li>同时保存最后一级 <strong>directory/file 的 name</strong>  </li>
-</ul>
-<h4 id="2-三个例子："><a href="#2-三个例子：" class="headerlink" title="2. 三个例子："></a>2. 三个例子：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1. 正常情况</span><br><span class="line">$ dirname /Users/kevin/Desktop/html-DOM.jpg </span><br><span class="line">/Users/kevin/Desktop</span><br><span class="line"></span><br><span class="line">2. 即便文件名字后边有 “／”，会先将“／”去掉</span><br><span class="line">$ dirname /Users/kevin/Desktop/html-DOM.jpg/</span><br><span class="line">/Users/kevin/Desktop</span><br><span class="line"></span><br><span class="line">3. 不但对文件(file)适用，对目录(directory)也适用</span><br><span class="line">$ dirname /Users/kevin/Desktop/</span><br><span class="line">/Users/kevin</span><br></pre></td></tr></table></figure>
-<h4 id="3-refcount"><a href="#3-refcount" class="headerlink" title="3. refcount"></a>3. refcount</h4><ul>
-<li><p>该函数如果成功返回的话，会使 res_vnode，也就是parent directory inode的 refcount++</p>
-</li>
-<li><p>因为函数内部会逐级调用 lookup() 进行 AFS call 以及  vput(base) 来抵消lookup(base)，给每级base带来的refcount++</p>
-</li>
-<li>但是lookup()找到了parent directory inode 的时候，刻意不调用vput(base)，是最后一级(即res_vnode)的refcount加“1”</li>
-<li>这是有原因的：用户调用dir_namev()，就是要对这个dir就行操作的，需要停留在这里，因此需要对硬盘中相应的对象做相应的refcount更新</li>
-</ul>
-<h4 id="4-dir-name-流程"><a href="#4-dir-name-流程" class="headerlink" title="4. dir_name() 流程"></a>4. dir_name() 流程</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int dir_namev(const char *pathname, size_t *namelen, </span><br><span class="line">              const char **name, vnode_t *base, </span><br><span class="line">              vnode_t **res_vnode)</span><br></pre></td></tr></table></figure>
-<ol>
-<li>根据 <strong><em>base</em></strong> 的值确定查找的起始节点<ul>
-<li>base == NULL, base = curproc -&gt; p_cwd;</li>
-<li>如果 pathname 以 “/“ 开始，忽略 base 的值；base = vfs_root_vn;</li>
-</ul>
-</li>
-<li>更新 base 的refcount =&gt; vref(base);</li>
-<li>依次提取 pathname 中 name 部分，在当前 base inode 下查找是否存在对应 entry<ul>
-<li>维护一个 start_ptr：指向”/“之后第一个位置</li>
-<li>维护一个 end_ptr： 指向下个”/“之前第一个位置</li>
-<li>[start, end] 之间就是 name 部分</li>
-</ul>
-</li>
-<li>调用 lookup 查找该 base vnode之下，是否有 name 的 vnode<ul>
-<li>返回值 != 0, 失败，提前return</li>
-<li>返回值 == 0, 成功，递归查询下一级 name</li>
-<li>更新本次查询使用的 base 的refcount</li>
-</ul>
-</li>
-<li>递归查询：将此次得到的 vnode 设置为下一次查询的 base</li>
-<li>直到start_ptr &gt;= len，表明路径解析完成，跳出<ul>
-<li>注意：在循环中的 lookup() 之前跳出</li>
-<li>因为这是查找上级 dir inode，并非查找最后一级inode</li>
-</ul>
-</li>
-<li>检查最后得到的 inode 是否为 directory</li>
-<li>填充相应的返回值；返回 0(成功)</li>
-</ol>
-<h2 id="open-namev"><a href="#open-namev" class="headerlink" title="open_namev()"></a>open_namev()</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">int open_namev(const char *pathname, int flag, </span><br><span class="line">               vnode_t **res_vnode, vnode_t *base)</span><br><span class="line"></span><br><span class="line">- 输入：</span><br><span class="line">    + pathname：指定要打开的绝对路径</span><br><span class="line">    + flag=O_CREAT &amp;&amp; name 不存在，那么创建新的</span><br><span class="line">    + base：指定从那个vnode 目录下开始解析路径</span><br><span class="line">    </span><br><span class="line">- 输出：将打开的 vnode 存在 res_vnode 中</span><br></pre></td></tr></table></figure>
-<h4 id="1-man-open"><a href="#1-man-open" class="headerlink" title="1. man open"></a>1. man open</h4><blockquote>
-<p>opens a file, a directory or even an URL, just as if you had double-clicked the file’s icon</p>
-</blockquote>
-<ul>
-<li>打开一个文件/目录/URL，相当于 Linux 的 open 指令</li>
-<li>open_namev = dir_namev + lookup + (create)</li>
-</ul>
-<h4 id="2-open-namev-流程"><a href="#2-open-namev-流程" class="headerlink" title="2. open_namev 流程"></a>2. open_namev 流程</h4><ol>
-<li>调用 dir_namev() 解析 pathname<ul>
-<li>retcode = dir_namev(pathname, &amp;namelen, &amp;name, base, &amp;dir);</li>
-<li>输入参数的错误处理由 dir_namev() 解决了</li>
-<li>检查返回值，如果没错误，更新 refcount</li>
-<li>继续下一步</li>
-</ul>
-</li>
-<li>根据刚得到的dir，调用 lookup() 打开dir下的该vnode<ul>
-<li>retVal = lookup(*dir,name,len,res_vnode);</li>
-<li>如果存在的话：将 vnode 返回到 res_vnode 中</li>
-<li>如果不存在的话，同时又满足(flag &amp; O_CREAT) == O_CREAT，那就创建新的vnode<ul>
-<li>调用(*dir)-&gt;vn_ops-&gt;create(*dir,name,len,res_vnode);</li>
-</ul>
-</li>
-<li>return retval</li>
-</ul>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2752,7 +2756,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">82</span>
+                    <span class="site-state-item-count">83</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -3060,7 +3064,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">134</span>
+                      
+                    
+                    <span class="site-state-item-count">135</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

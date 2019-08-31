@@ -332,6 +332,156 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/11/How-to-Make-Animation-using-JS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/mingkai.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/11/How-to-Make-Animation-using-JS/" itemprop="url">How to Make Animation using JS</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-11T22:56:29-07:00">2018-08-11</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="I-problem"><a href="#I-problem" class="headerlink" title="I. problem"></a>I. problem</h2><p>We want a function to move an <code>element</code> to its right by <code>distance</code> in specified <code>time</code></p>
+<ul>
+<li>API: <code>function moveToRight(ele, dis, time) {}</code></li>
+</ul>
+<h2 id="II-Implementation"><a href="#II-Implementation" class="headerlink" title="II. Implementation"></a>II. Implementation</h2><ol>
+<li>must not be <code>position: static</code>: using <code>ele.style.left</code> + <code>ele.offsetLeft</code></li>
+<li>no restrict on <code>position</code>: using `</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">	<span class="selector-id">#container</span>&#123;</span></span><br><span class="line"><span class="undefined">    	width: 100px;</span></span><br><span class="line"><span class="undefined">        height: 100px;</span></span><br><span class="line"><span class="undefined">    	border: 1px solid red;</span></span><br><span class="line"><span class="undefined">        position: relative;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript"><span class="comment">// Version 1</span></span></span><br><span class="line"><span class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">moveToRight_2</span>(<span class="params">ele, dis, time</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">  <span class="keyword">var</span> interval = <span class="number">10</span></span></span><br><span class="line"><span class="javascript">  <span class="keyword">var</span> oneStep = interval * dis / time</span></span><br><span class="line"><span class="javascript">  <span class="keyword">var</span> totalSteps = dis / oneStep</span></span><br><span class="line"><span class="javascript">  <span class="keyword">var</span> step = <span class="number">0</span></span></span><br><span class="line"><span class="javascript">  <span class="keyword">let</span> curLeft = ele.offsetLeft</span></span><br><span class="line"><span class="undefined"> </span></span><br><span class="line"><span class="javascript">  <span class="keyword">var</span> interval_handler= setInterval(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="undefined">    curLeft += oneStep</span></span><br><span class="line"><span class="javascript">    ele.style.left = curLeft + <span class="string">'px'</span></span></span><br><span class="line"><span class="undefined">    step += 1</span></span><br><span class="line"><span class="javascript">    <span class="keyword">if</span>( step === totalSteps ) clearInterval(interval_handler)</span></span><br><span class="line"><span class="undefined">  &#125;, interval)</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript"><span class="comment">// Version 2   </span></span></span><br><span class="line"><span class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">moveToRight</span>(<span class="params">ele, dis, time</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">  <span class="keyword">let</span> d = dis/time * <span class="number">10</span>;</span></span><br><span class="line"><span class="javascript">  <span class="keyword">let</span> cur = <span class="number">0</span>;</span></span><br><span class="line"><span class="javascript">  <span class="keyword">let</span> myInterval;</span></span><br><span class="line"><span class="undefined">  </span></span><br><span class="line"><span class="javascript">  myInterval = setInterval(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; </span></span><br><span class="line"><span class="undefined">      cur += d;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">if</span> (cur &lt;= dis) &#123;</span></span><br><span class="line"><span class="javascript">        ele.style.transform = <span class="string">"translate("</span> + cur +<span class="string">"px, 0)"</span>;</span></span><br><span class="line"><span class="javascript">      &#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="undefined">         clearInterval(myInterval);</span></span><br><span class="line"><span class="javascript">         <span class="built_in">console</span>.log(<span class="string">"stop"</span>);</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">  &#125;, 1);</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"> </span></span><br><span class="line"><span class="undefined">    </span></span><br><span class="line"><span class="javascript"><span class="comment">// Test  </span></span></span><br><span class="line"><span class="javascript"><span class="keyword">var</span> ele = <span class="built_in">document</span>.getElementById(<span class="string">"container"</span>);</span></span><br><span class="line"><span class="undefined">moveToRight_2(ele, 100, 500);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/01/Node-js/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2866,240 +3016,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/18/VM-Virtual-memory-File-system-Memory-object-in-VM/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/mingkai.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/18/VM-Virtual-memory-File-system-Memory-object-in-VM/" itemprop="url">VM: Virtual memory + File system = Memory object(in VM)</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-18T15:07:05-07:00">2018-04-18</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Courses/" itemprop="url" rel="index"><span itemprop="name">Courses</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="I-Virtual-memory-amp-File-system"><a href="#I-Virtual-memory-amp-File-system" class="headerlink" title="I. Virtual memory &amp; File system"></a>I. Virtual memory &amp; File system</h2><h4 id="1-file可以直接映射进memory，更快，但无cache。"><a href="#1-file可以直接映射进memory，更快，但无cache。" class="headerlink" title="1. file可以直接映射进memory，更快，但无cache。"></a>1. file可以直接映射进memory，更快，但无cache。</h4><h4 id="2-从disk读取文件有两种方法：read-and-mmap"><a href="#2-从disk读取文件有两种方法：read-and-mmap" class="headerlink" title="2. 从disk读取文件有两种方法：read() and mmap()"></a>2. 从disk读取文件有两种方法：<code>read()</code> and <code>mmap()</code></h4><ul>
-<li>read(): <ul>
-<li>user process： 系统调用<code>read()</code>，trap into kernel</li>
-<li>kernel： 执行interrupt handler，调用do_read()；继而调用 file system的 read() 指令</li>
-<li>kernel space：读入的内容放到 kernel address space</li>
-<li>user space： kernel 将内容copy到 user address space</li>
-</ul>
-</li>
-<li>mmap(): <ul>
-<li>user process：系统调用<code>mmap()</code>，trap into kernel</li>
-<li>kernel ：执行interrupt handler，调用 do_mmap()；继而调用 file system 的 mmap() 指令</li>
-<li>user space： kernel 直接将 file 映射到 user address space中</li>
-</ul>
-</li>
-</ul>
-<h4 id="3-file-system-中的-vnode-结构体："><a href="#3-file-system-中的-vnode-结构体：" class="headerlink" title="3. file system 中的 vnode 结构体："></a>3. file system 中的 vnode 结构体：</h4><pre><code>- 对应一个电脑文件系统中的一个 file
-- 其中还有一个 mmobj vn_mmobj 结构体： 是该file到address space 中的映射。 mmobj 包含：
-    + mmo_operations
-        - lookuppage：根据[mmobj:page#], 找对应的 pframe
-        - fillpage：将 disk file 内容加载到 pframe
-        - dirtypage：将该 mmobj 指定的 pframe 设置为 dirty
-        - cleanpage：将该 mmobj指定的 pframe 清楚
-        - ref
-        - put
-    + mmo_refcount
-    + mmo_resident_pages
-- vnode 为抽象的 inode，来实现 polymophism。也有与file 相关的 operations：
-    + read
-    + write
-    + mmap(): 注意这个mmap 是vnode层面的function；**实际上返回的是 vnode-&gt;vn\_mmobj; 而这个vn\_mmobj则是通过上述的fillpage()实际将 disk 中的数据加载进 pframe**
-</code></pre><h2 id="II-vmmap-c"><a href="#II-vmmap-c" class="headerlink" title="II. vmmap.c"></a>II. vmmap.c</h2><h4 id="1-vmmap-lookup"><a href="#1-vmmap-lookup" class="headerlink" title="1. vmmap_lookup"></a>1. vmmap_lookup</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">vmarea_t</span> * vmmap_lookup(<span class="keyword">vmmap_t</span> *<span class="built_in">map</span>, <span class="keyword">uint32_t</span> vfn)</span><br><span class="line"></span><br><span class="line"><span class="function">Find the vm_area that <span class="title">vfn</span><span class="params">(<span class="keyword">virtual</span> frame number)</span> lies in</span></span><br></pre></td></tr></table></figure>
-<h4 id="2-vmmap-map"><a href="#2-vmmap-map" class="headerlink" title="2. vmmap_map"></a>2. vmmap_map</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">vmmap_map(<span class="keyword">vmmap_t</span> *<span class="built_in">map</span>, <span class="keyword">vnode_t</span> *file, </span><br><span class="line">          <span class="keyword">uint32_t</span> lopage, <span class="keyword">uint32_t</span> npages, </span><br><span class="line">          <span class="keyword">int</span> prot, <span class="keyword">int</span> flags, <span class="keyword">off_t</span> off, </span><br><span class="line">          <span class="keyword">int</span> dir, <span class="keyword">vmarea_t</span> **<span class="keyword">new</span>)</span><br><span class="line">- <span class="built_in">map</span> 为cur process 的地址空间</span><br><span class="line">- file 为被映射到虚拟内存的 vnode/shadow/anonymous obj</span><br><span class="line">- lopage、npages 指明从地址空间的什么具体位置开始映射、映射长度</span><br><span class="line">- prot、flag、off 指明 vmarea 的 read/write、<span class="keyword">public</span>/<span class="keyword">private</span>、 vmarea的起始地址</span><br><span class="line">- <span class="keyword">new</span> 为接收 映射file到虚拟内存的 mapped\_file\_obj 的指针</span><br><span class="line"></span><br><span class="line">【注意】该函数被 system API:do_mmap()调用；完成</span><br></pre></td></tr></table></figure>
-<p>将指定的 file(anonymous／shadow) 映射map到该进程的“地址空间”address space中；经历一下步骤：</p>
-<ol>
-<li><p>现在cur_proc的地址空间中开辟一块 vmarea </p>
-<ul>
-<li>if lopage=0: 开辟一个新的 vmarea</li>
-<li>if lopage!=0: 如果该位置已经被别的vmarea占用，那么删除就的vmarea</li>
-</ul>
-</li>
-<li><p>对刚获得的 vmarea 赋值：</p>
-<ul>
-<li>newvma-&gt;vma_start = lopage;</li>
-<li>newvma-&gt;vma_end = lopage + npages;</li>
-<li>newvma-&gt;vma_off = ADDR_TO_PN(off);</li>
-<li>newvma-&gt;vma_prot = prot;</li>
-<li>newvma-&gt;vma_flags = flags;</li>
-<li>list_link_init(&amp;newvma-&gt;vma_plink);</li>
-<li>list_link_init(&amp;newvma-&gt;vma_olink);</li>
-</ul>
-</li>
-<li><p>创建 mmobj（<strong>这是 vmarea 存在的意义</strong>）</p>
-<ul>
-<li>if file==NULL: mmobj为新创建的 anonymous obj;<br><code>mmobj = anon_create();</code></li>
-<li>if file!=NULL: mmobj为从vnode读入的 mmobj;<br><code>file-&gt;vn_ops-&gt;mmap(file, newvma, &amp;mmobj);</code></li>
-<li>判断是否需要创建 shadow obj<br><code>if MAP_PRIVATE &amp; flags != 0</code> 需要在 mmobj内部创建 shadow obj</li>
-</ul>
-</li>
-<li><p>将mmobj 链接到 vmarea上；<code>newvma-&gt;vma_obj = mmobj;</code></p>
-</li>
-<li><p>将vmarea 插入到 cur_proc 的 地址空间 map 中</p>
-</li>
-</ol>
-<h4 id="3-vmmap-remove"><a href="#3-vmmap-remove" class="headerlink" title="3. vmmap_remove()"></a>3. vmmap_remove()</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">vmmap_remove</span><span class="params">(<span class="keyword">vmmap_t</span> *<span class="built_in">map</span>, <span class="keyword">uint32_t</span> lopage, <span class="keyword">uint32_t</span> npages)</span></span></span><br></pre></td></tr></table></figure>
-<ol>
-<li>删除虚拟内存/virtual address 中的对应的 mmobj</li>
-<li>并删除相应 page table entry，相当于释放物理内存</li>
-</ol>
-<h4 id="4-vmmap-is-range-empty"><a href="#4-vmmap-is-range-empty" class="headerlink" title="4. vmmap_is_range_empty"></a>4. vmmap_is_range_empty</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">vmmap_is_range_empty</span><span class="params">(<span class="keyword">vmmap_t</span> *<span class="built_in">map</span>, <span class="keyword">uint32_t</span> startvfn, <span class="keyword">uint32_t</span> npages)</span></span></span><br></pre></td></tr></table></figure>
-<p>判断指定的一段pages 在否在虚拟内存中未被占用</p>
-<h4 id="5-vmmap-read"><a href="#5-vmmap-read" class="headerlink" title="5. vmmap_read"></a>5. vmmap_read</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">vmmap_read</span><span class="params">(<span class="keyword">vmmap_t</span> *<span class="built_in">map</span>, <span class="keyword">const</span> <span class="keyword">void</span> *vaddr, <span class="keyword">void</span> *buf, <span class="keyword">size_t</span> count)</span></span></span><br></pre></td></tr></table></figure>
-<p>从 cur_proc 当前地址空间map中指定的vaddr开始，读取“内存”中大小为count的内容到指定的 “内存”buf 中（<strong>因为这里的“内存”是虚拟内存，必须要借助pframe_lookup()读取physical memory的值</strong>）</p>
-<ol>
-<li>循环执行以下步骤，直到读取字节数 达到count 数量；<ul>
-<li>注意：因为count 是字节数，而 address space 中以 page 为单位；并且page之间并非一直连续，是由 vmarea 链接而成；因此需要遍历 地址空间逐个vmarea、逐个page 读取</li>
-</ul>
-</li>
-<li>在 address space 中查找 start vaddr所属的 vmarea</li>
-<li>获得该 vmarea 中所包含的 pages</li>
-<li>循环读取所有 pages，memcpy到指定buf<ul>
-<li>调用<code>pframe_lookup()</code> 找到 virtual page 的 physical page </li>
-<li>注意1：如果之前并没有 mapped physical address；那么会调用<code>pframe_get()</code> 即刻map一个physical address</li>
-<li>注意2: 这里的 physical address 并非真正的，而依然是存在kernel address space 的 virtual address</li>
-<li>调用 <code>memcpy()</code>将对应的pframe中的内容copy到指定的buf中去</li>
-<li>注意3:因为<code>memcpy()</code>是C语言库函数，这里实际上还是“virtual address”之间的内容拷贝。很有可能在<code>memcpy()</code>实现了“virtual address to physical address”的转换</li>
-</ul>
-</li>
-<li>直到该vmarea所有pages都copy完<ul>
-<li>if count 未满足，则跳到下一个vmarea继续拷贝</li>
-<li>if count 满足，则退出</li>
-</ul>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3151,7 +3067,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">82</span>
+                    <span class="site-state-item-count">83</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -3459,7 +3375,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">134</span>
+                      
+                    
+                    <span class="site-state-item-count">135</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

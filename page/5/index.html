@@ -332,6 +332,190 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/04/Ways-of-Creating-Objects-in-JS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/mingkai.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/04/Ways-of-Creating-Objects-in-JS/" itemprop="url">Create new Objects with Inheritance</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-04T11:54:04-07:00">2018-10-04</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="I-Literal-Constructor"><a href="#I-Literal-Constructor" class="headerlink" title="I. { }: Literal Constructor"></a>I. <strong><code>{ }</code>: Literal Constructor</strong></h2><ol>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">    name = <span class="string">"Anand"</span>,</span><br><span class="line">    getName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.name </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="II-Object-create-can-be-used-on-inheritance"><a href="#II-Object-create-can-be-used-on-inheritance" class="headerlink" title="II. Object.create(): can be used on inheritance"></a>II. <strong><code>Object.create()</code>: can be used on inheritance</strong></h2><ul>
+<li><p>This can create a new object from another object as it prototype</p>
+</li>
+<li><p>More efficient to use a prototype if you are going to have multiple objects sharing properties or methods.</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> proto = &#123;<span class="attr">name</span>: <span class="string">"default"</span>, <span class="attr">foo</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;&#125;</span><br><span class="line"><span class="keyword">let</span> obj1 = <span class="built_in">Object</span>.create(proto); obj1.name = <span class="string">"a"</span></span><br><span class="line"><span class="keyword">let</span> obj2 = <span class="built_in">Object</span>.create(proto); obj1.name = <span class="string">"b"</span></span><br><span class="line"><span class="keyword">let</span> obj3 = <span class="built_in">Object</span>.create(proto); obj1.name = <span class="string">"c"</span></span><br><span class="line"><span class="keyword">let</span> obj4 = <span class="built_in">Object</span>.create(proto); obj1.name = <span class="string">"d"</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="III-Function-Constructor-with-this-amp-new"><a href="#III-Function-Constructor-with-this-amp-new" class="headerlink" title="III. Function Constructor with this &amp; new"></a>III. <strong>Function Constructor with <code>this</code> &amp; <code>new</code></strong></h2><ul>
+<li><strong>Bad thing:</strong> every time, when we create an new object, it will occupy space for all attributes of <code>Person</code></li>
+<li><p><strong>Using <code>Prototype</code></strong></p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = name</span><br><span class="line">  <span class="keyword">this</span>.getName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.name</span><br><span class="line">  &#125; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> mycar = <span class="keyword">new</span> Person(<span class="string">'Eagle'</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="IV-Function-Constructor-amp-Prototype"><a href="#IV-Function-Constructor-amp-Prototype" class="headerlink" title="IV. Function Constructor &amp; Prototype"></a>IV. <strong>Function Constructor &amp; Prototype</strong></h2><ul>
+<li><p><code>prototype</code> is a <strong><u>shared object</u></strong>, where all its inheriting objects will share this same space, won’t create extra space for attributes inherited from <code>prototype</code></p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Graph</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.vertices = [];</span><br><span class="line">  <span class="keyword">this</span>.edges = [];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Graph.prototype = &#123;</span><br><span class="line">  addVertex: <span class="function"><span class="keyword">function</span>(<span class="params">v</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.vertices.push(v);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> g = <span class="keyword">new</span> Graph();</span><br><span class="line"><span class="comment">// g is an object with own properties 'vertices' and 'edges'.</span></span><br><span class="line"><span class="comment">// g.[[Prototype]] is the value of Graph.prototype when new Graph() is executed.</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="V-ES6-class"><a href="#V-ES6-class" class="headerlink" title="V. ES6 class"></a>V. <strong>ES6 <code>class</code></strong></h2><ol>
+<li><p>introduced a new set of keywords implementing <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes" target="_blank" rel="noopener">classes</a>. The new keywords include <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/class" target="_blank" rel="noopener"><code>class</code></a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/constructor" target="_blank" rel="noopener"><code>constructor</code></a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/static" target="_blank" rel="noopener"><code>static</code></a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/extends" target="_blank" rel="noopener"><code>extends</code></a>, and <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/super" target="_blank" rel="noopener"><code>super</code></a>.</p>
+</li>
+<li><p>all functions except <code>constructor</code> are put into the prototype of that object (<code>Square</code>)</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Polygon</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(height, width) &#123;</span><br><span class="line">    <span class="keyword">this</span>.height = height;</span><br><span class="line">    <span class="keyword">this</span>.width = width;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// inherit from another class</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Square</span> <span class="keyword">extends</span> <span class="title">Polygon</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(sideLength) &#123;</span><br><span class="line">    <span class="keyword">super</span>(sideLength, sideLength);</span><br><span class="line">  &#125;</span><br><span class="line">  get area() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.height * <span class="keyword">this</span>.width;</span><br><span class="line">  &#125;</span><br><span class="line">  set sideLength(newLength) &#123;</span><br><span class="line">    <span class="keyword">this</span>.height = newLength;</span><br><span class="line">    <span class="keyword">this</span>.width = newLength;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Use new to create object from class</span></span><br><span class="line"><span class="keyword">var</span> square = <span class="keyword">new</span> Square(<span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="VI-Singleton-one-object-of-a-kind"><a href="#VI-Singleton-one-object-of-a-kind" class="headerlink" title="VI. Singleton: one object of a kind"></a>VI. <strong>Singleton: <em><u>one object</u></em> of a kind</strong></h2><ul>
+<li><p><code>Singleton</code>  is used on class-based language</p>
+</li>
+<li><p>In jS, All objects created using literal constructor are singletons</p>
+<ul>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Robot = &#123;</span><br><span class="line">  metal: <span class="string">"Titanium"</span>,</span><br><span class="line">  killAllHumans: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(<span class="string">"Exterminate!"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Robot.killAllHumans();</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/03/Note-of-Eloquent-JavaScript-JS-and-Browser/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2773,156 +2957,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/11/How-to-Make-Animation-using-JS/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/mingkai.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/11/How-to-Make-Animation-using-JS/" itemprop="url">How to Make Animation using JS</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-11T22:56:29-07:00">2018-08-11</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="I-problem"><a href="#I-problem" class="headerlink" title="I. problem"></a>I. problem</h2><p>We want a function to move an <code>element</code> to its right by <code>distance</code> in specified <code>time</code></p>
-<ul>
-<li>API: <code>function moveToRight(ele, dis, time) {}</code></li>
-</ul>
-<h2 id="II-Implementation"><a href="#II-Implementation" class="headerlink" title="II. Implementation"></a>II. Implementation</h2><ol>
-<li>must not be <code>position: static</code>: using <code>ele.style.left</code> + <code>ele.offsetLeft</code></li>
-<li>no restrict on <code>position</code>: using `</li>
-</ol>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">	<span class="selector-id">#container</span>&#123;</span></span><br><span class="line"><span class="undefined">    	width: 100px;</span></span><br><span class="line"><span class="undefined">        height: 100px;</span></span><br><span class="line"><span class="undefined">    	border: 1px solid red;</span></span><br><span class="line"><span class="undefined">        position: relative;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript"><span class="comment">// Version 1</span></span></span><br><span class="line"><span class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">moveToRight_2</span>(<span class="params">ele, dis, time</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">  <span class="keyword">var</span> interval = <span class="number">10</span></span></span><br><span class="line"><span class="javascript">  <span class="keyword">var</span> oneStep = interval * dis / time</span></span><br><span class="line"><span class="javascript">  <span class="keyword">var</span> totalSteps = dis / oneStep</span></span><br><span class="line"><span class="javascript">  <span class="keyword">var</span> step = <span class="number">0</span></span></span><br><span class="line"><span class="javascript">  <span class="keyword">let</span> curLeft = ele.offsetLeft</span></span><br><span class="line"><span class="undefined"> </span></span><br><span class="line"><span class="javascript">  <span class="keyword">var</span> interval_handler= setInterval(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="undefined">    curLeft += oneStep</span></span><br><span class="line"><span class="javascript">    ele.style.left = curLeft + <span class="string">'px'</span></span></span><br><span class="line"><span class="undefined">    step += 1</span></span><br><span class="line"><span class="javascript">    <span class="keyword">if</span>( step === totalSteps ) clearInterval(interval_handler)</span></span><br><span class="line"><span class="undefined">  &#125;, interval)</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript"><span class="comment">// Version 2   </span></span></span><br><span class="line"><span class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">moveToRight</span>(<span class="params">ele, dis, time</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">  <span class="keyword">let</span> d = dis/time * <span class="number">10</span>;</span></span><br><span class="line"><span class="javascript">  <span class="keyword">let</span> cur = <span class="number">0</span>;</span></span><br><span class="line"><span class="javascript">  <span class="keyword">let</span> myInterval;</span></span><br><span class="line"><span class="undefined">  </span></span><br><span class="line"><span class="javascript">  myInterval = setInterval(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; </span></span><br><span class="line"><span class="undefined">      cur += d;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">if</span> (cur &lt;= dis) &#123;</span></span><br><span class="line"><span class="javascript">        ele.style.transform = <span class="string">"translate("</span> + cur +<span class="string">"px, 0)"</span>;</span></span><br><span class="line"><span class="javascript">      &#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="undefined">         clearInterval(myInterval);</span></span><br><span class="line"><span class="javascript">         <span class="built_in">console</span>.log(<span class="string">"stop"</span>);</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">  &#125;, 1);</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"> </span></span><br><span class="line"><span class="undefined">    </span></span><br><span class="line"><span class="javascript"><span class="comment">// Test  </span></span></span><br><span class="line"><span class="javascript"><span class="keyword">var</span> ele = <span class="built_in">document</span>.getElementById(<span class="string">"container"</span>);</span></span><br><span class="line"><span class="undefined">moveToRight_2(ele, 100, 500);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2974,7 +3008,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">82</span>
+                    <span class="site-state-item-count">83</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -3282,7 +3316,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">134</span>
+                      
+                    
+                    <span class="site-state-item-count">135</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

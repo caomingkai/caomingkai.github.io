@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.6" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.6">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.6" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.6',
+    sidebar: {"position":"right","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="1. What is it?MVC is a pattern/framework decouple application into 3 parts: modal, view, and controller.  Modal: the single source of truth of your app, responsible for data input and data output; Vie">
+<meta name="keywords" content="MVC,Design Pattern">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Evolve your app to MVC pattern">
+<meta property="og:url" content="http://yoursite.com/2019/08/31/Evolve-your-app-to-MVC-pattern/index.html">
+<meta property="og:site_name" content="CMK">
+<meta property="og:description" content="1. What is it?MVC is a pattern/framework decouple application into 3 parts: modal, view, and controller.  Modal: the single source of truth of your app, responsible for data input and data output; Vie">
+<meta property="og:updated_time" content="2019-08-31T22:48:51.045Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Evolve your app to MVC pattern">
+<meta name="twitter:description" content="1. What is it?MVC is a pattern/framework decouple application into 3 parts: modal, view, and controller.  Modal: the single source of truth of your app, responsible for data input and data output; Vie">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/08/31/Evolve-your-app-to-MVC-pattern/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Evolve your app to MVC pattern | CMK</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-116541729-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-116541729-1');
+</script>
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> 
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">CMK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Let's create something!</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+          
+  <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+</li>
+
+      
+
+      
+    </ul>
+  
+
+  
+    
+
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/31/Evolve-your-app-to-MVC-pattern/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/mingkai.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Evolve your app to MVC pattern</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-31T12:26:15-07:00">2019-08-31</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             Views: 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="1-What-is-it"><a href="#1-What-is-it" class="headerlink" title="1. What is it?"></a>1. What is it?</h3><p><strong>MVC</strong> is a pattern/framework decouple application into 3 parts: <u>modal</u>, <u>view</u>, and <u>controller</u>.</p>
+<ul>
+<li><strong>Modal</strong>: the single source of truth of your app, <u>responsible for data input and data output</u>;</li>
+<li><strong>View</strong>: the UI part displayed to users, <u>responsible for display</u>;</li>
+<li><strong>Controller</strong>: bind views to modal  organically in a desired way, <u>responsible for handling Modal(automatically resulting in View update)</u></li>
+</ul>
+<p><u><strong>[Note]:</strong></u> MVC is based on <a href="">Observer Pattern</a></p>
+<h3 id="2-Why-use-it"><a href="#2-Why-use-it" class="headerlink" title="2. Why use it?"></a>2. Why use it?</h3><p>As app grow, the business logic between data and view become complicated. There could be a good chance that several component use same piece of data. It would be painful to call vanilla JS to update every component one by one. </p>
+<p>It would be better if there is a way that we can update all those components in a batch automatically when that data piece changes. Here come in the MVC pattern. </p>
+<ul>
+<li><code>View</code> is html code snippet actually on frontend;</li>
+<li><code>Modal</code> defines all single source of true for their views</li>
+<li><code>Controller</code> will <ul>
+<li>binds all <code>Views</code> to their corresponding <code>Modal</code>, so that Views will update automatically when the Modal changes.</li>
+<li>via callback passed in, it updates<code>Modal</code>, leading to <code>Views</code> get updated</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-How-to-use-it"><a href="#3-How-to-use-it" class="headerlink" title="3. How to use it?"></a>3. How to use it?</h3><p>The general way:</p>
+<ol>
+<li>Declare <code>modal</code> class prototype, and its APIs, which will be called by <code>controller</code></li>
+<li>Specify to-be-bound <code>modal</code> for <code>view</code> components</li>
+<li>pass intention callback to<code>controller</code> to specify how to update <code>modal</code></li>
+</ol>
+<h3 id="4-Evolve-to-MVC-pattern-eg-Timer"><a href="#4-Evolve-to-MVC-pattern-eg-Timer" class="headerlink" title="4. Evolve to MVC pattern (eg: Timer)"></a>4. Evolve to MVC pattern (eg: Timer)</h3><p>We will implement a very simple widget to show how to evolve an app to MVC pattern. The widget is to display whatever we get from API or from callback, and show it inside a <code>div</code>.</p>
+<ol>
+<li><p>No Pattern</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// View Part：</span></span><br><span class="line">&lt;div id=<span class="string">"div1"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Logic Part：</span></span><br><span class="line"><span class="keyword">const</span> data = <span class="string">"This is the data"</span></span><br><span class="line"><span class="keyword">const</span> div = <span class="built_in">document</span>.getElementById(<span class="string">'div1'</span>);</span><br><span class="line">div.innerHTML = data;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="2">
+<li><p>Using <code>Observer Pattern</code></p>
+<p>Now we don’t want to update view by ourselves. Instead, we hope data update will trigger view change automatically. <code>Observer Pattern</code> can be used here to let the view observe the modal, so whenever modal changes, view will get updated automatically.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Model</span>(<span class="params">value</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>._value = <span class="keyword">typeof</span> value === <span class="string">'undefined'</span> ? <span class="string">''</span> : value;</span><br><span class="line">    <span class="keyword">this</span>._listeners = [];</span><br><span class="line">&#125;</span><br><span class="line">Model.prototype.set = <span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> self = <span class="keyword">this</span>;</span><br><span class="line">    self._value = value;</span><br><span class="line">    <span class="comment">// model value change will notify regisered callbacks</span></span><br><span class="line">    <span class="comment">// According to JS running principle, we apply callback asynchronously: WON'T Freeze UI</span></span><br><span class="line">    <span class="comment">// or use requestAnimationFrame, rather than setTimout</span></span><br><span class="line">    setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        self._listeners.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">listener</span>) </span>&#123;</span><br><span class="line">            listener.call(self, value);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br><span class="line">Model.prototype.watch = <span class="function"><span class="keyword">function</span> (<span class="params">listener</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// register callback</span></span><br><span class="line">    <span class="keyword">this</span>._listeners.push(listener);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// View：</span></span><br><span class="line">&lt;div id=<span class="string">"div1"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Logic：</span></span><br><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> model = <span class="keyword">new</span> Model();</span><br><span class="line">    <span class="keyword">var</span> div1 = <span class="built_in">document</span>.getElementById(<span class="string">'div1'</span>);</span><br><span class="line">    model.watch(<span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">        div1.innerHTML = value;</span><br><span class="line">    &#125;);</span><br><span class="line">    model.set(<span class="string">'hello, this is a div'</span>);</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="3">
+<li><p>Bind <code>View</code> and <code>Modal</code></p>
+<p>There is a drawback in the above approach: we need to make modal to <code>watch</code> each related views <u><strong>manually</strong></u>. But the truth is that all those work are duplicated, and conveys the same functionality: bind views to modal, or let modal watch related views.</p>
+<p>We can encapsulate this feature onto modal actually, as follows:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Model.prototype.bind = <span class="function"><span class="keyword">function</span> (<span class="params">node</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// put `watch` and `common callback` inside bind</span></span><br><span class="line">    <span class="keyword">this</span>.watch(<span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">        node.innerHTML = value;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// View：</span></span><br><span class="line">&lt;div id=<span class="string">"div1"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;div id=<span class="string">"div2"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Logic：</span></span><br><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> model = <span class="keyword">new</span> Model();</span><br><span class="line">    model.bind(<span class="built_in">document</span>.getElementById(<span class="string">'div1'</span>));</span><br><span class="line">    model.bind(<span class="built_in">document</span>.getElementById(<span class="string">'div2'</span>));</span><br><span class="line">    model.set(<span class="string">'this is a div'</span>);</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="4">
+<li><p>MVC Pattern</p>
+<p>Now, it is better. We bind view and modal😄~ And we can bind as many as views to a modal as we want😱. </p>
+<p>But still, we need to <strong><u>manually</u></strong> bind view to modal. Is there a way our code can handle it for us, as long as we tell the code which modal the view want to bind. </p>
+<p>Yeah, You might already get it! We can specify modal piece for the view by using HTML attribute, like <code>&lt;div bind=&#39;modal1&#39; /&gt;</code>. Thus, the code can know the desired modal current view wants to bind.</p>
+<p>We will create <strong><u>an util object</u></strong> that can </p>
+<ul>
+<li>firstly, automatically bind views to their modals,</li>
+<li>secondly, receive a callback to update modal in programmer’s desired way</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Controller</span>(<span class="params">callback</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> models = &#123;&#125;;</span><br><span class="line">    <span class="comment">// find all views with `bind` attr</span></span><br><span class="line">    <span class="keyword">var</span> views = <span class="built_in">document</span>.querySelectorAll(<span class="string">'[bind]'</span>);</span><br><span class="line">    <span class="comment">// convert views into array</span></span><br><span class="line">    views = <span class="built_in">Array</span>.prototype.slice.call(views, <span class="number">0</span>);</span><br><span class="line">    views.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">view</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> modelName = view.getAttribute(<span class="string">'bind'</span>);</span><br><span class="line">        <span class="comment">// get the modal for this view, or create new one for it</span></span><br><span class="line">        models[modelName] = models[modelName] || <span class="keyword">new</span> Model();</span><br><span class="line">        <span class="comment">// bind view and its modal</span></span><br><span class="line">        models[modelName].bind(view);</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">// update modals using specified callback </span></span><br><span class="line">    callback.call(<span class="keyword">this</span>, models);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// View:</span></span><br><span class="line">&lt;div id=<span class="string">"div1"</span> bind=<span class="string">"model1"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;div id=<span class="string">"div2"</span> bind=<span class="string">"model1"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="comment">// Controller：</span></span><br><span class="line"><span class="keyword">new</span> Controller(<span class="function"><span class="keyword">function</span> (<span class="params">models</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> model1 = models.model1;</span><br><span class="line">    model1.set(<span class="string">'this is a div'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>The whole MVC</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Model</span>(<span class="params">value</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>._value = <span class="keyword">typeof</span> value === <span class="string">'undefined'</span> ? <span class="string">''</span> : value;</span><br><span class="line">    <span class="keyword">this</span>._listeners = [];</span><br><span class="line">&#125;</span><br><span class="line">Model.prototype.set = <span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> self = <span class="keyword">this</span>;</span><br><span class="line">    self._value = value;</span><br><span class="line">    setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        self._listeners.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">listener</span>) </span>&#123;</span><br><span class="line">            listener.call(self, value);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br><span class="line">Model.prototype.watch = <span class="function"><span class="keyword">function</span> (<span class="params">listener</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>._listeners.push(listener);</span><br><span class="line">&#125;;</span><br><span class="line">Model.prototype.bind = <span class="function"><span class="keyword">function</span> (<span class="params">node</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.watch(<span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">        node.innerHTML = value;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Controller</span>(<span class="params">callback</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> models = &#123;&#125;;</span><br><span class="line">    <span class="keyword">var</span> views = <span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">document</span>.querySelectorAll(<span class="string">'[bind]'</span>), <span class="number">0</span>);</span><br><span class="line">    views.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">view</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> modelName = view.getAttribute(<span class="string">'bind'</span>);</span><br><span class="line">        (models[modelName] = models[modelName] || <span class="keyword">new</span> Model()).bind(view);</span><br><span class="line">    &#125;);</span><br><span class="line">    callback.call(<span class="keyword">this</span>, models);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="5-Test-our-MVC-framework"><a href="#5-Test-our-MVC-framework" class="headerlink" title="5. Test our MVC framework"></a>5. Test our MVC framework</h3><p>We will use our MVC framework to implement a Timer as follows</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// View:</span><br><span class="line">&lt;span bind="hour"&gt;&lt;/span&gt; : &lt;span bind="minute"&gt;&lt;/span&gt; : &lt;span bind="second"&gt;&lt;/span&gt;</span><br><span class="line"></span><br><span class="line">// Controller:</span><br><span class="line"><span class="selector-tag">new</span> <span class="selector-tag">Controller</span>(<span class="selector-tag">function</span> (<span class="selector-tag">models</span>) &#123;</span><br><span class="line">    function setTime() &#123;</span><br><span class="line">        var date = new Date();</span><br><span class="line">        <span class="selector-tag">models</span><span class="selector-class">.hour</span><span class="selector-class">.set</span>(<span class="selector-tag">date</span><span class="selector-class">.getHours</span>());</span><br><span class="line">        <span class="selector-tag">models</span><span class="selector-class">.minute</span><span class="selector-class">.set</span>(<span class="selector-tag">date</span><span class="selector-class">.getMinutes</span>());</span><br><span class="line">        <span class="selector-tag">models</span><span class="selector-class">.second</span><span class="selector-class">.set</span>(<span class="selector-tag">date</span><span class="selector-class">.getSeconds</span>());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="selector-tag">setTime</span>();</span><br><span class="line">    <span class="selector-tag">setInterval</span>(<span class="selector-tag">setTime</span>, 1000);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="6-Thoughts"><a href="#6-Thoughts" class="headerlink" title="6. Thoughts"></a>6. Thoughts</h3><p>For almost all frameworks like <code>Redux</code>, <code>Flux</code>. It use similiar ways to handle View and Modal. Here we use <code>Observer Pattern</code> to implement <code>MVC</code>. </p>
+<p>Based on my understanding, <code>Redux</code> and <code>Flux</code> use <code>Publisher-Subscriber Pattern</code> will handles events better than <code>Observer Pattern</code>.</p>
+<h3 id="7-Reference"><a href="#7-Reference" class="headerlink" title="7. Reference"></a>7. Reference</h3><ol>
+<li><a href="https://www.cnblogs.com/front-end-ralph/p/5190442.html" target="_blank" rel="noopener">30行代码实现Javascript中的MVC</a></li>
+<li><a href="https://caomingkai.github.io/2018/10/07/Design-Pattern-JS/" target="_blank" rel="noopener">Design Pattern - JS</a></li>
+<li><a href="https://addyosmani.com/resources/essentialjsdesignpatterns/book/" target="_blank" rel="noopener">Learning JavaScript Design Patterns</a></li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MVC/" rel="tag"># MVC</a>
+          
+            <a href="/tags/Design-Pattern/" rel="tag"># Design Pattern</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/29/HOC-Redux-connect/" rel="next" title="HOC & Redux connect()">
+                <i class="fa fa-chevron-left"></i> HOC & Redux connect()
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/mingkai.jpg"
+                alt="Mingkai Cao" />
+            
+              <p class="site-author-name" itemprop="name">Mingkai Cao</p>
+              <p class="site-description motion-element" itemprop="description">All-trade Jack, loves full-stack</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">83</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">135</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/caomingkai" target="_blank" title="GitHub" rel="external nofollow"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:mingkaic@usc.edu" target="_blank" title="E-Mail" rel="external nofollow"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-What-is-it"><span class="nav-number">1.</span> <span class="nav-text">1. What is it?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Why-use-it"><span class="nav-number">2.</span> <span class="nav-text">2. Why use it?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-How-to-use-it"><span class="nav-number">3.</span> <span class="nav-text">3. How to use it?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Evolve-to-MVC-pattern-eg-Timer"><span class="nav-number">4.</span> <span class="nav-text">4. Evolve to MVC pattern (eg: Timer)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Test-our-MVC-framework"><span class="nav-number">5.</span> <span class="nav-text">5. Test our MVC framework</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-Thoughts"><span class="nav-number">6.</span> <span class="nav-text">6. Thoughts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-Reference"><span class="nav-number">7.</span> <span class="nav-text">7. Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate"> 
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mingkai Cao</span>
+
+  
+
+  
+</div>
+
+
+  
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" rel="external nofollow" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" rel="external nofollow" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.6</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="Total Visitors">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="Total Views">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.6"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.6"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.6"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.6"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.6"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+<style>
+    #comments .vempty{
+        display: none;
+    }
+</style>
+
+</body>
+</html>

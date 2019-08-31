@@ -332,6 +332,215 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/31/Evolve-your-app-to-MVC-pattern/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/mingkai.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/08/31/Evolve-your-app-to-MVC-pattern/" itemprop="url">Evolve your app to MVC pattern</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-31T12:26:15-07:00">2019-08-31</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="1-What-is-it"><a href="#1-What-is-it" class="headerlink" title="1. What is it?"></a>1. What is it?</h3><p><strong>MVC</strong> is a pattern/framework decouple application into 3 parts: <u>modal</u>, <u>view</u>, and <u>controller</u>.</p>
+<ul>
+<li><strong>Modal</strong>: the single source of truth of your app, <u>responsible for data input and data output</u>;</li>
+<li><strong>View</strong>: the UI part displayed to users, <u>responsible for display</u>;</li>
+<li><strong>Controller</strong>: bind views to modal  organically in a desired way, <u>responsible for handling Modal(automatically resulting in View update)</u></li>
+</ul>
+<p><u><strong>[Note]:</strong></u> MVC is based on <a href="">Observer Pattern</a></p>
+<h3 id="2-Why-use-it"><a href="#2-Why-use-it" class="headerlink" title="2. Why use it?"></a>2. Why use it?</h3><p>As app grow, the business logic between data and view become complicated. There could be a good chance that several component use same piece of data. It would be painful to call vanilla JS to update every component one by one. </p>
+<p>It would be better if there is a way that we can update all those components in a batch automatically when that data piece changes. Here come in the MVC pattern. </p>
+<ul>
+<li><code>View</code> is html code snippet actually on frontend;</li>
+<li><code>Modal</code> defines all single source of true for their views</li>
+<li><code>Controller</code> will <ul>
+<li>binds all <code>Views</code> to their corresponding <code>Modal</code>, so that Views will update automatically when the Modal changes.</li>
+<li>via callback passed in, it updates<code>Modal</code>, leading to <code>Views</code> get updated</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-How-to-use-it"><a href="#3-How-to-use-it" class="headerlink" title="3. How to use it?"></a>3. How to use it?</h3><p>The general way:</p>
+<ol>
+<li>Declare <code>modal</code> class prototype, and its APIs, which will be called by <code>controller</code></li>
+<li>Specify to-be-bound <code>modal</code> for <code>view</code> components</li>
+<li>pass intention callback to<code>controller</code> to specify how to update <code>modal</code></li>
+</ol>
+<h3 id="4-Evolve-to-MVC-pattern-eg-Timer"><a href="#4-Evolve-to-MVC-pattern-eg-Timer" class="headerlink" title="4. Evolve to MVC pattern (eg: Timer)"></a>4. Evolve to MVC pattern (eg: Timer)</h3><p>We will implement a very simple widget to show how to evolve an app to MVC pattern. The widget is to display whatever we get from API or from callback, and show it inside a <code>div</code>.</p>
+<ol>
+<li><p>No Pattern</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// View Part：</span></span><br><span class="line">&lt;div id=<span class="string">"div1"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Logic Part：</span></span><br><span class="line"><span class="keyword">const</span> data = <span class="string">"This is the data"</span></span><br><span class="line"><span class="keyword">const</span> div = <span class="built_in">document</span>.getElementById(<span class="string">'div1'</span>);</span><br><span class="line">div.innerHTML = data;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="2">
+<li><p>Using <code>Observer Pattern</code></p>
+<p>Now we don’t want to update view by ourselves. Instead, we hope data update will trigger view change automatically. <code>Observer Pattern</code> can be used here to let the view observe the modal, so whenever modal changes, view will get updated automatically.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Model</span>(<span class="params">value</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>._value = <span class="keyword">typeof</span> value === <span class="string">'undefined'</span> ? <span class="string">''</span> : value;</span><br><span class="line">    <span class="keyword">this</span>._listeners = [];</span><br><span class="line">&#125;</span><br><span class="line">Model.prototype.set = <span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> self = <span class="keyword">this</span>;</span><br><span class="line">    self._value = value;</span><br><span class="line">    <span class="comment">// model value change will notify regisered callbacks</span></span><br><span class="line">    <span class="comment">// According to JS running principle, we apply callback asynchronously: WON'T Freeze UI</span></span><br><span class="line">    <span class="comment">// or use requestAnimationFrame, rather than setTimout</span></span><br><span class="line">    setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        self._listeners.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">listener</span>) </span>&#123;</span><br><span class="line">            listener.call(self, value);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br><span class="line">Model.prototype.watch = <span class="function"><span class="keyword">function</span> (<span class="params">listener</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// register callback</span></span><br><span class="line">    <span class="keyword">this</span>._listeners.push(listener);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// View：</span></span><br><span class="line">&lt;div id=<span class="string">"div1"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Logic：</span></span><br><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> model = <span class="keyword">new</span> Model();</span><br><span class="line">    <span class="keyword">var</span> div1 = <span class="built_in">document</span>.getElementById(<span class="string">'div1'</span>);</span><br><span class="line">    model.watch(<span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">        div1.innerHTML = value;</span><br><span class="line">    &#125;);</span><br><span class="line">    model.set(<span class="string">'hello, this is a div'</span>);</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="3">
+<li><p>Bind <code>View</code> and <code>Modal</code></p>
+<p>There is a drawback in the above approach: we need to make modal to <code>watch</code> each related views <u><strong>manually</strong></u>. But the truth is that all those work are duplicated, and conveys the same functionality: bind views to modal, or let modal watch related views.</p>
+<p>We can encapsulate this feature onto modal actually, as follows:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Model.prototype.bind = <span class="function"><span class="keyword">function</span> (<span class="params">node</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// put `watch` and `common callback` inside bind</span></span><br><span class="line">    <span class="keyword">this</span>.watch(<span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">        node.innerHTML = value;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// View：</span></span><br><span class="line">&lt;div id=<span class="string">"div1"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;div id=<span class="string">"div2"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Logic：</span></span><br><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> model = <span class="keyword">new</span> Model();</span><br><span class="line">    model.bind(<span class="built_in">document</span>.getElementById(<span class="string">'div1'</span>));</span><br><span class="line">    model.bind(<span class="built_in">document</span>.getElementById(<span class="string">'div2'</span>));</span><br><span class="line">    model.set(<span class="string">'this is a div'</span>);</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="4">
+<li><p>MVC Pattern</p>
+<p>Now, it is better. We bind view and modal😄~ And we can bind as many as views to a modal as we want😱. </p>
+<p>But still, we need to <strong><u>manually</u></strong> bind view to modal. Is there a way our code can handle it for us, as long as we tell the code which modal the view want to bind. </p>
+<p>Yeah, You might already get it! We can specify modal piece for the view by using HTML attribute, like <code>&lt;div bind=&#39;modal1&#39; /&gt;</code>. Thus, the code can know the desired modal current view wants to bind.</p>
+<p>We will create <strong><u>an util object</u></strong> that can </p>
+<ul>
+<li>firstly, automatically bind views to their modals,</li>
+<li>secondly, receive a callback to update modal in programmer’s desired way</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Controller</span>(<span class="params">callback</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> models = &#123;&#125;;</span><br><span class="line">    <span class="comment">// find all views with `bind` attr</span></span><br><span class="line">    <span class="keyword">var</span> views = <span class="built_in">document</span>.querySelectorAll(<span class="string">'[bind]'</span>);</span><br><span class="line">    <span class="comment">// convert views into array</span></span><br><span class="line">    views = <span class="built_in">Array</span>.prototype.slice.call(views, <span class="number">0</span>);</span><br><span class="line">    views.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">view</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> modelName = view.getAttribute(<span class="string">'bind'</span>);</span><br><span class="line">        <span class="comment">// get the modal for this view, or create new one for it</span></span><br><span class="line">        models[modelName] = models[modelName] || <span class="keyword">new</span> Model();</span><br><span class="line">        <span class="comment">// bind view and its modal</span></span><br><span class="line">        models[modelName].bind(view);</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">// update modals using specified callback </span></span><br><span class="line">    callback.call(<span class="keyword">this</span>, models);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// View:</span></span><br><span class="line">&lt;div id=<span class="string">"div1"</span> bind=<span class="string">"model1"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;div id=<span class="string">"div2"</span> bind=<span class="string">"model1"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="comment">// Controller：</span></span><br><span class="line"><span class="keyword">new</span> Controller(<span class="function"><span class="keyword">function</span> (<span class="params">models</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> model1 = models.model1;</span><br><span class="line">    model1.set(<span class="string">'this is a div'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>The whole MVC</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Model</span>(<span class="params">value</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>._value = <span class="keyword">typeof</span> value === <span class="string">'undefined'</span> ? <span class="string">''</span> : value;</span><br><span class="line">    <span class="keyword">this</span>._listeners = [];</span><br><span class="line">&#125;</span><br><span class="line">Model.prototype.set = <span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> self = <span class="keyword">this</span>;</span><br><span class="line">    self._value = value;</span><br><span class="line">    setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        self._listeners.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">listener</span>) </span>&#123;</span><br><span class="line">            listener.call(self, value);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br><span class="line">Model.prototype.watch = <span class="function"><span class="keyword">function</span> (<span class="params">listener</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>._listeners.push(listener);</span><br><span class="line">&#125;;</span><br><span class="line">Model.prototype.bind = <span class="function"><span class="keyword">function</span> (<span class="params">node</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.watch(<span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">        node.innerHTML = value;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Controller</span>(<span class="params">callback</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> models = &#123;&#125;;</span><br><span class="line">    <span class="keyword">var</span> views = <span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">document</span>.querySelectorAll(<span class="string">'[bind]'</span>), <span class="number">0</span>);</span><br><span class="line">    views.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">view</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> modelName = view.getAttribute(<span class="string">'bind'</span>);</span><br><span class="line">        (models[modelName] = models[modelName] || <span class="keyword">new</span> Model()).bind(view);</span><br><span class="line">    &#125;);</span><br><span class="line">    callback.call(<span class="keyword">this</span>, models);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="5-Test-our-MVC-framework"><a href="#5-Test-our-MVC-framework" class="headerlink" title="5. Test our MVC framework"></a>5. Test our MVC framework</h3><p>We will use our MVC framework to implement a Timer as follows</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// View:</span><br><span class="line">&lt;span bind="hour"&gt;&lt;/span&gt; : &lt;span bind="minute"&gt;&lt;/span&gt; : &lt;span bind="second"&gt;&lt;/span&gt;</span><br><span class="line"></span><br><span class="line">// Controller:</span><br><span class="line"><span class="selector-tag">new</span> <span class="selector-tag">Controller</span>(<span class="selector-tag">function</span> (<span class="selector-tag">models</span>) &#123;</span><br><span class="line">    function setTime() &#123;</span><br><span class="line">        var date = new Date();</span><br><span class="line">        <span class="selector-tag">models</span><span class="selector-class">.hour</span><span class="selector-class">.set</span>(<span class="selector-tag">date</span><span class="selector-class">.getHours</span>());</span><br><span class="line">        <span class="selector-tag">models</span><span class="selector-class">.minute</span><span class="selector-class">.set</span>(<span class="selector-tag">date</span><span class="selector-class">.getMinutes</span>());</span><br><span class="line">        <span class="selector-tag">models</span><span class="selector-class">.second</span><span class="selector-class">.set</span>(<span class="selector-tag">date</span><span class="selector-class">.getSeconds</span>());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="selector-tag">setTime</span>();</span><br><span class="line">    <span class="selector-tag">setInterval</span>(<span class="selector-tag">setTime</span>, 1000);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="6-Thoughts"><a href="#6-Thoughts" class="headerlink" title="6. Thoughts"></a>6. Thoughts</h3><p>For almost all frameworks like <code>Redux</code>, <code>Flux</code>. It use similiar ways to handle View and Modal. Here we use <code>Observer Pattern</code> to implement <code>MVC</code>. </p>
+<p>Based on my understanding, <code>Redux</code> and <code>Flux</code> use <code>Publisher-Subscriber Pattern</code> will handles events better than <code>Observer Pattern</code>.</p>
+<h3 id="7-Reference"><a href="#7-Reference" class="headerlink" title="7. Reference"></a>7. Reference</h3><ol>
+<li><a href="https://www.cnblogs.com/front-end-ralph/p/5190442.html" target="_blank" rel="noopener">30行代码实现Javascript中的MVC</a></li>
+<li><a href="https://caomingkai.github.io/2018/10/07/Design-Pattern-JS/" target="_blank" rel="noopener">Design Pattern - JS</a></li>
+<li><a href="https://addyosmani.com/resources/essentialjsdesignpatterns/book/" target="_blank" rel="noopener">Learning JavaScript Design Patterns</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/29/HOC-Redux-connect/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2281,150 +2490,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/11/3-Longest-Substring-Without-Repeating-Characters-JS/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/mingkai.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/01/11/3-Longest-Substring-Without-Repeating-Characters-JS/" itemprop="url">3. Longest Substring Without Repeating Characters - JS</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-11T20:45:45-08:00">2019-01-11</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p>Given a string, find the length of the <strong>longest substring</strong> without repeating characters.</p>
-<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a><strong>Example</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Input: &quot;abcabcbb&quot;</span><br><span class="line">Output: 3 </span><br><span class="line">Explanation: The answer is &quot;abc&quot;, with the length of 3. </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Input: &quot;bbbbb&quot;</span><br><span class="line">Output: 1</span><br><span class="line">Explanation: The answer is &quot;b&quot;, with the length of 1.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Input: &quot;pwwkew&quot;</span><br><span class="line">Output: 3</span><br><span class="line">Explanation: The answer is &quot;wke&quot;, with the length of 3. </span><br><span class="line">             Note that the answer must be a substring, &quot;pwke&quot; is a subsequence and not a substring.</span><br></pre></td></tr></table></figure>
-<h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> lengthOfLongestSubstring = <span class="function"><span class="keyword">function</span>(<span class="params">s</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> set = <span class="keyword">new</span> <span class="built_in">Set</span>();</span><br><span class="line">    <span class="keyword">let</span> l = <span class="number">0</span>, r = <span class="number">0</span>, max = <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span>( r &lt; s.length )&#123;</span><br><span class="line">        <span class="keyword">if</span>( !set.has(s[r]) )&#123;</span><br><span class="line">            set.add(s[r]);</span><br><span class="line">            max = <span class="built_in">Math</span>.max(max, r-l+<span class="number">1</span>);</span><br><span class="line">            r++;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">while</span>( set.has(s[r]) ) &#123;</span><br><span class="line">              set.delete(s[l]);</span><br><span class="line">              l++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> max;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2476,7 +2541,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">82</span>
+                    <span class="site-state-item-count">83</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2784,7 +2849,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">134</span>
+                      
+                    
+                    <span class="site-state-item-count">135</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

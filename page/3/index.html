@@ -332,6 +332,160 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/09/Trie-Tree-Implementation-using-JS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/mingkai.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/09/Trie-Tree-Implementation-using-JS/" itemprop="url">Trie Tree Implementation using JS</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-09T12:20:29-08:00">2018-12-09</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="I-What-is-Trie"><a href="#I-What-is-Trie" class="headerlink" title="I. What is Trie"></a>I. What is Trie</h2><p>Trie is an efficient information <u><strong>reTrieval</strong></u> data structure. </p>
+<ol>
+<li><strong><u>search complexities</u></strong> can be brought to optimal limit (key length).</li>
+<li>If we store keys in BST, a well balanced BST will need time proportional to <code>O(M*log N)</code>, where <code>M</code> is maximum string length, and <code>N</code> is number of keys in tree</li>
+<li>Using Trie, we can search the key in <code>O(M)</code> time.</li>
+</ol>
+<h2 id="II-Use-case"><a href="#II-Use-case" class="headerlink" title="II. Use case"></a>II. Use case</h2><ol>
+<li>Prefix matching</li>
+<li>Check if a word exists in a dictionary</li>
+<li>Word frequency in dictionary</li>
+<li>Sort Words in dictionary</li>
+</ol>
+<h2 id="III-Implementation"><a href="#III-Implementation" class="headerlink" title="III. Implementation"></a>III. Implementation</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 			</span></span><br><span class="line"><span class="comment">				*</span></span><br><span class="line"><span class="comment">			 /  |  \</span></span><br><span class="line"><span class="comment">            a   c   o</span></span><br><span class="line"><span class="comment">          / |   |   |</span></span><br><span class="line"><span class="comment">         c  t   a   f</span></span><br><span class="line"><span class="comment">		/       | \</span></span><br><span class="line"><span class="comment">       e		t  b</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    For a word of length K, we need (K+1) nodes to store</span></span><br><span class="line"><span class="comment">	- `add`: [1] *.children.a  </span></span><br><span class="line"><span class="comment">			 [2] a.children.c </span></span><br><span class="line"><span class="comment">			 [3] c.children.d  </span></span><br><span class="line"><span class="comment">			 [4] e.children.isEnd = true</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TrieNode</span></span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>()&#123;</span><br><span class="line">        <span class="keyword">this</span>.isEnd = <span class="literal">false</span></span><br><span class="line">        <span class="keyword">this</span>.freq = <span class="number">0</span></span><br><span class="line">        <span class="keyword">this</span>.children = &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Trie</span></span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>()&#123;</span><br><span class="line">        <span class="keyword">this</span>.root = <span class="keyword">new</span> TrieNode()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    insert(word)&#123;</span><br><span class="line">        <span class="keyword">if</span>( word.length === <span class="number">0</span> ) <span class="keyword">return</span> 	<span class="comment">// forbid empty string</span></span><br><span class="line">        <span class="keyword">let</span> letter, curNode = <span class="keyword">this</span>.root</span><br><span class="line">        <span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">0</span>; i &lt; word.length; i++ )&#123;</span><br><span class="line">            letter = word[i]</span><br><span class="line">            <span class="keyword">if</span>( !curNode.children.hasOwnProperty(letter) )&#123;</span><br><span class="line">                curNode.children[letter] = <span class="keyword">new</span> TrieNode()</span><br><span class="line">            &#125;</span><br><span class="line">            curNode = curNode.children[letter]</span><br><span class="line">        &#125;</span><br><span class="line">        curNode.isEnd = <span class="literal">true</span></span><br><span class="line">        curNode.freq = curNode.freq + <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    getNodeForPrefix(str)&#123;</span><br><span class="line">        <span class="keyword">let</span> letter, curNode = <span class="keyword">this</span>.root</span><br><span class="line">        <span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">0</span>; i &lt; str.length; i++ )&#123;</span><br><span class="line">            letter = str[i]</span><br><span class="line">            <span class="keyword">if</span>( !curNode.children.hasOwnProperty(letter) ) </span><br><span class="line">                <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">            curNode = curNode.children[letter]</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> curNode</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    isWord(word)&#123;</span><br><span class="line">        <span class="keyword">if</span>( <span class="keyword">this</span>.getNodeForPrefix(word) === <span class="literal">null</span> ) <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.getNodeForPrefix(word).isEnd</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    getWordFreq(word)&#123;</span><br><span class="line">        <span class="keyword">if</span>( <span class="keyword">this</span>.getNodeForPrefix(word) === <span class="literal">null</span> ) <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.getNodeForPrefix(word).freq</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/* -------------------- Testing --------------------*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> ace = <span class="string">"ace"</span></span><br><span class="line"><span class="keyword">let</span> at = <span class="string">"at"</span></span><br><span class="line"><span class="keyword">let</span> cat = <span class="string">"cat"</span></span><br><span class="line"><span class="keyword">let</span> cab = <span class="string">"cab"</span></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">of</span> = <span class="string">"of"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> t = <span class="keyword">new</span> Trie()</span><br><span class="line">t.insert(ace)</span><br><span class="line"><span class="built_in">console</span>.log(t.isWord(ace))	  <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line">t.insert(ace)	</span><br><span class="line"><span class="built_in">console</span>.log(t.isWord(ace))     <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(t.getWordFreq(ace))<span class="comment">// 2</span></span><br><span class="line"></span><br><span class="line">t.insert(at)	</span><br><span class="line"><span class="built_in">console</span>.log(t.isWord(at))      <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(t.getWordFreq(at)) <span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line">t.insert(cat)</span><br><span class="line">t.insert(cat)	</span><br><span class="line"><span class="built_in">console</span>.log(t.isWord(cat))     <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(t.getWordFreq(cat))<span class="comment">// 2</span></span><br><span class="line">t.insert(cat)	</span><br><span class="line"><span class="built_in">console</span>.log(t.getWordFreq(cat))<span class="comment">// 3</span></span><br><span class="line"></span><br><span class="line">t.insert(cab)	</span><br><span class="line"><span class="built_in">console</span>.log(t.isWord(cab))     <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(t.getWordFreq(cab))<span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line">t.insert(<span class="keyword">of</span>)	</span><br><span class="line"><span class="built_in">console</span>.log(t.isWord(<span class="keyword">of</span>))     <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(t.getWordFreq(<span class="keyword">of</span>))<span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// check the internal representation of the Trie</span></span><br><span class="line"><span class="built_in">console</span>.log(t.root)</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/05/JS-common-interview-problems/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2364,161 +2518,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/14/Reposition-an-Array/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/mingkai.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/14/Reposition-an-Array/" itemprop="url">Reposition an Array</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-14T19:59:57-07:00">2018-10-14</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h2><p>Given an original array, and it new position to be. Reposition it according the given indices array. For example:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr  =    [<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>, <span class="string">"d"</span>, <span class="string">"e"</span>, <span class="string">"f"</span>]</span><br><span class="line"><span class="keyword">let</span> indices = [ <span class="number">1</span>,   <span class="number">2</span>,   <span class="number">3</span>,   <span class="number">5</span>,   <span class="number">0</span>,   <span class="number">4</span> ]</span><br><span class="line"></span><br><span class="line"><span class="comment">// the new array should be ["e", "a", "b", "c", "f", "d"]</span></span><br></pre></td></tr></table></figure>
-<h2 id="Follow-Up"><a href="#Follow-Up" class="headerlink" title="Follow Up"></a>Follow Up</h2><p>Try to do it <strong><u>in-place</u></strong>, i.e. : Space Complexity <code>O(1)</code></p>
-<h2 id="Solution-1-Space-complexity-O-n"><a href="#Solution-1-Space-complexity-O-n" class="headerlink" title="Solution 1: Space complexity O(n)"></a>Solution 1: Space complexity <code>O(n)</code></h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">rePosition</span>(<span class="params">arr, indices</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>( arr.length !== indices.length ) </span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"they are not the same length"</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> newArr = indices.map(<span class="function">(<span class="params">item, index</span>)=&gt;</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> arr[indices.indexOf(index)]</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> newArr</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Tests</span></span><br><span class="line"><span class="keyword">let</span> newArr = []</span><br><span class="line"><span class="keyword">let</span> arr  =     [<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>, <span class="string">"d"</span>, <span class="string">"e"</span>, <span class="string">"f"</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment">// test 1</span></span><br><span class="line"><span class="keyword">let</span> indices1 = [ <span class="number">1</span>,   <span class="number">2</span>,   <span class="number">3</span>,   <span class="number">5</span>,   <span class="number">0</span>,   <span class="number">4</span> ]</span><br><span class="line">newArr = rePosition(arr, indices1)</span><br><span class="line"><span class="built_in">console</span>.log(newArr)  <span class="comment">// ["e", "a", "b", "c", "f", "d"]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// test 2</span></span><br><span class="line"><span class="keyword">let</span> indices2 = [ <span class="number">0</span>,   <span class="number">1</span>,   <span class="number">2</span>,   <span class="number">3</span>,   <span class="number">4</span>,   <span class="number">5</span> ]</span><br><span class="line">newArr = rePosition(arr, indices2)</span><br><span class="line"><span class="built_in">console</span>.log(newArr) <span class="comment">//  ["a", "b", "c", "d", "e", "f"]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// test 3</span></span><br><span class="line"><span class="keyword">let</span> indices3 = [ <span class="number">2</span>,   <span class="number">1</span>,   <span class="number">0</span>,   <span class="number">4</span>,   <span class="number">3</span>,   <span class="number">5</span> ]</span><br><span class="line">newArr = rePosition(arr, indices3)</span><br><span class="line"><span class="built_in">console</span>.log(newArr) <span class="comment">//  ["c", "b", "a", "e", "d", "f"]</span></span><br></pre></td></tr></table></figure>
-<h2 id="Solution-2-Space-complexity-O-1"><a href="#Solution-2-Space-complexity-O-1" class="headerlink" title="Solution 2: Space complexity O(1)"></a>Solution 2: Space complexity <code>O(1)</code></h2><p>We need two variables: <code>kickedItem</code> and <code>kickedIndex</code>, to denote the kicked item in <code>arr</code> and kicked index in <code>indices</code></p>
-<ol>
-<li><p>Every time we update an item in its new position,  we put item in its new position, and swap the kicked item and index to their counterpart in <code>arr</code> &amp; <code>indices</code></p>
-</li>
-<li><p>Since the kicked item &amp; its new position are just swapped to previous position, we can keep staring the same position to deal with the chaining update, until there is an end to the chain</p>
-</li>
-<li><p>NOTE: there are also cases (<em><u>test case 3</u></em>) that the new indices are not  depended upon one another, but instead they are partially dependent. That’s why we need to maintain two variable for both <code>arr</code> &amp; <code>indices</code>, rather than just for <code>arr</code></p>
-</li>
-</ol>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">rePosition</span>(<span class="params">arr, indices</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">if</span>( arr.length !== indices.length ) </span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"they are not the same length"</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">0</span>; i &lt; arr.length; i++ )&#123;</span><br><span class="line">        <span class="keyword">while</span>( i !== indices[i] )&#123;</span><br><span class="line">            <span class="keyword">let</span> kickedItem = arr[indices[i]]</span><br><span class="line">            <span class="keyword">let</span> kickedIndex = indices[indices[i]]</span><br><span class="line">            arr[indices[i]] = arr[i]</span><br><span class="line">            indices[indices[i]] = indices[i]</span><br><span class="line">            arr[i] = kickedItem</span><br><span class="line">            indices[i] = kickedIndex</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Tests</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// test 1</span></span><br><span class="line"><span class="keyword">let</span> arr  =     [<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>, <span class="string">"d"</span>, <span class="string">"e"</span>, <span class="string">"f"</span>]</span><br><span class="line"><span class="keyword">let</span> indices1 = [ <span class="number">1</span>,   <span class="number">2</span>,   <span class="number">3</span>,   <span class="number">5</span>,   <span class="number">0</span>,   <span class="number">4</span> ]</span><br><span class="line">rePosition(arr, indices1)</span><br><span class="line"><span class="built_in">console</span>.log(arr)  <span class="comment">// ["e", "a", "b", "c", "f", "d"]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// test 2</span></span><br><span class="line">arr  =     [<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>, <span class="string">"d"</span>, <span class="string">"e"</span>, <span class="string">"f"</span>]</span><br><span class="line"><span class="keyword">let</span> indices2 = [ <span class="number">0</span>,   <span class="number">1</span>,   <span class="number">2</span>,   <span class="number">3</span>,   <span class="number">4</span>,   <span class="number">5</span> ]</span><br><span class="line">rePosition(arr, indices2)</span><br><span class="line"><span class="built_in">console</span>.log(arr) <span class="comment">//  ["a", "b", "c", "d", "e", "f"]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// test 3</span></span><br><span class="line">arr  =     [<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>, <span class="string">"d"</span>, <span class="string">"e"</span>, <span class="string">"f"</span>]</span><br><span class="line"><span class="keyword">let</span> indices3 = [ <span class="number">2</span>,   <span class="number">1</span>,   <span class="number">0</span>,   <span class="number">4</span>,   <span class="number">3</span>,   <span class="number">5</span> ]</span><br><span class="line">rePosition(arr, indices3)</span><br><span class="line"><span class="built_in">console</span>.log(arr) <span class="comment">//  ["c", "b", "a", "e", "d", "f"]</span></span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2570,7 +2569,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">82</span>
+                    <span class="site-state-item-count">83</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2878,7 +2877,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">134</span>
+                      
+                    
+                    <span class="site-state-item-count">135</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

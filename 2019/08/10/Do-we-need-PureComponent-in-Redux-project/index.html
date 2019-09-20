@@ -106,7 +106,7 @@
 <meta property="og:url" content="http://yoursite.com/2019/08/10/Do-we-need-PureComponent-in-Redux-project/index.html">
 <meta property="og:site_name" content="CMK">
 <meta property="og:description" content="I. WhatI had such question when I first join my current company. We use react-redux lib, and let redux to manage nearly all data in frontend.  [Fact 1]: We all know that the parent re-render will trig">
-<meta property="og:updated_time" content="2019-08-10T08:00:18.454Z">
+<meta property="og:updated_time" content="2019-09-04T06:12:11.831Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Do we need PureComponent in Redux project?">
 <meta name="twitter:description" content="I. WhatI had such question when I first join my current company. We use react-redux lib, and let redux to manage nearly all data in frontend.  [Fact 1]: We all know that the parent re-render will trig">
@@ -428,14 +428,14 @@
         <h2 id="I-What"><a href="#I-What" class="headerlink" title="I. What"></a>I. What</h2><p>I had such question when I first join my current company. We use <code>react-redux</code> lib, and let <code>redux</code> to manage nearly all data in frontend.</p>
 <ol>
 <li><u><strong>[Fact 1</strong></u>]: We all know that the parent re-render will trigger children component re-render by default (if no <code>shouldComponentUpdate</code> provided in child component, it will always default to <code>true</code>). This way, it might introduce unnecessary re-render for children component even though it should NOT.</li>
-<li><p><u><strong>[Fact 2]</strong></u>: Redux creating <strong><u>HoC Pure component</u></strong> for its corresponding UI components. That is, container components actually inherit <code>PureComponent</code> (by default, it implements <code>shouldComponentUpdate</code>  and return <code>false</code>). Thus, there is no need we use pure components for the UI components, as its container components already handle it</p>
+<li><p><u><strong>[Fact 2]</strong></u>: Redux creating <strong><u>HoC Pure component</u></strong> for its corresponding UI components. That is, container components actually inherit <code>PureComponent</code> (by default, it implements <code>shouldComponentUpdate</code>  and return <code>false</code> if <code>props</code> and <code>state</code> stay the same). Thus, there is no need we use pure components for the UI components, as its container components already handle it</p>
 </li>
 <li><p><strong><u>[Question]</u></strong>: Does that means we don’t need <code>PureComponent</code> in <code>Redux</code> project? ——&gt;<u><strong>NO</strong></u></p>
 </li>
 </ol>
 <h2 id="II-Why"><a href="#II-Why" class="headerlink" title="II. Why?"></a>II. Why?</h2><ol>
-<li>Actually,  <strong>Redux</strong> uses <code>connect()</code> to create <strong><u>HoC Pure component</u></strong>, which actually inherits <code>PureComponent</code> (by default, it implements <code>shouldComponentUpdate</code>  and return <code>false</code>). All <u>UI components</u> now hide behind the <u>Container components</u>, which are <code>Pure.Components</code></li>
-<li>But, we cannot guarantee all the components have a corresponding container components created by redux. Still, there exist pure react component not plugging into redux store. In this case, it will trigger child component re-render if the parent component re-render</li>
+<li>Actually,  <strong>Redux</strong> uses <code>connect()</code> to create <strong><u>HoC Pure component</u></strong>, which actually inherits <code>PureComponent</code> (by default, it implements <code>shouldComponentUpdate</code>  and return <code>false</code> if <code>props</code> and <code>state</code> stay the same). All <u>UI components</u> now hide behind the <u>Container components</u>, which are <code>Pure.Components</code></li>
+<li>But, we cannot guarantee all the components have a corresponding container components created by redux. Still, there exist react component not plugging into redux store. In this case, it will trigger child component re-render if the parent component re-render</li>
 <li>So, we still need to inherit <code>PureComponent</code> in some case in redux project</li>
 </ol>
 <h2 id="III-Code"><a href="#III-Code" class="headerlink" title="III. Code"></a>III. Code</h2><p>Play with <strong>part_1</strong> and <strong>part_2</strong>, to see when:</p>
@@ -597,6 +597,8 @@
                 <div class="site-state-item site-state-categories">
                   <a href="/categories/index.html">
                     
+                    
+                      
                     
                       
                     
@@ -893,9 +895,7 @@
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">135</span>
+                    <span class="site-state-item-count">133</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

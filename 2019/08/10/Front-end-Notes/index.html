@@ -106,7 +106,7 @@
 <meta property="og:url" content="http://yoursite.com/2019/08/10/Front-end-Notes/index.html">
 <meta property="og:site_name" content="CMK">
 <meta property="og:description" content="1. Array.prototype.sort(cb)Always pass in comparison callback, as the default of sort() behavior is:  first convert to string type then, sort string array  2 examples are given below: 123456let array1">
-<meta property="og:updated_time" content="2019-08-30T06:30:44.799Z">
+<meta property="og:updated_time" content="2019-09-04T06:13:20.963Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Front-end Notes">
 <meta name="twitter:description" content="1. Array.prototype.sort(cb)Always pass in comparison callback, as the default of sort() behavior is:  first convert to string type then, sort string array  2 examples are given below: 123456let array1">
@@ -935,8 +935,79 @@
 <li>details: ‘’</li>
 </ol>
 </li>
+</ol>
+</li>
+</ol>
+<h3 id="Product-Taste"><a href="#Product-Taste" class="headerlink" title="Product Taste"></a>Product Taste</h3><ol>
+<li><p>问最喜欢的app，<a href="http://redirect.viglink.com/?key=a1aa544c3b328def412653f9fc432107&amp;u=http%3A%2F%2Flinkedin.com" target="_blank" rel="noopener">linkedin</a>有什么要改进的地方，平时上那些技术网站论坛</p>
+<ol>
+<li>LinkedIn：<ul>
+<li>like concise and clean UI,  without distraction (compared to FB)</li>
+<li>like positive and supportive environment</li>
+<li>like the new action button group, give more accurate react  (Thoughts on new buttons)</li>
+<li><strong><u>Improvement:</u></strong> <ul>
+<li>Click on link: pop out detail page, have to click close. Can we use touch?</li>
+<li>Can we share file on home screen?</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Stripe</p>
+<ul>
+<li>harmonious color skeme / animation</li>
+<li>deliver more info with limited view port <ul>
+<li>debate on this: <u>focus with margin</u> or <u>info with less margin</u></li>
+<li>depends on business mode</li>
+</ul>
+</li>
+</ul>
+</li>
 <li></li>
 </ol>
+</li>
+<li><p>比如谈一次失败的经历；如果你和其他人意见不一致时怎么处理等。</p>
+<ol>
+<li>That not uncommon at work</li>
+<li>Something didn’t handle well, exist ambiguity. Opportunity for improvement.</li>
+<li>Talk directly, try to understand other’s point of view. If still cannot come to an agreement. No need to be hostile, as both parties’ goal is to improve sth<ol>
+<li>time to bring more ideas in, from different perspectives: PM, designer, backend, frontend, CS, even customers</li>
+<li>eg: whether we should use PureComponent in Redux project</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>谈谈你喜欢和不喜欢的App，以及LinkedIn App。我说我不怎么用LinkedIn App，谈谈网页版的行不行，他说没问题。</p>
+</li>
+<li><p>设计一个dashboard，dashboard是一个地图，当有新用户注册账号时，需要实时在dashboard上显示用户位置？<br>follow up：前端用什么library？(d3.js)，需要向前端发送哪些数据？（经纬度或者geohash），push vs pull？怎么实现push service？（消息队列）？怎么测试？</p>
+</li>
+<li><p>用网页写一个带简单 UI 的计算器。有点 Leetcode 224 的意思，但是 UI 的行为要符合简单的计算器，比如屏幕上显示 1 的时候，输入 2，要变成12，但是显示 0 的时候，输入 1，就要变成 1。Edge case 比较多，要好好跟考官交流。一开始只让写有 + 跟 = 就行了。写的不太好，这里又我面试完写的完全版： <a href="https://gist.github.com/d6u/2e982bdc965e14ce12a545e6996f0af4" target="_blank" rel="noopener">https://gist.github.com/d6u/2e982bdc965e14ce12a545e6996f0af4</a> 大家可以一起交流。带 +、-、*、/。面试的时候提了 reverse polish notation 但是没用。-baidu 1point3acres</p>
+</li>
+<li><p>11:00-12:00，一位面试官。题目是给了个地图，上面有很多点， 每个点是个object, x, y 坐标都给了， 比如{x: 5, y: 5}已知 包含所有点的 array, 某一个点，和半径d, 写一个function 返回到这个点的距离小于或等于d 的所有点。怎么优化。我当时答得是把整个地图分成小的区域，每一小块2d的正方形。然后找这个点所在的方块和周围的几个方块。这样就不用遍历地图里所有的点了。</p>
+</li>
+<li><p>这一轮和manager聊，学习经历和工作经历，全程聊天穿插一些behavior question。你想给LinkedIn增加哪些新功能。 </p>
+</li>
+<li><p>product and cultule fit。 说一个你最喜欢的应用， 为什么喜欢，还有哪些需要改进的地方。你想给LinkedIn增加哪些新功能（这一轮又问到了）。</p>
+</li>
+<li><p>1:00-2:00。还是两位面试官。 系统设计。linkedin新加的功能, 页面的右下角可以发messenger. 对于messenger这个feature, 先列一下有哪些功能要实现。然后对每个功能讲讲怎么实现。</p>
+</li>
+<li><p>题目是写一个function实现计算器里的undo以及redo功能。其实就是考数据结构里的stack。最后的拓展题感觉在问system design，问我如果这种undo以及redo操作是用在占据很大存储空间以及用户量很大的data上该怎么办，我说那就给每个数据加上index，undo以及redo只用在index上，最后再用index去取数据。。。</p>
+</li>
+<li><p>13:30-14:15，product and cultule fit。这轮主要就是扯淡。。。问到好多UI以及设计方面的问题，比如谈谈你对client side rendering以及server side rendering的理解，说一个你最喜欢的应用并列举下优缺点，LinkedIn还有哪些需要改进的地方等等等等。。。</p>
+</li>
+<li><p>主要根据简历的情况，很随机地问了很多behaviour的问题，所以简历里写的东西自己一定要熟悉，manager人好好呀，感觉特别亲和，有活力。</p>
+</li>
+<li><p>设计一个系统或者service，包括分析QPS， concurrent user那些，到后台用哪种database存，push or pull，这些，结果完全又不按套路出牌，<strong><u>让设计一个日历</u></strong>，要写detail的HTML和js代码，这一轮的面试小哥非常严肃，提示也比较confusing….楼主表示全程很懵逼，他问的问题也比较随机，看到你写到某个地方的时候，会突然根据你写的提出一个问题，感觉他有点想到什么问什么。</p>
+</li>
+<li><p>高频题：<strong><u>地图上显示新注册用户的位置</u></strong>。 很多很多follow up, 比如：更新频率如何设定，短时间大量用户注册怎么处理，后端api返回的数据结构，polling vs socket，是否需要实时更新等等。</p>
+</li>
+<li><p>这个是一个小时。主要考验你的是宏观的设计。例如后端该有什么 endpoint，前端什么时候要用这些 endpoint。前端每个 page 该怎么和对方交流。一般会叫你设计一个 Ap<strong><u>p。面试我的时候是给设计 linkedin 的 search</u></strong>。这轮之需要画一些 diagram 和 flowchart 就好，不需要写 code。</p>
+</li>
+<li><p>这一轮比较奇葩。要求你找一个你最喜欢的网站，然后讲你为什么喜欢。然后如果你是PM，你会怎么改进那个网站。考的更多的是你对 human computer interaction 的理解。大多数是学校里学 UI 时候学的东西。</p>
+</li>
+<li><p>Word ladder 1 / 2</p>
+</li>
+<li><p>简历</p>
+<p>1. </p>
 </li>
 </ol>
 
@@ -1082,6 +1153,8 @@
                 <div class="site-state-item site-state-categories">
                   <a href="/categories/index.html">
                     
+                    
+                      
                     
                       
                     
@@ -1378,9 +1451,7 @@
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">135</span>
+                    <span class="site-state-item-count">133</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -1430,7 +1501,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Array-prototype-sort-cb"><span class="nav-number">1.</span> <span class="nav-text">1. Array.prototype.sort(cb)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-NO-map-or-forEach-on-String"><span class="nav-number">2.</span> <span class="nav-text">2. NO map or forEach on String</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-oninput-vs-onchange"><span class="nav-number">3.</span> <span class="nav-text">3. oninput vs onchange</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Don’t-use-a-number-returned-comparator-directly"><span class="nav-number">4.</span> <span class="nav-text">4. Don’t use a number returned comparator directly</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Event"><span class="nav-number">5.</span> <span class="nav-text">5. Event</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-How-does-new-work-when-instantiate-an-object"><span class="nav-number">6.</span> <span class="nav-text">6. How does new work when instantiate an object?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-global-window-default-one-if-no-obj-set-to-this"><span class="nav-number">7.</span> <span class="nav-text">7. global/window: default one, if no obj set to this</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-Foo-prototype-method-vs-Foo-prototype"><span class="nav-number">8.</span> <span class="nav-text">8. Foo.prototype.method=... vs Foo.prototype={...}</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-AMD-vs-CommonJS-vs-import-export"><span class="nav-number">9.</span> <span class="nav-text">9. AMD vs. CommonJS vs import/export</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-When-to-use-document-write"><span class="nav-number">10.</span> <span class="nav-text">10. When to use document.write ?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-HTML-attribute-vs-DOM-property"><span class="nav-number">11.</span> <span class="nav-text">11. HTML attribute vs DOM property</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-document-load-vs-document-DOMContentLoaded"><span class="nav-number">12.</span> <span class="nav-text">12. document.load() vs document DOMContentLoaded()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-When-to-usePromise-resolve"><span class="nav-number">13.</span> <span class="nav-text">13. When to usePromise.resolve() ?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-CSS-preprocessor"><span class="nav-number">14.</span> <span class="nav-text">14. CSS preprocessor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-HTML-Accessibility"><span class="nav-number">15.</span> <span class="nav-text">15. HTML Accessibility</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-data-HTML-syntax-vs-JS-access-vs-CSS-access"><span class="nav-number">16.</span> <span class="nav-text">16.  data-*: HTML syntax vs. JS access vs. CSS access</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#17-How-does-browser-render-a-webpage"><span class="nav-number">17.</span> <span class="nav-text">17. How does browser render a webpage?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#18-CSS-float-set-amp-clear"><span class="nav-number">18.</span> <span class="nav-text">18. CSS: float set &amp; clear</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#19-CSS-positioning"><span class="nav-number">19.</span> <span class="nav-text">19. CSS: positioning</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#20-HTML-People-you-may-know"><span class="nav-number">20.</span> <span class="nav-text">20. HTML: People you may know</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#21-UI-create-a-tooltip"><span class="nav-number">21.</span> <span class="nav-text">21. UI: create a tooltip</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#22-JS-memorize-function"><span class="nav-number">22.</span> <span class="nav-text">22. JS: memorize function</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#23-UI-Inifinite-scroll"><span class="nav-number">23.</span> <span class="nav-text">23. UI: Inifinite scroll</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#24-JS-lazy-load"><span class="nav-number">24.</span> <span class="nav-text">24. JS: lazy load</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#26-UI-autocomplete"><span class="nav-number">25.</span> <span class="nav-text">26. UI: autocomplete</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#27-UI-widget"><span class="nav-number">26.</span> <span class="nav-text">27. UI: widget</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#28-Browser-GET-v-s-POST"><span class="nav-number">27.</span> <span class="nav-text">28: Browser: GET v.s. POST</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#29-UI-thumb-up"><span class="nav-number">28.</span> <span class="nav-text">29. UI: thumb up</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#30-JS"><span class="nav-number">29.</span> <span class="nav-text">30. JS:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Autocomplete"><span class="nav-number">30.</span> <span class="nav-text">Autocomplete</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#II-On-site"><span class="nav-number">31.</span> <span class="nav-text">II.On-site</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Web-amp-Browser"><span class="nav-number">31.1.</span> <span class="nav-text">Web &amp; Browser</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#HTTP与浏览器缓存"><span class="nav-number">31.1.0.1.</span> <span class="nav-text">HTTP与浏览器缓存</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#JSONP-https-www-w3schools-com-js-js-json-jsonp-asp"><span class="nav-number">31.1.0.2.</span> <span class="nav-text">JSONP: https://www.w3schools.com/js/js_json_jsonp.asp</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS-HTML"><span class="nav-number">31.2.</span> <span class="nav-text">CSS + HTML</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#BFC布局规则："><span class="nav-number">31.2.0.1.</span> <span class="nav-text">BFC布局规则：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JS-Lib-scroll-API"><span class="nav-number">31.3.</span> <span class="nav-text">JS Lib: (scroll + API)</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Array-prototype-sort-cb"><span class="nav-number">1.</span> <span class="nav-text">1. Array.prototype.sort(cb)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-NO-map-or-forEach-on-String"><span class="nav-number">2.</span> <span class="nav-text">2. NO map or forEach on String</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-oninput-vs-onchange"><span class="nav-number">3.</span> <span class="nav-text">3. oninput vs onchange</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Don’t-use-a-number-returned-comparator-directly"><span class="nav-number">4.</span> <span class="nav-text">4. Don’t use a number returned comparator directly</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Event"><span class="nav-number">5.</span> <span class="nav-text">5. Event</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-How-does-new-work-when-instantiate-an-object"><span class="nav-number">6.</span> <span class="nav-text">6. How does new work when instantiate an object?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-global-window-default-one-if-no-obj-set-to-this"><span class="nav-number">7.</span> <span class="nav-text">7. global/window: default one, if no obj set to this</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-Foo-prototype-method-vs-Foo-prototype"><span class="nav-number">8.</span> <span class="nav-text">8. Foo.prototype.method=... vs Foo.prototype={...}</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-AMD-vs-CommonJS-vs-import-export"><span class="nav-number">9.</span> <span class="nav-text">9. AMD vs. CommonJS vs import/export</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-When-to-use-document-write"><span class="nav-number">10.</span> <span class="nav-text">10. When to use document.write ?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-HTML-attribute-vs-DOM-property"><span class="nav-number">11.</span> <span class="nav-text">11. HTML attribute vs DOM property</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-document-load-vs-document-DOMContentLoaded"><span class="nav-number">12.</span> <span class="nav-text">12. document.load() vs document DOMContentLoaded()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-When-to-usePromise-resolve"><span class="nav-number">13.</span> <span class="nav-text">13. When to usePromise.resolve() ?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-CSS-preprocessor"><span class="nav-number">14.</span> <span class="nav-text">14. CSS preprocessor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-HTML-Accessibility"><span class="nav-number">15.</span> <span class="nav-text">15. HTML Accessibility</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-data-HTML-syntax-vs-JS-access-vs-CSS-access"><span class="nav-number">16.</span> <span class="nav-text">16.  data-*: HTML syntax vs. JS access vs. CSS access</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#17-How-does-browser-render-a-webpage"><span class="nav-number">17.</span> <span class="nav-text">17. How does browser render a webpage?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#18-CSS-float-set-amp-clear"><span class="nav-number">18.</span> <span class="nav-text">18. CSS: float set &amp; clear</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#19-CSS-positioning"><span class="nav-number">19.</span> <span class="nav-text">19. CSS: positioning</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#20-HTML-People-you-may-know"><span class="nav-number">20.</span> <span class="nav-text">20. HTML: People you may know</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#21-UI-create-a-tooltip"><span class="nav-number">21.</span> <span class="nav-text">21. UI: create a tooltip</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#22-JS-memorize-function"><span class="nav-number">22.</span> <span class="nav-text">22. JS: memorize function</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#23-UI-Inifinite-scroll"><span class="nav-number">23.</span> <span class="nav-text">23. UI: Inifinite scroll</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#24-JS-lazy-load"><span class="nav-number">24.</span> <span class="nav-text">24. JS: lazy load</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#26-UI-autocomplete"><span class="nav-number">25.</span> <span class="nav-text">26. UI: autocomplete</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#27-UI-widget"><span class="nav-number">26.</span> <span class="nav-text">27. UI: widget</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#28-Browser-GET-v-s-POST"><span class="nav-number">27.</span> <span class="nav-text">28: Browser: GET v.s. POST</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#29-UI-thumb-up"><span class="nav-number">28.</span> <span class="nav-text">29. UI: thumb up</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#30-JS"><span class="nav-number">29.</span> <span class="nav-text">30. JS:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Autocomplete"><span class="nav-number">30.</span> <span class="nav-text">Autocomplete</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#II-On-site"><span class="nav-number">31.</span> <span class="nav-text">II.On-site</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Web-amp-Browser"><span class="nav-number">31.1.</span> <span class="nav-text">Web &amp; Browser</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#HTTP与浏览器缓存"><span class="nav-number">31.1.0.1.</span> <span class="nav-text">HTTP与浏览器缓存</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#JSONP-https-www-w3schools-com-js-js-json-jsonp-asp"><span class="nav-number">31.1.0.2.</span> <span class="nav-text">JSONP: https://www.w3schools.com/js/js_json_jsonp.asp</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS-HTML"><span class="nav-number">31.2.</span> <span class="nav-text">CSS + HTML</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#BFC布局规则："><span class="nav-number">31.2.0.1.</span> <span class="nav-text">BFC布局规则：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JS-Lib-scroll-API"><span class="nav-number">31.3.</span> <span class="nav-text">JS Lib: (scroll + API)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Product-Taste"><span class="nav-number">31.4.</span> <span class="nav-text">Product Taste</span></a></li></ol></li></ol></div>
             
 
           </div>

@@ -332,6 +332,230 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/04/Flux-Redux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/mingkai.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/04/Flux-Redux/" itemprop="url">Flux & Redux</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-04T21:04:19-07:00">2018-10-04</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="I-Flux"><a href="#I-Flux" class="headerlink" title="I. Flux"></a>I. Flux</h2><ol>
+<li><p><strong>4 parts of Flux architecture:</strong></p>
+<ul>
+<li>View</li>
+<li>Actions</li>
+<li>Dispatcher</li>
+<li>Store</li>
+</ul>
+</li>
+<li><p><strong>Relationship</strong></p>
+<ul>
+<li><strong>Store:</strong> model object managing all data; has updating methods as well<ul>
+<li>provide data to <u>View</u></li>
+<li>provide updating methods to <u>Actions</u></li>
+</ul>
+</li>
+<li><strong>Dispatcher:  </strong>extends <code>Event Emitter object</code><ul>
+<li>used by component to <u>register event &amp; callbacks</u></li>
+<li>used by component to <u>emit actions to call store updating methods</u></li>
+</ul>
+</li>
+<li><strong>View:</strong> receive data from store</li>
+<li><strong>Actions: </strong>used by <u><em>component</em></u> to let <u><em>dispather</em></u> <u>emit actions</u></li>
+<li>Great article: <a href="http://www.ruanyifeng.com/blog/2016/01/flux.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2016/01/flux.html</a></li>
+</ul>
+</li>
+</ol>
+<h2 id="II-Redux"><a href="#II-Redux" class="headerlink" title="II. Redux"></a>II. Redux</h2><ol>
+<li><p><strong><code>store</code></strong> </p>
+<ol>
+<li><code>getState()</code>: source of data</li>
+<li><code>dispath()</code>: emit actions, execute <u>reducer</u> to update state</li>
+<li><code>subscribe()</code>: component subscribe to receive updated state</li>
+</ol>
+</li>
+<li><p><strong>reducer</strong></p>
+<ul>
+<li>like<code>emitter.on</code>, used to register all the <u>updating functions</u> for related <u>actions</u></li>
+<li>pure function</li>
+<li><code>combineReducers()</code>: used to make logic clean</li>
+</ul>
+</li>
+<li><p><strong>Store implementation</strong></p>
+<ol>
+<li><p>How to use the <code>store</code> object</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createStore &#125; <span class="keyword">from</span> <span class="string">'redux'</span>;</span><br><span class="line"><span class="keyword">let</span> &#123; subscribe, dispatch, getState &#125; = createStore(reducer);</span><br><span class="line"><span class="comment">// or </span></span><br><span class="line"><span class="keyword">let</span> store = createStore(todoApp, <span class="built_in">window</span>.STATE_FROM_SERVER)</span><br><span class="line">store.getState()</span><br><span class="line">store.dispatch()</span><br><span class="line">store.subscribe()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>redux provide an interface <code>createStore()</code> to create the <code>store</code> object</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> createStore = <span class="function">(<span class="params">reducer</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> state;</span><br><span class="line">  <span class="keyword">let</span> listeners = [];</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> getState = <span class="function"><span class="params">()</span> =&gt;</span> state;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> dispatch = <span class="function">(<span class="params">action</span>) =&gt;</span> &#123;</span><br><span class="line">    state = reducer(state, action);</span><br><span class="line">    listeners.forEach(<span class="function"><span class="params">listener</span> =&gt;</span> listener());</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> subscribe = <span class="function">(<span class="params">listener</span>) =&gt;</span> &#123;</span><br><span class="line">    listeners.push(listener);</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      listeners = listeners.filter(<span class="function"><span class="params">l</span> =&gt;</span> l !== listener);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  dispatch(&#123;&#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123; getState, dispatch, subscribe &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p><strong>An example using Redux</strong></p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Counter = <span class="function">(<span class="params">&#123; value, onIncrement, onDecrement &#125;</span>) =&gt;</span> (</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">  &lt;h1&gt;&#123;value&#125;&lt;<span class="regexp">/h1&gt;</span></span><br><span class="line"><span class="regexp">  &lt;button onClick=&#123;onIncrement&#125;&gt;+&lt;/</span>button&gt;</span><br><span class="line">  &lt;button onClick=&#123;onDecrement&#125;&gt;-<span class="xml"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line">  &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">);</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">const reducer = (state = 0, action) =&gt; &#123;</span></span><br><span class="line"><span class="regexp">  switch (action.type) &#123;</span></span><br><span class="line"><span class="regexp">    case 'INCREMENT': return state + 1;</span></span><br><span class="line"><span class="regexp">    case 'DECREMENT': return state - 1;</span></span><br><span class="line"><span class="regexp">    default: return state;</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">const store = createStore(reducer);</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">const render = () =&gt; &#123;</span></span><br><span class="line"><span class="regexp">  ReactDOM.render(</span></span><br><span class="line"><span class="regexp">    &lt;Counter</span></span><br><span class="line"><span class="regexp">      value=&#123;store.getState()&#125;</span></span><br><span class="line"><span class="regexp">      onIncrement=&#123;() =&gt; store.dispatch(&#123;type: 'INCREMENT'&#125;)&#125;</span></span><br><span class="line"><span class="regexp">      onDecrement=&#123;() =&gt; store.dispatch(&#123;type: 'DECREMENT'&#125;)&#125;</span></span><br><span class="line"><span class="regexp">    /</span>&gt;,</span><br><span class="line">    <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>)</span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">render();</span><br><span class="line">store.subscribe(render);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="III-React-Redux-package"><a href="#III-React-Redux-package" class="headerlink" title="III. React-Redux package"></a>III. React-Redux package</h2><ol>
+<li><code>connect()</code>: <ul>
+<li>connect <u>UI component</u> with it outer <u>Controller component</u></li>
+<li>usage: <code>const Contrainer = connect(mapStateToprops, mapDispatchToProps)(UIComponent)</code></li>
+</ul>
+</li>
+<li><code>mapStateToProps()</code><ul>
+<li>map <code>state</code> in Redux store to UI </li>
+<li>like <code>eventEmitter.subscribe()</code>, will always get the updated state from Redux</li>
+</ul>
+</li>
+<li><p><code>mapDispatchToProps</code></p>
+<ul>
+<li>map <code>actions dispatch()</code> in Redux to UI</li>
+<li>like <code>eventEmitter.emit()</code>, will trigger actions when UI event is fired, to execute reducer to update the state</li>
+</ul>
+</li>
+<li><p><code>&lt;Provider&gt;</code> component</p>
+<ul>
+<li>an outer container, used to pass the <code>state</code> to inner components</li>
+<li>using <code>context</code> attribute</li>
+</ul>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/04/Ways-of-Creating-Objects-in-JS/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2815,148 +3039,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/12/Web-Worker-no-interfer-with-UI-thread/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/mingkai.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/12/Web-Worker-no-interfer-with-UI-thread/" itemprop="url">Web Worker - not interfer with UI thread</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-12T14:12:33-07:00">2018-08-12</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="I-What"><a href="#I-What" class="headerlink" title="I. What"></a>I. What</h2><p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers" target="_blank" rel="noopener">https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers</a></p>
-<h2 id="II-To-be-continued"><a href="#II-To-be-continued" class="headerlink" title="II. To be continued"></a>II. To be continued</h2>
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3008,7 +3090,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">83</span>
+                    <span class="site-state-item-count">84</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -3020,8 +3102,6 @@
                 <div class="site-state-item site-state-categories">
                   <a href="/categories/index.html">
                     
-                    
-                      
                     
                       
                     
@@ -3318,7 +3398,7 @@
                     
                       
                     
-                    <span class="site-state-item-count">133</span>
+                    <span class="site-state-item-count">134</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

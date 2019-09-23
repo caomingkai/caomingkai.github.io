@@ -332,6 +332,207 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/21/Ember-js-Study-Notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/mingkai.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/21/Ember-js-Study-Notes/" itemprop="url">Ember.js Study Notes</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-21T00:35:54-07:00">2019-09-21</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>I am always curious about how do those libraries/frameworks like <code>React</code>, <code>Angular</code>, <code>Ember</code> work in background. I know it all about <strong><u>design patterns</u></strong>, which appeals me very much. </p>
+<p>Now, I have been working on React for about 2 years, and AngularJS for some time. It’s time to start an adventure in Ember world. Items below are my thoughts while I went through the official documentation, and will be kept updating.</p>
+<ol>
+<li><p>Ember framework/ecosystem behaves like a custodian, it </p>
+<ul>
+<li>takes <code>template</code>, <code>component</code>, <code>service</code>, <code>data</code>, <code>route</code>, etc defined by developers, via interfaces.</li>
+<li>ditches them together in background</li>
+</ul>
+<p>While React is more like a library, it works together with other library like Redux, React Router, Webpack to build up applications.</p>
+</li>
+<li><p><code>Ember CLI</code> can deal with file system, create scaffolds based on <em>convention over configuration</em></p>
+</li>
+<li><p><code>this</code> in <code>hbs</code>: </p>
+<ol>
+<li>Each template / component is an object / instance</li>
+<li>what does <code>this</code> refer to? / what is the context?</li>
+<li>why not using function programming, getting rid of <code>this</code> / context?</li>
+</ol>
+</li>
+<li><p><code>.hbs</code>: will be pre-compiled before it converted into valid html?</p>
+<ol>
+<li>Compilation workflow?<ul>
+<li>only handler-bar syntax will be scanned</li>
+<li>other valid html syntax will be omitted</li>
+<li>valid html generated</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>Ember’s rendering engine</p>
+</li>
+<li><p><a href="https://guides.emberjs.com/release/components/the-component-lifecycle/" target="_blank" rel="noopener">render lifecycle</a></p>
+</li>
+<li><p>almost all functions are injected into <code>Ember</code>, if they are intended to used in another file.</p>
+<ul>
+<li>eg.: helper functions will be in handlebar file, are injected by <code>helper()</code></li>
+</ul>
+</li>
+<li><p>function invokation in <code>hbs</code>: <code>function-name arg1 arg2</code>, will be executed as <code>function-name([arg1, arg2])</code></p>
+</li>
+<li><p>Router =&gt; Route [modal + template] =&gt; template with its model (consist of resuable components)</p>
+</li>
+<li><p><code>Ember Data</code> is data management lib, in charge of API call and other data massages</p>
+</li>
+<li><p><code>.extend()</code>: use Ember Component class/interface; Meanwhile, add customed function / data</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Component.extend(&#123;</span><br><span class="line">	isBig: <span class="literal">false</span>,</span><br><span class="line">	productList: []</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>A <strong><u>component</u></strong> consists of two parts:</p>
+<ul>
+<li>UI part: <code>.hbs</code> file (<code>app/templates/components/list-filter.hbs</code>)</li>
+<li>Logic Part: <code>component</code> object (<code>app/components/list-filter.js</code>)</li>
+</ul>
+</li>
+<li><p>A <strong><u>template</u></strong> can also have its own logic part: <code>controller</code> object </p>
+<ol>
+<li>UI part: <code>.hbs</code> file (<code>app/templates/rentals.hbs</code>)</li>
+<li>Logic Part: controller object (<code>app/controllers/rentals.js</code>)</li>
+</ol>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/31/Evolve-your-app-to-MVC-pattern/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2396,171 +2597,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/12/437-Path-Sum-III-JS/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/mingkai.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/01/12/437-Path-Sum-III-JS/" itemprop="url">437. Path Sum III - JS</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-12T11:18:34-08:00">2019-01-12</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p>You are given a binary tree in which each node contains an integer value.</p>
-<p>Find the number of paths that sum to a given value.</p>
-<p>The path does not need to start or end at the root or a leaf, but it must go downwards (traveling only from parent nodes to child nodes).</p>
-<p>The tree has no more than 1,000 nodes and the values are in the range -1,000,000 to 1,000,000.</p>
-<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a><strong>Example</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">root = [10,5,-3,3,2,null,11,3,-2,null,1], sum = 8</span><br><span class="line"></span><br><span class="line">      10</span><br><span class="line">     /  \</span><br><span class="line">    5   -3</span><br><span class="line">   / \    \</span><br><span class="line">  3   2   11</span><br><span class="line"> / \   \</span><br><span class="line">3  -2   1</span><br><span class="line"></span><br><span class="line">Return 3. The paths that sum to 8 are:</span><br><span class="line"></span><br><span class="line">1.  5 -&gt; 3</span><br><span class="line">2.  5 -&gt; 2 -&gt; 1</span><br><span class="line">3. -3 -&gt; 11</span><br></pre></td></tr></table></figure>
-<h2 id="Solution-1"><a href="#Solution-1" class="headerlink" title="Solution 1:"></a>Solution 1:</h2><p><strong>Time complexity: O(n^2)</strong> =&gt; for each node, traverse its subtree, and there are <code>n</code> nodes =&gt; <code>n^2</code></p>
-<p>For each node, we treat it as the starting node as the path, and count how many paths starting from it.</p>
-<ul>
-<li>we need to call <code>pathSum()</code> for every node in the tree; </li>
-<li>we also need to count how many satisfied paths starting from current node <code>dfs()</code></li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> pathSum = <span class="function"><span class="keyword">function</span>(<span class="params">root, sum</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>( root === <span class="literal">null</span> ) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> dfs(root, sum) + pathSum(root.left, sum) + pathSum(root.right, sum);;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// dfs() is just the count starting from the specified node, </span></span><br><span class="line"><span class="comment">// and need to add counts starting from it's children.</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">dfs</span>(<span class="params"> node, sum </span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> res = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>( node === <span class="literal">null</span> ) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>( node.val === sum ) res++;</span><br><span class="line">    <span class="keyword">return</span> res + dfs(node.left, sum-node.val) + dfs(node.right, sum-node.val);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Solution-2"><a href="#Solution-2" class="headerlink" title="Solution 2:"></a>Solution 2:</h2><p><strong>Time complexity: O(n)</strong> </p>
-<p>All the <u>satisfied paths</u> must be encountered when we traversal <u>all the path</u>s from root using dfs.</p>
-<ul>
-<li>while doing DFS, we can make use of the <u>current path</u>, to check if there is a satisfied path on it. </li>
-<li>The checking process is like “LC560. subarray sum equals k”, <ul>
-<li>we maintain <code>a map of &lt;prefixSum, freq&gt;</code></li>
-<li>for current node, we check if map has <code>counterpart = curSum+node.val - sum</code></li>
-<li>after finishing the visit of current node (i.e. <strong><u>done the visits of its children</u></strong>), we decrease its <code>freq</code></li>
-</ul>
-</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> pathSum = <span class="function"><span class="keyword">function</span>(<span class="params">root, sum</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> cnt = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">let</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>();</span><br><span class="line">    map.set(<span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">    dfs(root, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">return</span> cnt;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">dfs</span>(<span class="params"> node, curSum </span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>( node === <span class="literal">null</span> ) <span class="keyword">return</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">let</span> counterpart = curSum + node.val - sum;</span><br><span class="line">        <span class="keyword">if</span>( map.has(counterpart) ) cnt += map.get(counterpart);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>( !map.has(curSum+node.val) ) map.set(curSum+node.val, <span class="number">0</span>);</span><br><span class="line">        map.set(curSum+node.val, map.get(curSum+node.val)+<span class="number">1</span>);</span><br><span class="line">        </span><br><span class="line">        dfs( node.left, curSum+node.val );</span><br><span class="line">        dfs( node.right, curSum+node.val );</span><br><span class="line">        </span><br><span class="line">        map.set(curSum+node.val, map.get(curSum+node.val)<span class="number">-1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2612,7 +2648,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">83</span>
+                    <span class="site-state-item-count">84</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2624,8 +2660,6 @@
                 <div class="site-state-item site-state-categories">
                   <a href="/categories/index.html">
                     
-                    
-                      
                     
                       
                     
@@ -2922,7 +2956,7 @@
                     
                       
                     
-                    <span class="site-state-item-count">133</span>
+                    <span class="site-state-item-count">134</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

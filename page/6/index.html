@@ -332,6 +332,519 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/05/this-arrow-function/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/mingkai.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/05/this-arrow-function/" itemprop="url">'this' & arrow function</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-05T21:51:55-07:00">2018-09-05</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Full-stack/" itemprop="url" rel="index"><span itemprop="name">Full stack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="I-this-in-function"><a href="#I-this-in-function" class="headerlink" title="I. this in function"></a>I. <code>this</code> in function</h2><ol>
+<li><p><strong>what is <code>this</code> ?</strong></p>
+<ul>
+<li>all <strong><u>regular</u></strong> functions have <code>this</code> keyword</li>
+<li><code>this</code> determines how a function is called <strong><u>on whom</u></strong>!</li>
+</ul>
+</li>
+<li><p><strong><code>this</code> in global context</strong></p>
+<ul>
+<li><p><code>this</code> refers  gloabl object, no matter in strict mode or not</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// In web browsers, the window object is also the global object:</span><br><span class="line">console.log(this === window); // true</span><br><span class="line"></span><br><span class="line">a = 37;</span><br><span class="line">console.log(window.a); // 37</span><br><span class="line"></span><br><span class="line">this.b = &quot;MDN&quot;;</span><br><span class="line">console.log(window.b)  // &quot;MDN&quot;</span><br><span class="line">console.log(b)         // &quot;MDN&quot;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><u><strong><code>this</code> in function context [important]</strong></u></p>
+<p>There are 7 cases that different function context results in different <code>this</code> reference;</p>
+<blockquote>
+<p><u>The value of <code>this</code></u> depend on how the function is called</p>
+</blockquote>
+<ol>
+<li><p><code>this</code> in <strong><u>simple call</u></strong></p>
+<ul>
+<li><p>non-strict mode</p>
+<p>if <code>this</code> is not set explicitly, it default to global object</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> <span class="keyword">this</span>; &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// In a browser:</span></span><br><span class="line">f1() === <span class="built_in">window</span>; <span class="comment">// true </span></span><br><span class="line"></span><br><span class="line"><span class="comment">// In Node:</span></span><br><span class="line">f1() === global; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>strict mode</p>
+<p>if <code>this</code> is not set explicitly, the value of <code>this</code> remains <code>undefined</code></p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f2</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"><span class="meta">  'use strict'</span>; <span class="comment">// see strict mode</span></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">f2() === <span class="literal">undefined</span>; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>change the value of <code>this</code>, using <code>apply()</code> or <code>call()</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// An object can be passed as the first argument to call or apply and this will be bound to it.</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123;<span class="attr">a</span>: <span class="string">'Custom'</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// This property is set on the global object</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="string">'Global'</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">whatsThis</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.a;  <span class="comment">// The value of this is dependent on how the function is called</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">whatsThis();          <span class="comment">// 'Global'</span></span><br><span class="line">whatsThis.call(obj);  <span class="comment">// 'Custom'</span></span><br><span class="line">whatsThis.apply(obj); <span class="comment">// 'Custom'</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>this</code> in <strong><u><code>bind()</code> method</u></strong></p>
+<ul>
+<li><p>NOTE: <code>bind()</code> doesn’t change the orignal function, instead it return a <strong><u>new function</u></strong> with updated value of <code>this</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> <span class="keyword">this</span>.a; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> g = f.bind(&#123;<span class="attr">a</span>: <span class="string">'azerty'</span>&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(g()); <span class="comment">// azerty</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> h = g.bind(&#123;<span class="attr">a</span>: <span class="string">'yoo'</span>&#125;); <span class="comment">// bind only works once!</span></span><br><span class="line"><span class="built_in">console</span>.log(h()); <span class="comment">// azerty</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> o = &#123;<span class="attr">a</span>: <span class="number">37</span>, <span class="attr">f</span>: f, <span class="attr">g</span>: g, <span class="attr">h</span>: h&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(o.a, o.f(), o.g(), o.h()); <span class="comment">// 37,37, azerty, azerty</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>this</code> in <u><strong>arrow function</strong></u></p>
+<ul>
+<li><p><code>this</code> cannot be changed, it default to the value of the <strong><u>enclosing lexical context</u></strong>‘s <code>this</code></p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> globalObject = <span class="keyword">this</span>;</span><br><span class="line"><span class="keyword">var</span> foo = <span class="function">(<span class="params">(</span>) =&gt;</span> <span class="keyword">this</span>);</span><br><span class="line"><span class="built_in">console</span>.log(foo() === globalObject); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>About <code>call()</code> &amp; <code>apply()</code></p>
+<ul>
+<li><p>if <code>this</code> arg is passed to call, bind, or apply on invocation of an arrow function it will be <strong><u>ignored</u></strong>.</p>
+</li>
+<li><p>the <code>thisArg</code> still works</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Call as a method of an object</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123;<span class="attr">func</span>: foo&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(obj.func() === globalObject); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Attempt to set this using call</span></span><br><span class="line"><span class="built_in">console</span>.log(foo.call(obj) === globalObject); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Attempt to set this using bind</span></span><br><span class="line">foo = foo.bind(obj);</span><br><span class="line"><span class="built_in">console</span>.log(foo() === globalObject); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p><strong><u>another example:</u></strong>  <code>this</code> of arrow function, directly depends on its enclosing context </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Create obj with a method bar that returns a function that</span></span><br><span class="line"><span class="comment">// returns its this. The returned function is created as </span></span><br><span class="line"><span class="comment">// an arrow function, so its this is permanently bound to the</span></span><br><span class="line"><span class="comment">// this of its enclosing function. The value of bar can be set</span></span><br><span class="line"><span class="comment">// in the call, which in turn sets the value of the </span></span><br><span class="line"><span class="comment">// returned function.</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123;<span class="attr">bar</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">                    <span class="keyword">var</span> x = <span class="function">(<span class="params">(</span>) =&gt;</span> <span class="keyword">this</span>);</span><br><span class="line">                    <span class="keyword">return</span> x;</span><br><span class="line">                  &#125;</span><br><span class="line">          &#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Call bar as a method of obj, setting its this to obj</span></span><br><span class="line"><span class="comment">// Assign a reference to the returned function to fn</span></span><br><span class="line"><span class="keyword">var</span> fn = obj.bar();</span><br><span class="line"></span><br><span class="line"><span class="comment">// Call fn without setting this, would normally default</span></span><br><span class="line"><span class="comment">// to the global object or undefined in strict mode</span></span><br><span class="line"><span class="built_in">console</span>.log(fn() === obj); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// But caution if you reference the method of obj without calling it</span></span><br><span class="line"><span class="keyword">var</span> fn2 = obj.bar;</span><br><span class="line"><span class="comment">// Then calling the arrow function this is equals to window because it follows the this from bar.</span></span><br><span class="line"><span class="built_in">console</span>.log(fn2()() == <span class="built_in">window</span>); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>this</code> in <u><strong>object method</strong></u></p>
+<ul>
+<li><p>When a function is called as a method of an object, its <code>this</code> is set to <strong><u>the object</u></strong> the method is called on.</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> o = &#123;</span><br><span class="line">  prop: <span class="number">37</span>,</span><br><span class="line">  f: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.prop;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(o.f()); <span class="comment">// 37</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>this</code> on the object’s prototype chain</p>
+<p>If the method is on an object’s prototype chain, <code>this</code> refers to the object the method was called on, as if the method were on the object.</p>
+</li>
+</ul>
+</li>
+<li><p><code>this</code> in <u><strong>constructor</strong></u></p>
+<ul>
+<li><p><code>this</code> is bound to the <strong><u>new object being constructed</u></strong></p>
+</li>
+<li><p><strong>#A#</strong>  if <code>constructor</code> doesn’t return: result of <code>new</code> will be the object bound to <code>this</code></p>
+</li>
+<li><p><strong>#B#</strong>  if <code>constructor</code> return an object: result of <code>new</code> will be the return value</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">C</span>(<span class="params"></span>) </span>&#123; <span class="keyword">this</span>.a = <span class="number">37</span>; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> o = <span class="keyword">new</span> C();</span><br><span class="line"><span class="built_in">console</span>.log(o.a); <span class="comment">// 37</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">C2</span>(<span class="params"></span>) </span>&#123;   </span><br><span class="line">  <span class="keyword">this</span>.a = <span class="number">37</span>;</span><br><span class="line">  <span class="keyword">return</span> &#123;<span class="attr">a</span>: <span class="number">38</span>&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// if an object was returned during construction, then the new object that this was bound to simply gets discarded.</span></span><br><span class="line"></span><br><span class="line">o = <span class="keyword">new</span> C2();</span><br><span class="line"><span class="built_in">console</span>.log(o.a); <span class="comment">// 38</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>this</code> in <u><strong>DOM event handler</strong></u></p>
+<ul>
+<li><p><del><code>this</code> is set to the <strong><u>target element</u></strong> the event fired from</del></p>
+</li>
+<li><p><code>this</code> is set to the <strong><u>current element</u></strong> to which the event handler is attached; not the target element</p>
+</li>
+<li><p><code>this === e.currentTarget</code></p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// When called as a listener, turns the related element blue</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bluify</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// Always true</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span> === e.currentTarget); </span><br><span class="line">  <span class="comment">// true when currentTarget and target are the same object</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span> === e.target);</span><br><span class="line">  <span class="keyword">this</span>.style.backgroundColor = <span class="string">'#A5D9F3'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Get a list of every element in the document</span></span><br><span class="line"><span class="keyword">var</span> elements = <span class="built_in">document</span>.getElementsByTagName(<span class="string">'*'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Add bluify as a click listener so when the</span></span><br><span class="line"><span class="comment">// element is clicked on, it turns blue</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; elements.length; i++) &#123;</span><br><span class="line">  elements[i].addEventListener(<span class="string">'click'</span>, bluify, <span class="literal">false</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>this</code> in <u><strong>inline event handler</strong></u></p>
+<ul>
+<li><p><code>this</code> is set to the DOM element <strong><u>where the listener is placed</u></strong></p>
+</li>
+<li><p>however, only the outer code has its <code>this</code> set this way</p>
+</li>
+<li><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 1. this will refer to 'button' --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">"alert(this.tagName.toLowerCase());"</span>&gt;</span></span><br><span class="line">  Show this</span><br><span class="line"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 2. 'this' will refer to 'window' --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">"alert((function() &#123; return this; &#125;)());"</span>&gt;</span></span><br><span class="line">  Show inner this</span><br><span class="line"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="II-arrow-function"><a href="#II-arrow-function" class="headerlink" title="II. arrow function"></a>II. arrow function</h2><ol>
+<li><p>Best suited for <strong><u>non-method</u></strong> functions, ie. not related to method in <em>object</em></p>
+</li>
+<li><p>No separate <code>this</code> of its own, <em>using others’</em></p>
+<ul>
+<li><p>An arrow function does not have its own <code>this</code></p>
+</li>
+<li><p><code>this</code> value of the enclosing lexical context is used </p>
+</li>
+<li><p>how to find <code>this</code> of enclosing lexical context:</p>
+<ul>
+<li><p>check if <code>this</code>  is present in current scope;</p>
+</li>
+<li><p>check <code>this</code> is present in its enclosing scope;</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//---------- version1: works -----------------</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.age = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  setInterval(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.age++; <span class="comment">// |this| properly refers to the Person object</span></span><br><span class="line">  &#125;, <span class="number">1000</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> Person();</span><br><span class="line"></span><br><span class="line"><span class="comment">//---------- version2: doesn't work ----------</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// The Person() constructor defines `this` as an instance of itself.</span></span><br><span class="line">  <span class="keyword">this</span>.age = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  setInterval(<span class="function"><span class="keyword">function</span> <span class="title">growUp</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// In non-strict mode, the growUp() function defines `this` </span></span><br><span class="line">    <span class="comment">// as the global object (because it's where growUp() is executed.), </span></span><br><span class="line">    <span class="comment">// which is different from the `this`</span></span><br><span class="line">    <span class="comment">// defined by the Person() constructor. </span></span><br><span class="line">    <span class="keyword">this</span>.age++;</span><br><span class="line">  &#125;, <span class="number">1000</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> Person();</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>No binding of <code>arguments</code></p>
+<ul>
+<li><p>Arrow functions do not have their own <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments" target="_blank" rel="noopener"><code>arguments</code> object</a>.</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="built_in">arguments</span> = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">var</span> arr = <span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">arguments</span>[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">arr(); <span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> f = <span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">arguments</span>[<span class="number">0</span>] + n; <span class="comment">// foo's implicit arguments binding. arguments[0] is n</span></span><br><span class="line">  <span class="keyword">return</span> f();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo(<span class="number">3</span>); <span class="comment">// 6</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>using <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters" target="_blank" rel="noopener">rest parameters</a> is a good alternative to using an <code>arguments</code> object</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">n</span>) </span>&#123; </span><br><span class="line">  <span class="keyword">var</span> f = <span class="function">(<span class="params">...args</span>) =&gt;</span> args[<span class="number">0</span>] + n; </span><br><span class="line">  <span class="keyword">return</span> f(<span class="number">10</span>); </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo(<span class="number">1</span>); <span class="comment">// 11</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><u><strong>When not use arrow function?  ==&gt;  when need <code>this</code> explicitly</strong> </u></p>
+<ol>
+<li><p>don’t use as <u>methods of object</u>: </p>
+<ul>
+<li><p>because we need <code>this</code>, but arrow function doesn’t have its own <code>this</code></p>
+</li>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&apos;use strict&apos;;</span><br><span class="line"></span><br><span class="line">var obj = &#123;</span><br><span class="line">  i: 10,</span><br><span class="line">  b: () =&gt; console.log(this.i, this),</span><br><span class="line">  c: function() &#123;</span><br><span class="line">    console.log(this.i, this);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">obj.b(); // prints undefined, Window &#123;...&#125; (or the global object)</span><br><span class="line">obj.c(); // prints 10, Object &#123;...&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>don’t use as <u>function constructor</u>:  because we will use <code>new</code> to construct , which need <code>this</code></p>
+</li>
+<li><p>don’t add <code>prototype</code> to it:  because it doesn’t have <code>this</code></p>
+</li>
+<li><p>don’t use in <code>yeild</code> or <code>generators</code>: </p>
+</li>
+</ol>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/31/Trie/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mingkai Cao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/mingkai.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CMK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/31/Trie/" itemprop="url">Trie</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-31T10:07:43-07:00">2018-08-31</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="what"><a href="#what" class="headerlink" title="what"></a>what</h2><p>Trie, is actually a more general tree, also <strong>prefix tree</strong>.</p>
+<p>Used for <strong><em>massive</em></strong> words process, dictionary representation, and lexicographic sorting, word frequency calc.</p>
+<h2 id="How"><a href="#How" class="headerlink" title="How"></a>How</h2><h4 id="I-TrieNode"><a href="#I-TrieNode" class="headerlink" title="I. TrieNode"></a>I. TrieNode</h4><p>TrieNode has mainly two parts:</p>
+<ol>
+<li><code>children</code>, to link next possible characters appear in a words. If only considering ‘A-Z’, there is 26 children at most</li>
+<li>info used to record current TrieNode<ul>
+<li><code>isWord</code>, denotes previous character is a word or not.</li>
+<li><code>cnt</code>, denotes number of words consist of current prefix</li>
+</ul>
+</li>
+</ol>
+<p><strong><em>Note:</em></strong> this representation is a little different from binary tree, in which info data are stored for current Node. However, in Trie, info data are stored for previous Node, as follows:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">For dictionary: &#123; <span class="string">"a"</span>, <span class="string">"bd"</span>, <span class="string">"c"</span> &#125;, the Trie would be represented as following:</span><br><span class="line"></span><br><span class="line"><span class="function">root <span class="title">TrieNode</span><span class="params">(<span class="number">0xefe4</span>)</span></span></span><br><span class="line"><span class="function">- cnt: 0</span></span><br><span class="line"><span class="function">- isWord: <span class="keyword">false</span></span></span><br><span class="line"><span class="function">- children:</span>&#123;<span class="string">'a'</span>: TrieNode , <span class="string">'b'</span>: TrieNode, <span class="string">'c'</span>: TrieNode, ... &#125;</span><br><span class="line">            /				      |				          \</span><br><span class="line">            TrieNode(<span class="number">0xffe3</span>)	TrieNode(<span class="number">0xffe4</span>)   			TrieNode(<span class="number">0xffe5</span>)</span><br><span class="line">            - cnt: <span class="number">1</span>			- cnt: <span class="number">0</span>					- cnt: <span class="number">1</span></span><br><span class="line">            - isWord: <span class="keyword">true</span>		- isWord: <span class="keyword">false</span>				- isWord: <span class="keyword">false</span></span><br><span class="line">            - children: <span class="keyword">null</span>	- children: &#123;<span class="string">'d'</span>:TrieNode&#125;  - children: <span class="keyword">null</span></span><br><span class="line">                                    |</span><br><span class="line">                                   ...</span><br></pre></td></tr></table></figure>
+<h2 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h2><ul>
+<li><p>interfaces</p>
+<ul>
+<li>build (constructor)</li>
+<li>isWord</li>
+<li>countWord</li>
+<li>insert</li>
+<li>delete</li>
+<li>hasPrefix</li>
+<li>getPrefixNode</li>
+</ul>
+</li>
+<li><p>Time Complexity: [ <code>n</code> words, <code>K</code> is number of characters of the longest word ]</p>
+<ul>
+<li>build: O(nK)</li>
+<li>isWord: O(K)</li>
+<li>countWord: O(K)</li>
+<li>insert: O(K)</li>
+<li>delete: O(K)</li>
+</ul>
+</li>
+<li><p>Space Complexity: [<code>N</code> is the number of all characters appears in the dictionary ]</p>
+<ul>
+<li>too much space: O(N) +O(N^2) +O(N^3) +O(N^4) + O(N^K)</li>
+<li>good news is: when it is a really dictionary, all the space will be filled up, so not so much waste</li>
+</ul>
+</li>
+<li><p><code>delete</code> might be a little complex. The to-be-deleted word possibly :</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">when need delete a node, what should really to be done????</span><br><span class="line">    - delete the key from HashMap&lt;Character, Node&gt;</span><br><span class="line">    - reset to <span class="keyword">null</span> when using Node[]</span><br><span class="line">So, always ask two questions:</span><br><span class="line">	- the node to be deleted, is part of other <span class="keyword">long</span> word [by checking <span class="string">'children'</span>]?</span><br><span class="line">    - the node itself is the end of a word? [by checking <span class="string">'isWord'</span> &amp; <span class="string">'cnt'</span>]?</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>null</code>, empty string, not exists in the Trie</li>
+<li>contains other short words: “abc”, “ab”<ul>
+<li><strong>recursively from bottom to top</strong> delete node, till the longest prefix</li>
+</ul>
+</li>
+<li>has same words as itself: “abc”, “abc”<ul>
+<li>don’t delete node, only update <code>cnt</code></li>
+</ul>
+</li>
+<li>being a prefix of other long words: “abc”, “abcde”<ul>
+<li>don’t delete node, only update <code>isWord</code></li>
+</ul>
+</li>
+<li>share prefix with other words: “abc”, “abd”<ul>
+<li><strong>recursively from bottom to top</strong> delete node, till the longest prefix</li>
+</ul>
+</li>
+<li>only itself in the dictionary, not affect others “abc”<ul>
+<li>delte all nodes</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">int</span> cnt;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">boolean</span> isWord;</span><br><span class="line">	<span class="keyword">public</span> Map&lt;Character, Node&gt; children;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.cnt = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">this</span>.isWord = <span class="keyword">false</span>;</span><br><span class="line">		<span class="keyword">this</span>.children = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Trie</span></span>&#123;</span><br><span class="line">	Node root;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Trie</span><span class="params">( String[] strArr )</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.root = <span class="keyword">new</span> Node();</span><br><span class="line">		<span class="keyword">for</span>( String str : strArr )&#123;</span><br><span class="line">			insert( str );</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasPrefix</span><span class="params">(String str )</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>( str == <span class="keyword">null</span> || str.length() == <span class="number">0</span> ) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">		<span class="keyword">int</span> len = str.length();</span><br><span class="line">		Node cur = <span class="keyword">this</span>.root;</span><br><span class="line">		<span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++ )&#123;</span><br><span class="line">			<span class="keyword">char</span> ch = str.charAt(i);</span><br><span class="line">			<span class="keyword">if</span>( !cur.children.containsKey(ch) ) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">			cur = cur.children.get(ch);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> Node <span class="title">getPrefixNode</span> <span class="params">(String str)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>( !hasPrefix(str) ) <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">		<span class="keyword">int</span> len = str.length();</span><br><span class="line">		Node cur = <span class="keyword">this</span>.root;</span><br><span class="line">		<span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++ )&#123;</span><br><span class="line">			<span class="keyword">char</span> ch = str.charAt(i);</span><br><span class="line">			cur = cur.children.get(ch);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> cur;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">( String str )</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>( str == <span class="keyword">null</span> || str.length() == <span class="number">0</span> ) <span class="keyword">return</span>;</span><br><span class="line">		<span class="keyword">int</span> len = str.length();</span><br><span class="line">		Node cur = <span class="keyword">this</span>.root;</span><br><span class="line">		<span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++ )&#123;</span><br><span class="line">			<span class="keyword">char</span> ch = str.charAt(i);</span><br><span class="line">			<span class="keyword">if</span>( !cur.children.containsKey(ch) )&#123;</span><br><span class="line">				cur.children.put( ch, <span class="keyword">new</span> Node() );</span><br><span class="line">			&#125;</span><br><span class="line">			cur = cur.children.get(ch);</span><br><span class="line">		&#125;</span><br><span class="line">		cur.cnt++;</span><br><span class="line">		cur.isWord = <span class="keyword">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">delete</span> <span class="params">(String str )</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>( str == <span class="keyword">null</span> || str.length() == <span class="number">0</span> ) <span class="keyword">return</span>;</span><br><span class="line">		<span class="keyword">if</span>( !hasPrefix(str) ) <span class="keyword">return</span>;</span><br><span class="line">		Node cur = getPrefixNode(str);</span><br><span class="line">		cur.cnt--; </span><br><span class="line">		<span class="keyword">if</span>(cur.cnt &lt; <span class="number">0</span>) cur.cnt = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">if</span>(cur.cnt &gt; <span class="number">0</span>) <span class="keyword">return</span>; 	<span class="comment">// at this position, there still word exist</span></span><br><span class="line">		<span class="keyword">else</span>&#123;						<span class="comment">// at this position, there no word exist</span></span><br><span class="line">			<span class="keyword">if</span>( cur.children.size() &gt; <span class="number">0</span> ) &#123;	<span class="comment">// but can be prefix of other words</span></span><br><span class="line">				cur.isWord = <span class="keyword">false</span>;</span><br><span class="line">				<span class="keyword">return</span>;</span><br><span class="line">			&#125;<span class="keyword">else</span>&#123;							<span class="comment">// not a word, nor a prefix of others</span></span><br><span class="line">				deleteNode(str);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteNode</span><span class="params">( String str )</span></span>&#123;</span><br><span class="line">		<span class="keyword">int</span> len = str.length();</span><br><span class="line">		<span class="keyword">if</span>( len == <span class="number">0</span> ) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">		String prevStr = str.substring(<span class="number">0</span>, len-<span class="number">1</span>);</span><br><span class="line">		Node prevNode = getPrefixNode(prevStr);</span><br><span class="line">		prevNode.children.remove(str.charAt(len-<span class="number">1</span>));</span><br><span class="line">		<span class="keyword">if</span>( prevNode.children.size()==<span class="number">0</span> &amp;&amp; prevNode.cnt==<span class="number">0</span> ) delete(prevStr);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isWord</span><span class="params">( String str )</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>( !hasPrefix(str) ) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">		<span class="keyword">return</span> getPrefixNode(str).isWord;</span><br><span class="line">	&#125;	</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">countWord</span><span class="params">( String str )</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>( !hasPrefix(str) ) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">return</span> getPrefixNode(str).cnt;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TrieTree</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">( String[] args )</span></span>&#123;</span><br><span class="line">		String[] dict = &#123; <span class="string">"a"</span>, <span class="string">"ab"</span>, <span class="string">"ab"</span>, <span class="string">"abc"</span>, <span class="string">"abc"</span>, <span class="string">"abc"</span>, <span class="string">"abcd"</span>, <span class="string">"ac"</span>, <span class="string">"acd"</span>, <span class="string">"ad"</span>, <span class="string">"2,24"</span>,  <span class="string">"2,2,4"</span> &#125;;</span><br><span class="line">		Trie trieTree = <span class="keyword">new</span> Trie(dict);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// String isWordTest1 = "ab";</span></span><br><span class="line">		<span class="comment">// String isWordTest2 = "";</span></span><br><span class="line">		<span class="comment">// String isWordTest3 = "a";</span></span><br><span class="line">		<span class="comment">// String isWordTest4 = "abcd";</span></span><br><span class="line">		<span class="comment">// String isWordTest5 = "abcde";</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">// String countTest = "abc";</span></span><br><span class="line">		<span class="comment">// String insertTest = "abc";</span></span><br><span class="line">		</span><br><span class="line"></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.isWord(isWordTest1));</span></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.isWord(isWordTest2));</span></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.isWord(isWordTest3));</span></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.isWord(isWordTest4));</span></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.isWord(isWordTest5));</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.countWord(countTest));</span></span><br><span class="line">		<span class="comment">// trieTree.insert(insertTest);</span></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.countWord(countTest));</span></span><br><span class="line">		<span class="comment">// trieTree.insert(insertTest);</span></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.countWord(countTest));</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="comment">// String hasPrefixTest1 = "abcd";</span></span><br><span class="line">		<span class="comment">// String hasPrefixTest2 = "2,2";</span></span><br><span class="line">		<span class="comment">// String hasPrefixTest3 = "abcdd";</span></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.hasPrefix(hasPrefixTest1));</span></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.hasPrefix(hasPrefixTest2));</span></span><br><span class="line">		<span class="comment">// System.out.println( trieTree.hasPrefix(hasPrefixTest3));</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		String deleteTest1 = <span class="string">"abcd"</span>;</span><br><span class="line">		String deleteTest2 = <span class="string">"abc"</span>;</span><br><span class="line">		String deleteTest3 = <span class="string">"ab"</span>;</span><br><span class="line">		trieTree.delete(deleteTest1);</span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest3)); <span class="comment">// 2</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest2)); <span class="comment">// 3</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest1)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println();</span><br><span class="line"></span><br><span class="line">		trieTree.delete(deleteTest1);</span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest3)); <span class="comment">// 2</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest2)); <span class="comment">// 3</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest1)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println();</span><br><span class="line"></span><br><span class="line">		trieTree.delete(deleteTest2);</span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest3)); <span class="comment">// 2</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest2)); <span class="comment">// 2</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest1)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println();</span><br><span class="line">		</span><br><span class="line">		trieTree.delete(deleteTest2);</span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest3)); <span class="comment">// 2</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest2)); <span class="comment">// 1</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest1)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println();</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		trieTree.delete(deleteTest2);</span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest3)); <span class="comment">// 2</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest2)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest1)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println();</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line"></span><br><span class="line">		trieTree.delete(deleteTest2);</span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest3)); <span class="comment">// 2</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest2)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest1)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println();</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line"></span><br><span class="line">		trieTree.delete(deleteTest3);</span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest3)); <span class="comment">// 1</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest2)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest1)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println();</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line"></span><br><span class="line">		trieTree.delete(deleteTest3);</span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest3)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest2)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest1)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println();</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line"></span><br><span class="line">		trieTree.delete(deleteTest1);</span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest3)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest2)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println( trieTree.countWord(deleteTest1)); <span class="comment">// 0</span></span><br><span class="line">		System.out.println();</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/12/Web-Worker-no-interfer-with-UI-thread/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2473,491 +2986,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/23/React-Expense-Tracking-app/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/mingkai.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/23/React-Expense-Tracking-app/" itemprop="url">React: Expense Tracking app</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-23T11:47:10-07:00">2018-04-23</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Portfolios/" itemprop="url" rel="index"><span itemprop="name">Portfolios</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="I-About"><a href="#I-About" class="headerlink" title="I. About"></a>I. About</h2><ul>
-<li>An expense tracking application proving CRUD using React.</li>
-<li>Github: <ul>
-<li><a href="https://github.com/caomingkai/Expense-Tracking.git" target="_blank" rel="noopener">https://github.com/caomingkai/Expense-Tracking.git</a></li>
-</ul>
-</li>
-<li><p><strong>Chart1: Create</strong></p>
-  <img src="/2018/04/23/React-Expense-Tracking-app/create.gif">
-</li>
-<li><p>**Chart2: Update</p>
-  <img src="/2018/04/23/React-Expense-Tracking-app/update.gif">
-</li>
-<li><p><strong>Chart3: Delete</strong></p>
-  <img src="/2018/04/23/React-Expense-Tracking-app/delete.gif">
-</li>
-</ul>
-<h2 id="II-Structure"><a href="#II-Structure" class="headerlink" title="II. Structure"></a>II. Structure</h2><h3 id="1-Components-Structure"><a href="#1-Components-Structure" class="headerlink" title="1. Components Structure"></a>1. Components Structure</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">App</span><br><span class="line"> |___ Summary</span><br><span class="line"> |___ Form _ _ _ _ RecordsAPI</span><br><span class="line"> |                    |</span><br><span class="line"> |___ Table           |</span><br><span class="line">         |_______ TableRow</span><br><span class="line">                      |____ TableDisplay</span><br><span class="line">                      |____ TableEdit</span><br></pre></td></tr></table></figure>
-<ul>
-<li><strong>App Component:</strong> is the data hub<ul>
-<li>state: <code>records</code> for entries in Table component</li>
-<li>state: <code>isLoaded</code> show loading info, before showing Table</li>
-<li>state: <code>error</code> </li>
-<li>method: <code>componentDidMount()</code> get data from database</li>
-<li>method: <code>addRecord()</code> passed to Form</li>
-<li>method: <code>deleteRecord()</code> passed to Table and TableRow</li>
-<li>method: <code>updateRecord()</code> passed to Table and TableRow</li>
-<li>method: <code>credits()</code> passed to Summary</li>
-<li>method: <code>debits()</code> passed to Summary</li>
-<li>method: <code>balance()</code> passed to Summary</li>
-</ul>
-</li>
-<li><strong>Summary Component:</strong> displays negative/ positive summation for the <code>records</code></li>
-<li><strong>Form Component:</strong> add <code>record</code> into <code>records</code>, updating Table</li>
-<li><strong>Table Component:</strong> just pass <code>records</code> to <strong>TableRow</strong></li>
-<li><strong>TableRow Component:</strong> display each <code>record</code> in <code>records</code></li>
-<li><strong>RecordsAPI:</strong> utility providing interface to make RESTful API call</li>
-</ul>
-<h3 id="2-File-Structure"><a href="#2-File-Structure" class="headerlink" title="2. File Structure"></a>2. File Structure</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">|__node_modules</span><br><span class="line">|</span><br><span class="line">|__public  </span><br><span class="line">|    |___ index.html</span><br><span class="line">|</span><br><span class="line">|__ src</span><br><span class="line">     |___ utils: RecordsAPI.js</span><br><span class="line">     |</span><br><span class="line">     |___ components:</span><br><span class="line">              |___ App.js</span><br><span class="line">              |___ Form.js</span><br><span class="line">              |___ Summary.js</span><br><span class="line">              |___ Table.js</span><br><span class="line">              |___ TableRow.js</span><br></pre></td></tr></table></figure>
-<h2 id="III-Ajax-request"><a href="#III-Ajax-request" class="headerlink" title="III. Ajax request"></a>III. Ajax request</h2><h3 id="Several-Ways"><a href="#Several-Ways" class="headerlink" title="Several Ways:"></a>Several Ways:</h3><ol>
-<li>Ajax Libraries<ul>
-<li>Axios<ul>
-<li>axios.get(url[, config])</li>
-<li>axios.delete(url[, config])</li>
-<li>axios.head(url[, config])</li>
-<li>axios.options(url[, config])</li>
-<li>axios.post(url[, data[, config]])</li>
-<li>axios.put(url[, data[, config]])</li>
-</ul>
-</li>
-<li>jQuery AJAX</li>
-</ul>
-</li>
-<li><p>Browser built-in <code>window.fetch</code></p>
-<p> No need to prepend “window” before <code>fetch()</code>: default obj</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">## No need to prepend "window" before fetch, this is the default obj</span><br><span class="line"></span><br><span class="line">  fetch(<span class="string">'http://example.com/movies.json'</span>)</span><br><span class="line">    .then(<span class="function"><span class="keyword">function</span>(<span class="params">response</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> response.json();</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function"><span class="keyword">function</span>(<span class="params">myJson</span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(myJson);</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="When-and-where-to-initiate-Ajax-call"><a href="#When-and-where-to-initiate-Ajax-call" class="headerlink" title="When and where to initiate Ajax call?"></a>When and where to initiate Ajax call?</h3><p>Do it in <code>componentDidMount</code> lifecycle method. So you can use setState to update your component when the data is retrieved.</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">componentDidMount() &#123;</span><br><span class="line">  fetch(<span class="string">"https://api.example.com/items"</span>)</span><br><span class="line">    .then(<span class="function"><span class="params">res</span> =&gt;</span> res.json())</span><br><span class="line">    .then(</span><br><span class="line">      (result) =&gt; &#123;</span><br><span class="line">        <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">          isLoaded: <span class="literal">true</span>,</span><br><span class="line">          items: result.items</span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="comment">// Note: it's important to handle errors here</span></span><br><span class="line">      <span class="comment">// instead of a catch() block so that we don't swallow</span></span><br><span class="line">      <span class="comment">// exceptions from actual bugs in components.</span></span><br><span class="line">      (error) =&gt; &#123;</span><br><span class="line">        <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">          isLoaded: <span class="literal">true</span>,</span><br><span class="line">          error</span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="IV-Concept"><a href="#IV-Concept" class="headerlink" title="IV. Concept"></a>IV. Concept</h2><h3 id="1-组件数据流-Model-gt-View"><a href="#1-组件数据流-Model-gt-View" class="headerlink" title="1. 组件数据流: Model -&gt; View"></a>1. 组件数据流: Model -&gt; View</h3><ul>
-<li><p>父组件M -&gt; 子组件V</p>
-<ul>
-<li>父组件prop 之间传给 子组件 prop</li>
-</ul>
-</li>
-<li><p>子组件M -&gt; 父组件V</p>
-<ul>
-<li>回调函数<ul>
-<li>父组件向子组件传递回调函数</li>
-<li>JS中，function是一等公民，因此传入的值会作为自身field保存起来；与C／Java不同。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>sibling 组件间传值 M-&gt;V<ul>
-<li>必须依靠二者共同父组件来传递<ul>
-<li>但等组件之间的关系越来越复杂时候，这种依靠父组件作为中间人传值方式 would be a mess！</li>
-<li>Redux comes into picture</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="2-双向绑定-Model-View"><a href="#2-双向绑定-Model-View" class="headerlink" title="2. 双向绑定: Model  View"></a>2. 双向绑定: Model <-> View</-></h3><ul>
-<li>通过绑定<code>&lt;input&gt;</code>的 <code>onChange()</code> 监视 View的变换</li>
-<li>在 onChange Handler中更新组件的值，完成 View =&gt; Model 的数据流。</li>
-</ul>
-<h3 id="3-React-生命周期"><a href="#3-React-生命周期" class="headerlink" title="3. React 生命周期"></a>3. React 生命周期</h3><ul>
-<li><strong>Mount</strong><ul>
-<li>constructor()</li>
-<li>componentWillMount()</li>
-<li>render()</li>
-<li>componentDidMount()</li>
-</ul>
-</li>
-<li><strong>Update</strong><ul>
-<li>componentWillReceiveProps(): 将接收新的props</li>
-<li>shouldComponentUpdate(): 是否应该被更新？</li>
-<li>componentWillUpdate(): 组件即将更新</li>
-<li>render(): 组件被渲染</li>
-<li>componentDidUpdate(): 组件完成更新</li>
-</ul>
-</li>
-<li><strong>Unmount</strong><ul>
-<li>componentWillUnmount(): 组件被卸载前做一些数据清除</li>
-</ul>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/18/VM-Page-Table-Page-Fault-Hander/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mingkai Cao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/mingkai.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CMK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/18/VM-Page-Table-Page-Fault-Hander/" itemprop="url">VM: Page Table & Page Fault Hander</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-18T15:22:02-07:00">2018-04-18</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Courses/" itemprop="url" rel="index"><span itemprop="name">Courses</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="I-Page-Table"><a href="#I-Page-Table" class="headerlink" title="I. Page Table"></a>I. Page Table</h2><h4 id="1-Page-table的作用"><a href="#1-Page-table的作用" class="headerlink" title="1. Page table的作用"></a>1. Page table的作用</h4><p><strong>【简洁版】</strong></p>
-<ul>
-<li>隔离user process，给每个process分配4GB内存【假象，至于到底怎么分配，交给kernel】</li>
-<li>提供 CPU 可识别的 physical address</li>
-</ul>
-<p><strong>【详细版】</strong></p>
-<ul>
-<li>在没有 page table 之前，processes 如果想在memory中执行，必须做好process isolation。一个方案是为每个process 分配一段“大小合适的”内存，这样的缺点是：<ul>
-<li>首先，分配的内存必须连续；否则还需要 page table</li>
-<li>其次，多大才算“大小合适”，因为process在加载之前无法预知它会使用多少内存</li>
-</ul>
-</li>
-<li>另一种方案是：将内存划分成很小的“页”，按需使用；这样解决了“大小合适”的问题，但仍然存在内存必须连续的问题（否则会引起内存侵扰）</li>
-<li>最后的方案是：page table。建立虚拟内存，对于32bit机器而言：<ul>
-<li>给每个process的内存都是4GB[0x00000000~0xffffffff]</li>
-<li>同时kernel在每个processz的PCB中都维护一个 page table<br>提供给 CPU 可操作的 physical address</li>
-<li>一般情况下不知直接采用一级 page table，即将所有 4GB 的vaddr映射到 4GB的physical addr，占空间太大了！！<strong>【page table在memory中， kernel 1GB的address space中】</strong></li>
-</ul>
-</li>
-</ul>
-<h4 id="2-代码分析-Weenix"><a href="#2-代码分析-Weenix" class="headerlink" title="2. 代码分析 - Weenix"></a>2. 代码分析 - Weenix</h4><p>Weenix 中 page table 实际上由 pagedir struct (pagetable.c)负责维护，结构如下：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">pagedir</span> &#123;</span></span><br><span class="line">        <span class="keyword">pde_t</span>      pd_physical[PT_ENTRY_COUNT];</span><br><span class="line">        <span class="keyword">uintptr_t</span> *pd_virtual[PT_ENTRY_COUNT];</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pt_map</span><span class="params">(<span class="keyword">pagedir_t</span> *pd, <span class="keyword">uintptr_t</span> vaddr, <span class="keyword">uintptr_t</span>   </span></span></span><br><span class="line"><span class="function"><span class="params">           paddr, <span class="keyword">uint32_t</span> pdflags, <span class="keyword">uint32_t</span> ptflags)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line">将指定的 virtual addr 与 physical addr</span><br></pre></td></tr></table></figure>
-<ol>
-<li>每一个 vaddr 都由唯一对应两个表的index： pagedir table index、page table index<ul>
-<li>pagedir index = (vaddr&gt;&gt;12) / PAGE_ENTRY_CNT</li>
-<li>pagetable index = (vaddr&gt;&gt;12) % PAGE_ENTRY_CNT</li>
-<li>注意：pagedir table中存的是 [index1: pagetable physical addre]的entry</li>
-<li>注意：page table中存的才是[index2:physical addr]的entry</li>
-<li>这样就建立起 vaddr 的 Two-Level translation system；<br>先通过 pagedir table 找到 page table，在查到对应 physical addr</li>
-</ul>
-</li>
-<li>pagedir： <ul>
-<li>由 PCB 维护一个指针指向该 page directory table</li>
-<li>从pagedir开始，逐级查找到该 process的address space对应的physical address</li>
-</ul>
-</li>
-<li>pd_physical[i]： <ul>
-<li>由 (vaddr&gt;&gt;12) / PAGE_ENTRY_CNT 计算出vaddr所对应的 pagedir table中的entry</li>
-<li>该 entry 中维护一个指针指向下级 page table的 physical address；即vaddr所在的page table</li>
-</ul>
-</li>
-<li>*pd_virtual[i]：<ul>
-<li>由(vaddr&gt;&gt;12) % PAGE_ENTRY_CNT计算出vaddr对应的 page table 中的entry</li>
-<li>该 entry 维护中vaddr 对应的 physical addr</li>
-</ul>
-</li>
-</ol>
-<p><br></p>
-<h2 id="II-Page-fault"><a href="#II-Page-fault" class="headerlink" title="II. Page fault"></a>II. Page fault</h2><h4 id="1-page-fault-handler-具体步骤"><a href="#1-page-fault-handler-具体步骤" class="headerlink" title="1. page fault handler 具体步骤"></a>1. page fault handler 具体步骤</h4><p>page fault 是由MMU检测到的硬件中断，由kernel处理；当一个进程发生缺页中断的时候，进程会<strong>陷入(trap)内核态</strong>，执行以下操作： </p>
-<ol>
-<li>检查要访问的虚拟地址是否合法 </li>
-<li>查找/分配一个物理页 </li>
-<li>填充物理页内容（读取磁盘，或者直接置0，或者啥也不干） </li>
-<li>建立映射关系（虚拟地址到物理地址） </li>
-<li>重新执行发生缺页中断的那条指令 </li>
-</ol>
-<h4 id="2-代码分析-page-fault-handler"><a href="#2-代码分析-page-fault-handler" class="headerlink" title="2. 代码分析 - page fault handler"></a>2. 代码分析 - page fault handler</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">handle_pagefault</span><span class="params">(<span class="keyword">uintptr_t</span> vaddr, <span class="keyword">uint32_t</span> cause)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line">输入：vaddr【导致发生缺页中断的 vaddr】 </span><br><span class="line">     cause【page fault的原因】</span><br><span class="line">        + write on RDONLY</span><br><span class="line">        + write on Reserved, etc.</span><br><span class="line">输出：<span class="keyword">void</span></span><br></pre></td></tr></table></figure>
-<ol>
-<li>检查该 vaddr 真的是cur_proc 地址空间中的使用的 addr 么?<ul>
-<li><code>vmarea = vmmap_lookup(curproc-&gt;p_vmmap, ADDR_TO_PN(vaddr))</code></li>
-<li>if == NULL，表明地址空间中就没有 任何一个 region用到该地址，返回Error</li>
-</ul>
-</li>
-<li>至此，获得了该 vaddr 所属的 vmarea；<ul>
-<li>获得vmarea的目的，是为了获得该vaddr实际对应的mmobj</li>
-<li>只有通过<code>vmmap_lookup()</code><strong>找出“幕后主使”</strong>，才能够进行后续往物理内存中加载内容</li>
-<li>比如只有找出该vaddr对应的vmarea，继而找到vnode(即对应的file)，才能知道该往内存中读入什么！！</li>
-<li>user process 程序操作的全是vaddr，不知道该vaddr实际对应的是什么；但是查询到该vaddr page 所属的 mmobj就知道该往物理内存中读入什么了</li>
-</ul>
-</li>
-<li>注意特殊情况：forwrite，这会引起有意思的 Copy_On_Write</li>
-<li>重要的一步：往physical page加载mmobj，并更新page table with (vaddr：paddr)<ul>
-<li>通过调用 <code>pframe_lookup(vmarea, pageNum, fw, *pframe)</code>,找该vmarea下的pframe</li>
-<li>实际上vmarea不直接管理pframe，而是vmarea对应的mmobj管理；继而内部调用 vmarea—&gt;mmobj 的 <code>lookuppage()</code></li>
-<li>mmobj 调用<code>pframe_get()</code>寻找是否有相应的 pframe 对应于 mmonj&amp;pageNum</li>
-<li>如果有：直接返回；</li>
-<li>如果没有：进入<em>“无中生有”</em>这一步：<ul>
-<li>创建 pframe 结构体，获得physical address。 通过：<code>pframe_alloc(mmobj,pagenum)</code>  <ol>
-<li><strong>这一步会调用 <code>page_alloc()</code> 申请到物理内存physical address</strong>  </li>
-<li>至此vaddr有了与之对应的物理内存，但还未载入vaddr对应的内容</li>
-</ol>
-</li>
-<li>调用 <code>pframe_fill()</code>往刚申请到的physical addr中载入vaddr对应的内容  <ol>
-<li><strong>这一步调用 <code>mmobj-&gt;ops-&gt;fillpage(obj,pf)</code>由vaddr对应的mmobj向物理内存载入内容</strong>  </li>
-<li>实际上如果是disk，会调用<code>read_block()</code>进入硬件过程；后续还会通过DMA(direct memory access)直接将disk中的内容读入到内存</li>
-</ol>
-</li>
-<li>至此，mmobj的<strong>幕后人物：vnode / file</strong> 的内容成功读入到 page frame 中</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>最后调用 <code>pt_map(curproc-&gt;pdir, vaddr, pt_virt_to_phys(pf_addr),...)</code>将 (vadd:paddr)写到 page table 中</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">【实质】</span><br><span class="line"></span><br><span class="line"> virtualAddr &lt;=&gt; pframe &lt;=&gt; physicalAddr</span><br><span class="line">      |            |             |</span><br><span class="line">     user        kernel     physical mem</span><br><span class="line">      |            |             |</span><br><span class="line">      3G    1G=2^20*2^12=4K &lt;==&gt; 4G</span><br><span class="line">       \_ _ _ _ _ _ _ _ _ _ _ _ _／</span><br><span class="line">       </span><br><span class="line">+ 任何一块物理内存都由一个对应的pframe指向,并管理；</span><br><span class="line">+ pframe本身为virtual address；甚至其内部与phsical page</span><br><span class="line">  直接关联的 pf_addr也是 virtual address。But why?**  </span><br><span class="line">+ 实际上:</span><br><span class="line">    - 1page = 4KB = 2^12 Byte</span><br><span class="line">    - physical mem(32bit): 4GB=2^32 Byte</span><br><span class="line">    - pframe #: 2^32 / 2^12 = 2^20 </span><br><span class="line">    - kernel address space: 1GB = 2^20</span><br><span class="line">    - 也就是说：使用pframe分配物理内存的话，</span><br><span class="line">              kernel pframes正好与physical pages形成对应</span><br><span class="line">    - 因此：在pframe创建之时(即对应物理内存征用之时)，</span><br><span class="line">      只需要做一个简单的加减法就可以！</span><br><span class="line">      因为 kernel 1G [c0000000~ffffffff],对应4GB；</span><br><span class="line">      那么减去的 delta=c0000000（该值需要再调整）</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3009,7 +3037,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">84</span>
+                    <span class="site-state-item-count">86</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -3317,7 +3345,7 @@
                     
                       
                     
-                    <span class="site-state-item-count">134</span>
+                    <span class="site-state-item-count">136</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -3371,7 +3399,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love" id="animate"> 
     <i class="fa fa-user"></i>
   </span>

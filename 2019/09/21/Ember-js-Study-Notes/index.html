@@ -106,7 +106,7 @@
 <meta property="og:url" content="http://yoursite.com/2019/09/21/Ember-js-Study-Notes/index.html">
 <meta property="og:site_name" content="CMK">
 <meta property="og:description" content="I am always curious about how do those libraries/frameworks like React, Angular, Ember work in background. I know it all about design patterns, which appeals me very much.  Now, I have been working on">
-<meta property="og:updated_time" content="2019-09-23T05:30:24.839Z">
+<meta property="og:updated_time" content="2019-10-28T01:10:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ember.js Study Notes">
 <meta name="twitter:description" content="I am always curious about how do those libraries/frameworks like React, Angular, Ember work in background. I know it all about design patterns, which appeals me very much.  Now, I have been working on">
@@ -484,6 +484,28 @@
 <li>Logic Part: controller object (<code>app/controllers/rentals.js</code>)</li>
 </ol>
 </li>
+<li><p>Ember.Object</p>
+<ol>
+<li><p>expand properties and methods on original JS object</p>
+</li>
+<li><p>make it <code>observable</code> (design pattern), used heavily in Ember env system</p>
+</li>
+<li><p>Issue: <code>create()</code> to instantiate a object with preset properties, using <code>init()</code> at the same time</p>
+<ol>
+<li><p>Problem: preset properties and init properties which one called first?</p>
+<ol>
+<li>properties in <code>init</code> beats instance preset properties</li>
+<li><a href="https://github.com/emberjs/ember.js/issues/1557" target="_blank" rel="noopener">the hash passed to the create method is essentially treated as a mixin that is applied before init is run</a></li>
+<li>My early exploration encounterring such issue: seem like this is a good sign, which give me an impression this framework is not with a simple philosophy. But hold on, let me dig on.</li>
+</ol>
+</li>
+<li><p>How to overwrite <code>init</code> in <code>reopen</code>?</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Person = Ember.Object.extend(&#123;</span><br><span class="line">  init() &#123;</span><br><span class="line">    <span class="keyword">this</span>.set(<span class="string">"shoppingList"</span>, Ember.A([<span class="string">'eggs'</span>, <span class="string">'cheese'</span>]));</span><br><span class="line">  &#125;, </span><br><span class="line">  addItem(item) &#123;</span><br><span class="line">    <span class="keyword">this</span>.shoppingList.pushObject(item);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">Person.reopen(&#123;</span><br><span class="line">  init() &#123;</span><br><span class="line">    <span class="keyword">this</span>._super();</span><br><span class="line">    <span class="keyword">this</span>.set(<span class="string">"age"</span>, <span class="number">10</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> p1 = Person.create(&#123;</span><br><span class="line">  name: <span class="string">'Stefan Penner'</span>,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> p2 = Person.create(&#123;</span><br><span class="line">  name: <span class="string">'Robert Jackson'</span>,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> p3 = Person.create(&#123;</span><br><span class="line">  name: <span class="string">"a"</span>,</span><br><span class="line">  age: <span class="number">199</span>,</span><br><span class="line">  kkk: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="built_in">console</span>.log(<span class="string">"333"</span>)&#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(p1.age);</span><br><span class="line"><span class="built_in">console</span>.log(p2.age);</span><br><span class="line"><span class="built_in">console</span>.log(p3.age);</span><br><span class="line"></span><br><span class="line">p3.set(<span class="string">'age'</span>, <span class="number">3333</span>)</span><br><span class="line"><span class="built_in">console</span>.log(p3.age);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+</li>
 </ol>
 
       
@@ -527,6 +549,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/12/15/Houzz Front End Interview preps/" rel="prev" title="Houzz front end interview prep">
+                Houzz front end interview prep <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -595,7 +621,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">84</span>
+                    <span class="site-state-item-count">86</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -903,7 +929,7 @@
                     
                       
                     
-                    <span class="site-state-item-count">134</span>
+                    <span class="site-state-item-count">136</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -957,7 +983,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love" id="animate"> 
     <i class="fa fa-user"></i>
   </span>

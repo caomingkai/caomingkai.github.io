@@ -100,7 +100,7 @@
 
 
   <meta name="description" content="1. Array.prototype.sort(cb)Always pass in comparison callback, as the default of sort() behavior is:  first convert to string type then, sort string array  2 examples are given below: 123456let array1">
-<meta name="keywords" content="ReactJS,Vanilla JS,Redux,ES6,Event">
+<meta name="keywords" content="Vanilla JS,ReactJS,Redux,ES6,Event">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Front-end Notes">
 <meta property="og:url" content="http://yoursite.com/2019/08/10/Front-end-Notes/index.html">
@@ -392,6 +392,16 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/08/10/Front-end-Notes/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/08/10/Front-end-Notes/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -1030,9 +1040,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/ReactJS/" rel="tag"># ReactJS</a>
-          
             <a href="/tags/Vanilla-JS/" rel="tag"># Vanilla JS</a>
+          
+            <a href="/tags/ReactJS/" rel="tag"># ReactJS</a>
           
             <a href="/tags/Redux/" rel="tag"># Redux</a>
           
@@ -1089,6 +1099,9 @@
           </div>
           
 
+  
+    <div class="comments" id="comments">
+    </div>
   
 
 
@@ -1687,6 +1700,39 @@
 
 
 
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'hG8fgggWL7hK1jsXsRoVCNWv-MdYXbMMI',
+        appKey: 'VRAYsgwdkRyyb8bAFQ5uii6o',
+        placeholder: 'Any comment?',
+        avatar:'',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+    // 新增以下代码即可，可以移除.info下所有子节点
+    var infoEle = document.querySelector('#comments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0){
+      infoEle.childNodes.forEach(function(item) {
+        item.parentNode.removeChild(item);
+      });
+    }
+
+
+  </script>
 
 
 
